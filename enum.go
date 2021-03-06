@@ -6,6 +6,14 @@ type Coin string
 const (
 	// CoinBTC :
 	CoinBTC = "BTC"
+	// CoinETH :
+	CoinETH = "ETH"
+	// CoinEOS :
+	CoinEOS = "EOS"
+	// CoinXRP :
+	CoinXRP = "XRP"
+	// CoinUSDT :
+	CoinUSDT = "USDT"
 )
 
 // Symbol :
