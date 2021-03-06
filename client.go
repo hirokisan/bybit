@@ -14,6 +14,8 @@ import (
 const (
 	// MainNetBaseURL :
 	MainNetBaseURL = "https://api.bybit.com"
+	// TestNetBaseURL :
+	TestNetBaseURL = "https://api-testnet.bybit.com"
 )
 
 // Client :
@@ -32,13 +34,30 @@ func NewClient(key string, secret string) *Client {
 	}
 }
 
+// NewTestClient :
+func NewTestClient(key string, secret string) *Client {
+	return &Client{
+		BaseURL: TestNetBaseURL,
+		Key:     key,
+		Secret:  secret,
+	}
+}
+
 // Wallet :
 func (c *Client) Wallet() *WalletService {
 	return &WalletService{c}
 }
 
+// Account :
+func (c *Client) Account() *AccountService {
+	return &AccountService{c}
+}
+
 // BuildURL :
 func (c *Client) BuildURL(path string, params map[string]string) string {
+	if params == nil {
+		params = map[string]string{}
+	}
 	u, err := url.Parse(c.BaseURL)
 	if err != nil {
 		panic(err)
