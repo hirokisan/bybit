@@ -26,21 +26,30 @@ type Client struct {
 }
 
 // NewClient :
-func NewClient(key string, secret string) *Client {
+func NewClient() *Client {
 	return &Client{
 		BaseURL: MainNetBaseURL,
-		Key:     key,
-		Secret:  secret,
 	}
 }
 
 // NewTestClient :
-func NewTestClient(key string, secret string) *Client {
+func NewTestClient() *Client {
 	return &Client{
 		BaseURL: TestNetBaseURL,
-		Key:     key,
-		Secret:  secret,
 	}
+}
+
+// WithAuth :
+func (c *Client) WithAuth(key string, secret string) *Client {
+	c.Key = key
+	c.Secret = secret
+
+	return c
+}
+
+// HasAuth : check has auth key and secret
+func (c *Client) HasAuth() bool {
+	return c.Key != "" && c.Secret != ""
 }
 
 // Wallet :

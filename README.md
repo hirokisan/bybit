@@ -7,7 +7,7 @@ bybit is an bybit client for the Go programing language.
 ```
 import "github.com/hirokisan/bybit"
 
-client := bybit.NewClient("your api key", "your api secret")
+client := bybit.NewClient().WithAuth("your api key", "your api secret")
 res, err := client.Wallet().Balance(CoinBTC)
 // do as you want
 ```

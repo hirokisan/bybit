@@ -68,6 +68,10 @@ type CreateOrderParam struct {
 func (s *AccountService) CreateOrder(param CreateOrderParam) (*CreateOrderResponse, error) {
 	var res CreateOrderResponse
 
+	if !s.Client.HasAuth() {
+		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
 	url := s.Client.BuildURL("/v2/private/order/create", nil)
 
 	jsonBody, err := json.Marshal(param)

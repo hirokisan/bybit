@@ -2,6 +2,7 @@ package bybit
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -54,6 +55,10 @@ type Balance struct {
 // Balance :
 func (s *WalletService) Balance(coin Coin) (*BalanceResponse, error) {
 	var res BalanceResponse
+
+	if !s.Client.HasAuth() {
+		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
 
 	params := map[string]string{
 		"coin": string(coin),
