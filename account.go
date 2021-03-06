@@ -62,8 +62,6 @@ type CreateOrderParam struct {
 	OrderLinkID    *string  `json:"order_link_id,omitempty"`
 }
 
-// param -> json -> body -> post
-
 // CreateOrder :
 func (s *AccountService) CreateOrder(param CreateOrderParam) (*CreateOrderResponse, error) {
 	var res CreateOrderResponse
@@ -83,7 +81,6 @@ func (s *AccountService) CreateOrder(param CreateOrderParam) (*CreateOrderRespon
 		return nil, err
 	}
 	defer resp.Body.Close()
-	fmt.Printf("%v", resp.Request)
 	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
 		return nil, err
 	}
