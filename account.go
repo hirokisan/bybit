@@ -70,7 +70,10 @@ func (s *AccountService) CreateOrder(param CreateOrderParam) (*CreateOrderRespon
 
 	url := s.Client.BuildURL("/v2/private/order/create", nil)
 
-	jsonBody, _ := json.Marshal(param)
+	jsonBody, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CreateOrderParam: %w", err)
+	}
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return nil, err
