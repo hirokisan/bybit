@@ -36,19 +36,19 @@ func (r *BalanceResult) UnmarshalJSON(data []byte) error {
 
 // Balance :
 type Balance struct {
-	Equity           int     `json:"equity"`
-	AvailableBalance int     `json:"available_balance"`
+	Equity           float64 `json:"equity"`
+	AvailableBalance float64 `json:"available_balance"`
 	UsedMargin       float64 `json:"used_margin"`
 	OrderMargin      float64 `json:"order_margin"`
-	PositionMargin   int     `json:"position_margin"`
-	OccClosingFee    int     `json:"occ_closing_fee"`
-	OccFundingFee    int     `json:"occ_funding_fee"`
-	WalletBalance    int     `json:"wallet_balance"`
-	RealisedPnl      int     `json:"realised_pnl"`
-	UnrealisedPnl    int     `json:"unrealised_pnl"`
-	CumRealisedPnl   int     `json:"cum_realised_pnl"`
-	GivenCash        int     `json:"given_cash"`
-	ServiceCash      int     `json:"service_cash"`
+	PositionMargin   float64 `json:"position_margin"`
+	OccClosingFee    float64 `json:"occ_closing_fee"`
+	OccFundingFee    float64 `json:"occ_funding_fee"`
+	WalletBalance    float64 `json:"wallet_balance"`
+	RealisedPnl      float64 `json:"realised_pnl"`
+	UnrealisedPnl    float64 `json:"unrealised_pnl"`
+	CumRealisedPnl   float64 `json:"cum_realised_pnl"`
+	GivenCash        float64 `json:"given_cash"`
+	ServiceCash      float64 `json:"service_cash"`
 }
 
 // Balance :
