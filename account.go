@@ -86,3 +86,100 @@ func (s *AccountService) CreateOrder(param CreateOrderParam) (*CreateOrderRespon
 	}
 	return &res, nil
 }
+
+// ListPositionResponse :
+type ListPositionResponse struct {
+	CommonResponse `json:",inline"`
+	Result         ListPositionResult `json:"result"`
+}
+
+// ListPositionResult :
+type ListPositionResult struct {
+	ID                  int     `json:"id"`
+	UserID              int     `json:"user_id"`
+	RiskID              int     `json:"risk_id"`
+	Symbol              Symbol  `json:"symbol"`
+	Side                Side    `json:"side"`
+	Size                float64 `json:"size"`
+	PositionValue       string  `json:"position_value"`
+	EntryPrice          string  `json:"entry_price"`
+	IsIsolated          bool    `json:"is_isolated"`
+	AutoAddMargin       float64 `json:"auto_add_margin"`
+	Leverage            string  `json:"leverage"`
+	EffectiveLeverage   string  `json:"effective_leverage"`
+	PositionMargin      string  `json:"position_margin"`
+	LiqPrice            string  `json:"liq_price"`
+	BustPrice           string  `json:"bust_price"`
+	OccClosingFee       string  `json:"occ_closing_fee"`
+	OccFundingFee       string  `json:"occ_funding_fee"`
+	TakeProfit          string  `json:"take_profit"`
+	StopLoss            string  `json:"stop_loss"`
+	TrailingStop        string  `json:"trailing_stop"`
+	PositionStatus      string  `json:"position_status"`
+	DeleverageIndicator int     `json:"deleverage_indicator"`
+	OcCalcData          string  `json:"oc_calc_data"`
+	OrderMargin         string  `json:"order_margin"`
+	WalletBalance       string  `json:"wallet_balance"`
+	RealisedPnl         string  `json:"realised_pnl"`
+	UnrealisedPnl       float64 `json:"unrealised_pnl"`
+	CumRealisedPnl      string  `json:"cum_realised_pnl"`
+	CrossSeq            float64 `json:"cross_seq"`
+	PositionSeq         float64 `json:"position_seq"`
+	CreatedAt           string  `json:"created_at"`
+	UpdatedAt           string  `json:"updated_at"`
+}
+
+// ListPosition :
+func (s *AccountService) ListPosition(symbol Symbol) (*ListPositionResponse, error) {
+	var res ListPositionResponse
+
+	if !s.Client.HasAuth() {
+		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	params := map[string]string{
+		"symbol": string(symbol),
+	}
+	url := s.Client.BuildURL("/v2/private/position/list", params)
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+// ListPositionsResponse :
+type ListPositionsResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []ListPositionsResult `json:"result"`
+}
+
+// ListPositionsResult :
+type ListPositionsResult struct {
+	IsValid            bool `json:"is_valid"`
+	ListPositionResult `json:"data,inline"`
+}
+
+// ListPositions :
+func (s *AccountService) ListPositions() (*ListPositionsResponse, error) {
+	var res ListPositionsResponse
+
+	if !s.Client.HasAuth() {
+		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	url := s.Client.BuildURL("/v2/private/position/list", nil)
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
