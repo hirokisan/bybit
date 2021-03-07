@@ -34,7 +34,7 @@ type CreateOrder struct {
 	Qty           float64     `json:"qty"`
 	TimeInForce   TimeInForce `json:"time_in_force"`
 	OrderStatus   OrderStatus `json:"order_status"`
-	LastExecTime  int         `json:"last_exec_time"`
+	LastExecTime  float64     `json:"last_exec_time"`
 	LastExecPrice float64     `json:"last_exec_price"`
 	LeavesQty     float64     `json:"leaves_qty"`
 	CumExecQty    float64     `json:"cum_exec_qty"`
@@ -174,6 +174,78 @@ func (s *AccountService) ListPositions() (*ListPositionsResponse, error) {
 
 	url := s.Client.BuildURL("/v2/private/position/list", nil)
 	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+// CancelOrderResponse :
+type CancelOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         CancelOrderResult `json:"result"`
+}
+
+// CancelOrderResult :
+type CancelOrderResult struct {
+	CancelOrder `json:",inline"`
+}
+
+// CancelOrder :
+// so far, same as CreateOrder
+type CancelOrder struct {
+	UserID        int         `json:"user_id"`
+	OrderID       string      `json:"order_id"`
+	Symbol        Symbol      `json:"symbol"`
+	Side          Side        `json:"side"`
+	OrderType     OrderType   `json:"order_type"`
+	Price         float64     `json:"price"`
+	Qty           float64     `json:"qty"`
+	TimeInForce   TimeInForce `json:"time_in_force"`
+	OrderStatus   OrderStatus `json:"order_status"`
+	LastExecTime  float64     `json:"last_exec_time"`
+	LastExecPrice float64     `json:"last_exec_price"`
+	LeavesQty     float64     `json:"leaves_qty"`
+	CumExecQty    float64     `json:"cum_exec_qty"`
+	CumExecValue  float64     `json:"cum_exec_value"`
+	CumExecFee    float64     `json:"cum_exec_fee"`
+	RejectReason  string      `json:"reject_reason"`
+	OrderLinkID   string      `json:"order_link_id"`
+	CreatedAt     string      `json:"created_at"`
+	UpdatedAt     string      `json:"updated_at"`
+}
+
+// CancelOrderParam :
+type CancelOrderParam struct {
+	Symbol Symbol `json:"symbol"`
+
+	OrderID     *string `json:"order_id,omitempty"`
+	OrderLinkID *string `json:"order_link_id,omitempty"`
+}
+
+// CancelOrder :
+func (s *AccountService) CancelOrder(param CancelOrderParam) (*CancelOrderResponse, error) {
+	var res CancelOrderResponse
+
+	if !s.Client.HasAuth() {
+		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	if param.OrderID == nil && param.OrderLinkID == nil {
+		return nil, fmt.Errorf("either OrderID or OrderLinkID needed")
+	}
+
+	url := s.Client.BuildURL("/v2/private/order/cancel", nil)
+
+	jsonBody, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CancelOrderParam: %w", err)
+	}
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return nil, err
 	}
