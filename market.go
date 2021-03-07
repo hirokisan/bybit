@@ -284,3 +284,67 @@ func (s *MarketService) Symbols() (*SymbolsResponse, error) {
 	}
 	return &res, nil
 }
+
+// LiqRecordsResponse :
+type LiqRecordsResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []LiqRecordsResult `json:"result"`
+}
+
+// LiqRecordsResult :
+type LiqRecordsResult struct {
+	ID     float64 `json:"id"`
+	Qty    float64 `json:"qty"`
+	Side   Side    `json:"side"`
+	Time   int     `json:"time"` // or float64
+	Symbol Symbol  `json:"symbol"`
+	Price  float64 `json:"price"`
+}
+
+// LiqRecordsParam :
+type LiqRecordsParam struct {
+	Symbol Symbol `json:"symbol"`
+
+	From      *int `json:"from"`
+	Limit     *int `json:"limit"`
+	StartTime *int `json:"start_time"`
+	EndTime   *int `json:"end_time"`
+}
+
+func (p *LiqRecordsParam) build() map[string]string {
+	result := map[string]string{
+		"symbol": string(p.Symbol),
+	}
+	if p.From != nil {
+		result["from"] = strconv.Itoa(*p.From)
+	}
+	if p.Limit != nil {
+		result["limit"] = strconv.Itoa(*p.Limit)
+	}
+	if p.StartTime != nil {
+		result["start_time"] = strconv.Itoa(*p.StartTime)
+	}
+	if p.EndTime != nil {
+		result["end_time"] = strconv.Itoa(*p.EndTime)
+	}
+	return result
+}
+
+// LiqRecords :
+func (s *MarketService) LiqRecords(param LiqRecordsParam) (*LiqRecordsResponse, error) {
+	var res LiqRecordsResponse
+
+	url, err := s.Client.BuildPublicURL("/v2/public/liq-records", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
