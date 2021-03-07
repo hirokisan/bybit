@@ -83,3 +83,21 @@ const (
 	// TimeInForcePostOnly :
 	TimeInForcePostOnly = TimeInForce("PostOnly")
 )
+
+type Interval string
+
+const (
+	Interval1   = Interval("1")
+	Interval3   = Interval("3")
+	Interval5   = Interval("5")
+	Interval15  = Interval("15")
+	Interval30  = Interval("30")
+	Interval60  = Interval("60")
+	Interval120 = Interval("120")
+	Interval240 = Interval("240")
+	Interval360 = Interval("360")
+	Interval720 = Interval("720")
+	IntervalD   = Interval("D")
+	IntervalW   = Interval("W")
+	IntervalM   = Interval("M")
+)
