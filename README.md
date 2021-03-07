@@ -20,6 +20,7 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 - `/v2/public/kline/list`
 - `/v2/public/tickers`
 - `/v2/public/trading-records`
+- `/v2/public/symbols`
 
 ### Account Data Endpoints
 
