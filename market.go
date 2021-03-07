@@ -225,3 +225,62 @@ func (s *MarketService) TradingRecords(param TradingRecordsParam) (*TradingRecor
 	}
 	return &res, nil
 }
+
+// SymbolsResponse :
+type SymbolsResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []SymbolsResult `json:"result"`
+}
+
+// SymbolsResult :
+type SymbolsResult struct {
+	Name           string         `json:"name"`
+	BaseCurrency   string         `json:"base_currency"`
+	QuoteCurrency  string         `json:"quote_currency"`
+	PriceScale     float64        `json:"price_scale"`
+	TakerFee       string         `json:"taker_fee"`
+	MakerFee       string         `json:"maker_fee"`
+	LeverageFilter LeverageFilter `json:"leverage_filter"`
+	PriceFilter    PriceFilter    `json:"price_filter"`
+	LotSizeFilter  LotSizeFilter  `json:"lot_size_filter"`
+}
+
+// LeverageFilter :
+type LeverageFilter struct {
+	MinLeverage  float64 `json:"min_leverage"`
+	MaxLeverage  float64 `json:"max_leverage"`
+	LeverageStep string  `json:"leverage_step"`
+}
+
+// PriceFilter :
+type PriceFilter struct {
+	MinPrice string `json:"min_price"`
+	MaxPrice string `json:"max_price"`
+	TickSize string `json:"tick_size"`
+}
+
+// LotSizeFilter :
+type LotSizeFilter struct {
+	MaxTradingQty float64 `json:"max_trading_qty"`
+	MinTradingQty float64 `json:"min_trading_qty"`
+	QtyStep       float64 `json:"qty_step"`
+}
+
+// Symbols :
+func (s *MarketService) Symbols() (*SymbolsResponse, error) {
+	var res SymbolsResponse
+
+	url, err := s.Client.BuildPublicURL("/v2/public/symbols", nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
