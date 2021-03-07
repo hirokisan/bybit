@@ -169,3 +169,59 @@ func (s *MarketService) Tickers(symbol Symbol) (*TickersResponse, error) {
 	}
 	return &res, nil
 }
+
+// TradingRecordsParam :
+type TradingRecordsParam struct {
+	Symbol Symbol `json:"symbol"`
+
+	From  *int `json:"from"`
+	Limit *int `json:"limit"`
+}
+
+func (p *TradingRecordsParam) build() map[string]string {
+	result := map[string]string{
+		"symbol": string(p.Symbol),
+	}
+	if p.From != nil {
+		result["from"] = strconv.Itoa(*p.From)
+	}
+	if p.Limit != nil {
+		result["limit"] = strconv.Itoa(*p.Limit)
+	}
+	return result
+}
+
+// TradingRecordsResponse :
+type TradingRecordsResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []TradingRecordsResult `json:"result"`
+}
+
+// TradingRecordsResult :
+type TradingRecordsResult struct {
+	ID     float64 `json:"id"`
+	Symbol Symbol  `json:"symbol"`
+	Price  float64 `json:"price"`
+	Qty    float64 `json:"qty"`
+	Side   Side    `json:"side"`
+	Time   string  `json:"time"`
+}
+
+// TradingRecords :
+func (s *MarketService) TradingRecords(param TradingRecordsParam) (*TradingRecordsResponse, error) {
+	var res TradingRecordsResponse
+
+	url, err := s.Client.BuildPublicURL("/v2/public/trading-records", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
