@@ -17,6 +17,7 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 ### Market Data Endpoints
 
 - `/v2/public/orderBook/L2`
+- `/v2/public/kline/list`
 
 ### Account Data Endpoints
 
