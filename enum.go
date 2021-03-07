@@ -115,3 +115,17 @@ const (
 	// IntervalM :
 	IntervalM = Interval("M")
 )
+
+// TickDirection :
+type TickDirection string
+
+const (
+	// TickDirectionPlusTick :
+	TickDirectionPlusTick = TickDirection("PlusTick")
+	// TickDirectionZeroPlusTick :
+	TickDirectionZeroPlusTick = TickDirection("ZeroPlusTick")
+	// TickDirectionMinusTick :
+	TickDirectionMinusTick = TickDirection("MinusTick")
+	// TickDirectionZeroMinusTick :
+	TickDirectionZeroMinusTick = TickDirection("ZeroMinusTick")
+)
