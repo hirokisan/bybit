@@ -62,14 +62,44 @@ func (c *Client) Account() *AccountService {
 	return &AccountService{c}
 }
 
-// BuildURL :
-func (c *Client) BuildURL(path string, params map[string]string) string {
+// Market :
+func (c *Client) Market() *MarketService {
+	return &MarketService{c}
+}
+
+// BuildPublicURL :
+func (c *Client) BuildPublicURL(path string, params map[string]string) (string, error) {
 	if params == nil {
 		params = map[string]string{}
 	}
 	u, err := url.Parse(c.BaseURL)
 	if err != nil {
-		panic(err)
+		return "", nil
+	}
+	u.Path = path
+
+	q := u.Query()
+	for key, param := range params {
+		q.Set(key, param)
+	}
+	u.RawQuery = q.Encode()
+
+	fmt.Println(u.String())
+	return u.String(), nil
+}
+
+// BuildPrivateURL :
+func (c *Client) BuildPrivateURL(path string, params map[string]string) (string, error) {
+	if !c.HasAuth() {
+		return "", fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	if params == nil {
+		params = map[string]string{}
+	}
+	u, err := url.Parse(c.BaseURL)
+	if err != nil {
+		return "", err
 	}
 	u.Path = path
 
@@ -87,7 +117,7 @@ func (c *Client) BuildURL(path string, params map[string]string) string {
 	}
 	u.RawQuery = q.Encode()
 
-	return u.String()
+	return u.String(), nil
 }
 
 func getSignature(params map[string]string, key string) string {

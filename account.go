@@ -66,11 +66,10 @@ type CreateOrderParam struct {
 func (s *AccountService) CreateOrder(param CreateOrderParam) (*CreateOrderResponse, error) {
 	var res CreateOrderResponse
 
-	if !s.Client.HasAuth() {
-		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
+	url, err := s.Client.BuildPrivateURL("/v2/private/order/create", nil)
+	if err != nil {
+		return nil, err
 	}
-
-	url := s.Client.BuildURL("/v2/private/order/create", nil)
 
 	jsonBody, err := json.Marshal(param)
 	if err != nil {
@@ -133,14 +132,13 @@ type ListPositionResult struct {
 func (s *AccountService) ListPosition(symbol Symbol) (*ListPositionResponse, error) {
 	var res ListPositionResponse
 
-	if !s.Client.HasAuth() {
-		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
-	}
-
 	params := map[string]string{
 		"symbol": string(symbol),
 	}
-	url := s.Client.BuildURL("/v2/private/position/list", params)
+	url, err := s.Client.BuildPrivateURL("/v2/private/position/list", params)
+	if err != nil {
+		return nil, err
+	}
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -168,11 +166,10 @@ type ListPositionsResult struct {
 func (s *AccountService) ListPositions() (*ListPositionsResponse, error) {
 	var res ListPositionsResponse
 
-	if !s.Client.HasAuth() {
-		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
+	url, err := s.Client.BuildPrivateURL("/v2/private/position/list", nil)
+	if err != nil {
+		return nil, err
 	}
-
-	url := s.Client.BuildURL("/v2/private/position/list", nil)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -231,15 +228,14 @@ type CancelOrderParam struct {
 func (s *AccountService) CancelOrder(param CancelOrderParam) (*CancelOrderResponse, error) {
 	var res CancelOrderResponse
 
-	if !s.Client.HasAuth() {
-		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
-	}
-
 	if param.OrderID == nil && param.OrderLinkID == nil {
 		return nil, fmt.Errorf("either OrderID or OrderLinkID needed")
 	}
 
-	url := s.Client.BuildURL("/v2/private/order/cancel", nil)
+	url, err := s.Client.BuildPrivateURL("/v2/private/order/cancel", nil)
+	if err != nil {
+		return nil, err
+	}
 
 	jsonBody, err := json.Marshal(param)
 	if err != nil {
