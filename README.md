@@ -25,6 +25,7 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 - `/v2/public/mark-price-kline`
 - `/v2/public/index-price-kline`
 - `/v2/public/premium-index-kline`
+- `/v2/public/open-interest`
 
 ### Account Data Endpoints
 
