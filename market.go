@@ -570,3 +570,53 @@ func (s *MarketService) OpenInterest(param OpenInterestParam) (*OpenInterestResp
 	}
 	return &res, nil
 }
+
+// BigDealResponse :
+type BigDealResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []BigDealResult `json:"result"`
+}
+
+// BigDealResult :
+type BigDealResult struct {
+	Symbol    Symbol `json:"symbol"`
+	Side      Side   `json:"side"`
+	Timestamp int    `json:"timestamp"`
+	Value     int    `json:"value"`
+}
+
+// BigDealParam :
+type BigDealParam struct {
+	Symbol Symbol `json:"symbol"`
+
+	Limit *int `json:"limit"`
+}
+
+func (p *BigDealParam) build() map[string]string {
+	result := map[string]string{
+		"symbol": string(p.Symbol),
+	}
+	if p.Limit != nil {
+		result["limit"] = strconv.Itoa(*p.Limit)
+	}
+	return result
+}
+
+// BigDeal :
+func (s *MarketService) BigDeal(param BigDealParam) (*BigDealResponse, error) {
+	var res BigDealResponse
+
+	url, err := s.Client.BuildPublicURL("/v2/public/big-deal", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
