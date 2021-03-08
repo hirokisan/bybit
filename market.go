@@ -519,3 +519,54 @@ func (s *MarketService) PremiumIndexKline(param PremiumIndexKlineParam) (*Premiu
 	}
 	return &res, nil
 }
+
+// OpenInterestResponse :
+type OpenInterestResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []OpenInterestResult `json:"result"`
+}
+
+// OpenInterestResult :
+type OpenInterestResult struct {
+	OpenInterest int    `json:"open_interest"`
+	Timestamp    int    `json:"timestamp"`
+	Symbol       Symbol `json:"symbol"`
+}
+
+// OpenInterestParam :
+type OpenInterestParam struct {
+	Symbol Symbol `json:"symbol"`
+	Period Period `json:"period"`
+
+	Limit *int `json:"limit"`
+}
+
+func (p *OpenInterestParam) build() map[string]string {
+	result := map[string]string{
+		"symbol": string(p.Symbol),
+		"period": string(p.Period),
+	}
+	if p.Limit != nil {
+		result["limit"] = strconv.Itoa(*p.Limit)
+	}
+	return result
+}
+
+// OpenInterest :
+func (s *MarketService) OpenInterest(param OpenInterestParam) (*OpenInterestResponse, error) {
+	var res OpenInterestResponse
+
+	url, err := s.Client.BuildPublicURL("/v2/public/open-interest", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
