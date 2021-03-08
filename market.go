@@ -462,3 +462,60 @@ func (s *MarketService) IndexPriceKline(param IndexPriceKlineParam) (*IndexPrice
 	}
 	return &res, nil
 }
+
+// PremiumIndexKlineResponse :
+type PremiumIndexKlineResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []PremiumIndexKlineResult `json:"result"`
+}
+
+// PremiumIndexKlineResult :
+type PremiumIndexKlineResult struct {
+	Symbol   Symbol `json:"symbol"`
+	Period   Period `json:"period"`
+	OpenTime int    `json:"open_time"`
+	Open     string `json:"open"`
+	High     string `json:"high"`
+	Low      string `json:"low"`
+	Close    string `json:"close"`
+}
+
+// PremiumIndexKlineParam :
+type PremiumIndexKlineParam struct {
+	Symbol   Symbol   `json:"symbol"`
+	Interval Interval `json:"interval"`
+	From     int      `json:"from"`
+
+	Limit *int `json:"limit"`
+}
+
+func (p *PremiumIndexKlineParam) build() map[string]string {
+	result := map[string]string{
+		"symbol":   string(p.Symbol),
+		"interval": string(p.Interval),
+		"from":     strconv.Itoa(p.From),
+	}
+	if p.Limit != nil {
+		result["limit"] = strconv.Itoa(*p.Limit)
+	}
+	return result
+}
+
+// PremiumIndexKline :
+func (s *MarketService) PremiumIndexKline(param PremiumIndexKlineParam) (*PremiumIndexKlineResponse, error) {
+	var res PremiumIndexKlineResponse
+
+	url, err := s.Client.BuildPublicURL("/v2/public/premium-index-kline", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
