@@ -620,3 +620,55 @@ func (s *MarketService) BigDeal(param BigDealParam) (*BigDealResponse, error) {
 	}
 	return &res, nil
 }
+
+// AccountRatioResponse :
+type AccountRatioResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []AccountRatioResult `json:"result"`
+}
+
+// AccountRatioResult :
+type AccountRatioResult struct {
+	Symbol    Symbol  `json:"symbol"`
+	BuyRatio  float64 `json:"buy_ratio"`
+	SellRatio float64 `json:"sell_ratio"`
+	Timestamp int     `json:"timestamp"`
+}
+
+// AccountRatioParam :
+type AccountRatioParam struct {
+	Symbol Symbol `json:"symbol"`
+	Period Period `json:"period"`
+
+	Limit *int `json:"limit"`
+}
+
+func (p *AccountRatioParam) build() map[string]string {
+	result := map[string]string{
+		"symbol": string(p.Symbol),
+		"period": string(p.Period),
+	}
+	if p.Limit != nil {
+		result["limit"] = strconv.Itoa(*p.Limit)
+	}
+	return result
+}
+
+// AccountRatio :
+func (s *MarketService) AccountRatio(param AccountRatioParam) (*AccountRatioResponse, error) {
+	var res AccountRatioResponse
+
+	url, err := s.Client.BuildPublicURL("/v2/public/account-ratio", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
