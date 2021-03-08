@@ -129,3 +129,21 @@ const (
 	// TickDirectionZeroMinusTick :
 	TickDirectionZeroMinusTick = TickDirection("ZeroMinusTick")
 )
+
+// Period :
+type Period string
+
+const (
+	// Period5min :
+	Period5min = Period("5min")
+	// Period15min :
+	Period15min = Period("15min")
+	// Period30min :
+	Period30min = Period("30min")
+	// Period1h :
+	Period1h = Period("1h")
+	// Period4h :
+	Period4h = Period("4h")
+	// Period1d :
+	Period1d = Period("1d")
+)

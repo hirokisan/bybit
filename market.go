@@ -348,3 +348,60 @@ func (s *MarketService) LiqRecords(param LiqRecordsParam) (*LiqRecordsResponse, 
 	}
 	return &res, nil
 }
+
+// MarkPriceKlineResponse :
+type MarkPriceKlineResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []MarkPriceKlineResult `json:"result"`
+}
+
+// MarkPriceKlineResult :
+type MarkPriceKlineResult struct {
+	Symbol  Symbol  `json:"symbol"`
+	Period  Period  `json:"period"`
+	StartAt int     `json:"start_at"`
+	Open    float64 `json:"open"`
+	High    float64 `json:"high"`
+	Low     float64 `json:"low"`
+	Close   float64 `json:"close"`
+}
+
+// MarkPriceKlineParam :
+type MarkPriceKlineParam struct {
+	Symbol   Symbol   `json:"symbol"`
+	Interval Interval `json:"interval"`
+	From     int      `json:"from"`
+
+	Limit *int `json:"limit"`
+}
+
+func (p *MarkPriceKlineParam) build() map[string]string {
+	result := map[string]string{
+		"symbol":   string(p.Symbol),
+		"interval": string(p.Interval),
+		"from":     strconv.Itoa(p.From),
+	}
+	if p.Limit != nil {
+		result["limit"] = strconv.Itoa(*p.Limit)
+	}
+	return result
+}
+
+// MarkPriceKline :
+func (s *MarketService) MarkPriceKline(param MarkPriceKlineParam) (*MarkPriceKlineResponse, error) {
+	var res MarkPriceKlineResponse
+
+	url, err := s.Client.BuildPublicURL("/v2/public/mark-price-kline", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
