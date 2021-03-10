@@ -84,7 +84,6 @@ func (c *Client) BuildPublicURL(path string, params map[string]string) (string, 
 	}
 	u.RawQuery = q.Encode()
 
-	fmt.Println(u.String())
 	return u.String(), nil
 }
 

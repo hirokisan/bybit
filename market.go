@@ -2,7 +2,6 @@ package bybit
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 )
@@ -20,7 +19,6 @@ type OrderBookResponse struct {
 
 // UnmarshalJSON :
 func (r *OrderBookResponse) UnmarshalJSON(data []byte) error {
-	fmt.Println(string(data))
 	return nil
 }
 
