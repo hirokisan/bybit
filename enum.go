@@ -34,6 +34,8 @@ const (
 type Side string
 
 const (
+	// SideNone : not defined officially
+	SideNone = Side("None")
 	// SideBuy :
 	SideBuy = Side("Buy")
 	// SideSell :
