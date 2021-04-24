@@ -16,18 +16,42 @@ const (
 	CoinUSDT = "USDT"
 )
 
-// Symbol :
-type Symbol string
+// SymbolInverse :
+type SymbolInverse string
 
 const (
-	// SymbolBTCUSD :
-	SymbolBTCUSD = Symbol("BTCUSD")
-	// SymbolETHUSD :
-	SymbolETHUSD = Symbol("ETHUSD")
-	// SymbolEOSUSD :
-	SymbolEOSUSD = Symbol("EOSUSD")
-	// SymbolXRPUSD :
-	SymbolXRPUSD = Symbol("XRPUSD")
+	// SymbolInverseBTCUSD :
+	SymbolInverseBTCUSD = SymbolInverse("BTCUSD")
+	// SymbolInverseETHUSD :
+	SymbolInverseETHUSD = SymbolInverse("ETHUSD")
+	// SymbolInverseEOSUSD :
+	SymbolInverseEOSUSD = SymbolInverse("EOSUSD")
+	// SymbolInverseXRPUSD :
+	SymbolInverseXRPUSD = SymbolInverse("XRPUSD")
+)
+
+// SymbolUSDT :
+type SymbolUSDT string
+
+const (
+	// SymbolUSDTBTC :
+	SymbolUSDTBTC = SymbolUSDT("BTCUSDT")
+	// SymbolUSDTETH :
+	SymbolUSDTETH = SymbolUSDT("ETHUSDT")
+	// SymbolUSDTLTC :
+	SymbolUSDTLTC = SymbolUSDT("LTCUSDT")
+	// SymbolUSDTLINK :
+	SymbolUSDTLINK = SymbolUSDT("LINKUSDT")
+	// SymbolUSDTXTZ :
+	SymbolUSDTXTZ = SymbolUSDT("XTZUSDT")
+	// SymbolUSDTBCH :
+	SymbolUSDTBCH = SymbolUSDT("BCHUSDT")
+	// SymbolUSDTADA :
+	SymbolUSDTADA = SymbolUSDT("ADAUSDT")
+	// SymbolUSDTDOT :
+	SymbolUSDTDOT = SymbolUSDT("DOTUSDT")
+	// SymbolUSDTUNI :
+	SymbolUSDTUNI = SymbolUSDT("UNIUSDT")
 )
 
 // Side :

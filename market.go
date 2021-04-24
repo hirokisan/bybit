@@ -24,14 +24,14 @@ func (r *OrderBookResponse) UnmarshalJSON(data []byte) error {
 
 // OrderBookResult :
 type OrderBookResult struct {
-	Symbol Symbol  `json:"symbol"`
-	Price  float64 `json:"price"`
-	Size   float64 `json:"size"`
-	Side   Side    `json:"side"`
+	Symbol SymbolInverse `json:"symbol"`
+	Price  float64       `json:"price"`
+	Size   float64       `json:"size"`
+	Side   Side          `json:"side"`
 }
 
 // OrderBook :
-func (s *MarketService) OrderBook(symbol Symbol) (*OrderBookResponse, error) {
+func (s *MarketService) OrderBook(symbol SymbolInverse) (*OrderBookResponse, error) {
 	var res OrderBookResponse
 
 	params := map[string]string{
@@ -55,9 +55,9 @@ func (s *MarketService) OrderBook(symbol Symbol) (*OrderBookResponse, error) {
 
 // ListKlineParam :
 type ListKlineParam struct {
-	Symbol   Symbol   `json:"symbol"`
-	Interval Interval `json:"interval"`
-	From     int      `json:"from"`
+	Symbol   SymbolInverse `json:"symbol"`
+	Interval Interval      `json:"interval"`
+	From     int           `json:"from"`
 
 	Limit *int `json:"limit"`
 }
@@ -82,15 +82,15 @@ type ListKlineResponse struct {
 
 // ListKlineResult :
 type ListKlineResult struct {
-	Symbol   Symbol `json:"symbol"`
-	Interval string `json:"interval"`
-	OpenTime int    `json:"open_time`
-	Open     string `json:"open"`
-	High     string `json:"high"`
-	Low      string `json:"low"`
-	Close    string `json:"close"`
-	Volume   string `json:"volume"`
-	Turnover string `json:"turnover"`
+	Symbol   SymbolInverse `json:"symbol"`
+	Interval string        `json:"interval"`
+	OpenTime int           `json:"open_time`
+	Open     string        `json:"open"`
+	High     string        `json:"high"`
+	Low      string        `json:"low"`
+	Close    string        `json:"close"`
+	Volume   string        `json:"volume"`
+	Turnover string        `json:"turnover"`
 }
 
 // ListKline :
@@ -120,7 +120,7 @@ type TickersResponse struct {
 
 // TickersResult :
 type TickersResult struct {
-	Symbol               Symbol        `json:"symbol"`
+	Symbol               SymbolInverse `json:"symbol"`
 	BidPrice             string        `json:"bid_price"`
 	AskPrice             string        `json:"ask_price"`
 	LastPrice            string        `json:"last_price"`
@@ -146,7 +146,7 @@ type TickersResult struct {
 }
 
 // Tickers :
-func (s *MarketService) Tickers(symbol Symbol) (*TickersResponse, error) {
+func (s *MarketService) Tickers(symbol SymbolInverse) (*TickersResponse, error) {
 	var res TickersResponse
 
 	params := map[string]string{
@@ -170,7 +170,7 @@ func (s *MarketService) Tickers(symbol Symbol) (*TickersResponse, error) {
 
 // TradingRecordsParam :
 type TradingRecordsParam struct {
-	Symbol Symbol `json:"symbol"`
+	Symbol SymbolInverse `json:"symbol"`
 
 	From  *int `json:"from"`
 	Limit *int `json:"limit"`
@@ -197,12 +197,12 @@ type TradingRecordsResponse struct {
 
 // TradingRecordsResult :
 type TradingRecordsResult struct {
-	ID     float64 `json:"id"`
-	Symbol Symbol  `json:"symbol"`
-	Price  float64 `json:"price"`
-	Qty    float64 `json:"qty"`
-	Side   Side    `json:"side"`
-	Time   string  `json:"time"`
+	ID     float64       `json:"id"`
+	Symbol SymbolInverse `json:"symbol"`
+	Price  float64       `json:"price"`
+	Qty    float64       `json:"qty"`
+	Side   Side          `json:"side"`
+	Time   string        `json:"time"`
 }
 
 // TradingRecords :
@@ -291,17 +291,17 @@ type LiqRecordsResponse struct {
 
 // LiqRecordsResult :
 type LiqRecordsResult struct {
-	ID     float64 `json:"id"`
-	Qty    float64 `json:"qty"`
-	Side   Side    `json:"side"`
-	Time   int     `json:"time"` // or float64
-	Symbol Symbol  `json:"symbol"`
-	Price  float64 `json:"price"`
+	ID     float64       `json:"id"`
+	Qty    float64       `json:"qty"`
+	Side   Side          `json:"side"`
+	Time   int           `json:"time"` // or float64
+	Symbol SymbolInverse `json:"symbol"`
+	Price  float64       `json:"price"`
 }
 
 // LiqRecordsParam :
 type LiqRecordsParam struct {
-	Symbol Symbol `json:"symbol"`
+	Symbol SymbolInverse `json:"symbol"`
 
 	From      *int `json:"from"`
 	Limit     *int `json:"limit"`
@@ -355,20 +355,20 @@ type MarkPriceKlineResponse struct {
 
 // MarkPriceKlineResult :
 type MarkPriceKlineResult struct {
-	Symbol  Symbol  `json:"symbol"`
-	Period  Period  `json:"period"`
-	StartAt int     `json:"start_at"`
-	Open    float64 `json:"open"`
-	High    float64 `json:"high"`
-	Low     float64 `json:"low"`
-	Close   float64 `json:"close"`
+	Symbol  SymbolInverse `json:"symbol"`
+	Period  Period        `json:"period"`
+	StartAt int           `json:"start_at"`
+	Open    float64       `json:"open"`
+	High    float64       `json:"high"`
+	Low     float64       `json:"low"`
+	Close   float64       `json:"close"`
 }
 
 // MarkPriceKlineParam :
 type MarkPriceKlineParam struct {
-	Symbol   Symbol   `json:"symbol"`
-	Interval Interval `json:"interval"`
-	From     int      `json:"from"`
+	Symbol   SymbolInverse `json:"symbol"`
+	Interval Interval      `json:"interval"`
+	From     int           `json:"from"`
 
 	Limit *int `json:"limit"`
 }
@@ -412,20 +412,20 @@ type IndexPriceKlineResponse struct {
 
 // IndexPriceKlineResult :
 type IndexPriceKlineResult struct {
-	Symbol   Symbol `json:"symbol"`
-	Period   Period `json:"period"`
-	OpenTime int    `json:"open_time"`
-	Open     string `json:"open"`
-	High     string `json:"high"`
-	Low      string `json:"low"`
-	Close    string `json:"close"`
+	Symbol   SymbolInverse `json:"symbol"`
+	Period   Period        `json:"period"`
+	OpenTime int           `json:"open_time"`
+	Open     string        `json:"open"`
+	High     string        `json:"high"`
+	Low      string        `json:"low"`
+	Close    string        `json:"close"`
 }
 
 // IndexPriceKlineParam :
 type IndexPriceKlineParam struct {
-	Symbol   Symbol   `json:"symbol"`
-	Interval Interval `json:"interval"`
-	From     int      `json:"from"`
+	Symbol   SymbolInverse `json:"symbol"`
+	Interval Interval      `json:"interval"`
+	From     int           `json:"from"`
 
 	Limit *int `json:"limit"`
 }
@@ -469,20 +469,20 @@ type PremiumIndexKlineResponse struct {
 
 // PremiumIndexKlineResult :
 type PremiumIndexKlineResult struct {
-	Symbol   Symbol `json:"symbol"`
-	Period   Period `json:"period"`
-	OpenTime int    `json:"open_time"`
-	Open     string `json:"open"`
-	High     string `json:"high"`
-	Low      string `json:"low"`
-	Close    string `json:"close"`
+	Symbol   SymbolInverse `json:"symbol"`
+	Period   Period        `json:"period"`
+	OpenTime int           `json:"open_time"`
+	Open     string        `json:"open"`
+	High     string        `json:"high"`
+	Low      string        `json:"low"`
+	Close    string        `json:"close"`
 }
 
 // PremiumIndexKlineParam :
 type PremiumIndexKlineParam struct {
-	Symbol   Symbol   `json:"symbol"`
-	Interval Interval `json:"interval"`
-	From     int      `json:"from"`
+	Symbol   SymbolInverse `json:"symbol"`
+	Interval Interval      `json:"interval"`
+	From     int           `json:"from"`
 
 	Limit *int `json:"limit"`
 }
@@ -526,15 +526,15 @@ type OpenInterestResponse struct {
 
 // OpenInterestResult :
 type OpenInterestResult struct {
-	OpenInterest int    `json:"open_interest"`
-	Timestamp    int    `json:"timestamp"`
-	Symbol       Symbol `json:"symbol"`
+	OpenInterest int           `json:"open_interest"`
+	Timestamp    int           `json:"timestamp"`
+	Symbol       SymbolInverse `json:"symbol"`
 }
 
 // OpenInterestParam :
 type OpenInterestParam struct {
-	Symbol Symbol `json:"symbol"`
-	Period Period `json:"period"`
+	Symbol SymbolInverse `json:"symbol"`
+	Period Period        `json:"period"`
 
 	Limit *int `json:"limit"`
 }
@@ -577,15 +577,15 @@ type BigDealResponse struct {
 
 // BigDealResult :
 type BigDealResult struct {
-	Symbol    Symbol `json:"symbol"`
-	Side      Side   `json:"side"`
-	Timestamp int    `json:"timestamp"`
-	Value     int    `json:"value"`
+	Symbol    SymbolInverse `json:"symbol"`
+	Side      Side          `json:"side"`
+	Timestamp int           `json:"timestamp"`
+	Value     int           `json:"value"`
 }
 
 // BigDealParam :
 type BigDealParam struct {
-	Symbol Symbol `json:"symbol"`
+	Symbol SymbolInverse `json:"symbol"`
 
 	Limit *int `json:"limit"`
 }
@@ -627,16 +627,16 @@ type AccountRatioResponse struct {
 
 // AccountRatioResult :
 type AccountRatioResult struct {
-	Symbol    Symbol  `json:"symbol"`
-	BuyRatio  float64 `json:"buy_ratio"`
-	SellRatio float64 `json:"sell_ratio"`
-	Timestamp int     `json:"timestamp"`
+	Symbol    SymbolInverse `json:"symbol"`
+	BuyRatio  float64       `json:"buy_ratio"`
+	SellRatio float64       `json:"sell_ratio"`
+	Timestamp int           `json:"timestamp"`
 }
 
 // AccountRatioParam :
 type AccountRatioParam struct {
-	Symbol Symbol `json:"symbol"`
-	Period Period `json:"period"`
+	Symbol SymbolInverse `json:"symbol"`
+	Period Period        `json:"period"`
 
 	Limit *int `json:"limit"`
 }
