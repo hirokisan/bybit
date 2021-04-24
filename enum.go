@@ -187,3 +187,29 @@ const (
 	// TpSlModeBustTrade :
 	TpSlModeBustTrade = TpSlMode("BustTrade")
 )
+
+// MinimumVolumeUSDT :
+func MinimumVolumeUSDT(symbol SymbolUSDT) float64 {
+	switch symbol {
+	case SymbolUSDTBTC:
+		return 0.001
+	case SymbolUSDTETH:
+		return 0.01
+	case SymbolUSDTBCH:
+		return 0.01
+	case SymbolUSDTLTC:
+		return 0.1
+	case SymbolUSDTLINK:
+		return 0.1
+	case SymbolUSDTXTZ:
+		return 0.1
+	case SymbolUSDTDOT:
+		return 0.1
+	case SymbolUSDTUNI:
+		return 0.1
+	case SymbolUSDTADA:
+		return 1
+	default:
+		panic("nothing")
+	}
+}
