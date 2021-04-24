@@ -40,6 +40,7 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 #### USDT Perpetual
 
 - `/private/linear/order/create`
+- `/private/linear/order/cancel`
 - `/private/linear/position/list`
 
 ### Wallet Data Endpoints
