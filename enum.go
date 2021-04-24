@@ -173,3 +173,17 @@ const (
 	// Period1d :
 	Period1d = Period("1d")
 )
+
+// TpSlMode :
+type TpSlMode string
+
+const (
+	// TpSlModeTrade :
+	TpSlModeTrade = TpSlMode("Trade")
+	// TpSlModeAdlTrade :
+	TpSlModeAdlTrade = TpSlMode("AdlTrade")
+	// TpSlModeFunding :
+	TpSlModeFunding = TpSlMode("Funding")
+	// TpSlModeBustTrade :
+	TpSlModeBustTrade = TpSlMode("BustTrade")
+)

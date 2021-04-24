@@ -85,3 +85,86 @@ func (s *AccountService) CreateLinearOrder(param CreateLinearOrderParam) (*Creat
 	}
 	return &res, nil
 }
+
+// ListLinearPositionResponse :
+type ListLinearPositionResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []ListLinearPositionResult `json:"result"`
+}
+
+// ListLinearPositionResult :
+type ListLinearPositionResult struct {
+	UserID              int           `json:"user_id"`
+	Symbol              SymbolInverse `json:"symbol"`
+	Side                Side          `json:"side"`
+	Size                float64       `json:"size"`
+	PositionValue       float64       `json:"position_value"`
+	EntryPrice          float64       `json:"entry_price"`
+	LiqPrice            float64       `json:"liq_price"`
+	BustPrice           float64       `json:"bust_price"`
+	Leverage            float64       `json:"leverage"`
+	AutoAddMargin       float64       `json:"auto_add_margin"`
+	IsIsolated          bool          `json:"is_isolated"`
+	PositionMargin      float64       `json:"position_margin"`
+	OccClosingFee       float64       `json:"occ_closing_fee"`
+	RealisedPnl         float64       `json:"realised_pnl"`
+	CumRealisedPnl      float64       `json:"cum_realised_pnl"`
+	FreeQty             float64       `json:"free_qty"`
+	TpSlMode            TpSlMode      `json:"tp_sl_mode"`
+	DeleverageIndicator int           `json:"deleverage_indicator"`
+	UnrealisedPnl       float64       `json:"unrealised_pnl"`
+	RiskID              int           `json:"risk_id"`
+}
+
+// ListLinearPosition :
+func (s *AccountService) ListLinearPosition(symbol SymbolUSDT) (*ListLinearPositionResponse, error) {
+	var res ListLinearPositionResponse
+
+	params := map[string]string{
+		"symbol": string(symbol),
+	}
+	url, err := s.Client.BuildPrivateURL("/private/linear/position/list", params)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+// ListLinearPositionsResponse :
+type ListLinearPositionsResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []ListLinearPositionsResult `json:"result"`
+}
+
+// ListLinearPositionsResult :
+type ListLinearPositionsResult struct {
+	IsValid                  bool `json:"is_valid"`
+	ListLinearPositionResult `json:"data,inline"`
+}
+
+// ListLinearPositions :
+func (s *AccountService) ListLinearPositions() (*ListLinearPositionsResponse, error) {
+	var res ListLinearPositionsResponse
+
+	url, err := s.Client.BuildPrivateURL("/private/linear/position/list", nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
