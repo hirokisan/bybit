@@ -35,6 +35,8 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 - `/v2/private/order/cancel`
 - `/v2/private/order/list`
 
+- `/private/linear/order/create`
+
 ### Wallet Data Endpoints
 
 - `/v2/private/wallet/balance`
