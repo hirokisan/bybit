@@ -220,3 +220,39 @@ func (s *AccountService) CancelLinearOrder(param CancelLinearOrderParam) (*Cance
 	}
 	return &res, nil
 }
+
+// SaveLinearLeverageResponse :
+type SaveLinearLeverageResponse struct {
+	CommonResponse `json:",inline"`
+}
+
+// SaveLinearLeverageParam :
+type SaveLinearLeverageParam struct {
+	Symbol       SymbolUSDT `json:"symbol"`
+	BuyLeverage  float64    `json:"buy_leverage"`
+	SellLeverage float64    `json:"sell_leverage"`
+}
+
+// SaveLinearLeverage :
+func (s *AccountService) SaveLinearLeverage(param SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error) {
+	var res SaveLinearLeverageResponse
+
+	url, err := s.Client.BuildPrivateURL("/private/linear/position/set-leverage", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	jsonBody, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for SaveLinearLeverageParam: %w", err)
+	}
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
