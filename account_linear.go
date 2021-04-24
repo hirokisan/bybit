@@ -168,3 +168,55 @@ func (s *AccountService) ListLinearPositions() (*ListLinearPositionsResponse, er
 	}
 	return &res, nil
 }
+
+// CancelLinearOrderResponse :
+type CancelLinearOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         CancelLinearOrderResult `json:"result"`
+}
+
+// CancelLinearOrderResult :
+type CancelLinearOrderResult struct {
+	CancelLinearOrder `json:",inline"`
+}
+
+// CancelLinearOrder :
+type CancelLinearOrder struct {
+	OrderID string `json:"order_id"`
+}
+
+// CancelLinearOrderParam :
+type CancelLinearOrderParam struct {
+	Symbol SymbolUSDT `json:"symbol"`
+
+	OrderID     *string `json:"order_id,omitempty"`
+	OrderLinkID *string `json:"order_link_id,omitempty"`
+}
+
+// CancelLinearOrder :
+func (s *AccountService) CancelLinearOrder(param CancelLinearOrderParam) (*CancelLinearOrderResponse, error) {
+	var res CancelLinearOrderResponse
+
+	if param.OrderID == nil && param.OrderLinkID == nil {
+		return nil, fmt.Errorf("either OrderID or OrderLinkID needed")
+	}
+
+	url, err := s.Client.BuildPrivateURL("/private/linear/order/cancel", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	jsonBody, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CancelLinearOrderParam: %w", err)
+	}
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
