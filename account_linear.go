@@ -256,3 +256,74 @@ func (s *AccountService) SaveLinearLeverage(param SaveLinearLeverageParam) (*Sav
 	}
 	return &res, nil
 }
+
+// LinearExecutionListResponse :
+type LinearExecutionListResponse struct {
+	CommonResponse `json:",inline"`
+	Result         LinearExecutionListResult `json:"result"`
+}
+
+// LinearExecutionListResult :
+type LinearExecutionListResult struct {
+	CurrentPage          int                   `json:"current_page"`
+	LinearExecutionLists []LinearExecutionList `json:"data"`
+}
+
+// LinearExecutionList :
+type LinearExecutionList struct {
+	OrderID          string     `json:"order_id"`
+	OrderLinkID      string     `json:"order_link_id"`
+	Side             Side       `json:"side"`
+	Symbol           SymbolUSDT `json:"symbol"`
+	OrderPrice       float64    `json:"order_price"`
+	OrderQty         float64    `json:"order_qty"`
+	OrderType        OrderType  `json:"order_type"`
+	FeeRate          float64    `json:"fee_rate"`
+	ExecPrice        float64    `json:"exec_price"`
+	ExecType         ExecType   `json:"exec_type"`
+	ExecQty          float64    `json:"exec_qty"`
+	ExecFee          float64    `json:"exec_fee"`
+	ExecValue        float64    `json:"exec_value"`
+	LeavesQty        float64    `json:"leaves_qty"`
+	ClosedSize       float64    `json:"closed_size"`
+	LastLiquidityInd string     `json:"last_liquidity_ind"`
+	TradeTimeMs      float64    `json:"trade_time_ms"`
+}
+
+// LinearExecutionListParam :
+type LinearExecutionListParam struct {
+	Symbol SymbolUSDT `json:"symbol"`
+
+	StartTime *int      `json:"start_time"`
+	EndTime   *int      `json:"end_time"`
+	ExecType  *ExecType `json:"exec_type"`
+	Page      *int      `json:"page"`
+	Limit     *int      `json:"limit"`
+}
+
+// LinearExecutionList :
+// NOTE(TODO) : somehow got EOF 404(path not found)
+func (s *AccountService) LinearExecutionList(param LinearExecutionListParam) (*LinearExecutionListResponse, error) {
+	var res LinearExecutionListResponse
+
+	url, err := s.Client.BuildPrivateURL("/private/linear/trade/execution/list", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	jsonBody, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for LinearExecutionListParam: %w", err)
+	}
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	fmt.Printf("%+v", resp)
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	fmt.Println(url)
+	return &res, nil
+}

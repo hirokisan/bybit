@@ -178,14 +178,24 @@ const (
 type TpSlMode string
 
 const (
-	// TpSlModeTrade :
-	TpSlModeTrade = TpSlMode("Trade")
-	// TpSlModeAdlTrade :
-	TpSlModeAdlTrade = TpSlMode("AdlTrade")
-	// TpSlModeFunding :
-	TpSlModeFunding = TpSlMode("Funding")
-	// TpSlModeBustTrade :
-	TpSlModeBustTrade = TpSlMode("BustTrade")
+	// TpSlModeFull :
+	TpSlModeFull = TpSlMode("Full")
+	// TpSlModePartial :
+	TpSlModePartial = TpSlMode("Partial")
+)
+
+// ExecType :
+type ExecType string
+
+const (
+	// ExecTypeTrade :
+	ExecTypeTrade = ExecType("Trade")
+	// ExecTypeAdlTrade :
+	ExecTypeAdlTrade = ExecType("AdlTrade")
+	// ExecTypeFunding :
+	ExecTypeFunding = ExecType("Funding")
+	// ExecTypeBustTrade :
+	ExecTypeBustTrade = ExecType("BustTrade")
 )
 
 // MinimumVolumeUSDT :
