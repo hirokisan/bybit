@@ -320,7 +320,6 @@ func (s *AccountService) LinearExecutionList(param LinearExecutionListParam) (*L
 		return nil, err
 	}
 	defer resp.Body.Close()
-	fmt.Printf("%+v", resp)
 	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
 		return nil, err
 	}
