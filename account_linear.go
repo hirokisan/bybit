@@ -323,6 +323,5 @@ func (s *AccountService) LinearExecutionList(param LinearExecutionListParam) (*L
 	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
 		return nil, err
 	}
-	fmt.Println(url)
 	return &res, nil
 }
