@@ -44,6 +44,7 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 - `/private/linear/order/cancel`
 - `/private/linear/position/list`
 - `/private/linear/position/set-leverage`
+- `/private/linear/trade/execution/list`
 
 ### Wallet Data Endpoints
 
