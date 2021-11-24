@@ -1,0 +1,31 @@
+{
+  "ret_code": 0,
+  "ret_msg": "OK",
+  "ext_code": "",
+  "ext_info": "",
+  "time_now": "1637760676.850655",
+  "rate_limit_status": 96,
+  "rate_limit_reset_ms": 1637760676848,
+  "rate_limit": 100,
+  "result": {
+    "user_id": 146940,
+    "order_id": "18012901-a39c-4ff6-9971-81a5de9903d3",
+    "symbol": "BTCUSD",
+    "side": "Buy",
+    "order_type": "Limit",
+    "price": 28383.5,
+    "qty": 1,
+    "time_in_force": "GoodTillCancel",
+    "order_status": "New",
+    "last_exec_time": 1637760676.6064692,
+    "last_exec_price": 0,
+    "leaves_qty": 1,
+    "cum_exec_qty": 0,
+    "cum_exec_value": 0,
+    "cum_exec_fee": 0,
+    "reject_reason": "EC_NoError",
+    "order_link_id": "",
+    "created_at": "2021-11-24T13:31:16.606Z",
+    "updated_at": "2021-11-24T13:31:16.85Z"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "ret_code": 0,
+  "ret_msg": "OK",
+  "ext_code": "",
+  "ext_info": "",
+  "time_now": "1637761904.594659",
+  "rate_limit_status": 0,
+  "rate_limit_reset_ms": 0,
+  "rate_limit": 0,
+  "result": [
+    {
+      "id": 47695545,
+      "symbol": "BTCUSD",
+      "price": 56310.5,
+      "qty": 17,
+      "side": "Buy",
+      "time": "2021-11-24T13:51:42.747Z"
+    },
+    {
+      "id": 47695544,
+      "symbol": "BTCUSD",
+      "price": 56314.5,
+      "qty": 100,
+      "side": "Buy",
+      "time": "2021-11-24T13:51:22.743Z"
+    },
+    {
+      "id": 47695543,
+      "symbol": "BTCUSD",
+      "price": 56312,
+      "qty": 1100,
+      "side": "Sell",
+      "time": "2021-11-24T13:51:22.562Z"
+    },
+    {
+      "id": 47695542,
+      "symbol": "BTCUSD",
+      "price": 56344,
+      "qty": 9,
+      "side": "Buy",
+      "time": "2021-11-24T13:51:11.738Z"
+    },
+    {
+      "id": 47695541,
+      "symbol": "BTCUSD",
+      "price": 56324,
+      "qty": 49,
+      "side": "Sell",
+      "time": "2021-11-24T13:51:03.555Z"
+    },
+    {
+      "id": 47695540,
+      "symbol": "BTCUSD",
+      "price": 56344.5,
+      "qty": 68,
+      "side": "Buy",
+      "time": "2021-11-24T13:50:59.737Z"
+    },
+    {
+      "id": 47695539,
+      "symbol": "BTCUSD",
+      "price": 56306,
+      "qty": 38,
+      "side": "Buy",
+      "time": "2021-11-24T13:50:48.715Z"
+    },
+    {
+      "id": 47695538,
+      "symbol": "BTCUSD",
+      "price": 56252,
+      "qty": 4,
+      "side": "Buy",
+      "time": "2021-11-24T13:50:39.547Z"
+    },
+    {
+      "id": 47695537,
+      "symbol": "BTCUSD",
+      "price": 56259.5,
+      "qty": 19,
+      "side": "Buy",
+      "time": "2021-11-24T13:50:36.714Z"
+    },
+    {
+      "id": 47695536,
+      "symbol": "BTCUSD",
+      "price": 56259.5,
+      "qty": 1200,
+      "side": "Buy",
+      "time": "2021-11-24T13:50:34.706Z"
+    }
+  ]
+}

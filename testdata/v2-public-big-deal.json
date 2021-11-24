@@ -1,0 +1,48 @@
+{
+  "ret_code": 0,
+  "ret_msg": "OK",
+  "ext_code": "",
+  "ext_info": "",
+  "time_now": "1637763362.409921",
+  "rate_limit_status": 0,
+  "rate_limit_reset_ms": 0,
+  "rate_limit": 0,
+  "result": [
+    {
+      "symbol": "BTCUSD",
+      "side": "Sell",
+      "timestamp": 1637761982,
+      "value": 1360102
+    },
+    {
+      "symbol": "BTCUSD",
+      "side": "Sell",
+      "timestamp": 1637761635,
+      "value": 657441
+    },
+    {
+      "symbol": "BTCUSD",
+      "side": "Buy",
+      "timestamp": 1637742786,
+      "value": 7437258
+    },
+    {
+      "symbol": "BTCUSD",
+      "side": "Buy",
+      "timestamp": 1637736283,
+      "value": 767376
+    },
+    {
+      "symbol": "BTCUSD",
+      "side": "Sell",
+      "timestamp": 1637677502,
+      "value": 961866
+    },
+    {
+      "symbol": "BTCUSD",
+      "side": "Sell",
+      "timestamp": 1637677502,
+      "value": 523219
+    }
+  ]
+}

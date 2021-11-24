@@ -1,0 +1,120 @@
+{
+  "ret_code": 0,
+  "ret_msg": "OK",
+  "ext_code": "",
+  "ext_info": "",
+  "time_now": "1637763282.128791",
+  "rate_limit_status": 0,
+  "rate_limit_reset_ms": 0,
+  "rate_limit": 0,
+  "result": [
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637683200,
+      "open": "0.003167",
+      "high": "0.003167",
+      "low": "-0.000772",
+      "close": "0.000075"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637690400,
+      "open": "0.000075",
+      "high": "0.000887",
+      "low": "0.00005",
+      "close": "0.00005"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637697600,
+      "open": "0.00005",
+      "high": "0.000839",
+      "low": "-0.004763",
+      "close": "0.000025"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637704800,
+      "open": "0.000025",
+      "high": "0.00079",
+      "low": "0",
+      "close": "0.000127"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637712000,
+      "open": "0.000127",
+      "high": "0.001055",
+      "low": "-0.000134",
+      "close": "0.000075"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637719200,
+      "open": "0.000075",
+      "high": "0.006519",
+      "low": "-0.000182",
+      "close": "0.00005"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637726400,
+      "open": "0.00005",
+      "high": "0.001571",
+      "low": "-0.000157",
+      "close": "0.000203"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637733600,
+      "open": "0.000203",
+      "high": "0.001756",
+      "low": "-0.000352",
+      "close": "0"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637740800,
+      "open": "0",
+      "high": "0.001032",
+      "low": "-0.000032",
+      "close": "0.000122"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637748000,
+      "open": "0.000122",
+      "high": "0.000635",
+      "low": "-0.000059",
+      "close": "0.000186"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637755200,
+      "open": "0.000186",
+      "high": "0.000849",
+      "low": "-0.000273",
+      "close": "0.000025"
+    },
+    {
+      "symbol": "BTCUSD",
+      "period": "120",
+      "open_time": 1637762400,
+      "open": "0.000025",
+      "high": "0.000305",
+      "low": "-0.000195",
+      "close": "0.000022"
+    }
+  ]
+}

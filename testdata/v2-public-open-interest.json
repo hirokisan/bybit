@@ -1,0 +1,262 @@
+{
+  "ret_code": 0,
+  "ret_msg": "OK",
+  "ext_code": "",
+  "ext_info": "",
+  "time_now": "1637763326.150643",
+  "rate_limit_status": 0,
+  "rate_limit_reset_ms": 0,
+  "rate_limit": 0,
+  "result": [
+    {
+      "open_interest": 374403795,
+      "timestamp": 1637762400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 375703730,
+      "timestamp": 1637758800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 375821368,
+      "timestamp": 1637755200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 375502922,
+      "timestamp": 1637751600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 375804752,
+      "timestamp": 1637748000,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 380893996,
+      "timestamp": 1637744400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 390175642,
+      "timestamp": 1637740800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 390775307,
+      "timestamp": 1637737200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 384218697,
+      "timestamp": 1637733600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 383669741,
+      "timestamp": 1637730000,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 382927234,
+      "timestamp": 1637726400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 382210222,
+      "timestamp": 1637722800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 383507472,
+      "timestamp": 1637719200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 385549294,
+      "timestamp": 1637715600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 384986711,
+      "timestamp": 1637712000,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 381915258,
+      "timestamp": 1637708400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 381870481,
+      "timestamp": 1637704800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 381640461,
+      "timestamp": 1637701200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 376352164,
+      "timestamp": 1637697600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 384530568,
+      "timestamp": 1637694000,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 383783887,
+      "timestamp": 1637690400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 381915144,
+      "timestamp": 1637686800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 383117946,
+      "timestamp": 1637683200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 382457244,
+      "timestamp": 1637679600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 374731038,
+      "timestamp": 1637676000,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 375657339,
+      "timestamp": 1637672400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 369081283,
+      "timestamp": 1637668800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 376049376,
+      "timestamp": 1637665200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 378383436,
+      "timestamp": 1637661600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 378176673,
+      "timestamp": 1637658000,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 378502737,
+      "timestamp": 1637654400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 377169737,
+      "timestamp": 1637650800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 381278506,
+      "timestamp": 1637647200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 378514488,
+      "timestamp": 1637643600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 384336992,
+      "timestamp": 1637640000,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 382303971,
+      "timestamp": 1637636400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 383252227,
+      "timestamp": 1637632800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 379176357,
+      "timestamp": 1637629200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 380907355,
+      "timestamp": 1637625600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 380932213,
+      "timestamp": 1637622000,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 382213970,
+      "timestamp": 1637618400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 372633059,
+      "timestamp": 1637614800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 374603492,
+      "timestamp": 1637611200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 388638114,
+      "timestamp": 1637607600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 397407789,
+      "timestamp": 1637604000,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 394822205,
+      "timestamp": 1637600400,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 395206782,
+      "timestamp": 1637596800,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 393858666,
+      "timestamp": 1637593200,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 395345833,
+      "timestamp": 1637589600,
+      "symbol": "BTCUSD"
+    },
+    {
+      "open_interest": 392656767,
+      "timestamp": 1637586000,
+      "symbol": "BTCUSD"
+    }
+  ]
+}
