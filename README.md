@@ -59,6 +59,8 @@ $ export BYBIT_TEST_KEY=xxx
 $ export BYBIT_TEST_SECRET=xxx
 ```
 
+Also be sure to prepare assets on your testnet wallet
+
 Test with updating golden file
 ```console
 $ make test BYBIT_TEST_UPDATED=true
