@@ -1,21 +1,11 @@
-{
-  "ret_code": 0,
-  "ret_msg": "OK",
-  "ext_code": "",
-  "ext_info": "",
-  "time_now": "1637763230.063033",
-  "rate_limit_status": 0,
-  "rate_limit_reset_ms": 0,
-  "rate_limit": 0,
-  "result": [
-    {
-      "symbol": "BTCUSD",
-      "period": "D",
-      "open_time": 1637712000,
-      "open": "57570.81",
-      "high": "57741.4",
-      "low": "56026.68",
-      "close": "56059.52"
-    }
-  ]
-}
+[
+  {
+    "symbol": "BTCUSD",
+    "period": "D",
+    "open_time": 1637884800,
+    "open": "58961.63",
+    "high": "59193.9",
+    "low": "53546.82",
+    "close": "54712.74"
+  }
+]

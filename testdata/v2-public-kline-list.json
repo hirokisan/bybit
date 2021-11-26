@@ -1,144 +1,134 @@
-{
-  "ret_code": 0,
-  "ret_msg": "OK",
-  "ext_code": "",
-  "ext_info": "",
-  "time_now": "1637761541.867905",
-  "rate_limit_status": 0,
-  "rate_limit_reset_ms": 0,
-  "rate_limit": 0,
-  "result": [
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "56719",
-      "high": "57650",
-      "low": "56509.5",
-      "close": "57086",
-      "volume": "22075957",
-      "turnover": "386.53396695"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "57086",
-      "high": "57895.5",
-      "low": "57076",
-      "close": "57292",
-      "volume": "9402221",
-      "turnover": "163.67765194"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "57292",
-      "high": "57780",
-      "low": "57192",
-      "close": "57780",
-      "volume": "13566543",
-      "turnover": "235.82066705"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "57780",
-      "high": "57860.5",
-      "low": "57133",
-      "close": "57757",
-      "volume": "8136714",
-      "turnover": "141.45774501"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "57757",
-      "high": "57890.5",
-      "low": "57499.5",
-      "close": "57600.5",
-      "volume": "5580530",
-      "turnover": "96.71665183"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "57600.5",
-      "high": "57789.5",
-      "low": "56999.5",
-      "close": "57077.5",
-      "volume": "4478044",
-      "turnover": "77.99751173"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "57077.5",
-      "high": "57132.5",
-      "low": "56250",
-      "close": "56442.5",
-      "volume": "4571604",
-      "turnover": "80.7521602"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "56442.5",
-      "high": "56794",
-      "low": "56410",
-      "close": "56643",
-      "volume": "20653712",
-      "turnover": "364.98618243"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "56643",
-      "high": "57092.5",
-      "low": "56129.5",
-      "close": "56555.5",
-      "volume": "17583819",
-      "turnover": "310.77918718"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "56555.5",
-      "high": "57533.5",
-      "low": "56441.5",
-      "close": "56729.5",
-      "volume": "29130594",
-      "turnover": "510.74677511"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "56729.5",
-      "high": "56916",
-      "low": "56424.5",
-      "close": "56672.5",
-      "volume": "12016741",
-      "turnover": "211.98197161"
-    },
-    {
-      "symbol": "BTCUSD",
-      "interval": "120",
-      "OpenTime": 0,
-      "open": "56672.5",
-      "high": "57278",
-      "low": "56330",
-      "close": "56370.5",
-      "volume": "37994119",
-      "turnover": "670.11588057"
-    }
-  ]
-}
+[
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "59114.5",
+    "high": "59500",
+    "low": "58828",
+    "close": "59234",
+    "volume": "25929146",
+    "turnover": "437.8733737"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "59234",
+    "high": "59277",
+    "low": "58757",
+    "close": "58961.5",
+    "volume": "13118776",
+    "turnover": "222.36814358"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "58961.5",
+    "high": "59286",
+    "low": "58812",
+    "close": "58905.5",
+    "volume": "20664957",
+    "turnover": "350.34007741"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "58905.5",
+    "high": "59250",
+    "low": "58610",
+    "close": "58990",
+    "volume": "7956306",
+    "turnover": "135.06916769"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "58990",
+    "high": "59300",
+    "low": "58275.5",
+    "close": "58680.5",
+    "volume": "10038982",
+    "turnover": "170.45416924"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "58680.5",
+    "high": "58701",
+    "low": "57916",
+    "close": "57992.5",
+    "volume": "10830797",
+    "turnover": "186.04499585"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "57992.5",
+    "high": "58333.5",
+    "low": "57410",
+    "close": "57889.5",
+    "volume": "17011383",
+    "turnover": "294.22151668"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "57889.5",
+    "high": "58076.5",
+    "low": "56740",
+    "close": "57038.5",
+    "volume": "25012981",
+    "turnover": "434.94867992"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "57038.5",
+    "high": "57038.5",
+    "low": "54398.5",
+    "close": "54881",
+    "volume": "85309539",
+    "turnover": "1548.46769556"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "54881",
+    "high": "55013",
+    "low": "53523.5",
+    "close": "53754.5",
+    "volume": "54275262",
+    "turnover": "999.46546662"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "53754.5",
+    "high": "54676.5",
+    "low": "53320",
+    "close": "54554",
+    "volume": "41601271",
+    "turnover": "769.87116364"
+  },
+  {
+    "symbol": "BTCUSD",
+    "interval": "120",
+    "OpenTime": 0,
+    "open": "54554",
+    "high": "54811.5",
+    "low": "54342.5",
+    "close": "54752",
+    "volume": "6138504",
+    "turnover": "112.32906328"
+  }
+]
