@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"os"
 	"sort"
 	"strconv"
 	"time"
@@ -41,6 +42,22 @@ func NewTestClient() *Client {
 
 // WithAuth :
 func (c *Client) WithAuth(key string, secret string) *Client {
+	c.Key = key
+	c.Secret = secret
+
+	return c
+}
+
+// WithAuthFromEnv :
+func (c *Client) WithAuthFromEnv() *Client {
+	key, ok := os.LookupEnv("BYBIT_TEST_KEY")
+	if !ok {
+		panic("need BYBIT_TEST_KEY as environment variable")
+	}
+	secret, ok := os.LookupEnv("BYBIT_TEST_SECRET")
+	if !ok {
+		panic("need BYBIT_TEST_SECRET as environment variable")
+	}
 	c.Key = key
 	c.Secret = secret
 
