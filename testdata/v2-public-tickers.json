@@ -1,37 +1,27 @@
-{
-  "ret_code": 0,
-  "ret_msg": "OK",
-  "ext_code": "",
-  "ext_info": "",
-  "time_now": "1637761472.319418",
-  "rate_limit_status": 0,
-  "rate_limit_reset_ms": 0,
-  "rate_limit": 0,
-  "result": [
-    {
-      "symbol": "BTCUSDT",
-      "bid_price": "56405.5",
-      "ask_price": "56406",
-      "last_price": "56408.00",
-      "last_tick_direction": "ZeroPlusTick",
-      "prev_price_24h": "56867.50",
-      "price_24h_pcnt": "-0.00808",
-      "high_price_24h": "57934.00",
-      "low_price_24h": "56233.50",
-      "prev_price_1h": "56603.50",
-      "price_1h_pcnt": "-0.003453",
-      "mark_price": "56344.76",
-      "index_price": "56343.27",
-      "open_interest": 12352.31,
-      "open_value": "0.00",
-      "total_turnover": "47935880172.33",
-      "turnover_24h": "398175329.92",
-      "total_volume": 7102775.17,
-      "volume_24h": 6982.94,
-      "funding_rate": "0.000174",
-      "predicted_funding_rate": "0.000212",
-      "next_funding_time": "2021-11-24T16:00:00Z",
-      "countdown_hour": 3
-    }
-  ]
-}
+[
+  {
+    "symbol": "BTCUSDT",
+    "bid_price": "54538",
+    "ask_price": "54567.5",
+    "last_price": "54538.00",
+    "last_tick_direction": "MinusTick",
+    "prev_price_24h": "58726.00",
+    "price_24h_pcnt": "-0.071314",
+    "high_price_24h": "59500.00",
+    "low_price_24h": "53623.00",
+    "prev_price_1h": "54389.50",
+    "price_1h_pcnt": "0.00273",
+    "mark_price": "54493.19",
+    "index_price": "54486.49",
+    "open_interest": 12181.74,
+    "open_value": "0.00",
+    "total_turnover": "49014503761.11",
+    "turnover_24h": "660461858.10",
+    "total_volume": 7121727.02,
+    "volume_24h": 11676.58,
+    "funding_rate": "0.000812",
+    "predicted_funding_rate": "0.000364",
+    "next_funding_time": "2021-11-26T16:00:00Z",
+    "countdown_hour": 2
+  }
+]

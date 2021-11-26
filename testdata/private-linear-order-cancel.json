@@ -1,13 +1,3 @@
 {
-  "ret_code": 20001,
-  "ret_msg": "order not exists or too late to cancel",
-  "ext_code": "",
-  "ext_info": "",
-  "time_now": "1637761039.505969",
-  "rate_limit_status": 98,
-  "rate_limit_reset_ms": 1637761039503,
-  "rate_limit": 100,
-  "result": {
-    "order_id": ""
-  }
+  "order_id": "0f6c5ab1-7605-4925-bb66-a1b3f37c4c05"
 }

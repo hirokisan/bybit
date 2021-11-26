@@ -1,72 +1,62 @@
-{
-  "ret_code": 0,
-  "ret_msg": "OK",
-  "ext_code": "",
-  "ext_info": "",
-  "time_now": "1637763406.700022",
-  "rate_limit_status": 0,
-  "rate_limit_reset_ms": 0,
-  "rate_limit": 0,
-  "result": [
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5491,
-      "sell_ratio": 0.4509,
-      "timestamp": 1637762400
-    },
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5492,
-      "sell_ratio": 0.4508,
-      "timestamp": 1637758800
-    },
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5491,
-      "sell_ratio": 0.4509,
-      "timestamp": 1637755200
-    },
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5495,
-      "sell_ratio": 0.4505,
-      "timestamp": 1637751600
-    },
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5486,
-      "sell_ratio": 0.4514,
-      "timestamp": 1637748000
-    },
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5489,
-      "sell_ratio": 0.4511,
-      "timestamp": 1637744400
-    },
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5485,
-      "sell_ratio": 0.4515,
-      "timestamp": 1637740800
-    },
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5493,
-      "sell_ratio": 0.4507,
-      "timestamp": 1637737200
-    },
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5493,
-      "sell_ratio": 0.4507,
-      "timestamp": 1637733600
-    },
-    {
-      "symbol": "BTCUSD",
-      "buy_ratio": 0.5492,
-      "sell_ratio": 0.4508,
-      "timestamp": 1637730000
-    }
-  ]
-}
+[
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.5327,
+    "sell_ratio": 0.4673,
+    "timestamp": 1637935200
+  },
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.5323,
+    "sell_ratio": 0.4677,
+    "timestamp": 1637931600
+  },
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.5328,
+    "sell_ratio": 0.4672,
+    "timestamp": 1637928000
+  },
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.5328,
+    "sell_ratio": 0.4672,
+    "timestamp": 1637924400
+  },
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.533,
+    "sell_ratio": 0.467,
+    "timestamp": 1637920800
+  },
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.5328,
+    "sell_ratio": 0.4672,
+    "timestamp": 1637917200
+  },
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.5332,
+    "sell_ratio": 0.4668,
+    "timestamp": 1637913600
+  },
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.5338,
+    "sell_ratio": 0.4662,
+    "timestamp": 1637910000
+  },
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.5488,
+    "sell_ratio": 0.4512,
+    "timestamp": 1637906400
+  },
+  {
+    "symbol": "BTCUSD",
+    "buy_ratio": 0.5485,
+    "sell_ratio": 0.4515,
+    "timestamp": 1637902800
+  }
+]
