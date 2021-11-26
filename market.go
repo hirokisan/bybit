@@ -17,15 +17,10 @@ type OrderBookResponse struct {
 	Result         []OrderBookResult `json:"result"`
 }
 
-// UnmarshalJSON :
-func (r *OrderBookResponse) UnmarshalJSON(data []byte) error {
-	return nil
-}
-
 // OrderBookResult :
 type OrderBookResult struct {
 	Symbol SymbolInverse `json:"symbol"`
-	Price  float64       `json:"price"`
+	Price  string        `json:"price"`
 	Size   float64       `json:"size"`
 	Side   Side          `json:"side"`
 }
