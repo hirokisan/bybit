@@ -1,0 +1,23 @@
+name: request-check-test
+
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.17'
+      - name: check-go-version
+        run: go version
+      - name: go-test
+        run: make test
+        env:
+          BYBIT_TEST_KEY: ${{ secrets.BYBIT_TEST_KEY }}
+          BYBIT_TEST_SECRET: ${{ secrets.BYBIT_TEST_SECRET }}
