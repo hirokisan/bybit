@@ -1,7 +1,6 @@
 name: request-check-test
 
 on:
-  push:
   schedule:
     - cron:  '0 0 * * *'
 
