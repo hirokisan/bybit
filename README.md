@@ -28,6 +28,10 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 - `/v2/public/big-deal`
 - `/v2/public/account-ratio`
 
+#### Spot
+
+- `/spot/v1/symbols`
+
 ### Account Data Endpoints
 
 #### Inverse Perpetual
