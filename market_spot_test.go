@@ -20,3 +20,20 @@ func TestSpotSymbols(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSpotQuoteDepth(t *testing.T) {
+	client := NewTestClient()
+	res, err := client.Market().SpotQuoteDepth(SpotQuoteDepthParam{
+		Symbol: SymbolSpotBTCUSDT,
+	})
+	t.Log(res)
+	{
+		require.NoError(t, err)
+		require.Equal(t, "", res.RetMsg)
+	}
+	{
+		goldenFilename := "./testdata/spot-quote-v1-depth.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
