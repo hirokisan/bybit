@@ -54,6 +54,46 @@ const (
 	SymbolUSDTUNI = SymbolUSDT("UNIUSDT")
 )
 
+// SymbolSpot :
+type SymbolSpot string
+
+const (
+	// SymbolSpotBTCUSDT :
+	SymbolSpotBTCUSDT = SymbolSpot("BTCUSDT")
+	// SymbolSpotETHUSDT :
+	SymbolSpotETHUSDT = SymbolSpot("ETHUSDT")
+	// SymbolSpotEOSUSDT :
+	SymbolSpotEOSUSDT = SymbolSpot("EOSUSDT")
+	// SymbolSpotXRPUSDT :
+	SymbolSpotXRPUSDT = SymbolSpot("XRPUSDT")
+	// SymbolSpotUNIUSDT :
+	SymbolSpotUNIUSDT = SymbolSpot("UNIUSDT")
+	// SymbolSpotBTCETH :
+	SymbolSpotBTCETH = SymbolSpot("BTCETH")
+	// SymbolSpotDOGEXRP :
+	SymbolSpotDOGEXRP = SymbolSpot("DOGEXRP")
+	// SymbolSpotXLMUSDT :
+	SymbolSpotXLMUSDT = SymbolSpot("XLMUSDT")
+	// SymbolSpotLTCUSDT :
+	SymbolSpotLTCUSDT = SymbolSpot("LTCUSDT")
+	// SymbolSpotXRPBTC :
+	SymbolSpotXRPBTC = SymbolSpot("XRPBTC")
+	// SymbolSpotDOGEUSDT :
+	SymbolSpotDOGEUSDT = SymbolSpot("DOGEUSDT")
+	// SymbolSpotBITUSDT :
+	SymbolSpotBITUSDT = SymbolSpot("BITUSDT")
+	// SymbolSpotMANAUSDT :
+	SymbolSpotMANAUSDT = SymbolSpot("MANAUSDT")
+	// SymbolSpotAXSUSDT :
+	SymbolSpotAXSUSDT = SymbolSpot("AXSUSDT")
+	// SymbolSpotDYDXUSDT :
+	SymbolSpotDYDXUSDT = SymbolSpot("DYDXUSDT")
+	// SymbolSpotPMTEST5BTC :
+	SymbolSpotPMTEST5BTC = SymbolSpot("PMTEST5BTC")
+	// SymbolSpotGENEUSDT :
+	SymbolSpotGENEUSDT = SymbolSpot("GENEUSDT")
+)
+
 // Side :
 type Side string
 
