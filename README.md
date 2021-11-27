@@ -31,6 +31,7 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 #### Spot
 
 - `/spot/v1/symbols`
+- `/spot/quote/v1/depth`
 
 ### Account Data Endpoints
 
