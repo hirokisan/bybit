@@ -3,6 +3,7 @@ package bybit
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 )
@@ -78,19 +79,33 @@ type SpotQuoteDepthResult struct {
 	Asks SpotQuoteDepthBidsAsks `json:"asks"`
 }
 
+// SpotQuoteDepthBidsAsks :
+type SpotQuoteDepthBidsAsks []SpotQuoteDepthBidAsk
+
 // UnmarshalJSON :
 func (r *SpotQuoteDepthBidsAsks) UnmarshalJSON(data []byte) error {
 	parsedData := [][]string{}
 	if err := json.Unmarshal(data, &parsedData); err != nil {
 		return err
 	}
-	r.Price = parsedData[0][0]
-	r.Quantity = parsedData[0][1]
+	items := SpotQuoteDepthBidsAsks{}
+	for _, item := range parsedData {
+		item := item
+		fmt.Println("item", item)
+		if len(item) != 2 {
+			return errors.New("so far len(item) must be 2, please check it on documents")
+		}
+		items = append(items, SpotQuoteDepthBidAsk{
+			Price:    item[0],
+			Quantity: item[1],
+		})
+	}
+	*r = items
 	return nil
 }
 
-// SpotQuoteDepthBidsAsks :
-type SpotQuoteDepthBidsAsks struct {
+// SpotQuoteDepthBidAsk :
+type SpotQuoteDepthBidAsk struct {
 	Price    string
 	Quantity string
 }
