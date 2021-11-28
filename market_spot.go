@@ -112,3 +112,56 @@ func (s *MarketService) SpotQuoteDepth(param SpotQuoteDepthParam) (*SpotQuoteDep
 	}
 	return &res, nil
 }
+
+// SpotQuoteDepthMergedParam :
+type SpotQuoteDepthMergedParam struct {
+	Symbol SymbolSpot `json:"symbol"`
+
+	Scale *int `json:"scale"`
+	Limit *int `json:"limit"`
+}
+
+func (p *SpotQuoteDepthMergedParam) build() map[string]string {
+	result := map[string]string{
+		"symbol": string(p.Symbol),
+	}
+	if p.Scale != nil {
+		result["scale"] = strconv.Itoa(*p.Scale)
+	}
+	if p.Limit != nil {
+		result["limit"] = strconv.Itoa(*p.Limit)
+	}
+	return result
+}
+
+// SpotQuoteDepthMergedResponse :
+type SpotQuoteDepthMergedResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotQuoteDepthMergedResult `json:"result"`
+}
+
+// SpotQuoteDepthMergedResult :
+type SpotQuoteDepthMergedResult struct {
+	Time int                    `json:"time"`
+	Bids SpotQuoteDepthBidsAsks `json:"bids"`
+	Asks SpotQuoteDepthBidsAsks `json:"asks"`
+}
+
+// SpotQuoteDepthMerged :
+func (s *MarketService) SpotQuoteDepthMerged(param SpotQuoteDepthMergedParam) (*SpotQuoteDepthMergedResponse, error) {
+	var res SpotQuoteDepthMergedResponse
+
+	url, err := s.Client.BuildPublicURL("/spot/quote/v1/depth/merged", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
