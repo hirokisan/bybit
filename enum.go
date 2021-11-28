@@ -54,6 +54,46 @@ const (
 	SymbolUSDTUNI = SymbolUSDT("UNIUSDT")
 )
 
+// SymbolSpot :
+type SymbolSpot string
+
+const (
+	// SymbolSpotBTCUSDT :
+	SymbolSpotBTCUSDT = SymbolSpot("BTCUSDT")
+	// SymbolSpotETHUSDT :
+	SymbolSpotETHUSDT = SymbolSpot("ETHUSDT")
+	// SymbolSpotEOSUSDT :
+	SymbolSpotEOSUSDT = SymbolSpot("EOSUSDT")
+	// SymbolSpotXRPUSDT :
+	SymbolSpotXRPUSDT = SymbolSpot("XRPUSDT")
+	// SymbolSpotUNIUSDT :
+	SymbolSpotUNIUSDT = SymbolSpot("UNIUSDT")
+	// SymbolSpotBTCETH :
+	SymbolSpotBTCETH = SymbolSpot("BTCETH")
+	// SymbolSpotDOGEXRP :
+	SymbolSpotDOGEXRP = SymbolSpot("DOGEXRP")
+	// SymbolSpotXLMUSDT :
+	SymbolSpotXLMUSDT = SymbolSpot("XLMUSDT")
+	// SymbolSpotLTCUSDT :
+	SymbolSpotLTCUSDT = SymbolSpot("LTCUSDT")
+	// SymbolSpotXRPBTC :
+	SymbolSpotXRPBTC = SymbolSpot("XRPBTC")
+	// SymbolSpotDOGEUSDT :
+	SymbolSpotDOGEUSDT = SymbolSpot("DOGEUSDT")
+	// SymbolSpotBITUSDT :
+	SymbolSpotBITUSDT = SymbolSpot("BITUSDT")
+	// SymbolSpotMANAUSDT :
+	SymbolSpotMANAUSDT = SymbolSpot("MANAUSDT")
+	// SymbolSpotAXSUSDT :
+	SymbolSpotAXSUSDT = SymbolSpot("AXSUSDT")
+	// SymbolSpotDYDXUSDT :
+	SymbolSpotDYDXUSDT = SymbolSpot("DYDXUSDT")
+	// SymbolSpotPMTEST5BTC :
+	SymbolSpotPMTEST5BTC = SymbolSpot("PMTEST5BTC")
+	// SymbolSpotGENEUSDT :
+	SymbolSpotGENEUSDT = SymbolSpot("GENEUSDT")
+)
+
 // Side :
 type Side string
 
@@ -140,6 +180,38 @@ const (
 	IntervalW = Interval("W")
 	// IntervalM :
 	IntervalM = Interval("M")
+)
+
+// SpotInterval :
+type SpotInterval string
+
+const (
+	// SpotInterval1m :
+	SpotInterval1m = Interval("1m")
+	// SpotInterval3m :
+	SpotInterval3m = Interval("3m")
+	// SpotInterval5m :
+	SpotInterval5m = Interval("5m")
+	// SpotInterval15m :
+	SpotInterval15m = Interval("15m")
+	// SpotInterval30m :
+	SpotInterval30m = Interval("30m")
+	// SpotInterval1h :
+	SpotInterval1h = Interval("1h")
+	// SpotInterval2h :
+	SpotInterval2h = Interval("2h")
+	// SpotInterval4h :
+	SpotInterval4h = Interval("4h")
+	// SpotInterval6h :
+	SpotInterval6h = Interval("6h")
+	// SpotInterval12h :
+	SpotInterval12h = Interval("12h")
+	// SpotInterval1d :
+	SpotInterval1d = Interval("1d")
+	// SpotInterval1w :
+	SpotInterval1w = Interval("1w")
+	// SpotInterval1M :
+	SpotInterval1M = Interval("1M")
 )
 
 // TickDirection :

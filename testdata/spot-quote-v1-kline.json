@@ -1,0 +1,2252 @@
+[
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625184000000,
+      "Open": "36087",
+      "High": "36087",
+      "Low": "3050",
+      "Close": "34999",
+      "Volume": "50.669414",
+      "EndTime": 0,
+      "QuoteAssetVolume": "500560.494221",
+      "Trades": 127,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625270400000,
+      "Open": "34999",
+      "High": "35000",
+      "Low": "3500",
+      "Close": "35000",
+      "Volume": "10.182344",
+      "EndTime": 0,
+      "QuoteAssetVolume": "269617.3805",
+      "Trades": 18,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625356800000,
+      "Open": "35000",
+      "High": "35555",
+      "Low": "3444",
+      "Close": "35555",
+      "Volume": "9.518032",
+      "EndTime": 0,
+      "QuoteAssetVolume": "117228.530518",
+      "Trades": 25,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625443200000,
+      "Open": "35555",
+      "High": "35555",
+      "Low": "3500",
+      "Close": "3500",
+      "Volume": "7.823778",
+      "EndTime": 0,
+      "QuoteAssetVolume": "63994.615546",
+      "Trades": 72,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625529600000,
+      "Open": "3500",
+      "High": "35550",
+      "Low": "3500",
+      "Close": "35436.94",
+      "Volume": "13.572985",
+      "EndTime": 0,
+      "QuoteAssetVolume": "261944.46024251",
+      "Trades": 87,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625616000000,
+      "Open": "35436.94",
+      "High": "35436.94",
+      "Low": "27000",
+      "Close": "34661.32",
+      "Volume": "4.852591",
+      "EndTime": 0,
+      "QuoteAssetVolume": "156833.04050376",
+      "Trades": 71,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625702400000,
+      "Open": "34661.32",
+      "High": "35436.94",
+      "Low": "3520",
+      "Close": "33436.93",
+      "Volume": "39.398661",
+      "EndTime": 0,
+      "QuoteAssetVolume": "391508.99365212",
+      "Trades": 128,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625788800000,
+      "Open": "33436.93",
+      "High": "35000",
+      "Low": "6222",
+      "Close": "33474.57",
+      "Volume": "14.858661",
+      "EndTime": 0,
+      "QuoteAssetVolume": "347383.06693282",
+      "Trades": 103,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625875200000,
+      "Open": "33474.57",
+      "High": "34800",
+      "Low": "20000",
+      "Close": "33398.5",
+      "Volume": "327.683035",
+      "EndTime": 0,
+      "QuoteAssetVolume": "11069040.8987008",
+      "Trades": 751,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1625961600000,
+      "Open": "33398.5",
+      "High": "34000",
+      "Low": "33322.5",
+      "Close": "33888",
+      "Volume": "14.841447",
+      "EndTime": 0,
+      "QuoteAssetVolume": "500815.835957",
+      "Trades": 30,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626048000000,
+      "Open": "33888",
+      "High": "34466.5",
+      "Low": "32765.27",
+      "Close": "33206.38",
+      "Volume": "183.971754",
+      "EndTime": 0,
+      "QuoteAssetVolume": "6144199.08408586",
+      "Trades": 430,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626134400000,
+      "Open": "33206.38",
+      "High": "69696.69",
+      "Low": "7000",
+      "Close": "32728.76",
+      "Volume": "547.988342",
+      "EndTime": 0,
+      "QuoteAssetVolume": "18132353.52175679",
+      "Trades": 6968,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626220800000,
+      "Open": "32728.76",
+      "High": "33080.76",
+      "Low": "31634.47",
+      "Close": "32824.56",
+      "Volume": "37.527753",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1202903.00892822",
+      "Trades": 4874,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626307200000,
+      "Open": "32824.56",
+      "High": "33178.99",
+      "Low": "31129.62",
+      "Close": "31831.11",
+      "Volume": "15.391236",
+      "EndTime": 0,
+      "QuoteAssetVolume": "498369.59460434",
+      "Trades": 4713,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626393600000,
+      "Open": "31831.11",
+      "High": "32244.17",
+      "Low": "31041.52",
+      "Close": "31413.88",
+      "Volume": "9.863447",
+      "EndTime": 0,
+      "QuoteAssetVolume": "311545.31356621",
+      "Trades": 4979,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626480000000,
+      "Open": "31413.88",
+      "High": "31948.66",
+      "Low": "31172.6",
+      "Close": "31536.63",
+      "Volume": "11.296023",
+      "EndTime": 0,
+      "QuoteAssetVolume": "355445.2229561",
+      "Trades": 5095,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626566400000,
+      "Open": "31536.63",
+      "High": "32418.3",
+      "Low": "31106.48",
+      "Close": "31800.55",
+      "Volume": "16.049817",
+      "EndTime": 0,
+      "QuoteAssetVolume": "506822.13968508",
+      "Trades": 5121,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626652800000,
+      "Open": "31800.55",
+      "High": "31876.89",
+      "Low": "30522.24",
+      "Close": "30810.36",
+      "Volume": "40.184541",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1255431.99962701",
+      "Trades": 4856,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626739200000,
+      "Open": "30810.36",
+      "High": "31056.51",
+      "Low": "29336.19",
+      "Close": "29759.76",
+      "Volume": "43.845771",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1302553.79283802",
+      "Trades": 4677,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626825600000,
+      "Open": "29759.76",
+      "High": "32668.35",
+      "Low": "29504.59",
+      "Close": "32144.1",
+      "Volume": "57.507488",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1790174.10311737",
+      "Trades": 3871,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626912000000,
+      "Open": "32144.1",
+      "High": "32568.35",
+      "Low": "31705.62",
+      "Close": "32319.25",
+      "Volume": "11.42164",
+      "EndTime": 0,
+      "QuoteAssetVolume": "365610.22432263",
+      "Trades": 3980,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1626998400000,
+      "Open": "32319.25",
+      "High": "33607.29",
+      "Low": "32010.87",
+      "Close": "33607.29",
+      "Volume": "16.986629",
+      "EndTime": 0,
+      "QuoteAssetVolume": "550343.38741344",
+      "Trades": 4010,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627084800000,
+      "Open": "33607.29",
+      "High": "34497.37",
+      "Low": "33382.8",
+      "Close": "34225.64",
+      "Volume": "11.307602",
+      "EndTime": 0,
+      "QuoteAssetVolume": "383231.2780477",
+      "Trades": 3963,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627171200000,
+      "Open": "34225.64",
+      "High": "35376.53",
+      "Low": "33836.38",
+      "Close": "35348.21",
+      "Volume": "22.365409",
+      "EndTime": 0,
+      "QuoteAssetVolume": "772371.18668033",
+      "Trades": 3842,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627257600000,
+      "Open": "35348.21",
+      "High": "40526.1",
+      "Low": "35234.53",
+      "Close": "37245.52",
+      "Volume": "53.5867",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2061419.20290336",
+      "Trades": 3567,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627344000000,
+      "Open": "37245.52",
+      "High": "39503.6",
+      "Low": "36397.9",
+      "Close": "39503.6",
+      "Volume": "24.509701",
+      "EndTime": 0,
+      "QuoteAssetVolume": "915433.03760466",
+      "Trades": 3947,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627430400000,
+      "Open": "39503.6",
+      "High": "40840.48",
+      "Low": "38800",
+      "Close": "40023.31",
+      "Volume": "16.200103",
+      "EndTime": 0,
+      "QuoteAssetVolume": "646012.60091879",
+      "Trades": 3894,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627516800000,
+      "Open": "40023.31",
+      "High": "40616.68",
+      "Low": "39299.23",
+      "Close": "39974.37",
+      "Volume": "33.90572",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1354918.59651297",
+      "Trades": 4495,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627603200000,
+      "Open": "39974.37",
+      "High": "42214.88",
+      "Low": "38331.22",
+      "Close": "42131.79",
+      "Volume": "26.477264",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1040737.56237876",
+      "Trades": 4691,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627689600000,
+      "Open": "42131.79",
+      "High": "42364.71",
+      "Low": "41020.2",
+      "Close": "41382.89",
+      "Volume": "48.848036",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2025143.36603679",
+      "Trades": 4812,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627776000000,
+      "Open": "41382.89",
+      "High": "42587.05",
+      "Low": "39535.62",
+      "Close": "39863.02",
+      "Volume": "15.400322",
+      "EndTime": 0,
+      "QuoteAssetVolume": "643444.24859868",
+      "Trades": 4626,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627862400000,
+      "Open": "39863.02",
+      "High": "40472.25",
+      "Low": "38681.32",
+      "Close": "39138.21",
+      "Volume": "16.029472",
+      "EndTime": 0,
+      "QuoteAssetVolume": "635128.51826268",
+      "Trades": 5003,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1627948800000,
+      "Open": "39138.21",
+      "High": "39768.89",
+      "Low": "37728",
+      "Close": "38118.28",
+      "Volume": "46.547292",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1788223.26716139",
+      "Trades": 2284,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628035200000,
+      "Open": "38118.28",
+      "High": "39957.99",
+      "Low": "37556.92",
+      "Close": "39742.65",
+      "Volume": "28.602304",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1112537.11646013",
+      "Trades": 1742,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628121600000,
+      "Open": "39742.65",
+      "High": "41356.05",
+      "Low": "37415.69",
+      "Close": "40867.51",
+      "Volume": "12.703317",
+      "EndTime": 0,
+      "QuoteAssetVolume": "506216.07611517",
+      "Trades": 1679,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628208000000,
+      "Open": "40867.51",
+      "High": "43306.12",
+      "Low": "39919.03",
+      "Close": "42820.96",
+      "Volume": "16.897823",
+      "EndTime": 0,
+      "QuoteAssetVolume": "709015.59486641",
+      "Trades": 1690,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628294400000,
+      "Open": "42820.96",
+      "High": "44680.26",
+      "Low": "42625.84",
+      "Close": "44548.24",
+      "Volume": "120.045657",
+      "EndTime": 0,
+      "QuoteAssetVolume": "5227046.48977306",
+      "Trades": 1883,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628380800000,
+      "Open": "44548.24",
+      "High": "45287.04",
+      "Low": "43280.79",
+      "Close": "43803.07",
+      "Volume": "43.400041",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1931620.1994577",
+      "Trades": 1695,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628467200000,
+      "Open": "43803.07",
+      "High": "46433.46",
+      "Low": "42829.15",
+      "Close": "46303.08",
+      "Volume": "86.249188",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3821959.8692928",
+      "Trades": 1799,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628553600000,
+      "Open": "46303.08",
+      "High": "46632.04",
+      "Low": "44679.89",
+      "Close": "45603.53",
+      "Volume": "30.721171",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1403477.10581354",
+      "Trades": 1627,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628640000000,
+      "Open": "45603.53",
+      "High": "46725.66",
+      "Low": "45351.99",
+      "Close": "45582.04",
+      "Volume": "214.839817",
+      "EndTime": 0,
+      "QuoteAssetVolume": "9894620.24893421",
+      "Trades": 2061,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628726400000,
+      "Open": "45582.04",
+      "High": "46192.5",
+      "Low": "43824.02",
+      "Close": "44410.65",
+      "Volume": "29.068294",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1309006.65067069",
+      "Trades": 1669,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628812800000,
+      "Open": "44410.65",
+      "High": "47851.49",
+      "Low": "44239.51",
+      "Close": "47778.71",
+      "Volume": "25.437812",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1171868.87986843",
+      "Trades": 1520,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628899200000,
+      "Open": "47778.71",
+      "High": "48123.06",
+      "Low": "46176.45",
+      "Close": "47049.97",
+      "Volume": "24.282458",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1145879.20593946",
+      "Trades": 1644,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1628985600000,
+      "Open": "47049.97",
+      "High": "47340.72",
+      "Low": "45620.75",
+      "Close": "47031.12",
+      "Volume": "13.962313",
+      "EndTime": 0,
+      "QuoteAssetVolume": "647392.90903274",
+      "Trades": 1631,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629072000000,
+      "Open": "47031.12",
+      "High": "47982.22",
+      "Low": "45648.7",
+      "Close": "45891.62",
+      "Volume": "63.148358",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2935174.0312722",
+      "Trades": 1756,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629158400000,
+      "Open": "45891.62",
+      "High": "47102.61",
+      "Low": "44500",
+      "Close": "44710.16",
+      "Volume": "72.485934",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3329063.83364533",
+      "Trades": 1769,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629244800000,
+      "Open": "44710.16",
+      "High": "45961.49",
+      "Low": "44300",
+      "Close": "44769.03",
+      "Volume": "31.633129",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1430620.99573471",
+      "Trades": 1682,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629331200000,
+      "Open": "44769.03",
+      "High": "47031.59",
+      "Low": "43978.01",
+      "Close": "46775.61",
+      "Volume": "12.024101",
+      "EndTime": 0,
+      "QuoteAssetVolume": "539169.65342634",
+      "Trades": 1642,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629417600000,
+      "Open": "46775.61",
+      "High": "49367.7",
+      "Low": "46670.94",
+      "Close": "49356.55",
+      "Volume": "27.334015",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1296181.31618642",
+      "Trades": 1709,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629504000000,
+      "Open": "49356.55",
+      "High": "49713.84",
+      "Low": "48274.02",
+      "Close": "48882.02",
+      "Volume": "18.06291",
+      "EndTime": 0,
+      "QuoteAssetVolume": "883585.5125949",
+      "Trades": 1737,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629590400000,
+      "Open": "48882.02",
+      "High": "49461.31",
+      "Low": "48070.47",
+      "Close": "49298.43",
+      "Volume": "14.050576",
+      "EndTime": 0,
+      "QuoteAssetVolume": "690785.45949363",
+      "Trades": 1511,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629676800000,
+      "Open": "49298.43",
+      "High": "50685.2",
+      "Low": "49058.29",
+      "Close": "49549.41",
+      "Volume": "58.104099",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2907657.59784926",
+      "Trades": 1829,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629763200000,
+      "Open": "49549.41",
+      "High": "49867.29",
+      "Low": "47623.65",
+      "Close": "47659.68",
+      "Volume": "110.81602",
+      "EndTime": 0,
+      "QuoteAssetVolume": "5421061.54591181",
+      "Trades": 1770,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629849600000,
+      "Open": "47659.68",
+      "High": "49223.98",
+      "Low": "47133.99",
+      "Close": "48893.9",
+      "Volume": "67.160151",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3190509.54455268",
+      "Trades": 1630,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1629936000000,
+      "Open": "48893.9",
+      "High": "49322.52",
+      "Low": "46340.29",
+      "Close": "46782.66",
+      "Volume": "59.463173",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2828720.99049491",
+      "Trades": 28520,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630022400000,
+      "Open": "46782.66",
+      "High": "49164.76",
+      "Low": "46336.95",
+      "Close": "49099.86",
+      "Volume": "96.767519",
+      "EndTime": 0,
+      "QuoteAssetVolume": "4589432.72163615",
+      "Trades": 2122,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630108800000,
+      "Open": "49099.86",
+      "High": "49331.58",
+      "Low": "48426.89",
+      "Close": "48916.47",
+      "Volume": "31.894529",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1555619.63292128",
+      "Trades": 2017,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630195200000,
+      "Open": "48916.47",
+      "High": "49184.23",
+      "Low": "47922.8",
+      "Close": "48779.67",
+      "Volume": "65.509288",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3189257.54631386",
+      "Trades": 33520,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630281600000,
+      "Open": "48779.67",
+      "High": "48791.73",
+      "Low": "47412.93",
+      "Close": "48172.29",
+      "Volume": "86.548364",
+      "EndTime": 0,
+      "QuoteAssetVolume": "4175208.64104522",
+      "Trades": 30279,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630368000000,
+      "Open": "48172.29",
+      "High": "48172.29",
+      "Low": "46622.46",
+      "Close": "47107.33",
+      "Volume": "60.982429",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2874730.7481318",
+      "Trades": 2640,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630454400000,
+      "Open": "47107.33",
+      "High": "47744.17",
+      "Low": "46758.63",
+      "Close": "47744.17",
+      "Volume": "46.151066",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2175667.38180313",
+      "Trades": 19605,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630540800000,
+      "Open": "47744.17",
+      "High": "49933.12",
+      "Low": "47744.17",
+      "Close": "49285.47",
+      "Volume": "103.973792",
+      "EndTime": 0,
+      "QuoteAssetVolume": "5147761.56025344",
+      "Trades": 5645,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630627200000,
+      "Open": "49285.47",
+      "High": "49700",
+      "Low": "48687.55",
+      "Close": "49500",
+      "Volume": "108.100674",
+      "EndTime": 0,
+      "QuoteAssetVolume": "5307976.06390675",
+      "Trades": 17057,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630713600000,
+      "Open": "49500",
+      "High": "49700",
+      "Low": "49463.71",
+      "Close": "49700",
+      "Volume": "33.09726",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1642620.45433607",
+      "Trades": 1410,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630800000000,
+      "Open": "49700",
+      "High": "49700",
+      "Low": "49454.66",
+      "Close": "49700",
+      "Volume": "12.526742",
+      "EndTime": 0,
+      "QuoteAssetVolume": "622096.92854177",
+      "Trades": 1190,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630886400000,
+      "Open": "49700",
+      "High": "49900",
+      "Low": "41000",
+      "Close": "45767.68",
+      "Volume": "37.16141",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1767227.58365085",
+      "Trades": 298,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1630972800000,
+      "Open": "45767.68",
+      "High": "50000",
+      "Low": "38198.99",
+      "Close": "46760.78",
+      "Volume": "86.601909",
+      "EndTime": 0,
+      "QuoteAssetVolume": "4029417.06502945",
+      "Trades": 1343,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631059200000,
+      "Open": "46760.78",
+      "High": "47289.68",
+      "Low": "37000",
+      "Close": "46095.52",
+      "Volume": "95.292385",
+      "EndTime": 0,
+      "QuoteAssetVolume": "4389503.10214951",
+      "Trades": 2648,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631145600000,
+      "Open": "46095.52",
+      "High": "46600",
+      "Low": "45559.22",
+      "Close": "46409.13",
+      "Volume": "51.725794",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2378942.84343522",
+      "Trades": 1663,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631232000000,
+      "Open": "46409.13",
+      "High": "46600",
+      "Low": "44152.03",
+      "Close": "44809.64",
+      "Volume": "60.551133",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2752235.03474516",
+      "Trades": 2902,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631318400000,
+      "Open": "44809.64",
+      "High": "45772.81",
+      "Low": "44717.99",
+      "Close": "45058.78",
+      "Volume": "11.233936",
+      "EndTime": 0,
+      "QuoteAssetVolume": "508387.02953644",
+      "Trades": 1730,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631404800000,
+      "Open": "45058.78",
+      "High": "46410",
+      "Low": "44691.59",
+      "Close": "46075.39",
+      "Volume": "16.828496",
+      "EndTime": 0,
+      "QuoteAssetVolume": "765534.07407747",
+      "Trades": 1933,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631491200000,
+      "Open": "46075.39",
+      "High": "46600",
+      "Low": "43431.45",
+      "Close": "44733.2",
+      "Volume": "21.973258",
+      "EndTime": 0,
+      "QuoteAssetVolume": "984587.11904022",
+      "Trades": 2086,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631577600000,
+      "Open": "44733.2",
+      "High": "46011.95",
+      "Low": "40000",
+      "Close": "45815.98",
+      "Volume": "28.621571",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1286883.52194455",
+      "Trades": 1430,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631664000000,
+      "Open": "45815.98",
+      "High": "45815.98",
+      "Low": "33000",
+      "Close": "33000",
+      "Volume": "20.421855",
+      "EndTime": 0,
+      "QuoteAssetVolume": "761018.96846971",
+      "Trades": 184,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631750400000,
+      "Open": "33000",
+      "High": "45999.99",
+      "Low": "6800",
+      "Close": "6800",
+      "Volume": "31.458525",
+      "EndTime": 0,
+      "QuoteAssetVolume": "984438.76558007",
+      "Trades": 210,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631836800000,
+      "Open": "6800",
+      "High": "45888",
+      "Low": "6800",
+      "Close": "6800",
+      "Volume": "17.430921",
+      "EndTime": 0,
+      "QuoteAssetVolume": "378684.82270356",
+      "Trades": 140,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1631923200000,
+      "Open": "6800",
+      "High": "48735.71",
+      "Low": "1000",
+      "Close": "47850.95",
+      "Volume": "83.385509",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1564304.59442676",
+      "Trades": 5600,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632009600000,
+      "Open": "47850.95",
+      "High": "48214.37",
+      "Low": "1000",
+      "Close": "47271.99",
+      "Volume": "58.724053",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2725777.4062953",
+      "Trades": 3937,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632096000000,
+      "Open": "47271.99",
+      "High": "47306.5",
+      "Low": "42343.61",
+      "Close": "42772.46",
+      "Volume": "30.206735",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1345983.93596117",
+      "Trades": 1652,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632182400000,
+      "Open": "42772.46",
+      "High": "43605.99",
+      "Low": "39711.83",
+      "Close": "40735.87",
+      "Volume": "21.024662",
+      "EndTime": 0,
+      "QuoteAssetVolume": "876798.35226043",
+      "Trades": 1984,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632268800000,
+      "Open": "40735.87",
+      "High": "43905",
+      "Low": "40536.33",
+      "Close": "43574.65",
+      "Volume": "34.927475",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1486030.05001952",
+      "Trades": 2345,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632355200000,
+      "Open": "43574.65",
+      "High": "44000",
+      "Low": "40000",
+      "Close": "40800",
+      "Volume": "35.607144",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1547360.23982272",
+      "Trades": 1364,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632441600000,
+      "Open": "40800",
+      "High": "44107.86",
+      "Low": "39000",
+      "Close": "42734.65",
+      "Volume": "23.239614",
+      "EndTime": 0,
+      "QuoteAssetVolume": "981225.38845072",
+      "Trades": 1094,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632528000000,
+      "Open": "42734.65",
+      "High": "42978.47",
+      "Low": "41685.52",
+      "Close": "42755.63",
+      "Volume": "25.803973",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1096320.49445065",
+      "Trades": 2158,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632614400000,
+      "Open": "42755.63",
+      "High": "43310.05",
+      "Low": "40742.28",
+      "Close": "43148.47",
+      "Volume": "14.616671",
+      "EndTime": 0,
+      "QuoteAssetVolume": "625310.02271996",
+      "Trades": 1365,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632700800000,
+      "Open": "43148.47",
+      "High": "43148.47",
+      "Low": "18000",
+      "Close": "42294.13",
+      "Volume": "15.602413",
+      "EndTime": 0,
+      "QuoteAssetVolume": "625017.84816916",
+      "Trades": 737,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632787200000,
+      "Open": "42294.13",
+      "High": "42731.3",
+      "Low": "40886.3",
+      "Close": "41030.26",
+      "Volume": "26.416165",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1100172.59043903",
+      "Trades": 2110,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632873600000,
+      "Open": "41030.26",
+      "High": "42631.29",
+      "Low": "40793.73",
+      "Close": "41588",
+      "Volume": "44.989936",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1874139.94554944",
+      "Trades": 2371,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1632960000000,
+      "Open": "41588",
+      "High": "43148.47",
+      "Low": "41345.33",
+      "Close": "43148.2",
+      "Volume": "17.544012",
+      "EndTime": 0,
+      "QuoteAssetVolume": "753536.40950308",
+      "Trades": 1586,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633046400000,
+      "Open": "43148.2",
+      "High": "46500",
+      "Low": "41000",
+      "Close": "46500",
+      "Volume": "40.942481",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1804496.0953505",
+      "Trades": 198,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633132800000,
+      "Open": "46500",
+      "High": "46500",
+      "Low": "43148.46",
+      "Close": "43148.46",
+      "Volume": "11.541746",
+      "EndTime": 0,
+      "QuoteAssetVolume": "503266.89842377",
+      "Trades": 49,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633219200000,
+      "Open": "43148.46",
+      "High": "47000",
+      "Low": "43148.46",
+      "Close": "46999.99",
+      "Volume": "15.308248",
+      "EndTime": 0,
+      "QuoteAssetVolume": "677511.09327331",
+      "Trades": 45,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633305600000,
+      "Open": "46999.99",
+      "High": "47000",
+      "Low": "43148.46",
+      "Close": "43148.46",
+      "Volume": "10.290284",
+      "EndTime": 0,
+      "QuoteAssetVolume": "462852.54492132",
+      "Trades": 110,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633392000000,
+      "Open": "43148.46",
+      "High": "47902.3",
+      "Low": "18000",
+      "Close": "18000",
+      "Volume": "15.463778",
+      "EndTime": 0,
+      "QuoteAssetVolume": "456853.69121078",
+      "Trades": 101,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633478400000,
+      "Open": "18000",
+      "High": "47900",
+      "Low": "18000",
+      "Close": "47872.43",
+      "Volume": "12.774616",
+      "EndTime": 0,
+      "QuoteAssetVolume": "476618.92155436",
+      "Trades": 100,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633564800000,
+      "Open": "47872.43",
+      "High": "48000",
+      "Low": "27000",
+      "Close": "48000",
+      "Volume": "24.497172",
+      "EndTime": 0,
+      "QuoteAssetVolume": "986544.60454971",
+      "Trades": 122,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633651200000,
+      "Open": "48000",
+      "High": "48000",
+      "Low": "20000",
+      "Close": "20250",
+      "Volume": "35.023671",
+      "EndTime": 0,
+      "QuoteAssetVolume": "962681.18087157",
+      "Trades": 143,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633737600000,
+      "Open": "20250",
+      "High": "48000",
+      "Low": "20150",
+      "Close": "46972.6",
+      "Volume": "9.29663",
+      "EndTime": 0,
+      "QuoteAssetVolume": "279293.06518596",
+      "Trades": 58,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633824000000,
+      "Open": "46972.6",
+      "High": "48000",
+      "Low": "20350",
+      "Close": "48000",
+      "Volume": "12.045637",
+      "EndTime": 0,
+      "QuoteAssetVolume": "416304.61327329",
+      "Trades": 65,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633910400000,
+      "Open": "48000",
+      "High": "50000",
+      "Low": "900",
+      "Close": "21500",
+      "Volume": "73.705151",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2090981.0221292",
+      "Trades": 377,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1633996800000,
+      "Open": "21500",
+      "High": "57450.23",
+      "Low": "21500",
+      "Close": "56101.5",
+      "Volume": "38.505495",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1951697.8432399",
+      "Trades": 745,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634083200000,
+      "Open": "56101.5",
+      "High": "57707.26",
+      "Low": "54304.46",
+      "Close": "57366.89",
+      "Volume": "31.845942",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1776826.03627435",
+      "Trades": 2041,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634169600000,
+      "Open": "57366.89",
+      "High": "58479.8",
+      "Low": "56859",
+      "Close": "57315.65",
+      "Volume": "27.414321",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1579129.48596411",
+      "Trades": 1828,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634256000000,
+      "Open": "57315.65",
+      "High": "62609.03",
+      "Low": "56858.89",
+      "Close": "61681.89",
+      "Volume": "35.469553",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2154107.87976727",
+      "Trades": 2190,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634342400000,
+      "Open": "61681.89",
+      "High": "62495.51",
+      "Low": "60162.41",
+      "Close": "60937.55",
+      "Volume": "17.721126",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1086955.60572192",
+      "Trades": 1825,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634428800000,
+      "Open": "60937.55",
+      "High": "61709.25",
+      "Low": "59065.02",
+      "Close": "61532.84",
+      "Volume": "11.632757",
+      "EndTime": 0,
+      "QuoteAssetVolume": "708379.63465626",
+      "Trades": 1520,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634515200000,
+      "Open": "61532.84",
+      "High": "62641.81",
+      "Low": "55000",
+      "Close": "62093.54",
+      "Volume": "30.284331",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1857907.72619593",
+      "Trades": 2012,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634601600000,
+      "Open": "62093.54",
+      "High": "64480.5",
+      "Low": "61582.17",
+      "Close": "64300.29",
+      "Volume": "10.347936",
+      "EndTime": 0,
+      "QuoteAssetVolume": "654875.49106468",
+      "Trades": 1613,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634688000000,
+      "Open": "64300.29",
+      "High": "66966.19",
+      "Low": "63295.06",
+      "Close": "66020",
+      "Volume": "135.996724",
+      "EndTime": 0,
+      "QuoteAssetVolume": "8805115.63210012",
+      "Trades": 4698,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634774400000,
+      "Open": "66020",
+      "High": "66777.22",
+      "Low": "62169.28",
+      "Close": "62192.01",
+      "Volume": "49.070818",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3181851.7734179",
+      "Trades": 2154,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634860800000,
+      "Open": "62192.01",
+      "High": "63823.87",
+      "Low": "60130.89",
+      "Close": "60756.55",
+      "Volume": "20.723045",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1295126.56023091",
+      "Trades": 1381,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1634947200000,
+      "Open": "60756.55",
+      "High": "61630.49",
+      "Low": "60123.78",
+      "Close": "61347.21",
+      "Volume": "9.235682",
+      "EndTime": 0,
+      "QuoteAssetVolume": "562007.01442639",
+      "Trades": 1417,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635033600000,
+      "Open": "61347.21",
+      "High": "61597.62",
+      "Low": "59582.73",
+      "Close": "60921.67",
+      "Volume": "32.144907",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1948360.19611396",
+      "Trades": 1775,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635120000000,
+      "Open": "60921.67",
+      "High": "63643.81",
+      "Low": "60694.51",
+      "Close": "63106.18",
+      "Volume": "22.125437",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1381805.36200186",
+      "Trades": 1503,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635206400000,
+      "Open": "63106.18",
+      "High": "63305.04",
+      "Low": "59978.17",
+      "Close": "60379.33",
+      "Volume": "22.488229",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1396660.0873254",
+      "Trades": 2148,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635292800000,
+      "Open": "60379.33",
+      "High": "61483.68",
+      "Low": "58000",
+      "Close": "58352.99",
+      "Volume": "31.146847",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1854678.13492789",
+      "Trades": 1687,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635379200000,
+      "Open": "58352.99",
+      "High": "62049.83",
+      "Low": "55011",
+      "Close": "60576.85",
+      "Volume": "65.943045",
+      "EndTime": 0,
+      "QuoteAssetVolume": "4000306.55124152",
+      "Trades": 1613,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635465600000,
+      "Open": "60576.85",
+      "High": "63000",
+      "Low": "60213.51",
+      "Close": "62298.5",
+      "Volume": "29.842915",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1820433.48154094",
+      "Trades": 1773,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635552000000,
+      "Open": "62298.5",
+      "High": "62369.48",
+      "Low": "56680",
+      "Close": "61804.1",
+      "Volume": "55.2218",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3364834.3895692",
+      "Trades": 1580,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635638400000,
+      "Open": "61804.1",
+      "High": "62747.77",
+      "Low": "60022.59",
+      "Close": "61354.54",
+      "Volume": "19.708346",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1200230.91472987",
+      "Trades": 1443,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635724800000,
+      "Open": "61354.54",
+      "High": "62490",
+      "Low": "56680",
+      "Close": "60926.63",
+      "Volume": "44.831323",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2730064.57021514",
+      "Trades": 1649,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635811200000,
+      "Open": "60926.63",
+      "High": "64143.15",
+      "Low": "60519.59",
+      "Close": "63093.33",
+      "Volume": "20.75786",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1298165.65642645",
+      "Trades": 2371,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635897600000,
+      "Open": "63093.33",
+      "High": "63515.27",
+      "Low": "61256.61",
+      "Close": "62862.25",
+      "Volume": "55.98026636",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3515750.386954732",
+      "Trades": 2707,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1635984000000,
+      "Open": "62862.25",
+      "High": "66830.36",
+      "Low": "60603.83",
+      "Close": "61368.5",
+      "Volume": "43.44051297",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2702666.7506334868",
+      "Trades": 5313,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636070400000,
+      "Open": "61368.5",
+      "High": "62410.88",
+      "Low": "60456.9",
+      "Close": "60974.92",
+      "Volume": "47.72111388",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2924756.7633290193",
+      "Trades": 8458,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636156800000,
+      "Open": "60974.92",
+      "High": "61783.6",
+      "Low": "59060",
+      "Close": "61422.99",
+      "Volume": "115.33581489",
+      "EndTime": 0,
+      "QuoteAssetVolume": "6986192.6907367897",
+      "Trades": 8062,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636243200000,
+      "Open": "61422.99",
+      "High": "62434.78",
+      "Low": "60925",
+      "Close": "62270",
+      "Volume": "20.00812992",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1234357.6708549995",
+      "Trades": 7439,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636329600000,
+      "Open": "62270",
+      "High": "66830.36",
+      "Low": "62269.77",
+      "Close": "66830.36",
+      "Volume": "84.57013042",
+      "EndTime": 0,
+      "QuoteAssetVolume": "5554873.9477894788",
+      "Trades": 8138,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636416000000,
+      "Open": "66830.36",
+      "High": "68551.34",
+      "Low": "65622",
+      "Close": "66871.67",
+      "Volume": "42.79697604",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2893410.939643581144",
+      "Trades": 7607,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636502400000,
+      "Open": "66871.67",
+      "High": "67542",
+      "Low": "62966.65",
+      "Close": "64913.76",
+      "Volume": "68.97586274",
+      "EndTime": 0,
+      "QuoteAssetVolume": "4597221.3016658105",
+      "Trades": 6126,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636588800000,
+      "Open": "64913.76",
+      "High": "65710.12",
+      "Low": "63971.3",
+      "Close": "64815.21",
+      "Volume": "100.69133956",
+      "EndTime": 0,
+      "QuoteAssetVolume": "6528475.8619663818",
+      "Trades": 9884,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636675200000,
+      "Open": "64815.21",
+      "High": "65717.71",
+      "Low": "62264.27",
+      "Close": "64174.72",
+      "Volume": "131.05872318",
+      "EndTime": 0,
+      "QuoteAssetVolume": "8398716.8440845757",
+      "Trades": 11334,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636761600000,
+      "Open": "64174.72",
+      "High": "64884.84",
+      "Low": "63193",
+      "Close": "64412.21",
+      "Volume": "32.47750255",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2089303.8424240256",
+      "Trades": 7548,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636848000000,
+      "Open": "64412.21",
+      "High": "65113",
+      "Low": "63417.86",
+      "Close": "64538.83",
+      "Volume": "8.0422972",
+      "EndTime": 0,
+      "QuoteAssetVolume": "518606.966041153759",
+      "Trades": 7002,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1636934400000,
+      "Open": "64538.83",
+      "High": "66202.67",
+      "Low": "63485.05",
+      "Close": "63600",
+      "Volume": "58.17903989",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3797843.250118038789",
+      "Trades": 7887,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637020800000,
+      "Open": "63600",
+      "High": "63628.09",
+      "Low": "58740",
+      "Close": "60110.16",
+      "Volume": "107.79116244",
+      "EndTime": 0,
+      "QuoteAssetVolume": "6527448.452563377315",
+      "Trades": 8911,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637107200000,
+      "Open": "60110.16",
+      "High": "60829.94",
+      "Low": "58469",
+      "Close": "60390.5",
+      "Volume": "55.25413362",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3295057.970215692709",
+      "Trades": 8706,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637193600000,
+      "Open": "60390.5",
+      "High": "60910.72",
+      "Low": "56340",
+      "Close": "56931.17",
+      "Volume": "36.42565901",
+      "EndTime": 0,
+      "QuoteAssetVolume": "2145827.500229750875",
+      "Trades": 9882,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637280000000,
+      "Open": "56931.17",
+      "High": "58312.93",
+      "Low": "55650",
+      "Close": "58084.91",
+      "Volume": "24.94859603",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1425592.935929230022",
+      "Trades": 7894,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637366400000,
+      "Open": "58084.91",
+      "High": "59819.75",
+      "Low": "56702.26",
+      "Close": "59682.72",
+      "Volume": "63.58586261",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3712977.206632571099",
+      "Trades": 9000,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637452800000,
+      "Open": "59682.72",
+      "High": "60030",
+      "Low": "58425.48",
+      "Close": "58710",
+      "Volume": "17.76183908",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1047950.847835387634",
+      "Trades": 8161,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637539200000,
+      "Open": "58710",
+      "High": "59160",
+      "Low": "55600",
+      "Close": "56300",
+      "Volume": "27.09864761",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1551154.102404302032",
+      "Trades": 8967,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637625600000,
+      "Open": "56300",
+      "High": "57868.92",
+      "Low": "299",
+      "Close": "57510",
+      "Volume": "291.38035274",
+      "EndTime": 0,
+      "QuoteAssetVolume": "14857538.235263818706",
+      "Trades": 9867,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637712000000,
+      "Open": "57510",
+      "High": "57698.35",
+      "Low": "56000.18",
+      "Close": "57120.3",
+      "Volume": "24.07317371",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1363653.15574449688",
+      "Trades": 8036,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637798400000,
+      "Open": "57120.3",
+      "High": "59600",
+      "Low": "56850",
+      "Close": "58898.9",
+      "Volume": "32.86439443",
+      "EndTime": 0,
+      "QuoteAssetVolume": "1912430.412602205212",
+      "Trades": 8739,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637884800000,
+      "Open": "58898.9",
+      "High": "59155.14",
+      "Low": "53342.37",
+      "Close": "53669.04",
+      "Volume": "60.94766331",
+      "EndTime": 0,
+      "QuoteAssetVolume": "3432399.238162751694",
+      "Trades": 9690,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1637971200000,
+      "Open": "53669.04",
+      "High": "55342.01",
+      "Low": "53596.59",
+      "Close": "54800.13",
+      "Volume": "11.27912433",
+      "EndTime": 0,
+      "QuoteAssetVolume": "613848.132035874489",
+      "Trades": 7626,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  },
+  {
+    "SpotQuoteKline": {
+      "StartTime": 1638057600000,
+      "Open": "54800.13",
+      "High": "55018.72",
+      "Low": "53710.21",
+      "Close": "54215.45",
+      "Volume": "0.19262536",
+      "EndTime": 0,
+      "QuoteAssetVolume": "10478.0357569037",
+      "Trades": 918,
+      "TakerBaseVolume": "0",
+      "TakerQuoteVolume": "0"
+    }
+  }
+]
