@@ -53,7 +53,7 @@ func TestSpotQuoteDepthMerged(t *testing.T) {
 	}
 }
 
-func TestSpotTradesMerged(t *testing.T) {
+func TestSpotQuoteTrades(t *testing.T) {
 	client := NewTestClient()
 	res, err := client.Market().SpotQuoteTrades(SpotQuoteTradesParam{
 		Symbol: SymbolSpotBTCUSDT,
@@ -64,6 +64,23 @@ func TestSpotTradesMerged(t *testing.T) {
 	}
 	{
 		goldenFilename := "./testdata/spot-quote-v1-trades.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
+
+func TestSpotQuoteKline(t *testing.T) {
+	client := NewTestClient()
+	res, err := client.Market().SpotQuoteKline(SpotQuoteKlineParam{
+		Symbol:   SymbolSpotBTCUSDT,
+		Interval: SpotInterval1d,
+	})
+	{
+		require.NoError(t, err)
+		require.Equal(t, "", res.RetMsg)
+	}
+	{
+		goldenFilename := "./testdata/spot-quote-v1-kline.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
