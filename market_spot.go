@@ -2,6 +2,7 @@ package bybit
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 )
@@ -202,6 +203,103 @@ func (s *MarketService) SpotQuoteTrades(param SpotQuoteTradesParam) (*SpotQuoteT
 	var res SpotQuoteTradesResponse
 
 	url, err := s.Client.BuildPublicURL("/spot/quote/v1/trades", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+// SpotQuoteKlineParam :
+type SpotQuoteKlineParam struct {
+	Symbol   SymbolSpot `json:"symbol"`
+	Interval Interval   `json:"interval"`
+
+	Limit     *int `json:"limit"`
+	StartTime *int `json:"startTime"`
+	EndTime   *int `json:"endTime"`
+}
+
+func (p *SpotQuoteKlineParam) build() map[string]string {
+	result := map[string]string{
+		"symbol":   string(p.Symbol),
+		"interval": string(p.Interval),
+	}
+	if p.Limit != nil {
+		result["limit"] = strconv.Itoa(*p.Limit)
+	}
+	if p.StartTime != nil {
+		result["startTime"] = strconv.Itoa(*p.StartTime)
+	}
+	if p.EndTime != nil {
+		result["endTime"] = strconv.Itoa(*p.EndTime)
+	}
+	return result
+}
+
+// SpotQuoteKlineResponse :
+type SpotQuoteKlineResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []SpotQuoteKlineResult `json:"result"`
+}
+
+// SpotQuoteKlineResult :
+type SpotQuoteKlineResult struct {
+	SpotQuoteKline SpotQuoteKline
+}
+
+// UnmarshalJSON :
+func (r *SpotQuoteKlineResult) UnmarshalJSON(data []byte) error {
+	parsedData := []interface{}{}
+	if err := json.Unmarshal(data, &parsedData); err != nil {
+		return err
+	}
+	if len(parsedData) != 11 {
+		return errors.New("so far len(items) must be 11, please check it on documents")
+	}
+	r.SpotQuoteKline = SpotQuoteKline{
+		StartTime:        int(parsedData[0].(float64)),
+		Open:             parsedData[1].(string),
+		High:             parsedData[2].(string),
+		Low:              parsedData[3].(string),
+		Close:            parsedData[4].(string),
+		Volume:           parsedData[5].(string),
+		EndTime:          int(parsedData[6].(float64)),
+		QuoteAssetVolume: parsedData[7].(string),
+		Trades:           int(parsedData[8].(float64)),
+		TakerBaseVolume:  parsedData[9].(string),
+		TakerQuoteVolume: parsedData[10].(string),
+	}
+	return nil
+}
+
+// SpotQuoteKline :
+type SpotQuoteKline struct {
+	StartTime        int
+	Open             string
+	High             string
+	Low              string
+	Close            string
+	Volume           string
+	EndTime          int
+	QuoteAssetVolume string
+	Trades           int
+	TakerBaseVolume  string
+	TakerQuoteVolume string
+}
+
+// SpotQuoteKline :
+func (s *MarketService) SpotQuoteKline(param SpotQuoteKlineParam) (*SpotQuoteKlineResponse, error) {
+	var res SpotQuoteKlineResponse
+
+	url, err := s.Client.BuildPublicURL("/spot/quote/v1/kline", param.build())
 	if err != nil {
 		return nil, err
 	}
