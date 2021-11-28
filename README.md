@@ -83,3 +83,5 @@ Test specific method
 ```
 $ make test-spec BYBIT_TEST_METHOD=TestBalance
 ```
+
+You can check result of daily test on [GitHub Actions](https://github.com/hirokisan/bybit/actions/workflows/test.yml)
