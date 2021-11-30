@@ -85,3 +85,20 @@ func TestSpotQuoteKline(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSpotQuoteTicker24hr(t *testing.T) {
+	client := NewTestClient()
+	symbol := SymbolSpotBTCUSDT
+	res, err := client.Market().SpotQuoteTicker24hr(SpotQuoteTicker24hrParam{
+		Symbol: &symbol,
+	})
+	{
+		require.NoError(t, err)
+		require.Equal(t, "", res.RetMsg)
+	}
+	{
+		goldenFilename := "./testdata/spot-quote-v1-ticker-24hr.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
