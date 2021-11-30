@@ -328,3 +328,57 @@ func (s *MarketService) SpotQuoteKline(param SpotQuoteKlineParam) (*SpotQuoteKli
 	}
 	return &res, nil
 }
+
+// SpotQuoteTicker24hrParam :
+type SpotQuoteTicker24hrParam struct {
+	Symbol *SymbolSpot `json:"symbol"`
+}
+
+func (p *SpotQuoteTicker24hrParam) build() map[string]string {
+	if p.Symbol == nil {
+		return nil
+	}
+	result := map[string]string{
+		"symbol": string(*p.Symbol),
+	}
+	return result
+}
+
+// SpotQuoteTicker24hrResponse :
+type SpotQuoteTicker24hrResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotQuoteTicker24hrResult `json:"result"`
+}
+
+// SpotQuoteTicker24hrResult :
+type SpotQuoteTicker24hrResult struct {
+	Time         int    `json:"time"`
+	Symbol       string `json:"symbol"`
+	BestBidPrice string `json:"bestBidPrice"`
+	BestAskPrice string `json:"bestAskPrice"`
+	LastPrice    string `json:"lastPrice"`
+	OpenPrice    string `json:"openPrice"`
+	HighPrice    string `json:"highPrice"`
+	LowPrice     string `json:"lowPrice"`
+	Volume       string `json:"volume"`
+	QuoteVolume  string `json:"quoteVolume"`
+}
+
+// SpotQuoteTicker24hr :
+func (s *MarketService) SpotQuoteTicker24hr(param SpotQuoteTicker24hrParam) (*SpotQuoteTicker24hrResponse, error) {
+	var res SpotQuoteTicker24hrResponse
+
+	url, err := s.Client.BuildPublicURL("/spot/quote/v1/ticker/24hr", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
