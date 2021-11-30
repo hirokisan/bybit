@@ -119,3 +119,20 @@ func TestSpotQuoteTickerPrice(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSpotQuoteTickerBookTicker(t *testing.T) {
+	client := NewTestClient()
+	symbol := SymbolSpotBTCUSDT
+	res, err := client.Market().SpotQuoteTickerBookTicker(SpotQuoteTickerBookTickerParam{
+		Symbol: &symbol,
+	})
+	{
+		require.NoError(t, err)
+		require.Equal(t, "", res.RetMsg)
+	}
+	{
+		goldenFilename := "./testdata/spot-quote-v1-ticker-book-ticker.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
