@@ -382,3 +382,49 @@ func (s *MarketService) SpotQuoteTicker24hr(param SpotQuoteTicker24hrParam) (*Sp
 	}
 	return &res, nil
 }
+
+// SpotQuoteTickerPriceParam :
+type SpotQuoteTickerPriceParam struct {
+	Symbol *SymbolSpot `json:"symbol"`
+}
+
+func (p *SpotQuoteTickerPriceParam) build() map[string]string {
+	if p.Symbol == nil {
+		return nil
+	}
+	result := map[string]string{
+		"symbol": string(*p.Symbol),
+	}
+	return result
+}
+
+// SpotQuoteTickerPriceResponse :
+type SpotQuoteTickerPriceResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotQuoteTickerPriceResult `json:"result"`
+}
+
+// SpotQuoteTickerPriceResult :
+type SpotQuoteTickerPriceResult struct {
+	Symbol string `json:"symbol"`
+	Price  string `json:"price"`
+}
+
+// SpotQuoteTickerPrice :
+func (s *MarketService) SpotQuoteTickerPrice(param SpotQuoteTickerPriceParam) (*SpotQuoteTickerPriceResponse, error) {
+	var res SpotQuoteTickerPriceResponse
+
+	url, err := s.Client.BuildPublicURL("/spot/quote/v1/ticker/price", param.build())
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
