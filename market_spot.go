@@ -556,3 +556,67 @@ func (s *MarketService) SpotPostOrder(param SpotPostOrderParam) (*SpotPostOrderR
 	}
 	return &res, nil
 }
+
+type SpotGetOrderParam struct {
+	OrderID     *string `json:"orderId"`
+	OrderLinkID *string `json:"orderLinkId"`
+}
+
+func (p SpotGetOrderParam) build() map[string]string {
+	result := map[string]string{}
+	if p.OrderID != nil {
+		result["orderId"] = *p.OrderID
+	}
+	if p.OrderLinkID != nil {
+		result["orderLinkId"] = *p.OrderLinkID
+	}
+	return result
+}
+
+type SpotGetOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotGetOrderResult `json:"result"`
+}
+
+type SpotGetOrderResult struct {
+	AccountId           string `json:"accountId"`
+	ExchangeId          string `json:"exchangeId"`
+	Symbol              string `json:"symbol"`
+	SymbolName          string `json:"symbolName"`
+	OrderLinkId         string `json:"orderLinkId"`
+	OrderId             string `json:"orderId"`
+	Price               string `json:"price"`
+	OrigQty             string `json:"origQty"`
+	ExecutedQty         string `json:"executedQty"`
+	CummulativeQuoteQty string `json:"cummulativeQuoteQty"`
+	AvgPrice            string `json:"avgPrice"`
+	Status              string `json:"status"`
+	TimeInForce         string `json:"timeInForce"`
+	Type                string `json:"type"`
+	Side                string `json:"side"`
+	StopPrice           string `json:"stopPrice"`
+	IcebergQty          string `json:"icebergQty"`
+	Time                string `json:"time"`
+	UpdateTime          string `json:"updateTime"`
+	IsWorking           bool   `json:"isWorking"`
+}
+
+// SpotGetOrder :
+func (s *MarketService) SpotGetOrder(param SpotGetOrderParam) (*SpotGetOrderResponse, error) {
+	var res SpotGetOrderResponse
+
+	url, err := s.Client.BuildPrivateURL("/spot/v1/order", param.build())
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
