@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // SpotSymbolsResponse :
@@ -469,6 +470,83 @@ func (s *MarketService) SpotQuoteTickerBookTicker(param SpotQuoteTickerBookTicke
 		return nil, err
 	}
 	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+// SpotPostOrderParam :
+type SpotPostOrderParam struct {
+	Symbol SymbolSpot    `json:"symbol"`
+	Qty    float64       `json:"qty"`
+	Side   Side          `json:"side"`
+	Type   OrderTypeSpot `json:"type"`
+
+	TimeInForce *TimeInForceSpot `json:"timeInForce"`
+	Price       *float64         `json:"price"`
+	OrderLinkID *string          `json:"orderLinkId"`
+}
+
+func (p SpotPostOrderParam) build() map[string]string {
+	ps := map[string]string{}
+	ps["symbol"] = string(p.Symbol)
+	ps["qty"] = strconv.FormatFloat(p.Qty, 'f', 2, 64)
+	ps["side"] = string(p.Side)
+	ps["type"] = string(p.Type)
+	if p.Price != nil {
+		ps["price"] = strconv.FormatFloat(*p.Price, 'f', 2, 64)
+	}
+	if p.TimeInForce != nil {
+		ps["timeInForce"] = string(*p.TimeInForce)
+	}
+	if p.OrderLinkID != nil {
+		ps["orderLinkId"] = string(*p.OrderLinkID)
+	}
+	return ps
+}
+
+// SpotPostOrderResponse :
+type SpotPostOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotPostOrderResult `json:"result"`
+}
+
+// SpotPostOrderResult :
+type SpotPostOrderResult struct {
+	OrderID      string          `json:"orderId"`
+	OrderLinkID  string          `json:"orderLinkId"`
+	Symbol       string          `json:"symbol"`
+	TransactTime string          `json:"transactTime"`
+	Price        string          `json:"price"`
+	OrigQty      string          `json:"origQty"`
+	Type         OrderTypeSpot   `json:"type"`
+	Side         string          `json:"side"`
+	Status       OrderStatusSpot `json:"status"`
+	TimeInForce  TimeInForceSpot `json:"timeInForce"`
+	AccountID    string          `json:"accountId"`
+	SymbolName   string          `json:"symbolName"`
+	ExecutedQty  string          `json:"executedQty"`
+}
+
+// SpotPostOrder :
+func (s *MarketService) SpotPostOrder(param SpotPostOrderParam) (*SpotPostOrderResponse, error) {
+	var res SpotPostOrderResponse
+
+	url, err := s.Client.BuildPublicURL("/spot/v1/order", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	ps := param.build()
+	s.Client.populateSignature(ps)
+
+	body := strings.NewReader(encodeURLParamsFrom(ps))
+	resp, err := http.Post(url, "application/x-www-form-urlencoded", body)
 	if err != nil {
 		return nil, err
 	}

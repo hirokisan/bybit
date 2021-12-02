@@ -119,13 +119,7 @@ func (c *Client) BuildPrivateURL(path string, params map[string]string) (string,
 	}
 	u.Path = path
 
-	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
-	now := strconv.Itoa(intNow)
-
-	params["api_key"] = c.Key
-	params["timestamp"] = now
-
-	params["sign"] = getSignature(params, c.Secret)
+	c.populateSignature(params)
 
 	q := u.Query()
 	for key, param := range params {
@@ -134,6 +128,24 @@ func (c *Client) BuildPrivateURL(path string, params map[string]string) (string,
 	u.RawQuery = q.Encode()
 
 	return u.String(), nil
+}
+
+func (c *Client) populateSignature(params map[string]string) {
+	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
+	now := strconv.Itoa(intNow)
+
+	params["api_key"] = c.Key
+	params["timestamp"] = now
+
+	params["sign"] = getSignature(params, c.Secret)
+}
+
+func encodeURLParamsFrom(params map[string]string) string {
+	form := url.Values{}
+	for key, value := range params {
+		form.Add(key, value)
+	}
+	return form.Encode()
 }
 
 func getSignature(params map[string]string, key string) string {

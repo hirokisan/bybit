@@ -116,6 +116,18 @@ const (
 	OrderTypeMarket = OrderType("Market")
 )
 
+// OrderTypeSpot :
+type OrderTypeSpot string
+
+const (
+	// OrderTypeSpotLimit :
+	OrderTypeSpotLimit = OrderTypeSpot("LIMIT")
+	// OrderTypeSpotMarket :
+	OrderTypeSpotMarket = OrderTypeSpot("MARKET")
+	// OrderTypeSpotLimitMaker :
+	OrderTypeSpotLimitMaker = OrderTypeSpot("LIMIT_MAKER")
+)
+
 // OrderStatus :
 type OrderStatus string
 
@@ -136,6 +148,26 @@ const (
 	OrderStatusPendingCancel = OrderStatus("PendingCancel")
 )
 
+// OrderStatusSpot :
+type OrderStatusSpot string
+
+const (
+	// OrderStatusSpotNew :
+	OrderStatusSpotNew = OrderStatusSpot("NEW")
+	// OrderStatusSpotPartiallyFilled :
+	OrderStatusSpotPartiallyFilled = OrderStatusSpot("PARTIALLY_FILLED")
+	// OrderStatusSpotFilled :
+	OrderStatusSpotFilled = OrderStatusSpot("FILLED")
+	// OrderStatusSpotCanceled :
+	OrderStatusSpotCanceled = OrderStatusSpot("CANCELED")
+	// OrderStatusSpotPendingCancel :
+	OrderStatusSpotPendingCancel = OrderStatusSpot("PENDING_CANCEL")
+	// OrderStatusSpotPendingNew :
+	OrderStatusSpotPendingNew = OrderStatusSpot("PENDING_NEW")
+	// OrderStatusSpotRejected :
+	OrderStatusSpotRejected = OrderStatusSpot("REJECTED")
+)
+
 // TimeInForce :
 type TimeInForce string
 
@@ -148,6 +180,18 @@ const (
 	TimeInForceFillOrKill = TimeInForce("FillOrKill")
 	// TimeInForcePostOnly :
 	TimeInForcePostOnly = TimeInForce("PostOnly")
+)
+
+// TimeInForceSpot :
+type TimeInForceSpot string
+
+const (
+	// TimeInForceSpotGTC :
+	TimeInForceSpotGTC = TimeInForceSpot("GTC")
+	// TimeInForceSpotFOK :
+	TimeInForceSpotFOK = TimeInForceSpot("FOK")
+	// TimeInForceSpotIOC :
+	TimeInForceSpotIOC = TimeInForceSpot("IOC")
 )
 
 // Interval :
