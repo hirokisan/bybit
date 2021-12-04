@@ -300,7 +300,7 @@ type SpotOrderBatchCancelResult struct {
 func (s *AccountService) SpotOrderBatchCancel(param SpotOrderBatchCancelParam) (*SpotOrderBatchCancelResponse, error) {
 	var res SpotOrderBatchCancelResponse
 
-	url, err := s.Client.BuildPrivateURL("/spot/v1/order/batch-cancel", param.build())
+	url, err := s.Client.BuildPrivateURL("/spot/order/batch-cancel", param.build())
 	if err != nil {
 		return nil, err
 	}
@@ -357,7 +357,7 @@ type SpotOrderBatchFastCancelResult struct {
 func (s *AccountService) SpotOrderBatchFastCancel(param SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error) {
 	var res SpotOrderBatchFastCancelResponse
 
-	url, err := s.Client.BuildPrivateURL("/spot/v1/order/batch-fast-cancel", param.build())
+	url, err := s.Client.BuildPrivateURL("/spot/order/batch-fast-cancel", param.build())
 	if err != nil {
 		return nil, err
 	}

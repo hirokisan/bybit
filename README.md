@@ -60,8 +60,8 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 
 - `/spot/v1/order`
 - `/spot/v1/order/fast`
-- `/spot/v1/order/batch-cancel`
-- `/spot/v1/order/batch-fast-cancel`
+- `/spot/order/batch-cancel`
+- `/spot/order/batch-fast-cancel`
 - `/spot/order/batch-cancel-by-ids`
 
 ### Wallet Data Endpoints
