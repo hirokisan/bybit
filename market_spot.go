@@ -735,3 +735,60 @@ func (s *MarketService) SpotDeleteOrderFast(param SpotDeleteOrderFastParam) (*Sp
 	}
 	return &res, nil
 }
+
+type SpotOrderBatchCancelParam struct {
+	Symbol SymbolSpot `json:"symbolId"`
+
+	Side  *Side           `json:"side"`
+	Types []OrderTypeSpot `json:"orderTypes"`
+}
+
+func (p SpotOrderBatchCancelParam) build() map[string]string {
+	result := map[string]string{
+		"symbolId": string(p.Symbol),
+	}
+	if p.Side != nil {
+		result["side"] = string(*p.Side)
+	}
+	if len(p.Types) != 0 {
+		var types []string
+		for _, t := range p.Types {
+			types = append(types, string(t))
+		}
+		result["orderTypes"] = strings.Join(types, ",")
+	}
+	return result
+}
+
+type SpotOrderBatchCancelResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotOrderBatchCancelResult `json:"result"`
+}
+
+type SpotOrderBatchCancelResult struct {
+	Success bool `json:"success"`
+}
+
+func (s *MarketService) SpotOrderBatchCancel(param SpotOrderBatchCancelParam) (*SpotOrderBatchCancelResponse, error) {
+	var res SpotOrderBatchCancelResponse
+
+	url, err := s.Client.BuildPrivateURL("/spot/v1/order/batch-cancel", param.build())
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	client := new(http.Client)
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
