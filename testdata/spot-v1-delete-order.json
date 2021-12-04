@@ -1,0 +1,14 @@
+{
+  "orderId": "1038932323571144448",
+  "orderLinkId": "1638586384171235",
+  "symbol": "BTCUSDT",
+  "status": "CANCELED",
+  "accountId": "213998",
+  "transactTime": "1638586384184",
+  "price": "28383.5",
+  "origQty": "0.01",
+  "executedQty": "0",
+  "timeInForce": "GTC",
+  "type": "LIMIT",
+  "side": "BUY"
+}
