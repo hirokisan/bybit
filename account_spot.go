@@ -2,6 +2,7 @@ package bybit
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 	"strings"
@@ -357,6 +358,47 @@ func (s *AccountService) SpotOrderBatchFastCancel(param SpotOrderBatchFastCancel
 	var res SpotOrderBatchFastCancelResponse
 
 	url, err := s.Client.BuildPrivateURL("/spot/v1/order/batch-fast-cancel", param.build())
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	client := new(http.Client)
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+type SpotOrderBatchCancelByIDsResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []SpotOrderBatchCancelByIDsResult `json:"result"`
+}
+
+type SpotOrderBatchCancelByIDsResult struct {
+	OrderID string `json:"orderId"`
+	Code    string `json:"code"`
+}
+
+// TODO : have bug multiple orderIds
+func (s *AccountService) SpotOrderBatchCancelByIDs(orderIDs []string) (*SpotOrderBatchCancelByIDsResponse, error) {
+	var res SpotOrderBatchCancelByIDsResponse
+
+	if len(orderIDs) > 100 {
+		return nil, errors.New("orderIDs length must be no more than 100")
+	}
+
+	url, err := s.Client.BuildPrivateURL("/spot/order/batch-cancel-by-ids", map[string]string{
+		"orderIds": strings.Join(orderIDs, ","),
+	})
 	if err != nil {
 		return nil, err
 	}
