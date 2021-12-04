@@ -156,7 +156,17 @@ func TestSpotPostOrder(t *testing.T) {
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
-	// TODO : cancel order
+	// clean order
+	orderID := res.Result.OrderID
+	{
+		res, err := client.Market().SpotDeleteOrder(SpotDeleteOrderParam{
+			OrderID: &orderID,
+		})
+		{
+			require.NoError(t, err)
+			require.Equal(t, "", res.RetMsg)
+		}
+	}
 }
 
 func TestSpotGetOrder(t *testing.T) {
@@ -191,7 +201,16 @@ func TestSpotGetOrder(t *testing.T) {
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
-	// TODO : cancel order
+	// clean order
+	{
+		res, err := client.Market().SpotDeleteOrder(SpotDeleteOrderParam{
+			OrderID: &orderID,
+		})
+		{
+			require.NoError(t, err)
+			require.Equal(t, "", res.RetMsg)
+		}
+	}
 }
 
 func TestSpotDeleteOrder(t *testing.T) {
