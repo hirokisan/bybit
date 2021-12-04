@@ -620,3 +620,64 @@ func (s *MarketService) SpotGetOrder(param SpotGetOrderParam) (*SpotGetOrderResp
 	}
 	return &res, nil
 }
+
+type SpotDeleteOrderParam struct {
+	OrderID     *string `json:"orderId"`
+	OrderLinkID *string `json:"orderLinkId"`
+}
+
+func (p SpotDeleteOrderParam) build() map[string]string {
+	result := map[string]string{}
+	if p.OrderID != nil {
+		result["orderId"] = *p.OrderID
+	}
+	if p.OrderLinkID != nil {
+		result["orderLinkId"] = *p.OrderLinkID
+	}
+	return result
+}
+
+type SpotDeleteOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotDeleteOrderResult `json:"result"`
+}
+
+type SpotDeleteOrderResult struct {
+	OrderId      string `json:"orderId"`
+	OrderLinkId  string `json:"orderLinkId"`
+	Symbol       string `json:"symbol"`
+	Status       string `json:"status"`
+	AccountId    string `json:"accountId"`
+	TransactTime string `json:"transactTime"`
+	Price        string `json:"price"`
+	OrigQty      string `json:"origQty"`
+	ExecutedQty  string `json:"executedQty"`
+	TimeInForce  string `json:"timeInForce"`
+	Type         string `json:"type"`
+	Side         string `json:"side"`
+}
+
+// SpotDeleteOrder :
+func (s *MarketService) SpotDeleteOrder(param SpotDeleteOrderParam) (*SpotDeleteOrderResponse, error) {
+	var res SpotDeleteOrderResponse
+
+	url, err := s.Client.BuildPrivateURL("/spot/v1/order", param.build())
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	client := new(http.Client)
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
