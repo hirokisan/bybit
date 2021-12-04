@@ -319,3 +319,60 @@ func (s *AccountService) SpotOrderBatchCancel(param SpotOrderBatchCancelParam) (
 	}
 	return &res, nil
 }
+
+type SpotOrderBatchFastCancelParam struct {
+	Symbol SymbolSpot `json:"symbolId"`
+
+	Side  *Side           `json:"side"`
+	Types []OrderTypeSpot `json:"orderTypes"`
+}
+
+func (p SpotOrderBatchFastCancelParam) build() map[string]string {
+	result := map[string]string{
+		"symbolId": string(p.Symbol),
+	}
+	if p.Side != nil {
+		result["side"] = string(*p.Side)
+	}
+	if len(p.Types) != 0 {
+		var types []string
+		for _, t := range p.Types {
+			types = append(types, string(t))
+		}
+		result["orderTypes"] = strings.Join(types, ",")
+	}
+	return result
+}
+
+type SpotOrderBatchFastCancelResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotOrderBatchFastCancelResult `json:"result"`
+}
+
+type SpotOrderBatchFastCancelResult struct {
+	Success bool `json:"success"`
+}
+
+func (s *AccountService) SpotOrderBatchFastCancel(param SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error) {
+	var res SpotOrderBatchFastCancelResponse
+
+	url, err := s.Client.BuildPrivateURL("/spot/v1/order/batch-fast-cancel", param.build())
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	client := new(http.Client)
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
