@@ -39,6 +39,7 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 - `/spot/quote/v1/ticker/price`
 - `/spot/quote/v1/ticker/book_ticker`
 - `/spot/v1/order`
+- `/spot/v1/order/fast`
 
 ### Account Data Endpoints
 
