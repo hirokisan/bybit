@@ -681,3 +681,57 @@ func (s *MarketService) SpotDeleteOrder(param SpotDeleteOrderParam) (*SpotDelete
 	}
 	return &res, nil
 }
+
+type SpotDeleteOrderFastParam struct {
+	Symbol SymbolSpot `json:"symbolId"`
+
+	OrderID     *string `json:"orderId"`
+	OrderLinkID *string `json:"orderLinkId"`
+}
+
+func (p SpotDeleteOrderFastParam) build() map[string]string {
+	result := map[string]string{
+		"symbolId": string(p.Symbol),
+	}
+	if p.OrderID != nil {
+		result["orderId"] = *p.OrderID
+	}
+	if p.OrderLinkID != nil {
+		result["orderLinkId"] = *p.OrderLinkID
+	}
+	return result
+}
+
+type SpotDeleteOrderFastResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotDeleteOrderFastResult `json:"result"`
+}
+
+type SpotDeleteOrderFastResult struct {
+	IsCancelled bool `json:"isCancelled"`
+}
+
+// SpotDeleteOrderFast :
+func (s *MarketService) SpotDeleteOrderFast(param SpotDeleteOrderFastParam) (*SpotDeleteOrderFastResponse, error) {
+	var res SpotDeleteOrderFastResponse
+
+	url, err := s.Client.BuildPrivateURL("/spot/v1/order/fast", param.build())
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	client := new(http.Client)
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
