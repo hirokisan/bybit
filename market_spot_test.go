@@ -283,3 +283,37 @@ func TestSpotDeleteFastOrder(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSpotOrderBatchCancel(t *testing.T) {
+	client := NewTestClient().WithAuthFromEnv()
+
+	var symbol SymbolSpot
+	{
+		price := 28383.5
+		res, err := client.Market().SpotPostOrder(SpotPostOrderParam{
+			Symbol: SymbolSpotBTCUSDT,
+			Qty:    0.01,
+			Side:   SideBuy,
+			Type:   OrderTypeSpotLimit,
+			Price:  &price,
+		})
+		{
+			require.NoError(t, err)
+			require.Equal(t, "", res.RetMsg)
+		}
+		symbol = SymbolSpot(res.Result.Symbol)
+	}
+
+	res, err := client.Market().SpotOrderBatchCancel(SpotOrderBatchCancelParam{
+		Symbol: symbol,
+	})
+	{
+		require.NoError(t, err)
+		require.Equal(t, "", res.RetMsg)
+	}
+	{
+		goldenFilename := "./testdata/spot-v1-order-batch-cancel.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
