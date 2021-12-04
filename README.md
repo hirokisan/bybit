@@ -38,9 +38,6 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 - `/spot/quote/v1/ticker/24hr`
 - `/spot/quote/v1/ticker/price`
 - `/spot/quote/v1/ticker/book_ticker`
-- `/spot/v1/order`
-- `/spot/v1/order/fast`
-- `/spot/v1/order/batch-cancel`
 
 ### Account Data Endpoints
 
@@ -58,6 +55,12 @@ res, err := client.Wallet().Balance(bybit.CoinBTC)
 - `/private/linear/position/list`
 - `/private/linear/position/set-leverage`
 - `/private/linear/trade/execution/list`
+
+#### Spot
+
+- `/spot/v1/order`
+- `/spot/v1/order/fast`
+- `/spot/v1/order/batch-cancel`
 
 ### Wallet Data Endpoints
 
