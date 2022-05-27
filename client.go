@@ -162,6 +162,10 @@ func getSignature(params map[string]string, key string) string {
 	}
 	_val = _val[0 : len(_val)-1]
 	h := hmac.New(sha256.New, []byte(key))
-	io.WriteString(h, _val)
+	_, err := io.WriteString(h, _val)
+	if err != nil {
+		panic(err)
+	}
+
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
