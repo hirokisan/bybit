@@ -212,3 +212,30 @@ func (c *Client) postForm(path string, body url.Values, dst interface{}) error {
 
 	return nil
 }
+
+func (c *Client) deletePrivately(path string, query url.Values, dst interface{}) error {
+	if !c.HasAuth() {
+		return fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	u, err := url.Parse(c.BaseURL)
+	if err != nil {
+		return err
+	}
+	u.Path = path
+	c.populateSignature(query)
+	u.RawQuery = query.Encode()
+
+	req, err := http.NewRequest(http.MethodDelete, u.String(), nil)
+	if err != nil {
+		return err
+	}
+	client := new(http.Client)
+	resp, err := client.Do(req)
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+		return err
+	}
+
+	return nil
+}

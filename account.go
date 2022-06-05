@@ -1,10 +1,9 @@
 package bybit
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"net/http"
+	"net/url"
 )
 
 // AccountService :
@@ -66,23 +65,15 @@ type CreateOrderParam struct {
 func (s *AccountService) CreateOrder(param CreateOrderParam) (*CreateOrderResponse, error) {
 	var res CreateOrderResponse
 
-	url, err := s.Client.BuildPrivateURL("/v2/private/order/create", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonBody, err := json.Marshal(param)
+	body, err := json.Marshal(param)
 	if err != nil {
 		return nil, fmt.Errorf("json marshal for CreateOrderParam: %w", err)
 	}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
-	if err != nil {
+
+	if err := s.Client.postJSON("/v2/private/order/create", body, &res); err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -132,21 +123,13 @@ type ListPositionResult struct {
 func (s *AccountService) ListPosition(symbol SymbolInverse) (*ListPositionResponse, error) {
 	var res ListPositionResponse
 
-	params := map[string]string{
-		"symbol": string(symbol),
-	}
-	url, err := s.Client.BuildPrivateURL("/v2/private/position/list", params)
-	if err != nil {
+	query := url.Values{}
+	query.Add("symbol", string(symbol))
+
+	if err := s.Client.getPrivately("/v2/private/position/list", query, &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -166,18 +149,10 @@ type ListPositionsResult struct {
 func (s *AccountService) ListPositions() (*ListPositionsResponse, error) {
 	var res ListPositionsResponse
 
-	url, err := s.Client.BuildPrivateURL("/v2/private/position/list", nil)
-	if err != nil {
+	if err := s.Client.getPrivately("/v2/private/position/list", nil, &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -232,23 +207,15 @@ func (s *AccountService) CancelOrder(param CancelOrderParam) (*CancelOrderRespon
 		return nil, fmt.Errorf("either OrderID or OrderLinkID needed")
 	}
 
-	url, err := s.Client.BuildPrivateURL("/v2/private/order/cancel", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonBody, err := json.Marshal(param)
+	body, err := json.Marshal(param)
 	if err != nil {
 		return nil, fmt.Errorf("json marshal for CancelOrderParam: %w", err)
 	}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
-	if err != nil {
+
+	if err := s.Client.postJSON("/v2/private/order/cancel", body, &res); err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -268,22 +235,14 @@ type SaveLeverageParam struct {
 func (s *AccountService) SaveLeverage(param SaveLeverageParam) (*SaveLeverageResponse, error) {
 	var res SaveLeverageResponse
 
-	url, err := s.Client.BuildPrivateURL("/v2/private/position/leverage/save", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonBody, err := json.Marshal(param)
+	body, err := json.Marshal(param)
 	if err != nil {
 		return nil, fmt.Errorf("json marshal for CancelOrderParam: %w", err)
 	}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
-	if err != nil {
+
+	if err := s.Client.postJSON("/v2/private/position/leverage/save", body, &res); err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }

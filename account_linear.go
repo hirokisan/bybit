@@ -1,10 +1,9 @@
 package bybit
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"net/http"
+	"net/url"
 )
 
 // CreateLinearOrderResponse :
@@ -66,23 +65,15 @@ type CreateLinearOrderParam struct {
 func (s *AccountService) CreateLinearOrder(param CreateLinearOrderParam) (*CreateLinearOrderResponse, error) {
 	var res CreateLinearOrderResponse
 
-	url, err := s.Client.BuildPrivateURL("/private/linear/order/create", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonBody, err := json.Marshal(param)
+	body, err := json.Marshal(param)
 	if err != nil {
 		return nil, fmt.Errorf("json marshal for CreateLinearOrderParam: %w", err)
 	}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
-	if err != nil {
+
+	if err := s.Client.postJSON("/private/linear/order/create", body, &res); err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -120,21 +111,13 @@ type ListLinearPositionResult struct {
 func (s *AccountService) ListLinearPosition(symbol SymbolUSDT) (*ListLinearPositionResponse, error) {
 	var res ListLinearPositionResponse
 
-	params := map[string]string{
-		"symbol": string(symbol),
-	}
-	url, err := s.Client.BuildPrivateURL("/private/linear/position/list", params)
-	if err != nil {
+	query := url.Values{}
+	query.Add("symbol", string(symbol))
+
+	if err := s.Client.getPrivately("/private/linear/position/list", query, &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -154,18 +137,10 @@ type ListLinearPositionsResult struct {
 func (s *AccountService) ListLinearPositions() (*ListLinearPositionsResponse, error) {
 	var res ListLinearPositionsResponse
 
-	url, err := s.Client.BuildPrivateURL("/private/linear/position/list", nil)
-	if err != nil {
+	if err := s.Client.getPrivately("/private/linear/position/list", nil, &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -201,23 +176,15 @@ func (s *AccountService) CancelLinearOrder(param CancelLinearOrderParam) (*Cance
 		return nil, fmt.Errorf("either OrderID or OrderLinkID needed")
 	}
 
-	url, err := s.Client.BuildPrivateURL("/private/linear/order/cancel", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonBody, err := json.Marshal(param)
+	body, err := json.Marshal(param)
 	if err != nil {
 		return nil, fmt.Errorf("json marshal for CancelLinearOrderParam: %w", err)
 	}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
-	if err != nil {
+
+	if err := s.Client.postJSON("/private/linear/order/cancel", body, &res); err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -237,23 +204,15 @@ type SaveLinearLeverageParam struct {
 func (s *AccountService) SaveLinearLeverage(param SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error) {
 	var res SaveLinearLeverageResponse
 
-	url, err := s.Client.BuildPrivateURL("/private/linear/position/set-leverage", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonBody, err := json.Marshal(param)
+	body, err := json.Marshal(param)
 	if err != nil {
 		return nil, fmt.Errorf("json marshal for SaveLinearLeverageParam: %w", err)
 	}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
-	if err != nil {
+
+	if err := s.Client.postJSON("/private/linear/position/set-leverage", body, &res); err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -306,22 +265,14 @@ type LinearExecutionListParam struct {
 func (s *AccountService) LinearExecutionList(param LinearExecutionListParam) (*LinearExecutionListResponse, error) {
 	var res LinearExecutionListResponse
 
-	url, err := s.Client.BuildPrivateURL("/private/linear/trade/execution/list", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonBody, err := json.Marshal(param)
+	body, err := json.Marshal(param)
 	if err != nil {
 		return nil, fmt.Errorf("json marshal for LinearExecutionListParam: %w", err)
 	}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBody))
-	if err != nil {
+
+	if err := s.Client.postJSON("/private/linear/trade/execution/list", body, &res); err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
