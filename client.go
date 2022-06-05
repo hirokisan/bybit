@@ -232,6 +232,9 @@ func (c *Client) deletePrivately(path string, query url.Values, dst interface{})
 	}
 	client := new(http.Client)
 	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
 	defer resp.Body.Close()
 	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
 		return err
