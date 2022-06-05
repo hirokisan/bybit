@@ -1,8 +1,7 @@
 package bybit
 
 import (
-	"encoding/json"
-	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -29,22 +28,13 @@ type OrderBookResult struct {
 func (s *MarketService) OrderBook(symbol SymbolInverse) (*OrderBookResponse, error) {
 	var res OrderBookResponse
 
-	params := map[string]string{
-		"symbol": string(symbol),
+	query := url.Values{}
+	query.Add("symbol", string(symbol))
+
+	if err := s.Client.getPublicly("/v2/public/orderBook/L2", query, &res); err != nil {
+		return nil, err
 	}
 
-	url, err := s.Client.BuildPublicURL("/v2/public/orderBook/L2", params)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }
 
@@ -57,14 +47,13 @@ type ListKlineParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *ListKlineParam) build() map[string]string {
-	result := map[string]string{
-		"symbol":   string(p.Symbol),
-		"interval": string(p.Interval),
-		"from":     strconv.Itoa(p.From),
-	}
+func (p *ListKlineParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
+	result.Add("interval", string(p.Interval))
+	result.Add("from", strconv.Itoa(p.From))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -92,18 +81,10 @@ type ListKlineResult struct {
 func (s *MarketService) ListKline(param ListKlineParam) (*ListKlineResponse, error) {
 	var res ListKlineResponse
 
-	url, err := s.Client.BuildPublicURL("/v2/public/kline/list", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/v2/public/kline/list", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -144,22 +125,13 @@ type TickersResult struct {
 func (s *MarketService) Tickers(symbol SymbolInverse) (*TickersResponse, error) {
 	var res TickersResponse
 
-	params := map[string]string{
-		"symbol": string(symbol),
+	query := url.Values{}
+	query.Add("symbol", string(symbol))
+
+	if err := s.Client.getPublicly("/v2/public/tickers", query, &res); err != nil {
+		return nil, err
 	}
 
-	url, err := s.Client.BuildPublicURL("/v2/public/tickers", params)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }
 
@@ -171,15 +143,14 @@ type TradingRecordsParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *TradingRecordsParam) build() map[string]string {
-	result := map[string]string{
-		"symbol": string(p.Symbol),
-	}
+func (p *TradingRecordsParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
 	if p.From != nil {
-		result["from"] = strconv.Itoa(*p.From)
+		result.Add("from", strconv.Itoa(*p.From))
 	}
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -204,18 +175,10 @@ type TradingRecordsResult struct {
 func (s *MarketService) TradingRecords(param TradingRecordsParam) (*TradingRecordsResponse, error) {
 	var res TradingRecordsResponse
 
-	url, err := s.Client.BuildPublicURL("/v2/public/trading-records", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/v2/public/trading-records", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -263,18 +226,10 @@ type LotSizeFilter struct {
 func (s *MarketService) Symbols() (*SymbolsResponse, error) {
 	var res SymbolsResponse
 
-	url, err := s.Client.BuildPublicURL("/v2/public/symbols", nil)
-	if err != nil {
+	if err := s.Client.getPublicly("/v2/public/symbols", nil, &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -304,14 +259,13 @@ type MarkPriceKlineParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *MarkPriceKlineParam) build() map[string]string {
-	result := map[string]string{
-		"symbol":   string(p.Symbol),
-		"interval": string(p.Interval),
-		"from":     strconv.Itoa(p.From),
-	}
+func (p *MarkPriceKlineParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
+	result.Add("interval", string(p.Interval))
+	result.Add("from", strconv.Itoa(p.From))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -320,18 +274,10 @@ func (p *MarkPriceKlineParam) build() map[string]string {
 func (s *MarketService) MarkPriceKline(param MarkPriceKlineParam) (*MarkPriceKlineResponse, error) {
 	var res MarkPriceKlineResponse
 
-	url, err := s.Client.BuildPublicURL("/v2/public/mark-price-kline", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/v2/public/mark-price-kline", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -361,14 +307,13 @@ type IndexPriceKlineParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *IndexPriceKlineParam) build() map[string]string {
-	result := map[string]string{
-		"symbol":   string(p.Symbol),
-		"interval": string(p.Interval),
-		"from":     strconv.Itoa(p.From),
-	}
+func (p *IndexPriceKlineParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
+	result.Add("interval", string(p.Interval))
+	result.Add("from", strconv.Itoa(p.From))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -377,18 +322,10 @@ func (p *IndexPriceKlineParam) build() map[string]string {
 func (s *MarketService) IndexPriceKline(param IndexPriceKlineParam) (*IndexPriceKlineResponse, error) {
 	var res IndexPriceKlineResponse
 
-	url, err := s.Client.BuildPublicURL("/v2/public/index-price-kline", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/v2/public/index-price-kline", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -418,14 +355,13 @@ type PremiumIndexKlineParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *PremiumIndexKlineParam) build() map[string]string {
-	result := map[string]string{
-		"symbol":   string(p.Symbol),
-		"interval": string(p.Interval),
-		"from":     strconv.Itoa(p.From),
-	}
+func (p *PremiumIndexKlineParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
+	result.Add("interval", string(p.Interval))
+	result.Add("from", strconv.Itoa(p.From))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -434,18 +370,10 @@ func (p *PremiumIndexKlineParam) build() map[string]string {
 func (s *MarketService) PremiumIndexKline(param PremiumIndexKlineParam) (*PremiumIndexKlineResponse, error) {
 	var res PremiumIndexKlineResponse
 
-	url, err := s.Client.BuildPublicURL("/v2/public/premium-index-kline", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/v2/public/premium-index-kline", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -470,13 +398,12 @@ type OpenInterestParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *OpenInterestParam) build() map[string]string {
-	result := map[string]string{
-		"symbol": string(p.Symbol),
-		"period": string(p.Period),
-	}
+func (p *OpenInterestParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
+	result.Add("period", string(p.Period))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -485,18 +412,10 @@ func (p *OpenInterestParam) build() map[string]string {
 func (s *MarketService) OpenInterest(param OpenInterestParam) (*OpenInterestResponse, error) {
 	var res OpenInterestResponse
 
-	url, err := s.Client.BuildPublicURL("/v2/public/open-interest", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/v2/public/open-interest", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -521,12 +440,11 @@ type BigDealParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *BigDealParam) build() map[string]string {
-	result := map[string]string{
-		"symbol": string(p.Symbol),
-	}
+func (p *BigDealParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -535,18 +453,10 @@ func (p *BigDealParam) build() map[string]string {
 func (s *MarketService) BigDeal(param BigDealParam) (*BigDealResponse, error) {
 	var res BigDealResponse
 
-	url, err := s.Client.BuildPublicURL("/v2/public/big-deal", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/v2/public/big-deal", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -572,13 +482,12 @@ type AccountRatioParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *AccountRatioParam) build() map[string]string {
-	result := map[string]string{
-		"symbol": string(p.Symbol),
-		"period": string(p.Period),
-	}
+func (p *AccountRatioParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
+	result.Add("period", string(p.Period))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -587,16 +496,7 @@ func (p *AccountRatioParam) build() map[string]string {
 func (s *MarketService) AccountRatio(param AccountRatioParam) (*AccountRatioResponse, error) {
 	var res AccountRatioResponse
 
-	url, err := s.Client.BuildPublicURL("/v2/public/account-ratio", param.build())
-	if err != nil {
-		return nil, err
-	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+	if err := s.Client.getPublicly("/v2/public/account-ratio", param.build(), &res); err != nil {
 		return nil, err
 	}
 	return &res, nil

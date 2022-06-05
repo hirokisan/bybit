@@ -1,9 +1,6 @@
 package bybit
 
-import (
-	"encoding/json"
-	"net/http"
-)
+import "net/url"
 
 // LinearTickersResponse :
 type LinearTickersResponse struct {
@@ -42,21 +39,12 @@ type LinearTickersResult struct {
 func (s *MarketService) LinearTickers(symbol SymbolUSDT) (*LinearTickersResponse, error) {
 	var res LinearTickersResponse
 
-	params := map[string]string{
-		"symbol": string(symbol),
+	query := url.Values{}
+	query.Add("symbol", string(symbol))
+
+	if err := s.Client.getPublicly("/v2/public/tickers", query, &res); err != nil {
+		return nil, err
 	}
 
-	url, err := s.Client.BuildPublicURL("/v2/public/tickers", params)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }

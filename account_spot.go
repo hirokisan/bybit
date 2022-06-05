@@ -1,9 +1,8 @@
 package bybit
 
 import (
-	"encoding/json"
 	"errors"
-	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 )
@@ -20,20 +19,21 @@ type SpotPostOrderParam struct {
 	OrderLinkID *string          `json:"orderLinkId"`
 }
 
-func (p SpotPostOrderParam) build() map[string]string {
-	ps := map[string]string{}
-	ps["symbol"] = string(p.Symbol)
-	ps["qty"] = strconv.FormatFloat(p.Qty, 'f', 2, 64)
-	ps["side"] = string(p.Side)
-	ps["type"] = string(p.Type)
+func (p SpotPostOrderParam) build() url.Values {
+	ps := url.Values{}
+	ps.Add("symbol", string(p.Symbol))
+	ps.Add("qty", strconv.FormatFloat(p.Qty, 'f', 2, 64))
+	ps.Add("side", string(p.Side))
+	ps.Add("type", string(p.Type))
+
 	if p.Price != nil {
-		ps["price"] = strconv.FormatFloat(*p.Price, 'f', 2, 64)
+		ps.Add("price", strconv.FormatFloat(*p.Price, 'f', 2, 64))
 	}
 	if p.TimeInForce != nil {
-		ps["timeInForce"] = string(*p.TimeInForce)
+		ps.Add("timeInForce", string(*p.TimeInForce))
 	}
 	if p.OrderLinkID != nil {
-		ps["orderLinkId"] = string(*p.OrderLinkID)
+		ps.Add("orderLinkId", string(*p.OrderLinkID))
 	}
 	return ps
 }
@@ -65,23 +65,10 @@ type SpotPostOrderResult struct {
 func (s *AccountService) SpotPostOrder(param SpotPostOrderParam) (*SpotPostOrderResponse, error) {
 	var res SpotPostOrderResponse
 
-	url, err := s.Client.BuildPublicURL("/spot/v1/order", nil)
-	if err != nil {
+	if err := s.Client.postForm("/spot/v1/order", param.build(), &res); err != nil {
 		return nil, err
 	}
 
-	ps := param.build()
-	s.Client.populateSignature(ps)
-
-	body := strings.NewReader(encodeURLParamsFrom(ps))
-	resp, err := http.Post(url, "application/x-www-form-urlencoded", body)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }
 
@@ -90,13 +77,13 @@ type SpotGetOrderParam struct {
 	OrderLinkID *string `json:"orderLinkId"`
 }
 
-func (p SpotGetOrderParam) build() map[string]string {
-	result := map[string]string{}
+func (p SpotGetOrderParam) build() url.Values {
+	result := url.Values{}
 	if p.OrderID != nil {
-		result["orderId"] = *p.OrderID
+		result.Add("orderId", *p.OrderID)
 	}
 	if p.OrderLinkID != nil {
-		result["orderLinkId"] = *p.OrderLinkID
+		result.Add("orderLinkId", *p.OrderLinkID)
 	}
 	return result
 }
@@ -133,19 +120,10 @@ type SpotGetOrderResult struct {
 func (s *AccountService) SpotGetOrder(param SpotGetOrderParam) (*SpotGetOrderResponse, error) {
 	var res SpotGetOrderResponse
 
-	url, err := s.Client.BuildPrivateURL("/spot/v1/order", param.build())
-	if err != nil {
+	if err := s.Client.getPrivately("/spot/v1/order", param.build(), &res); err != nil {
 		return nil, err
 	}
 
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }
 
@@ -154,13 +132,13 @@ type SpotDeleteOrderParam struct {
 	OrderLinkID *string `json:"orderLinkId"`
 }
 
-func (p SpotDeleteOrderParam) build() map[string]string {
-	result := map[string]string{}
+func (p SpotDeleteOrderParam) build() url.Values {
+	result := url.Values{}
 	if p.OrderID != nil {
-		result["orderId"] = *p.OrderID
+		result.Add("orderId", *p.OrderID)
 	}
 	if p.OrderLinkID != nil {
-		result["orderLinkId"] = *p.OrderLinkID
+		result.Add("orderLinkId", *p.OrderLinkID)
 	}
 	return result
 }
@@ -189,24 +167,10 @@ type SpotDeleteOrderResult struct {
 func (s *AccountService) SpotDeleteOrder(param SpotDeleteOrderParam) (*SpotDeleteOrderResponse, error) {
 	var res SpotDeleteOrderResponse
 
-	url, err := s.Client.BuildPrivateURL("/spot/v1/order", param.build())
-	if err != nil {
+	if err := s.Client.deletePrivately("/spot/v1/order", param.build(), &res); err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodDelete, url, nil)
-	if err != nil {
-		return nil, err
-	}
-	client := new(http.Client)
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }
 
@@ -217,15 +181,15 @@ type SpotDeleteOrderFastParam struct {
 	OrderLinkID *string `json:"orderLinkId"`
 }
 
-func (p SpotDeleteOrderFastParam) build() map[string]string {
-	result := map[string]string{
-		"symbolId": string(p.Symbol),
-	}
+func (p SpotDeleteOrderFastParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbolId", string(p.Symbol))
+
 	if p.OrderID != nil {
-		result["orderId"] = *p.OrderID
+		result.Add("orderId", *p.OrderID)
 	}
 	if p.OrderLinkID != nil {
-		result["orderLinkId"] = *p.OrderLinkID
+		result.Add("orderLinkId", *p.OrderLinkID)
 	}
 	return result
 }
@@ -243,24 +207,10 @@ type SpotDeleteOrderFastResult struct {
 func (s *AccountService) SpotDeleteOrderFast(param SpotDeleteOrderFastParam) (*SpotDeleteOrderFastResponse, error) {
 	var res SpotDeleteOrderFastResponse
 
-	url, err := s.Client.BuildPrivateURL("/spot/v1/order/fast", param.build())
-	if err != nil {
+	if err := s.Client.deletePrivately("/spot/v1/order/fast", param.build(), &res); err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodDelete, url, nil)
-	if err != nil {
-		return nil, err
-	}
-	client := new(http.Client)
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }
 
@@ -271,19 +221,19 @@ type SpotOrderBatchCancelParam struct {
 	Types []OrderTypeSpot `json:"orderTypes"`
 }
 
-func (p SpotOrderBatchCancelParam) build() map[string]string {
-	result := map[string]string{
-		"symbolId": string(p.Symbol),
-	}
+func (p SpotOrderBatchCancelParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbolId", string(p.Symbol))
+
 	if p.Side != nil {
-		result["side"] = string(*p.Side)
+		result.Add("side", string(*p.Side))
 	}
 	if len(p.Types) != 0 {
 		var types []string
 		for _, t := range p.Types {
 			types = append(types, string(t))
 		}
-		result["orderTypes"] = strings.Join(types, ",")
+		result.Add("orderTypes", strings.Join(types, ","))
 	}
 	return result
 }
@@ -300,24 +250,10 @@ type SpotOrderBatchCancelResult struct {
 func (s *AccountService) SpotOrderBatchCancel(param SpotOrderBatchCancelParam) (*SpotOrderBatchCancelResponse, error) {
 	var res SpotOrderBatchCancelResponse
 
-	url, err := s.Client.BuildPrivateURL("/spot/order/batch-cancel", param.build())
-	if err != nil {
+	if err := s.Client.deletePrivately("/spot/order/batch-cancel", param.build(), &res); err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodDelete, url, nil)
-	if err != nil {
-		return nil, err
-	}
-	client := new(http.Client)
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }
 
@@ -328,19 +264,18 @@ type SpotOrderBatchFastCancelParam struct {
 	Types []OrderTypeSpot `json:"orderTypes"`
 }
 
-func (p SpotOrderBatchFastCancelParam) build() map[string]string {
-	result := map[string]string{
-		"symbolId": string(p.Symbol),
-	}
+func (p SpotOrderBatchFastCancelParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbolId", string(p.Symbol))
 	if p.Side != nil {
-		result["side"] = string(*p.Side)
+		result.Add("side", string(*p.Side))
 	}
 	if len(p.Types) != 0 {
 		var types []string
 		for _, t := range p.Types {
 			types = append(types, string(t))
 		}
-		result["orderTypes"] = strings.Join(types, ",")
+		result.Add("orderTypes", strings.Join(types, ","))
 	}
 	return result
 }
@@ -357,24 +292,10 @@ type SpotOrderBatchFastCancelResult struct {
 func (s *AccountService) SpotOrderBatchFastCancel(param SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error) {
 	var res SpotOrderBatchFastCancelResponse
 
-	url, err := s.Client.BuildPrivateURL("/spot/order/batch-fast-cancel", param.build())
-	if err != nil {
+	if err := s.Client.deletePrivately("/spot/order/batch-fast-cancel", param.build(), &res); err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodDelete, url, nil)
-	if err != nil {
-		return nil, err
-	}
-	client := new(http.Client)
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }
 
@@ -396,25 +317,11 @@ func (s *AccountService) SpotOrderBatchCancelByIDs(orderIDs []string) (*SpotOrde
 		return nil, errors.New("orderIDs length must be no more than 100")
 	}
 
-	url, err := s.Client.BuildPrivateURL("/spot/order/batch-cancel-by-ids", map[string]string{
-		"orderIds": strings.Join(orderIDs, ","),
-	})
-	if err != nil {
+	query := url.Values{}
+	query.Add("orderIds", strings.Join(orderIDs, ","))
+	if err := s.Client.deletePrivately("/spot/order/batch-cancel-by-ids", query, &res); err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodDelete, url, nil)
-	if err != nil {
-		return nil, err
-	}
-	client := new(http.Client)
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
 	return &res, nil
 }

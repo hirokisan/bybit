@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -34,18 +34,10 @@ type SpotSymbolsResult struct {
 func (s *MarketService) SpotSymbols() (*SpotSymbolsResponse, error) {
 	var res SpotSymbolsResponse
 
-	url, err := s.Client.BuildPublicURL("/spot/v1/symbols", nil)
-	if err != nil {
+	if err := s.Client.getPublicly("/spot/v1/symbols", nil, &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -56,12 +48,11 @@ type SpotQuoteDepthParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *SpotQuoteDepthParam) build() map[string]string {
-	result := map[string]string{
-		"symbol": string(p.Symbol),
-	}
+func (p *SpotQuoteDepthParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -114,18 +105,10 @@ type SpotQuoteDepthBidAsk struct {
 func (s *MarketService) SpotQuoteDepth(param SpotQuoteDepthParam) (*SpotQuoteDepthResponse, error) {
 	var res SpotQuoteDepthResponse
 
-	url, err := s.Client.BuildPublicURL("/spot/quote/v1/depth", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/spot/quote/v1/depth", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -137,15 +120,14 @@ type SpotQuoteDepthMergedParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *SpotQuoteDepthMergedParam) build() map[string]string {
-	result := map[string]string{
-		"symbol": string(p.Symbol),
-	}
+func (p *SpotQuoteDepthMergedParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
 	if p.Scale != nil {
-		result["scale"] = strconv.Itoa(*p.Scale)
+		result.Add("scale", strconv.Itoa(*p.Scale))
 	}
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -167,18 +149,10 @@ type SpotQuoteDepthMergedResult struct {
 func (s *MarketService) SpotQuoteDepthMerged(param SpotQuoteDepthMergedParam) (*SpotQuoteDepthMergedResponse, error) {
 	var res SpotQuoteDepthMergedResponse
 
-	url, err := s.Client.BuildPublicURL("/spot/quote/v1/depth/merged", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/spot/quote/v1/depth/merged", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -189,12 +163,11 @@ type SpotQuoteTradesParam struct {
 	Limit *int `json:"limit"`
 }
 
-func (p *SpotQuoteTradesParam) build() map[string]string {
-	result := map[string]string{
-		"symbol": string(p.Symbol),
-	}
+func (p *SpotQuoteTradesParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	return result
 }
@@ -217,18 +190,10 @@ type SpotQuoteTradesResult struct {
 func (s *MarketService) SpotQuoteTrades(param SpotQuoteTradesParam) (*SpotQuoteTradesResponse, error) {
 	var res SpotQuoteTradesResponse
 
-	url, err := s.Client.BuildPublicURL("/spot/quote/v1/trades", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/spot/quote/v1/trades", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -242,19 +207,18 @@ type SpotQuoteKlineParam struct {
 	EndTime   *int `json:"endTime"`
 }
 
-func (p *SpotQuoteKlineParam) build() map[string]string {
-	result := map[string]string{
-		"symbol":   string(p.Symbol),
-		"interval": string(p.Interval),
-	}
+func (p *SpotQuoteKlineParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
+	result.Add("interval", string(p.Interval))
 	if p.Limit != nil {
-		result["limit"] = strconv.Itoa(*p.Limit)
+		result.Add("limit", strconv.Itoa(*p.Limit))
 	}
 	if p.StartTime != nil {
-		result["startTime"] = strconv.Itoa(*p.StartTime)
+		result.Add("startTime", strconv.Itoa(*p.StartTime))
 	}
 	if p.EndTime != nil {
-		result["endTime"] = strconv.Itoa(*p.EndTime)
+		result.Add("endTime", strconv.Itoa(*p.EndTime))
 	}
 	return result
 }
@@ -314,18 +278,10 @@ type SpotQuoteKline struct {
 func (s *MarketService) SpotQuoteKline(param SpotQuoteKlineParam) (*SpotQuoteKlineResponse, error) {
 	var res SpotQuoteKlineResponse
 
-	url, err := s.Client.BuildPublicURL("/spot/quote/v1/kline", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/spot/quote/v1/kline", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -334,13 +290,12 @@ type SpotQuoteTicker24hrParam struct {
 	Symbol *SymbolSpot `json:"symbol"`
 }
 
-func (p *SpotQuoteTicker24hrParam) build() map[string]string {
+func (p *SpotQuoteTicker24hrParam) build() url.Values {
 	if p.Symbol == nil {
 		return nil
 	}
-	result := map[string]string{
-		"symbol": string(*p.Symbol),
-	}
+	result := url.Values{}
+	result.Add("symbol", string(*p.Symbol))
 	return result
 }
 
@@ -368,18 +323,10 @@ type SpotQuoteTicker24hrResult struct {
 func (s *MarketService) SpotQuoteTicker24hr(param SpotQuoteTicker24hrParam) (*SpotQuoteTicker24hrResponse, error) {
 	var res SpotQuoteTicker24hrResponse
 
-	url, err := s.Client.BuildPublicURL("/spot/quote/v1/ticker/24hr", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/spot/quote/v1/ticker/24hr", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -388,13 +335,12 @@ type SpotQuoteTickerPriceParam struct {
 	Symbol *SymbolSpot `json:"symbol"`
 }
 
-func (p *SpotQuoteTickerPriceParam) build() map[string]string {
+func (p *SpotQuoteTickerPriceParam) build() url.Values {
 	if p.Symbol == nil {
 		return nil
 	}
-	result := map[string]string{
-		"symbol": string(*p.Symbol),
-	}
+	result := url.Values{}
+	result.Add("symbol", string(*p.Symbol))
 	return result
 }
 
@@ -414,18 +360,10 @@ type SpotQuoteTickerPriceResult struct {
 func (s *MarketService) SpotQuoteTickerPrice(param SpotQuoteTickerPriceParam) (*SpotQuoteTickerPriceResponse, error) {
 	var res SpotQuoteTickerPriceResponse
 
-	url, err := s.Client.BuildPublicURL("/spot/quote/v1/ticker/price", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/spot/quote/v1/ticker/price", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
 
@@ -434,13 +372,12 @@ type SpotQuoteTickerBookTickerParam struct {
 	Symbol *SymbolSpot `json:"symbol"`
 }
 
-func (p *SpotQuoteTickerBookTickerParam) build() map[string]string {
+func (p *SpotQuoteTickerBookTickerParam) build() url.Values {
 	if p.Symbol == nil {
 		return nil
 	}
-	result := map[string]string{
-		"symbol": string(*p.Symbol),
-	}
+	result := url.Values{}
+	result.Add("symbol", string(*p.Symbol))
 	return result
 }
 
@@ -464,17 +401,9 @@ type SpotQuoteTickerBookTickerResult struct {
 func (s *MarketService) SpotQuoteTickerBookTicker(param SpotQuoteTickerBookTickerParam) (*SpotQuoteTickerBookTickerResponse, error) {
 	var res SpotQuoteTickerBookTickerResponse
 
-	url, err := s.Client.BuildPublicURL("/spot/quote/v1/ticker/book_ticker", param.build())
-	if err != nil {
+	if err := s.Client.getPublicly("/spot/quote/v1/ticker/book_ticker", param.build(), &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }

@@ -2,7 +2,7 @@ package bybit
 
 import (
 	"encoding/json"
-	"net/http"
+	"net/url"
 )
 
 // WalletService :
@@ -55,20 +55,11 @@ type Balance struct {
 func (s *WalletService) Balance(coin Coin) (*BalanceResponse, error) {
 	var res BalanceResponse
 
-	params := map[string]string{
-		"coin": string(coin),
-	}
-	url, err := s.Client.BuildPrivateURL("/v2/private/wallet/balance", params)
-	if err != nil {
+	query := url.Values{}
+	query.Add("coin", string(coin))
+	if err := s.Client.getPrivately("/v2/private/wallet/balance", query, &res); err != nil {
 		return nil, err
 	}
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return nil, err
-	}
+
 	return &res, nil
 }
