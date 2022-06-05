@@ -88,7 +88,7 @@ func (c *Client) Market() *MarketService {
 	return &MarketService{c}
 }
 
-func (c *Client) populateSignature(src url.Values) {
+func (c *Client) populateSignature(src url.Values) url.Values {
 	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
 	now := strconv.Itoa(intNow)
 
@@ -99,6 +99,8 @@ func (c *Client) populateSignature(src url.Values) {
 	src.Add("api_key", c.Key)
 	src.Add("timestamp", now)
 	src.Add("sign", getSignature(src, c.Secret))
+
+	return src
 }
 
 func getSignature(src url.Values, key string) string {
@@ -154,7 +156,7 @@ func (c *Client) getPrivately(path string, query url.Values, dst interface{}) er
 		return err
 	}
 	u.Path = path
-	c.populateSignature(query)
+	query = c.populateSignature(query)
 	u.RawQuery = query.Encode()
 
 	resp, err := http.Get(u.String())
@@ -181,7 +183,7 @@ func (c *Client) postJSON(path string, body []byte, dst interface{}) error {
 	u.Path = path
 
 	query := url.Values{}
-	c.populateSignature(query)
+	query = c.populateSignature(query)
 	u.RawQuery = query.Encode()
 
 	resp, err := http.Post(u.String(), "application/json", bytes.NewBuffer(body))
@@ -203,7 +205,7 @@ func (c *Client) postForm(path string, body url.Values, dst interface{}) error {
 	}
 	u.Path = path
 
-	c.populateSignature(body)
+	body = c.populateSignature(body)
 
 	resp, err := http.Post(u.String(), "application/x-www-form-urlencoded", strings.NewReader(body.Encode()))
 	if err != nil {
@@ -227,7 +229,7 @@ func (c *Client) deletePrivately(path string, query url.Values, dst interface{})
 		return err
 	}
 	u.Path = path
-	c.populateSignature(query)
+	query = c.populateSignature(query)
 	u.RawQuery = query.Encode()
 
 	req, err := http.NewRequest(http.MethodDelete, u.String(), nil)
