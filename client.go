@@ -1,14 +1,18 @@
 package bybit
 
 import (
+	"bytes"
 	"crypto/hmac"
 	"crypto/sha256"
+	"encoding/json"
 	"fmt"
 	"io"
+	"net/http"
 	"net/url"
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -84,81 +88,26 @@ func (c *Client) Market() *MarketService {
 	return &MarketService{c}
 }
 
-// BuildPublicURL :
-func (c *Client) BuildPublicURL(path string, params map[string]string) (string, error) {
-	if params == nil {
-		params = map[string]string{}
-	}
-	u, err := url.Parse(c.BaseURL)
-	if err != nil {
-		return "", nil
-	}
-	u.Path = path
-
-	q := u.Query()
-	for key, param := range params {
-		q.Set(key, param)
-	}
-	u.RawQuery = q.Encode()
-
-	return u.String(), nil
-}
-
-// BuildPrivateURL :
-func (c *Client) BuildPrivateURL(path string, params map[string]string) (string, error) {
-	if !c.HasAuth() {
-		return "", fmt.Errorf("this is private endpoint, please set api key and secret")
-	}
-
-	if params == nil {
-		params = map[string]string{}
-	}
-	u, err := url.Parse(c.BaseURL)
-	if err != nil {
-		return "", err
-	}
-	u.Path = path
-
-	c.populateSignature(params)
-
-	q := u.Query()
-	for key, param := range params {
-		q.Set(key, param)
-	}
-	u.RawQuery = q.Encode()
-
-	return u.String(), nil
-}
-
-func (c *Client) populateSignature(params map[string]string) {
+func (c *Client) populateSignature(src url.Values) {
 	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
 	now := strconv.Itoa(intNow)
 
-	params["api_key"] = c.Key
-	params["timestamp"] = now
-
-	params["sign"] = getSignature(params, c.Secret)
+	src.Add("api_key", c.Key)
+	src.Add("timestamp", now)
+	src.Add("sign", getSignature(src, c.Secret))
 }
 
-func encodeURLParamsFrom(params map[string]string) string {
-	form := url.Values{}
-	for key, value := range params {
-		form.Add(key, value)
-	}
-	return form.Encode()
-}
-
-func getSignature(params map[string]string, key string) string {
-	keys := make([]string, len(params))
+func getSignature(src url.Values, key string) string {
+	keys := make([]string, len(src))
 	i := 0
 	_val := ""
-	for k := range params {
+	for k := range src {
 		keys[i] = k
 		i++
 	}
 	sort.Strings(keys)
 	for _, k := range keys {
-		_val += k + "=" + params[k] + "&"
+		_val += k + "=" + src.Get(k) + "&"
 	}
 	_val = _val[0 : len(_val)-1]
 	h := hmac.New(sha256.New, []byte(key))
@@ -168,4 +117,98 @@ func getSignature(params map[string]string, key string) string {
 	}
 
 	return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+func (c *Client) getPublicly(path string, query url.Values, dst interface{}) error {
+	u, err := url.Parse(c.BaseURL)
+	if err != nil {
+		return err
+	}
+	u.Path = path
+	u.RawQuery = query.Encode()
+
+	resp, err := http.Get(u.String())
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) getPrivately(path string, query url.Values, dst interface{}) error {
+	if !c.HasAuth() {
+		return fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	u, err := url.Parse(c.BaseURL)
+	if err != nil {
+		return err
+	}
+	u.Path = path
+	c.populateSignature(query)
+	u.RawQuery = query.Encode()
+
+	resp, err := http.Get(u.String())
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) postJSON(path string, body []byte, dst interface{}) error {
+	if !c.HasAuth() {
+		return fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	u, err := url.Parse(c.BaseURL)
+	if err != nil {
+		return err
+	}
+	u.Path = path
+
+	query := url.Values{}
+	c.populateSignature(query)
+	u.RawQuery = query.Encode()
+
+	resp, err := http.Post(u.String(), "application/json", bytes.NewBuffer(body))
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) postForm(path string, body url.Values, dst interface{}) error {
+	u, err := url.Parse(c.BaseURL)
+	if err != nil {
+		return nil
+	}
+	u.Path = path
+
+	c.populateSignature(body)
+
+	resp, err := http.Post(u.String(), "application/x-www-form-urlencoded", strings.NewReader(body.Encode()))
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+		return err
+	}
+
+	return nil
 }
