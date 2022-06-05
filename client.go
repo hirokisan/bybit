@@ -92,6 +92,10 @@ func (c *Client) populateSignature(src url.Values) {
 	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
 	now := strconv.Itoa(intNow)
 
+	if src == nil {
+		src = url.Values{}
+	}
+
 	src.Add("api_key", c.Key)
 	src.Add("timestamp", now)
 	src.Add("sign", getSignature(src, c.Secret))
