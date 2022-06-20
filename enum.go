@@ -339,3 +339,13 @@ func MinimumVolumeUSDT(symbol SymbolUSDT) float64 {
 		panic("nothing")
 	}
 }
+
+// Direction :
+type Direction string
+
+const (
+	// DirectionPrev :
+	DirectionPrev = Direction("prev")
+	// DirectionNext :
+	DirectionNext = Direction("next")
+)

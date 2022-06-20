@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"strconv"
 )
 
 // AccountService :
@@ -71,6 +72,82 @@ func (s *AccountService) CreateOrder(param CreateOrderParam) (*CreateOrderRespon
 	}
 
 	if err := s.Client.postJSON("/v2/private/order/create", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// ListOrderResponse :
+type ListOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         ListOrderResult `json:"result"`
+}
+
+// ListOrderResult :
+type ListOrderResult struct {
+	ListOrders []ListOrder `json:"data"`
+}
+
+// ListOrder :
+type ListOrder struct {
+	UserID       int           `json:"user_id"`
+	Symbol       SymbolInverse `json:"symbol"`
+	Side         Side          `json:"side"`
+	OrderType    OrderType     `json:"order_type"`
+	Price        string        `json:"price"`
+	Qty          string        `json:"qty"`
+	TimeInForce  TimeInForce   `json:"time_in_force"`
+	OrderStatus  OrderStatus   `json:"order_status"`
+	LeavesQty    string        `json:"leaves_qty"`
+	LeavesValue  string        `json:"leaves_value"`
+	CumExecQty   string        `json:"cum_exec_qty"`
+	CumExecValue string        `json:"cum_exec_value"`
+	CumExecFee   string        `json:"cum_exec_fee"`
+	RejectReason string        `json:"reject_reason"`
+	OrderLinkID  string        `json:"order_link_id"`
+	CreatedAt    string        `json:"created_at"`
+	OrderID      string        `json:"order_id"`
+	TakeProfit   string        `json:"take_profit"`
+	StopLoss     string        `json:"stop_loss"`
+	TpTriggerBy  string        `json:"tp_trigger_by"`
+	SlTriggerBy  string        `json:"sl_trigger_by"`
+}
+
+// ListOrderParam :
+type ListOrderParam struct {
+	Symbol SymbolInverse `json:"symbol"`
+
+	OrderStatus *OrderStatus `json:"order_status,omitempty"`
+	Direction   *Direction   `json:"direction,omitempty"`
+	Size        *int         `json:"size,omitempty"`
+	Cursor      *string      `json:"cursor,omitempty"`
+}
+
+func (p *ListOrderParam) build() url.Values {
+	result := url.Values{}
+	result.Add("symbol", string(p.Symbol))
+	if p.OrderStatus != nil {
+		result.Add("order_status", string(*p.OrderStatus))
+	}
+	if p.Direction != nil {
+		result.Add("direction", string(*p.Direction))
+	}
+	if p.Size != nil {
+		result.Add("size", strconv.Itoa(*p.Size))
+	}
+	if p.Cursor != nil {
+		result.Add("cursor", *p.Cursor)
+	}
+
+	return result
+}
+
+// ListOrder :
+func (s *AccountService) ListOrder(param ListOrderParam) (*ListOrderResponse, error) {
+	var res ListOrderResponse
+
+	if err := s.Client.getPrivately("/v2/private/order/list", param.build(), &res); err != nil {
 		return nil, err
 	}
 
