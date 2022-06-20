@@ -35,6 +35,7 @@ The following API endpoints have been implemented
 #### Account Data Endpoints
 
 - `/v2/private/order/create` Place Active Order
+- `/v2/private/order/list` Get Active Order
 - `/v2/private/order/cancel` Cancel Active Order
 
 #### Wallet Data Endpoints
