@@ -2,7 +2,8 @@ package bybit
 
 import (
 	"net/url"
-	"strconv"
+
+	"github.com/google/go-querystring/query"
 )
 
 // MarketService :
@@ -40,22 +41,11 @@ func (s *MarketService) OrderBook(symbol SymbolInverse) (*OrderBookResponse, err
 
 // ListKlineParam :
 type ListKlineParam struct {
-	Symbol   SymbolInverse `json:"symbol"`
-	Interval Interval      `json:"interval"`
-	From     int           `json:"from"`
+	Symbol   SymbolInverse `url:"symbol"`
+	Interval Interval      `url:"interval"`
+	From     int           `url:"from"`
 
-	Limit *int `json:"limit"`
-}
-
-func (p *ListKlineParam) build() url.Values {
-	result := url.Values{}
-	result.Add("symbol", string(p.Symbol))
-	result.Add("interval", string(p.Interval))
-	result.Add("from", strconv.Itoa(p.From))
-	if p.Limit != nil {
-		result.Add("limit", strconv.Itoa(*p.Limit))
-	}
-	return result
+	Limit *int `url:"limit,omitempty"`
 }
 
 // ListKlineResponse :
@@ -81,7 +71,12 @@ type ListKlineResult struct {
 func (s *MarketService) ListKline(param ListKlineParam) (*ListKlineResponse, error) {
 	var res ListKlineResponse
 
-	if err := s.Client.getPublicly("/v2/public/kline/list", param.build(), &res); err != nil {
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.Client.getPublicly("/v2/public/kline/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -137,22 +132,10 @@ func (s *MarketService) Tickers(symbol SymbolInverse) (*TickersResponse, error) 
 
 // TradingRecordsParam :
 type TradingRecordsParam struct {
-	Symbol SymbolInverse `json:"symbol"`
+	Symbol SymbolInverse `url:"symbol"`
 
-	From  *int `json:"from"`
-	Limit *int `json:"limit"`
-}
-
-func (p *TradingRecordsParam) build() url.Values {
-	result := url.Values{}
-	result.Add("symbol", string(p.Symbol))
-	if p.From != nil {
-		result.Add("from", strconv.Itoa(*p.From))
-	}
-	if p.Limit != nil {
-		result.Add("limit", strconv.Itoa(*p.Limit))
-	}
-	return result
+	From  *int `url:"from,omitempty"`
+	Limit *int `url:"limit,omitempty"`
 }
 
 // TradingRecordsResponse :
@@ -175,7 +158,12 @@ type TradingRecordsResult struct {
 func (s *MarketService) TradingRecords(param TradingRecordsParam) (*TradingRecordsResponse, error) {
 	var res TradingRecordsResponse
 
-	if err := s.Client.getPublicly("/v2/public/trading-records", param.build(), &res); err != nil {
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.Client.getPublicly("/v2/public/trading-records", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -252,29 +240,23 @@ type MarkPriceKlineResult struct {
 
 // MarkPriceKlineParam :
 type MarkPriceKlineParam struct {
-	Symbol   SymbolInverse `json:"symbol"`
-	Interval Interval      `json:"interval"`
-	From     int           `json:"from"`
+	Symbol   SymbolInverse `url:"symbol"`
+	Interval Interval      `url:"interval"`
+	From     int           `url:"from"`
 
-	Limit *int `json:"limit"`
-}
-
-func (p *MarkPriceKlineParam) build() url.Values {
-	result := url.Values{}
-	result.Add("symbol", string(p.Symbol))
-	result.Add("interval", string(p.Interval))
-	result.Add("from", strconv.Itoa(p.From))
-	if p.Limit != nil {
-		result.Add("limit", strconv.Itoa(*p.Limit))
-	}
-	return result
+	Limit *int `url:"limit,omitempty"`
 }
 
 // MarkPriceKline :
 func (s *MarketService) MarkPriceKline(param MarkPriceKlineParam) (*MarkPriceKlineResponse, error) {
 	var res MarkPriceKlineResponse
 
-	if err := s.Client.getPublicly("/v2/public/mark-price-kline", param.build(), &res); err != nil {
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.Client.getPublicly("/v2/public/mark-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -300,29 +282,23 @@ type IndexPriceKlineResult struct {
 
 // IndexPriceKlineParam :
 type IndexPriceKlineParam struct {
-	Symbol   SymbolInverse `json:"symbol"`
-	Interval Interval      `json:"interval"`
-	From     int           `json:"from"`
+	Symbol   SymbolInverse `url:"symbol"`
+	Interval Interval      `url:"interval"`
+	From     int           `url:"from"`
 
-	Limit *int `json:"limit"`
-}
-
-func (p *IndexPriceKlineParam) build() url.Values {
-	result := url.Values{}
-	result.Add("symbol", string(p.Symbol))
-	result.Add("interval", string(p.Interval))
-	result.Add("from", strconv.Itoa(p.From))
-	if p.Limit != nil {
-		result.Add("limit", strconv.Itoa(*p.Limit))
-	}
-	return result
+	Limit *int `url:"limit,omitempty"`
 }
 
 // IndexPriceKline :
 func (s *MarketService) IndexPriceKline(param IndexPriceKlineParam) (*IndexPriceKlineResponse, error) {
 	var res IndexPriceKlineResponse
 
-	if err := s.Client.getPublicly("/v2/public/index-price-kline", param.build(), &res); err != nil {
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.Client.getPublicly("/v2/public/index-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -348,29 +324,23 @@ type PremiumIndexKlineResult struct {
 
 // PremiumIndexKlineParam :
 type PremiumIndexKlineParam struct {
-	Symbol   SymbolInverse `json:"symbol"`
-	Interval Interval      `json:"interval"`
-	From     int           `json:"from"`
+	Symbol   SymbolInverse `url:"symbol"`
+	Interval Interval      `url:"interval"`
+	From     int           `url:"from"`
 
-	Limit *int `json:"limit"`
-}
-
-func (p *PremiumIndexKlineParam) build() url.Values {
-	result := url.Values{}
-	result.Add("symbol", string(p.Symbol))
-	result.Add("interval", string(p.Interval))
-	result.Add("from", strconv.Itoa(p.From))
-	if p.Limit != nil {
-		result.Add("limit", strconv.Itoa(*p.Limit))
-	}
-	return result
+	Limit *int `url:"limit,omitempty"`
 }
 
 // PremiumIndexKline :
 func (s *MarketService) PremiumIndexKline(param PremiumIndexKlineParam) (*PremiumIndexKlineResponse, error) {
 	var res PremiumIndexKlineResponse
 
-	if err := s.Client.getPublicly("/v2/public/premium-index-kline", param.build(), &res); err != nil {
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.Client.getPublicly("/v2/public/premium-index-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -392,27 +362,22 @@ type OpenInterestResult struct {
 
 // OpenInterestParam :
 type OpenInterestParam struct {
-	Symbol SymbolInverse `json:"symbol"`
-	Period Period        `json:"period"`
+	Symbol SymbolInverse `url:"symbol"`
+	Period Period        `url:"period"`
 
-	Limit *int `json:"limit"`
-}
-
-func (p *OpenInterestParam) build() url.Values {
-	result := url.Values{}
-	result.Add("symbol", string(p.Symbol))
-	result.Add("period", string(p.Period))
-	if p.Limit != nil {
-		result.Add("limit", strconv.Itoa(*p.Limit))
-	}
-	return result
+	Limit *int `url:"limit,omitempty"`
 }
 
 // OpenInterest :
 func (s *MarketService) OpenInterest(param OpenInterestParam) (*OpenInterestResponse, error) {
 	var res OpenInterestResponse
 
-	if err := s.Client.getPublicly("/v2/public/open-interest", param.build(), &res); err != nil {
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.Client.getPublicly("/v2/public/open-interest", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -435,25 +400,21 @@ type BigDealResult struct {
 
 // BigDealParam :
 type BigDealParam struct {
-	Symbol SymbolInverse `json:"symbol"`
+	Symbol SymbolInverse `url:"symbol"`
 
-	Limit *int `json:"limit"`
-}
-
-func (p *BigDealParam) build() url.Values {
-	result := url.Values{}
-	result.Add("symbol", string(p.Symbol))
-	if p.Limit != nil {
-		result.Add("limit", strconv.Itoa(*p.Limit))
-	}
-	return result
+	Limit *int `url:"limit,omitempty"`
 }
 
 // BigDeal :
 func (s *MarketService) BigDeal(param BigDealParam) (*BigDealResponse, error) {
 	var res BigDealResponse
 
-	if err := s.Client.getPublicly("/v2/public/big-deal", param.build(), &res); err != nil {
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.Client.getPublicly("/v2/public/big-deal", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -476,27 +437,22 @@ type AccountRatioResult struct {
 
 // AccountRatioParam :
 type AccountRatioParam struct {
-	Symbol SymbolInverse `json:"symbol"`
-	Period Period        `json:"period"`
+	Symbol SymbolInverse `url:"symbol"`
+	Period Period        `url:"period"`
 
-	Limit *int `json:"limit"`
-}
-
-func (p *AccountRatioParam) build() url.Values {
-	result := url.Values{}
-	result.Add("symbol", string(p.Symbol))
-	result.Add("period", string(p.Period))
-	if p.Limit != nil {
-		result.Add("limit", strconv.Itoa(*p.Limit))
-	}
-	return result
+	Limit *int `url:"limit,omitempty"`
 }
 
 // AccountRatio :
 func (s *MarketService) AccountRatio(param AccountRatioParam) (*AccountRatioResponse, error) {
 	var res AccountRatioResponse
 
-	if err := s.Client.getPublicly("/v2/public/account-ratio", param.build(), &res); err != nil {
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.Client.getPublicly("/v2/public/account-ratio", queryString, &res); err != nil {
 		return nil, err
 	}
 	return &res, nil

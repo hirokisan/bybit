@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
-	"strconv"
+
+	"github.com/google/go-querystring/query"
 )
 
 // AccountService :
@@ -116,38 +117,24 @@ type ListOrder struct {
 
 // ListOrderParam :
 type ListOrderParam struct {
-	Symbol SymbolInverse `json:"symbol"`
+	Symbol SymbolInverse `url:"symbol"`
 
-	OrderStatus *OrderStatus `json:"order_status,omitempty"`
-	Direction   *Direction   `json:"direction,omitempty"`
-	Size        *int         `json:"size,omitempty"`
-	Cursor      *string      `json:"cursor,omitempty"`
-}
-
-func (p *ListOrderParam) build() url.Values {
-	result := url.Values{}
-	result.Add("symbol", string(p.Symbol))
-	if p.OrderStatus != nil {
-		result.Add("order_status", string(*p.OrderStatus))
-	}
-	if p.Direction != nil {
-		result.Add("direction", string(*p.Direction))
-	}
-	if p.Size != nil {
-		result.Add("size", strconv.Itoa(*p.Size))
-	}
-	if p.Cursor != nil {
-		result.Add("cursor", *p.Cursor)
-	}
-
-	return result
+	OrderStatus *OrderStatus `url:"order_status,omitempty"`
+	Direction   *Direction   `url:"direction,omitempty"`
+	Size        *int         `url:"size,omitempty"`
+	Cursor      *string      `url:"cursor,omitempty"`
 }
 
 // ListOrder :
 func (s *AccountService) ListOrder(param ListOrderParam) (*ListOrderResponse, error) {
 	var res ListOrderResponse
 
-	if err := s.Client.getPrivately("/v2/private/order/list", param.build(), &res); err != nil {
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.Client.getPrivately("/v2/private/order/list", queryString, &res); err != nil {
 		return nil, err
 	}
 

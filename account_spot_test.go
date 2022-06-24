@@ -1,9 +1,13 @@
 package bybit
 
 import (
+	"net/url"
+	"strings"
 	"testing"
 
+	"github.com/google/go-querystring/query"
 	"github.com/hirokisan/bybit/testhelper"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -252,4 +256,40 @@ func TestSpotOrderBatchCancelByIDs(t *testing.T) {
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
+}
+
+func TestSpotOrderBatchCancelParam(t *testing.T) {
+	param := SpotOrderBatchCancelParam{
+		Symbol: SymbolSpotBTCUSDT,
+		Types:  []OrderTypeSpot{OrderTypeSpotLimit, OrderTypeSpotMarket},
+	}
+	queryString, err := query.Values(param)
+	require.NoError(t, err)
+	want := url.Values{}
+	want.Add("symbolId", string(param.Symbol))
+	var types []string
+	for _, t := range param.Types {
+		types = append(types, string(t))
+	}
+	want.Add("orderTypes", strings.Join(types, ","))
+
+	assert.Equal(t, want, queryString)
+}
+
+func TestSpotOrderBatchFastCancelParam(t *testing.T) {
+	param := SpotOrderBatchFastCancelParam{
+		Symbol: SymbolSpotBTCUSDT,
+		Types:  []OrderTypeSpot{OrderTypeSpotLimit, OrderTypeSpotMarket},
+	}
+	queryString, err := query.Values(param)
+	require.NoError(t, err)
+	want := url.Values{}
+	want.Add("symbolId", string(param.Symbol))
+	var types []string
+	for _, t := range param.Types {
+		types = append(types, string(t))
+	}
+	want.Add("orderTypes", strings.Join(types, ","))
+
+	assert.Equal(t, want, queryString)
 }
