@@ -1,9 +1,10 @@
-module github.com/hirokisan/bybit
+module github.com/cksidharthan/bybit
 
 go 1.17
 
 require (
 	github.com/google/go-querystring v1.1.0
+	github.com/hirokisan/bybit v1.0.0
 	github.com/stretchr/testify v1.7.0
 )
 
