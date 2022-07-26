@@ -114,8 +114,6 @@ const (
 	OrderTypeLimit = OrderType("Limit")
 	// OrderTypeMarket :
 	OrderTypeMarket = OrderType("Market")
-	// OrderTypeConditional :
-	OrderTypeConditional = OrderType("Conditional")
 )
 
 // OrderTypeSpot :
