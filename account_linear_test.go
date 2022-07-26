@@ -170,3 +170,26 @@ func TestLinearExecutionList(t *testing.T) {
 		require.Error(t, err)
 	})
 }
+
+func TestAccountService_LinearCancelAllOrder(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := NewTestClient().WithAuthFromEnv()
+		res, err := client.Account().LinearCancelAllOrder(LinearCancelAllParam{
+			Symbol: SymbolUSDTBTC,
+		})
+		{
+			require.NoError(t, err)
+			require.Equal(t, "OK", res.RetMsg)
+		}
+		{
+			goldenFilename := "./testdata/private-linear-cancel-all-order.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	})
+	t.Run("auth error", func(t *testing.T) {
+		client := NewTestClient()
+		_, err := client.Account().LinearCancelAllOrder(LinearCancelAllParam{})
+		require.Error(t, err)
+	})
+}
