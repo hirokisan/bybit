@@ -276,3 +276,32 @@ func (s *AccountService) LinearExecutionList(param LinearExecutionListParam) (*L
 
 	return &res, nil
 }
+
+// LinearCancelAllParam : Parameters to be supplied to cancel all endpoint
+type LinearCancelAllParam struct {
+	Symbol SymbolUSDT `json:"symbol"`
+}
+
+// LinearCancelAllResponse : Response from cancel all endpoint
+type LinearCancelAllResponse struct {
+	CommonResponse `json:",inline"`
+	Result         LinearCancelAllResult `json:"result"`
+}
+
+type LinearCancelAllResult []string
+
+// LinearCancelAllOrder : Cancel all active orders that are unfilled or partially filled. Fully filled orders cannot be cancelled.
+func (s *AccountService) LinearCancelAllOrder(param LinearCancelAllParam) (*LinearCancelAllResponse, error) {
+	var res LinearCancelAllResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal for LinearCancelAllParam: %w", err)
+	}
+
+	if err := s.Client.postJSON("/private/linear/order/cancel-all", body, &res); err != nil {
+		return &res, err
+	}
+
+	return &res, nil
+}
