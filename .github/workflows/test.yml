@@ -1,8 +1,8 @@
-name: request-check-test
+name: test
 
 on:
-  schedule:
-    - cron:  '0 0 * * *'
+  push:
+    branches: '*'
 
 jobs:
   test:
@@ -16,6 +16,3 @@ jobs:
         run: go version
       - name: go-test
         run: make test
-        env:
-          BYBIT_TEST_KEY: ${{ secrets.BYBIT_TEST_KEY }}
-          BYBIT_TEST_SECRET: ${{ secrets.BYBIT_TEST_SECRET }}

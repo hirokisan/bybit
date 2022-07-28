@@ -1,22 +1,25 @@
-package bybit
+//go:build integrationtest
+
+package integrationtest
 
 import (
 	"testing"
 
-	"github.com/hirokisan/bybit/testhelper"
+	"github.com/hirokisan/bybit"
+	"github.com/hirokisan/bybit/integrationtest/testhelper"
 	"github.com/stretchr/testify/require"
 )
 
 func TestCreateOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
+		client := bybit.NewTestClient().WithAuthFromEnv()
 		price := 28383.5
-		res, err := client.Account().CreateOrder(CreateOrderParam{
-			Side:        SideBuy,
-			Symbol:      SymbolInverseBTCUSD,
-			OrderType:   OrderTypeLimit,
+		res, err := client.Account().CreateOrder(bybit.CreateOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolInverseBTCUSD,
+			OrderType:   bybit.OrderTypeLimit,
 			Qty:         1,
-			TimeInForce: TimeInForceGoodTillCancel,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
 			Price:       &price,
 		})
 		{
@@ -31,8 +34,8 @@ func TestCreateOrder(t *testing.T) {
 		// clean
 		{
 			orderID := res.Result.OrderID
-			res, err := client.Account().CancelOrder(CancelOrderParam{
-				Symbol:  SymbolInverseBTCUSD,
+			res, err := client.Account().CancelOrder(bybit.CancelOrderParam{
+				Symbol:  bybit.SymbolInverseBTCUSD,
 				OrderID: &orderID,
 			})
 			require.NoError(t, err)
@@ -41,14 +44,14 @@ func TestCreateOrder(t *testing.T) {
 	})
 
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
+		client := bybit.NewTestClient()
 		price := 28383.5
-		_, err := client.Account().CreateOrder(CreateOrderParam{
-			Side:        SideBuy,
-			Symbol:      SymbolInverseBTCUSD,
-			OrderType:   OrderTypeLimit,
+		_, err := client.Account().CreateOrder(bybit.CreateOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolInverseBTCUSD,
+			OrderType:   bybit.OrderTypeLimit,
 			Qty:         1,
-			TimeInForce: TimeInForceGoodTillCancel,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
 			Price:       &price,
 		})
 		require.Error(t, err)
@@ -57,16 +60,16 @@ func TestCreateOrder(t *testing.T) {
 
 func TestListOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
+		client := bybit.NewTestClient().WithAuthFromEnv()
 		var orderID string
 		{
 			price := 10000.0
-			res, err := client.Account().CreateOrder(CreateOrderParam{
-				Side:        SideBuy,
-				Symbol:      SymbolInverseBTCUSD,
-				OrderType:   OrderTypeLimit,
+			res, err := client.Account().CreateOrder(bybit.CreateOrderParam{
+				Side:        bybit.SideBuy,
+				Symbol:      bybit.SymbolInverseBTCUSD,
+				OrderType:   bybit.OrderTypeLimit,
 				Qty:         1,
-				TimeInForce: TimeInForceGoodTillCancel,
+				TimeInForce: bybit.TimeInForceGoodTillCancel,
 				Price:       &price,
 			})
 			{
@@ -75,8 +78,8 @@ func TestListOrder(t *testing.T) {
 			}
 			orderID = res.Result.OrderID
 		}
-		res, err := client.Account().ListOrder(ListOrderParam{
-			Symbol: SymbolInverseBTCUSD,
+		res, err := client.Account().ListOrder(bybit.ListOrderParam{
+			Symbol: bybit.SymbolInverseBTCUSD,
 		})
 		{
 			require.NoError(t, err)
@@ -89,8 +92,8 @@ func TestListOrder(t *testing.T) {
 		}
 		// clean
 		{
-			res, err := client.Account().CancelOrder(CancelOrderParam{
-				Symbol:  SymbolInverseBTCUSD,
+			res, err := client.Account().CancelOrder(bybit.CancelOrderParam{
+				Symbol:  bybit.SymbolInverseBTCUSD,
 				OrderID: &orderID,
 			})
 			require.NoError(t, err)
@@ -99,14 +102,14 @@ func TestListOrder(t *testing.T) {
 	})
 
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
+		client := bybit.NewTestClient()
 		price := 28383.5
-		_, err := client.Account().CreateOrder(CreateOrderParam{
-			Side:        SideBuy,
-			Symbol:      SymbolInverseBTCUSD,
-			OrderType:   OrderTypeLimit,
+		_, err := client.Account().CreateOrder(bybit.CreateOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolInverseBTCUSD,
+			OrderType:   bybit.OrderTypeLimit,
 			Qty:         1,
-			TimeInForce: TimeInForceGoodTillCancel,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
 			Price:       &price,
 		})
 		require.Error(t, err)
@@ -115,8 +118,8 @@ func TestListOrder(t *testing.T) {
 
 func TestListPosition(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
-		res, err := client.Account().ListPosition(SymbolInverseBTCUSD)
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		res, err := client.Account().ListPosition(bybit.SymbolInverseBTCUSD)
 		{
 			require.NoError(t, err)
 			require.Equal(t, "OK", res.RetMsg)
@@ -128,15 +131,15 @@ func TestListPosition(t *testing.T) {
 		}
 	})
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
-		_, err := client.Account().ListPosition(SymbolInverseBTCUSD)
+		client := bybit.NewTestClient()
+		_, err := client.Account().ListPosition(bybit.SymbolInverseBTCUSD)
 		require.Error(t, err)
 	})
 }
 
 func TestListPositions(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
+		client := bybit.NewTestClient().WithAuthFromEnv()
 		res, err := client.Account().ListPositions()
 		{
 			require.NoError(t, err)
@@ -149,7 +152,7 @@ func TestListPositions(t *testing.T) {
 		}
 	})
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
+		client := bybit.NewTestClient()
 		_, err := client.Account().ListPositions()
 		require.Error(t, err)
 	})
@@ -157,16 +160,16 @@ func TestListPositions(t *testing.T) {
 
 func TestCancelOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
+		client := bybit.NewTestClient().WithAuthFromEnv()
 		var orderID string
 		{
 			price := 28383.5
-			res, err := client.Account().CreateOrder(CreateOrderParam{
-				Side:        SideBuy,
-				Symbol:      SymbolInverseBTCUSD,
-				OrderType:   OrderTypeLimit,
+			res, err := client.Account().CreateOrder(bybit.CreateOrderParam{
+				Side:        bybit.SideBuy,
+				Symbol:      bybit.SymbolInverseBTCUSD,
+				OrderType:   bybit.OrderTypeLimit,
 				Qty:         1,
-				TimeInForce: TimeInForceGoodTillCancel,
+				TimeInForce: bybit.TimeInForceGoodTillCancel,
 				Price:       &price,
 			})
 			{
@@ -175,8 +178,8 @@ func TestCancelOrder(t *testing.T) {
 			}
 			orderID = res.Result.OrderID
 		}
-		res, err := client.Account().CancelOrder(CancelOrderParam{
-			Symbol:  SymbolInverseBTCUSD,
+		res, err := client.Account().CancelOrder(bybit.CancelOrderParam{
+			Symbol:  bybit.SymbolInverseBTCUSD,
 			OrderID: &orderID,
 		})
 		{
@@ -191,18 +194,18 @@ func TestCancelOrder(t *testing.T) {
 	})
 
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
-		_, err := client.Account().CancelOrder(CancelOrderParam{})
+		client := bybit.NewTestClient()
+		_, err := client.Account().CancelOrder(bybit.CancelOrderParam{})
 		require.Error(t, err)
 	})
 }
 
 func TestSaveLeverage(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
+		client := bybit.NewTestClient().WithAuthFromEnv()
 		{
-			res, err := client.Account().SaveLeverage(SaveLeverageParam{
-				Symbol:   SymbolInverseBTCUSD,
+			res, err := client.Account().SaveLeverage(bybit.SaveLeverageParam{
+				Symbol:   bybit.SymbolInverseBTCUSD,
 				Leverage: 2.0,
 			})
 			{
@@ -217,8 +220,8 @@ func TestSaveLeverage(t *testing.T) {
 		}
 	})
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
-		_, err := client.Account().CancelOrder(CancelOrderParam{})
+		client := bybit.NewTestClient()
+		_, err := client.Account().CancelOrder(bybit.CancelOrderParam{})
 		require.Error(t, err)
 	})
 }

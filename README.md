@@ -1,5 +1,5 @@
 [![golangci-lint](https://github.com/hirokisan/bybit/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/hirokisan/bybit/actions/workflows/golangci-lint.yml)
-[![request-check-test](https://github.com/hirokisan/bybit/actions/workflows/test.yml/badge.svg)](https://github.com/hirokisan/bybit/actions/workflows/test.yml)
+[![test](https://github.com/hirokisan/bybit/actions/workflows/test.yml/badge.svg)](https://github.com/hirokisan/bybit/actions/workflows/test.yml)
 
 # bybit
 
@@ -111,32 +111,3 @@ The following API endpoints have been implemented
 - `/spot/order/batch-cancel` Batch Cancel Active Order
 - `/spot/order/batch-fast-cancel` Batch Fast Cancel Active Order
 - `/spot/order/batch-cancel-by-ids` Batch Cancel Active Order By IDs
-
-## Run Test
-
-There are tests so that we can get to know the changes of bybit api response.
-
-Before run test, export testnet api key and secret
-```console
-$ export BYBIT_TEST_KEY=xxx
-$ export BYBIT_TEST_SECRET=xxx
-```
-
-Also be sure to prepare assets on your testnet wallet
-
-Test with updating golden file
-```console
-$ make test BYBIT_TEST_UPDATED=true
-```
-
-Test
-```console
-$ make test
-```
-
-Test specific method
-```
-$ make test-spec BYBIT_TEST_METHOD=TestBalance
-```
-
-You can check result of daily test on [GitHub Actions](https://github.com/hirokisan/bybit/actions/workflows/test.yml)

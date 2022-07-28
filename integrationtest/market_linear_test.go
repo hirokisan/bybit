@@ -1,15 +1,18 @@
-package bybit
+//go:build integrationtest
+
+package integrationtest
 
 import (
 	"testing"
 
-	"github.com/hirokisan/bybit/testhelper"
+	"github.com/hirokisan/bybit"
+	"github.com/hirokisan/bybit/integrationtest/testhelper"
 	"github.com/stretchr/testify/require"
 )
 
 func TestLinearTickers(t *testing.T) {
-	client := NewTestClient()
-	res, err := client.Market().LinearTickers(SymbolUSDTBTC)
+	client := bybit.NewTestClient()
+	res, err := client.Market().LinearTickers(bybit.SymbolUSDTBTC)
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
