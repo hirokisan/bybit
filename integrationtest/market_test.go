@@ -1,16 +1,19 @@
-package bybit
+//go:build integrationtest
+
+package integrationtest
 
 import (
 	"testing"
 	"time"
 
-	"github.com/hirokisan/bybit/testhelper"
+	"github.com/hirokisan/bybit"
+	"github.com/hirokisan/bybit/integrationtest/testhelper"
 	"github.com/stretchr/testify/require"
 )
 
 func TestOrderBook(t *testing.T) {
-	client := NewTestClient()
-	res, err := client.Market().OrderBook(SymbolInverseBTCUSD)
+	client := bybit.NewTestClient()
+	res, err := client.Market().OrderBook(bybit.SymbolInverseBTCUSD)
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
@@ -23,10 +26,10 @@ func TestOrderBook(t *testing.T) {
 }
 
 func TestListKline(t *testing.T) {
-	client := NewTestClient()
-	res, err := client.Market().ListKline(ListKlineParam{
-		Symbol:   SymbolInverseBTCUSD,
-		Interval: Interval120,
+	client := bybit.NewTestClient()
+	res, err := client.Market().ListKline(bybit.ListKlineParam{
+		Symbol:   bybit.SymbolInverseBTCUSD,
+		Interval: bybit.Interval120,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
 	{
@@ -41,8 +44,8 @@ func TestListKline(t *testing.T) {
 }
 
 func TestTickers(t *testing.T) {
-	client := NewTestClient()
-	res, err := client.Market().Tickers(SymbolInverseBTCUSD)
+	client := bybit.NewTestClient()
+	res, err := client.Market().Tickers(bybit.SymbolInverseBTCUSD)
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
@@ -55,10 +58,10 @@ func TestTickers(t *testing.T) {
 }
 
 func TestTradingRecords(t *testing.T) {
-	client := NewTestClient()
+	client := bybit.NewTestClient()
 	limit := 10
-	res, err := client.Market().TradingRecords(TradingRecordsParam{
-		Symbol: SymbolInverseBTCUSD,
+	res, err := client.Market().TradingRecords(bybit.TradingRecordsParam{
+		Symbol: bybit.SymbolInverseBTCUSD,
 		Limit:  &limit,
 	})
 	{
@@ -73,7 +76,7 @@ func TestTradingRecords(t *testing.T) {
 }
 
 func TestSymbols(t *testing.T) {
-	client := NewTestClient()
+	client := bybit.NewTestClient()
 	res, err := client.Market().Symbols()
 	{
 		require.NoError(t, err)
@@ -87,10 +90,10 @@ func TestSymbols(t *testing.T) {
 }
 
 func TestIndexPriceKline(t *testing.T) {
-	client := NewTestClient()
-	res, err := client.Market().IndexPriceKline(IndexPriceKlineParam{
-		Symbol:   SymbolInverseBTCUSD,
-		Interval: IntervalD,
+	client := bybit.NewTestClient()
+	res, err := client.Market().IndexPriceKline(bybit.IndexPriceKlineParam{
+		Symbol:   bybit.SymbolInverseBTCUSD,
+		Interval: bybit.IntervalD,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
 	{
@@ -105,10 +108,10 @@ func TestIndexPriceKline(t *testing.T) {
 }
 
 func TestPremiumIndexKline(t *testing.T) {
-	client := NewTestClient()
-	res, err := client.Market().PremiumIndexKline(PremiumIndexKlineParam{
-		Symbol:   SymbolInverseBTCUSD,
-		Interval: Interval120,
+	client := bybit.NewTestClient()
+	res, err := client.Market().PremiumIndexKline(bybit.PremiumIndexKlineParam{
+		Symbol:   bybit.SymbolInverseBTCUSD,
+		Interval: bybit.Interval120,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
 	{
@@ -123,10 +126,10 @@ func TestPremiumIndexKline(t *testing.T) {
 }
 
 func TestOpenInterest(t *testing.T) {
-	client := NewTestClient()
-	res, err := client.Market().OpenInterest(OpenInterestParam{
-		Symbol: SymbolInverseBTCUSD,
-		Period: Period1h,
+	client := bybit.NewTestClient()
+	res, err := client.Market().OpenInterest(bybit.OpenInterestParam{
+		Symbol: bybit.SymbolInverseBTCUSD,
+		Period: bybit.Period1h,
 	})
 	{
 		require.NoError(t, err)
@@ -140,9 +143,9 @@ func TestOpenInterest(t *testing.T) {
 }
 
 func TestBigDeal(t *testing.T) {
-	client := NewTestClient()
-	res, err := client.Market().BigDeal(BigDealParam{
-		Symbol: SymbolInverseBTCUSD,
+	client := bybit.NewTestClient()
+	res, err := client.Market().BigDeal(bybit.BigDealParam{
+		Symbol: bybit.SymbolInverseBTCUSD,
 	})
 	{
 		require.NoError(t, err)
@@ -156,11 +159,11 @@ func TestBigDeal(t *testing.T) {
 }
 
 func TestAccountRatio(t *testing.T) {
-	client := NewTestClient()
+	client := bybit.NewTestClient()
 	limit := 10
-	res, err := client.Market().AccountRatio(AccountRatioParam{
-		Symbol: SymbolInverseBTCUSD,
-		Period: Period1h,
+	res, err := client.Market().AccountRatio(bybit.AccountRatioParam{
+		Symbol: bybit.SymbolInverseBTCUSD,
+		Period: bybit.Period1h,
 		Limit:  &limit,
 	})
 	{

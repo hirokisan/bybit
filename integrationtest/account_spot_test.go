@@ -1,4 +1,6 @@
-package bybit
+//go:build integrationtest
+
+package integrationtest
 
 import (
 	"net/url"
@@ -6,19 +8,20 @@ import (
 	"testing"
 
 	"github.com/google/go-querystring/query"
-	"github.com/hirokisan/bybit/testhelper"
+	"github.com/hirokisan/bybit"
+	"github.com/hirokisan/bybit/integrationtest/testhelper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func TestSpotPostOrder(t *testing.T) {
-	client := NewTestClient().WithAuthFromEnv()
+	client := bybit.NewTestClient().WithAuthFromEnv()
 	price := 28383.5
-	res, err := client.Account().SpotPostOrder(SpotPostOrderParam{
-		Symbol: SymbolSpotBTCUSDT,
+	res, err := client.Account().SpotPostOrder(bybit.SpotPostOrderParam{
+		Symbol: bybit.SymbolSpotBTCUSDT,
 		Qty:    0.01,
-		Side:   SideBuy,
-		Type:   OrderTypeSpotLimit,
+		Side:   bybit.SideBuy,
+		Type:   bybit.OrderTypeSpotLimit,
 		Price:  &price,
 	})
 	{
@@ -33,7 +36,7 @@ func TestSpotPostOrder(t *testing.T) {
 	// clean order
 	orderID := res.Result.OrderID
 	{
-		res, err := client.Account().SpotDeleteOrder(SpotDeleteOrderParam{
+		res, err := client.Account().SpotDeleteOrder(bybit.SpotDeleteOrderParam{
 			OrderID: &orderID,
 		})
 		{
@@ -44,16 +47,16 @@ func TestSpotPostOrder(t *testing.T) {
 }
 
 func TestSpotGetOrder(t *testing.T) {
-	client := NewTestClient().WithAuthFromEnv()
+	client := bybit.NewTestClient().WithAuthFromEnv()
 
 	var orderID string
 	{
 		price := 28383.5
-		res, err := client.Account().SpotPostOrder(SpotPostOrderParam{
-			Symbol: SymbolSpotBTCUSDT,
+		res, err := client.Account().SpotPostOrder(bybit.SpotPostOrderParam{
+			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
-			Side:   SideBuy,
-			Type:   OrderTypeSpotLimit,
+			Side:   bybit.SideBuy,
+			Type:   bybit.OrderTypeSpotLimit,
 			Price:  &price,
 		})
 		{
@@ -63,7 +66,7 @@ func TestSpotGetOrder(t *testing.T) {
 		orderID = res.Result.OrderID
 	}
 
-	res, err := client.Account().SpotGetOrder(SpotGetOrderParam{
+	res, err := client.Account().SpotGetOrder(bybit.SpotGetOrderParam{
 		OrderID: &orderID,
 	})
 	{
@@ -77,7 +80,7 @@ func TestSpotGetOrder(t *testing.T) {
 	}
 	// clean order
 	{
-		res, err := client.Account().SpotDeleteOrder(SpotDeleteOrderParam{
+		res, err := client.Account().SpotDeleteOrder(bybit.SpotDeleteOrderParam{
 			OrderID: &orderID,
 		})
 		{
@@ -88,16 +91,16 @@ func TestSpotGetOrder(t *testing.T) {
 }
 
 func TestSpotDeleteOrder(t *testing.T) {
-	client := NewTestClient().WithAuthFromEnv()
+	client := bybit.NewTestClient().WithAuthFromEnv()
 
 	var orderID string
 	{
 		price := 28383.5
-		res, err := client.Account().SpotPostOrder(SpotPostOrderParam{
-			Symbol: SymbolSpotBTCUSDT,
+		res, err := client.Account().SpotPostOrder(bybit.SpotPostOrderParam{
+			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
-			Side:   SideBuy,
-			Type:   OrderTypeSpotLimit,
+			Side:   bybit.SideBuy,
+			Type:   bybit.OrderTypeSpotLimit,
 			Price:  &price,
 		})
 		{
@@ -107,7 +110,7 @@ func TestSpotDeleteOrder(t *testing.T) {
 		orderID = res.Result.OrderID
 	}
 
-	res, err := client.Account().SpotDeleteOrder(SpotDeleteOrderParam{
+	res, err := client.Account().SpotDeleteOrder(bybit.SpotDeleteOrderParam{
 		OrderID: &orderID,
 	})
 	{
@@ -122,17 +125,17 @@ func TestSpotDeleteOrder(t *testing.T) {
 }
 
 func TestSpotDeleteFastOrder(t *testing.T) {
-	client := NewTestClient().WithAuthFromEnv()
+	client := bybit.NewTestClient().WithAuthFromEnv()
 
 	var orderID string
-	var symbol SymbolSpot
+	var symbol bybit.SymbolSpot
 	{
 		price := 28383.5
-		res, err := client.Account().SpotPostOrder(SpotPostOrderParam{
-			Symbol: SymbolSpotBTCUSDT,
+		res, err := client.Account().SpotPostOrder(bybit.SpotPostOrderParam{
+			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
-			Side:   SideBuy,
-			Type:   OrderTypeSpotLimit,
+			Side:   bybit.SideBuy,
+			Type:   bybit.OrderTypeSpotLimit,
 			Price:  &price,
 		})
 		{
@@ -140,10 +143,10 @@ func TestSpotDeleteFastOrder(t *testing.T) {
 			require.Equal(t, "", res.RetMsg)
 		}
 		orderID = res.Result.OrderID
-		symbol = SymbolSpot(res.Result.Symbol)
+		symbol = bybit.SymbolSpot(res.Result.Symbol)
 	}
 
-	res, err := client.Account().SpotDeleteOrderFast(SpotDeleteOrderFastParam{
+	res, err := client.Account().SpotDeleteOrderFast(bybit.SpotDeleteOrderFastParam{
 		Symbol:  symbol,
 		OrderID: &orderID,
 	})
@@ -159,26 +162,26 @@ func TestSpotDeleteFastOrder(t *testing.T) {
 }
 
 func TestSpotOrderBatchCancel(t *testing.T) {
-	client := NewTestClient().WithAuthFromEnv()
+	client := bybit.NewTestClient().WithAuthFromEnv()
 
-	var symbol SymbolSpot
+	var symbol bybit.SymbolSpot
 	{
 		price := 28383.5
-		res, err := client.Account().SpotPostOrder(SpotPostOrderParam{
-			Symbol: SymbolSpotBTCUSDT,
+		res, err := client.Account().SpotPostOrder(bybit.SpotPostOrderParam{
+			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
-			Side:   SideBuy,
-			Type:   OrderTypeSpotLimit,
+			Side:   bybit.SideBuy,
+			Type:   bybit.OrderTypeSpotLimit,
 			Price:  &price,
 		})
 		{
 			require.NoError(t, err)
 			require.Equal(t, "", res.RetMsg)
 		}
-		symbol = SymbolSpot(res.Result.Symbol)
+		symbol = bybit.SymbolSpot(res.Result.Symbol)
 	}
 
-	res, err := client.Account().SpotOrderBatchCancel(SpotOrderBatchCancelParam{
+	res, err := client.Account().SpotOrderBatchCancel(bybit.SpotOrderBatchCancelParam{
 		Symbol: symbol,
 	})
 	{
@@ -193,26 +196,26 @@ func TestSpotOrderBatchCancel(t *testing.T) {
 }
 
 func TestSpotOrderBatchFastCancel(t *testing.T) {
-	client := NewTestClient().WithAuthFromEnv()
+	client := bybit.NewTestClient().WithAuthFromEnv()
 
-	var symbol SymbolSpot
+	var symbol bybit.SymbolSpot
 	{
 		price := 28383.5
-		res, err := client.Account().SpotPostOrder(SpotPostOrderParam{
-			Symbol: SymbolSpotBTCUSDT,
+		res, err := client.Account().SpotPostOrder(bybit.SpotPostOrderParam{
+			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
-			Side:   SideBuy,
-			Type:   OrderTypeSpotLimit,
+			Side:   bybit.SideBuy,
+			Type:   bybit.OrderTypeSpotLimit,
 			Price:  &price,
 		})
 		{
 			require.NoError(t, err)
 			require.Equal(t, "", res.RetMsg)
 		}
-		symbol = SymbolSpot(res.Result.Symbol)
+		symbol = bybit.SymbolSpot(res.Result.Symbol)
 	}
 
-	res, err := client.Account().SpotOrderBatchFastCancel(SpotOrderBatchFastCancelParam{
+	res, err := client.Account().SpotOrderBatchFastCancel(bybit.SpotOrderBatchFastCancelParam{
 		Symbol: symbol,
 	})
 	{
@@ -227,16 +230,16 @@ func TestSpotOrderBatchFastCancel(t *testing.T) {
 }
 
 func TestSpotOrderBatchCancelByIDs(t *testing.T) {
-	client := NewTestClient().WithAuthFromEnv()
+	client := bybit.NewTestClient().WithAuthFromEnv()
 
 	var orderID string
 	{
 		price := 28383.5
-		res, err := client.Account().SpotPostOrder(SpotPostOrderParam{
-			Symbol: SymbolSpotBTCUSDT,
+		res, err := client.Account().SpotPostOrder(bybit.SpotPostOrderParam{
+			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
-			Side:   SideBuy,
-			Type:   OrderTypeSpotLimit,
+			Side:   bybit.SideBuy,
+			Type:   bybit.OrderTypeSpotLimit,
 			Price:  &price,
 		})
 		{
@@ -259,9 +262,9 @@ func TestSpotOrderBatchCancelByIDs(t *testing.T) {
 }
 
 func TestSpotOrderBatchCancelParam(t *testing.T) {
-	param := SpotOrderBatchCancelParam{
-		Symbol: SymbolSpotBTCUSDT,
-		Types:  []OrderTypeSpot{OrderTypeSpotLimit, OrderTypeSpotMarket},
+	param := bybit.SpotOrderBatchCancelParam{
+		Symbol: bybit.SymbolSpotBTCUSDT,
+		Types:  []bybit.OrderTypeSpot{bybit.OrderTypeSpotLimit, bybit.OrderTypeSpotMarket},
 	}
 	queryString, err := query.Values(param)
 	require.NoError(t, err)
@@ -277,9 +280,9 @@ func TestSpotOrderBatchCancelParam(t *testing.T) {
 }
 
 func TestSpotOrderBatchFastCancelParam(t *testing.T) {
-	param := SpotOrderBatchFastCancelParam{
-		Symbol: SymbolSpotBTCUSDT,
-		Types:  []OrderTypeSpot{OrderTypeSpotLimit, OrderTypeSpotMarket},
+	param := bybit.SpotOrderBatchFastCancelParam{
+		Symbol: bybit.SymbolSpotBTCUSDT,
+		Types:  []bybit.OrderTypeSpot{bybit.OrderTypeSpotLimit, bybit.OrderTypeSpotMarket},
 	}
 	queryString, err := query.Values(param)
 	require.NoError(t, err)

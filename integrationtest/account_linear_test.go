@@ -1,22 +1,25 @@
-package bybit
+//go:build integrationtest
+
+package integrationtest
 
 import (
 	"testing"
 
-	"github.com/hirokisan/bybit/testhelper"
+	"github.com/hirokisan/bybit"
+	"github.com/hirokisan/bybit/integrationtest/testhelper"
 	"github.com/stretchr/testify/require"
 )
 
 func TestCreateLinearOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
+		client := bybit.NewTestClient().WithAuthFromEnv()
 		price := 28383.5
-		res, err := client.Account().CreateLinearOrder(CreateLinearOrderParam{
-			Side:        SideBuy,
-			Symbol:      SymbolUSDTBTC,
-			OrderType:   OrderTypeLimit,
+		res, err := client.Account().CreateLinearOrder(bybit.CreateLinearOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolUSDTBTC,
+			OrderType:   bybit.OrderTypeLimit,
 			Qty:         0.001,
-			TimeInForce: TimeInForceGoodTillCancel,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
 			Price:       &price,
 		})
 		{
@@ -30,14 +33,14 @@ func TestCreateLinearOrder(t *testing.T) {
 		}
 	})
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
+		client := bybit.NewTestClient()
 		price := 28383.5
-		_, err := client.Account().CreateLinearOrder(CreateLinearOrderParam{
-			Side:        SideBuy,
-			Symbol:      SymbolUSDTBTC,
-			OrderType:   OrderTypeLimit,
+		_, err := client.Account().CreateLinearOrder(bybit.CreateLinearOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolUSDTBTC,
+			OrderType:   bybit.OrderTypeLimit,
 			Qty:         0.001,
-			TimeInForce: TimeInForceGoodTillCancel,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
 			Price:       &price,
 		})
 		require.Error(t, err)
@@ -46,8 +49,8 @@ func TestCreateLinearOrder(t *testing.T) {
 
 func TestListLinearPosition(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
-		res, err := client.Account().ListLinearPosition(SymbolUSDTBTC)
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		res, err := client.Account().ListLinearPosition(bybit.SymbolUSDTBTC)
 		{
 			require.NoError(t, err)
 			require.Equal(t, "OK", res.RetMsg)
@@ -59,15 +62,15 @@ func TestListLinearPosition(t *testing.T) {
 		}
 	})
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
-		_, err := client.Account().ListLinearPosition(SymbolUSDTBTC)
+		client := bybit.NewTestClient()
+		_, err := client.Account().ListLinearPosition(bybit.SymbolUSDTBTC)
 		require.Error(t, err)
 	})
 }
 
 func TestListLinearPositions(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
+		client := bybit.NewTestClient().WithAuthFromEnv()
 		res, err := client.Account().ListLinearPositions()
 		{
 			require.NoError(t, err)
@@ -80,7 +83,7 @@ func TestListLinearPositions(t *testing.T) {
 		}
 	})
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
+		client := bybit.NewTestClient()
 		_, err := client.Account().ListLinearPositions()
 		require.Error(t, err)
 	})
@@ -88,25 +91,25 @@ func TestListLinearPositions(t *testing.T) {
 
 func TestCancelLinearOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
+		client := bybit.NewTestClient().WithAuthFromEnv()
 
 		var orderID string
 		{
 			price := 47000.0
-			res, err := client.Account().CreateLinearOrder(CreateLinearOrderParam{
-				Side:        SideBuy,
-				Symbol:      SymbolUSDTBTC,
-				OrderType:   OrderTypeLimit,
+			res, err := client.Account().CreateLinearOrder(bybit.CreateLinearOrderParam{
+				Side:        bybit.SideBuy,
+				Symbol:      bybit.SymbolUSDTBTC,
+				OrderType:   bybit.OrderTypeLimit,
 				Qty:         0.001,
-				TimeInForce: TimeInForceGoodTillCancel,
+				TimeInForce: bybit.TimeInForceGoodTillCancel,
 				Price:       &price,
 			})
 			require.NoError(t, err)
 			require.Equal(t, "OK", res.RetMsg)
 			orderID = res.Result.OrderID
 		}
-		res, err := client.Account().CancelLinearOrder(CancelLinearOrderParam{
-			Symbol:  SymbolUSDTBTC,
+		res, err := client.Account().CancelLinearOrder(bybit.CancelLinearOrderParam{
+			Symbol:  bybit.SymbolUSDTBTC,
 			OrderID: &orderID,
 		})
 		{
@@ -121,17 +124,17 @@ func TestCancelLinearOrder(t *testing.T) {
 	})
 
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
-		_, err := client.Account().CancelLinearOrder(CancelLinearOrderParam{})
+		client := bybit.NewTestClient()
+		_, err := client.Account().CancelLinearOrder(bybit.CancelLinearOrderParam{})
 		require.Error(t, err)
 	})
 }
 
 func TestSaveLinearLeverage(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
-		res, err := client.Account().SaveLinearLeverage(SaveLinearLeverageParam{
-			Symbol:       SymbolUSDTBTC,
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		res, err := client.Account().SaveLinearLeverage(bybit.SaveLinearLeverageParam{
+			Symbol:       bybit.SymbolUSDTBTC,
 			BuyLeverage:  2.0,
 			SellLeverage: 2.0,
 		})
@@ -142,17 +145,17 @@ func TestSaveLinearLeverage(t *testing.T) {
 	})
 
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
-		_, err := client.Account().CancelLinearOrder(CancelLinearOrderParam{})
+		client := bybit.NewTestClient()
+		_, err := client.Account().CancelLinearOrder(bybit.CancelLinearOrderParam{})
 		require.Error(t, err)
 	})
 }
 
 func TestLinearExecutionList(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
-		res, err := client.Account().LinearExecutionList(LinearExecutionListParam{
-			Symbol: SymbolUSDTBTC,
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		res, err := client.Account().LinearExecutionList(bybit.LinearExecutionListParam{
+			Symbol: bybit.SymbolUSDTBTC,
 		})
 		{
 			require.NoError(t, err)
@@ -165,17 +168,17 @@ func TestLinearExecutionList(t *testing.T) {
 		}
 	})
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
-		_, err := client.Account().LinearExecutionList(LinearExecutionListParam{})
+		client := bybit.NewTestClient()
+		_, err := client.Account().LinearExecutionList(bybit.LinearExecutionListParam{})
 		require.Error(t, err)
 	})
 }
 
 func TestAccountService_LinearCancelAllOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		client := NewTestClient().WithAuthFromEnv()
-		res, err := client.Account().LinearCancelAllOrder(LinearCancelAllParam{
-			Symbol: SymbolUSDTBTC,
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		res, err := client.Account().LinearCancelAllOrder(bybit.LinearCancelAllParam{
+			Symbol: bybit.SymbolUSDTBTC,
 		})
 		{
 			require.NoError(t, err)
@@ -188,8 +191,8 @@ func TestAccountService_LinearCancelAllOrder(t *testing.T) {
 		}
 	})
 	t.Run("auth error", func(t *testing.T) {
-		client := NewTestClient()
-		_, err := client.Account().LinearCancelAllOrder(LinearCancelAllParam{})
+		client := bybit.NewTestClient()
+		_, err := client.Account().LinearCancelAllOrder(bybit.LinearCancelAllParam{})
 		require.Error(t, err)
 	})
 }
