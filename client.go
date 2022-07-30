@@ -44,6 +44,13 @@ func NewTestClient() *Client {
 	}
 }
 
+// WithBaseURL :
+func (c *Client) WithBaseURL(url string) *Client {
+	c.BaseURL = url
+
+	return c
+}
+
 // WithAuth :
 func (c *Client) WithAuth(key string, secret string) *Client {
 	c.Key = key
@@ -199,6 +206,10 @@ func (c *Client) postJSON(path string, body []byte, dst interface{}) error {
 }
 
 func (c *Client) postForm(path string, body url.Values, dst interface{}) error {
+	if !c.HasAuth() {
+		return fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
 	u, err := url.Parse(c.BaseURL)
 	if err != nil {
 		return nil
