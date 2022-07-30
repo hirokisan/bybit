@@ -44,6 +44,13 @@ func NewTestClient() *Client {
 	}
 }
 
+// WithBaseURL :
+func (c *Client) WithBaseURL(url string) *Client {
+	c.BaseURL = url
+
+	return c
+}
+
 // WithAuth :
 func (c *Client) WithAuth(key string, secret string) *Client {
 	c.Key = key
