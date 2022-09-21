@@ -80,11 +80,6 @@ func (c *Client) HasAuth() bool {
 	return c.Key != "" && c.Secret != ""
 }
 
-// Wallet :
-func (c *Client) Wallet() *WalletService {
-	return &WalletService{c}
-}
-
 // Account :
 func (c *Client) Account() *AccountService {
 	return &AccountService{c}
