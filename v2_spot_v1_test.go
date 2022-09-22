@@ -52,7 +52,7 @@ func TestSpotPostOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Account().SpotPostOrder(param)
+		resp, err := client.Spot().V1.SpotPostOrder(param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -97,7 +97,7 @@ func TestSpotPostOrder(t *testing.T) {
 		client := NewClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Account().SpotPostOrder(param)
+		_, err = client.Spot().V1.SpotPostOrder(param)
 		assert.Error(t, err)
 	})
 }
