@@ -80,11 +80,6 @@ func (c *Client) HasAuth() bool {
 	return c.Key != "" && c.Secret != ""
 }
 
-// Account :
-func (c *Client) Account() *AccountService {
-	return &AccountService{c}
-}
-
 func (c *Client) populateSignature(src url.Values) url.Values {
 	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
 	now := strconv.Itoa(intNow)
