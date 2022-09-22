@@ -19,16 +19,23 @@ type FutureService struct {
 	InversePerpetual *FutureInversePerpetualService
 	USDTPerpetual    *FutureUSDTPerpetualService
 	InverseFuture    *FutureInverseFutureService
-	Common           *FutureCommonService
 }
 
 // Future :
 func (c *Client) Future() *FutureService {
 	return &FutureService{
-		InversePerpetual: &FutureInversePerpetualService{c},
-		USDTPerpetual:    &FutureUSDTPerpetualService{c},
-		InverseFuture:    &FutureInverseFutureService{c},
-		Common:           &FutureCommonService{c},
+		InversePerpetual: &FutureInversePerpetualService{
+			client:              c,
+			FutureCommonService: &FutureCommonService{c},
+		},
+		USDTPerpetual: &FutureUSDTPerpetualService{
+			client:              c,
+			FutureCommonService: &FutureCommonService{c},
+		},
+		InverseFuture: &FutureInverseFutureService{
+			client:              c,
+			FutureCommonService: &FutureCommonService{c},
+		},
 	}
 }
 

@@ -1,6 +1,6 @@
-//go:build integrationtest
+//go:build integrationtestspotv1
 
-package integrationtest
+package integrationtestspotv1
 
 import (
 	"net/url"
@@ -21,7 +21,7 @@ func TestSpotSymbols(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-v1-symbols.json"
+		goldenFilename := "./testdata/spot-v1-symbols.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -36,7 +36,7 @@ func TestSpotQuoteDepth(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-quote-v1-depth.json"
+		goldenFilename := "./testdata/spot-quote-v1-depth.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -51,7 +51,7 @@ func TestSpotQuoteDepthMerged(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-quote-v1-depth-merged.json"
+		goldenFilename := "./testdata/spot-quote-v1-depth-merged.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -66,7 +66,7 @@ func TestSpotQuoteTrades(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-quote-v1-trades.json"
+		goldenFilename := "./testdata/spot-quote-v1-trades.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -82,7 +82,7 @@ func TestSpotQuoteKline(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-quote-v1-kline.json"
+		goldenFilename := "./testdata/spot-quote-v1-kline.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -98,7 +98,7 @@ func TestSpotQuoteTicker24hr(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-quote-v1-ticker-24hr.json"
+		goldenFilename := "./testdata/spot-quote-v1-ticker-24hr.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -114,7 +114,7 @@ func TestSpotQuoteTickerPrice(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-quote-v1-ticker-price.json"
+		goldenFilename := "./testdata/spot-quote-v1-ticker-price.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -130,7 +130,7 @@ func TestSpotQuoteTickerBookTicker(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-quote-v1-ticker-book-ticker.json"
+		goldenFilename := "./testdata/spot-quote-v1-ticker-book-ticker.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -150,7 +150,7 @@ func TestSpotPostOrder(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-v1-post-order.json"
+		goldenFilename := "./testdata/spot-v1-post-order.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -192,7 +192,7 @@ func TestSpotGetOrder(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-v1-get-order.json"
+		goldenFilename := "./testdata/spot-v1-get-order.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -233,7 +233,7 @@ func TestSpotDeleteOrder(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-v1-delete-order.json"
+		goldenFilename := "./testdata/spot-v1-delete-order.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -268,7 +268,7 @@ func TestSpotDeleteFastOrder(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-v1-delete-order-fast.json"
+		goldenFilename := "./testdata/spot-v1-delete-order-fast.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -300,7 +300,7 @@ func TestSpotOrderBatchCancel(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-v1-order-batch-cancel.json"
+		goldenFilename := "./testdata/spot-v1-order-batch-cancel.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -332,7 +332,7 @@ func TestSpotOrderBatchFastCancel(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-v1-order-batch-fast-cancel.json"
+		goldenFilename := "./testdata/spot-v1-order-batch-fast-cancel.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -362,7 +362,7 @@ func TestSpotOrderBatchCancelByIDs(t *testing.T) {
 		require.NoError(t, err)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1/spot-v1-order-batch-cancel-by-ids.json"
+		goldenFilename := "./testdata/spot-v1-order-batch-cancel-by-ids.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}

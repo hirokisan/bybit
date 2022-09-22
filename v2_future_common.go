@@ -1,21 +1,97 @@
 package bybit
 
-import "net/url"
+import (
+	"net/url"
+
+	"github.com/google/go-querystring/query"
+)
 
 // FutureCommonService :
 type FutureCommonService struct {
 	client *Client
 }
 
-// LinearTickersResponse :
-type LinearTickersResponse struct {
+// OrderBookResponse :
+type OrderBookResponse struct {
 	CommonResponse `json:",inline"`
-	Result         []LinearTickersResult `json:"result"`
+	Result         []OrderBookResult `json:"result"`
 }
 
-// LinearTickersResult :
-type LinearTickersResult struct {
-	Symbol               SymbolUSDT    `json:"symbol"`
+// OrderBookResult :
+type OrderBookResult struct {
+	Symbol SymbolInverse `json:"symbol"`
+	Price  string        `json:"price"`
+	Size   float64       `json:"size"`
+	Side   Side          `json:"side"`
+}
+
+// OrderBook :
+func (s *FutureCommonService) OrderBook(symbol SymbolInverse) (*OrderBookResponse, error) {
+	var res OrderBookResponse
+
+	query := url.Values{}
+	query.Add("symbol", string(symbol))
+
+	if err := s.client.getPublicly("/v2/public/orderBook/L2", query, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// ListKlineParam :
+type ListKlineParam struct {
+	Symbol   SymbolInverse `url:"symbol"`
+	Interval Interval      `url:"interval"`
+	From     int           `url:"from"`
+
+	Limit *int `url:"limit,omitempty"`
+}
+
+// ListKlineResponse :
+type ListKlineResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []ListKlineResult `json:"result"`
+}
+
+// ListKlineResult :
+type ListKlineResult struct {
+	Symbol   SymbolInverse `json:"symbol"`
+	Interval string        `json:"interval"`
+	OpenTime int           `json:"open_time"`
+	Open     string        `json:"open"`
+	High     string        `json:"high"`
+	Low      string        `json:"low"`
+	Close    string        `json:"close"`
+	Volume   string        `json:"volume"`
+	Turnover string        `json:"turnover"`
+}
+
+// ListKline :
+func (s *FutureCommonService) ListKline(param ListKlineParam) (*ListKlineResponse, error) {
+	var res ListKlineResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v2/public/kline/list", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// TickersResponse :
+type TickersResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []TickersResult `json:"result"`
+}
+
+// TickersResult :
+type TickersResult struct {
+	Symbol               SymbolInverse `json:"symbol"`
 	BidPrice             string        `json:"bid_price"`
 	AskPrice             string        `json:"ask_price"`
 	LastPrice            string        `json:"last_price"`
@@ -40,9 +116,9 @@ type LinearTickersResult struct {
 	CountdownHour        float64       `json:"countdown_hour"`
 }
 
-// LinearTickers :
-func (s *FutureCommonService) LinearTickers(symbol SymbolUSDT) (*LinearTickersResponse, error) {
-	var res LinearTickersResponse
+// Tickers :
+func (s *FutureCommonService) Tickers(symbol SymbolInverse) (*TickersResponse, error) {
+	var res TickersResponse
 
 	query := url.Values{}
 	query.Add("symbol", string(symbol))
@@ -51,5 +127,291 @@ func (s *FutureCommonService) LinearTickers(symbol SymbolUSDT) (*LinearTickersRe
 		return nil, err
 	}
 
+	return &res, nil
+}
+
+// TradingRecordsParam :
+type TradingRecordsParam struct {
+	Symbol SymbolInverse `url:"symbol"`
+
+	From  *int `url:"from,omitempty"`
+	Limit *int `url:"limit,omitempty"`
+}
+
+// TradingRecordsResponse :
+type TradingRecordsResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []TradingRecordsResult `json:"result"`
+}
+
+// TradingRecordsResult :
+type TradingRecordsResult struct {
+	ID     float64       `json:"id"`
+	Symbol SymbolInverse `json:"symbol"`
+	Price  float64       `json:"price"`
+	Qty    float64       `json:"qty"`
+	Side   Side          `json:"side"`
+	Time   string        `json:"time"`
+}
+
+// TradingRecords :
+func (s *FutureCommonService) TradingRecords(param TradingRecordsParam) (*TradingRecordsResponse, error) {
+	var res TradingRecordsResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v2/public/trading-records", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// SymbolsResponse :
+type SymbolsResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []SymbolsResult `json:"result"`
+}
+
+// SymbolsResult :
+type SymbolsResult struct {
+	Name           string         `json:"name"`
+	BaseCurrency   string         `json:"base_currency"`
+	QuoteCurrency  string         `json:"quote_currency"`
+	PriceScale     float64        `json:"price_scale"`
+	TakerFee       string         `json:"taker_fee"`
+	MakerFee       string         `json:"maker_fee"`
+	LeverageFilter LeverageFilter `json:"leverage_filter"`
+	PriceFilter    PriceFilter    `json:"price_filter"`
+	LotSizeFilter  LotSizeFilter  `json:"lot_size_filter"`
+}
+
+// LeverageFilter :
+type LeverageFilter struct {
+	MinLeverage  float64 `json:"min_leverage"`
+	MaxLeverage  float64 `json:"max_leverage"`
+	LeverageStep string  `json:"leverage_step"`
+}
+
+// PriceFilter :
+type PriceFilter struct {
+	MinPrice string `json:"min_price"`
+	MaxPrice string `json:"max_price"`
+	TickSize string `json:"tick_size"`
+}
+
+// LotSizeFilter :
+type LotSizeFilter struct {
+	MaxTradingQty float64 `json:"max_trading_qty"`
+	MinTradingQty float64 `json:"min_trading_qty"`
+	QtyStep       float64 `json:"qty_step"`
+}
+
+// Symbols :
+func (s *FutureCommonService) Symbols() (*SymbolsResponse, error) {
+	var res SymbolsResponse
+
+	if err := s.client.getPublicly("/v2/public/symbols", nil, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// MarkPriceKlineResponse :
+type MarkPriceKlineResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []MarkPriceKlineResult `json:"result"`
+}
+
+// MarkPriceKlineResult :
+type MarkPriceKlineResult struct {
+	Symbol  SymbolInverse `json:"symbol"`
+	Period  Period        `json:"period"`
+	StartAt int           `json:"start_at"`
+	Open    float64       `json:"open"`
+	High    float64       `json:"high"`
+	Low     float64       `json:"low"`
+	Close   float64       `json:"close"`
+}
+
+// MarkPriceKlineParam :
+type MarkPriceKlineParam struct {
+	Symbol   SymbolInverse `url:"symbol"`
+	Interval Interval      `url:"interval"`
+	From     int           `url:"from"`
+
+	Limit *int `url:"limit,omitempty"`
+}
+
+// MarkPriceKline :
+func (s *FutureCommonService) MarkPriceKline(param MarkPriceKlineParam) (*MarkPriceKlineResponse, error) {
+	var res MarkPriceKlineResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v2/public/mark-price-kline", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// IndexPriceKlineResponse :
+type IndexPriceKlineResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []IndexPriceKlineResult `json:"result"`
+}
+
+// IndexPriceKlineResult :
+type IndexPriceKlineResult struct {
+	Symbol   SymbolInverse `json:"symbol"`
+	Period   Period        `json:"period"`
+	OpenTime int           `json:"open_time"`
+	Open     string        `json:"open"`
+	High     string        `json:"high"`
+	Low      string        `json:"low"`
+	Close    string        `json:"close"`
+}
+
+// IndexPriceKlineParam :
+type IndexPriceKlineParam struct {
+	Symbol   SymbolInverse `url:"symbol"`
+	Interval Interval      `url:"interval"`
+	From     int           `url:"from"`
+
+	Limit *int `url:"limit,omitempty"`
+}
+
+// IndexPriceKline :
+func (s *FutureCommonService) IndexPriceKline(param IndexPriceKlineParam) (*IndexPriceKlineResponse, error) {
+	var res IndexPriceKlineResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v2/public/index-price-kline", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// OpenInterestResponse :
+type OpenInterestResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []OpenInterestResult `json:"result"`
+}
+
+// OpenInterestResult :
+type OpenInterestResult struct {
+	OpenInterest int           `json:"open_interest"`
+	Timestamp    int           `json:"timestamp"`
+	Symbol       SymbolInverse `json:"symbol"`
+}
+
+// OpenInterestParam :
+type OpenInterestParam struct {
+	Symbol SymbolInverse `url:"symbol"`
+	Period Period        `url:"period"`
+
+	Limit *int `url:"limit,omitempty"`
+}
+
+// OpenInterest :
+func (s *FutureCommonService) OpenInterest(param OpenInterestParam) (*OpenInterestResponse, error) {
+	var res OpenInterestResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v2/public/open-interest", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// BigDealResponse :
+type BigDealResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []BigDealResult `json:"result"`
+}
+
+// BigDealResult :
+type BigDealResult struct {
+	Symbol    SymbolInverse `json:"symbol"`
+	Side      Side          `json:"side"`
+	Timestamp int           `json:"timestamp"`
+	Value     int           `json:"value"`
+}
+
+// BigDealParam :
+type BigDealParam struct {
+	Symbol SymbolInverse `url:"symbol"`
+
+	Limit *int `url:"limit,omitempty"`
+}
+
+// BigDeal :
+func (s *FutureCommonService) BigDeal(param BigDealParam) (*BigDealResponse, error) {
+	var res BigDealResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v2/public/big-deal", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// AccountRatioResponse :
+type AccountRatioResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []AccountRatioResult `json:"result"`
+}
+
+// AccountRatioResult :
+type AccountRatioResult struct {
+	Symbol    SymbolInverse `json:"symbol"`
+	BuyRatio  float64       `json:"buy_ratio"`
+	SellRatio float64       `json:"sell_ratio"`
+	Timestamp int           `json:"timestamp"`
+}
+
+// AccountRatioParam :
+type AccountRatioParam struct {
+	Symbol SymbolInverse `url:"symbol"`
+	Period Period        `url:"period"`
+
+	Limit *int `url:"limit,omitempty"`
+}
+
+// AccountRatio :
+func (s *FutureCommonService) AccountRatio(param AccountRatioParam) (*AccountRatioResponse, error) {
+	var res AccountRatioResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v2/public/account-ratio", queryString, &res); err != nil {
+		return nil, err
+	}
 	return &res, nil
 }

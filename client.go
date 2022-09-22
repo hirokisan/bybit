@@ -85,11 +85,6 @@ func (c *Client) Account() *AccountService {
 	return &AccountService{c}
 }
 
-// Market :
-func (c *Client) Market() *MarketService {
-	return &MarketService{c}
-}
-
 func (c *Client) populateSignature(src url.Values) url.Values {
 	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
 	now := strconv.Itoa(intNow)

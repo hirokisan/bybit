@@ -3,11 +3,15 @@ package bybit
 import (
 	"encoding/json"
 	"net/url"
+
+	"github.com/google/go-querystring/query"
 )
 
 // FutureInversePerpetualService :
 type FutureInversePerpetualService struct {
 	client *Client
+
+	*FutureCommonService
 }
 
 // BalanceResponse :
@@ -58,6 +62,48 @@ func (s *FutureInversePerpetualService) Balance(coin Coin) (*BalanceResponse, er
 	query := url.Values{}
 	query.Add("coin", string(coin))
 	if err := s.client.getPrivately("/v2/private/wallet/balance", query, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// PremiumIndexKlineResponse :
+type PremiumIndexKlineResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []PremiumIndexKlineResult `json:"result"`
+}
+
+// PremiumIndexKlineResult :
+type PremiumIndexKlineResult struct {
+	Symbol   SymbolInverse `json:"symbol"`
+	Period   Period        `json:"period"`
+	OpenTime int           `json:"open_time"`
+	Open     string        `json:"open"`
+	High     string        `json:"high"`
+	Low      string        `json:"low"`
+	Close    string        `json:"close"`
+}
+
+// PremiumIndexKlineParam :
+type PremiumIndexKlineParam struct {
+	Symbol   SymbolInverse `url:"symbol"`
+	Interval Interval      `url:"interval"`
+	From     int           `url:"from"`
+
+	Limit *int `url:"limit,omitempty"`
+}
+
+// PremiumIndexKline :
+func (s *FutureInversePerpetualService) PremiumIndexKline(param PremiumIndexKlineParam) (*PremiumIndexKlineResponse, error) {
+	var res PremiumIndexKlineResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v2/public/premium-index-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
