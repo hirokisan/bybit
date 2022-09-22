@@ -19,7 +19,6 @@ func TestSpotSymbols(t *testing.T) {
 	res, err := client.Spot().V1.SpotSymbols()
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-v1-symbols.json"
@@ -35,7 +34,6 @@ func TestSpotQuoteDepth(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-quote-v1-depth.json"
@@ -51,7 +49,6 @@ func TestSpotQuoteDepthMerged(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-quote-v1-depth-merged.json"
@@ -67,7 +64,6 @@ func TestSpotQuoteTrades(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-quote-v1-trades.json"
@@ -84,7 +80,6 @@ func TestSpotQuoteKline(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-quote-v1-kline.json"
@@ -101,7 +96,6 @@ func TestSpotQuoteTicker24hr(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-quote-v1-ticker-24hr.json"
@@ -118,7 +112,6 @@ func TestSpotQuoteTickerPrice(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-quote-v1-ticker-price.json"
@@ -135,7 +128,6 @@ func TestSpotQuoteTickerBookTicker(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-quote-v1-ticker-book-ticker.json"
@@ -146,7 +138,7 @@ func TestSpotQuoteTickerBookTicker(t *testing.T) {
 
 func TestSpotPostOrder(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
-	price := 28383.5
+	price := 18383.5
 	res, err := client.Spot().V1.SpotPostOrder(bybit.SpotPostOrderParam{
 		Symbol: bybit.SymbolSpotBTCUSDT,
 		Qty:    0.01,
@@ -156,7 +148,6 @@ func TestSpotPostOrder(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-v1-post-order.json"
@@ -166,12 +157,11 @@ func TestSpotPostOrder(t *testing.T) {
 	// clean order
 	orderID := res.Result.OrderID
 	{
-		res, err := client.Spot().V1.SpotDeleteOrder(bybit.SpotDeleteOrderParam{
+		_, err := client.Spot().V1.SpotDeleteOrder(bybit.SpotDeleteOrderParam{
 			OrderID: &orderID,
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "", res.RetMsg)
 		}
 	}
 }
@@ -191,7 +181,6 @@ func TestSpotGetOrder(t *testing.T) {
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "", res.RetMsg)
 		}
 		orderID = res.Result.OrderID
 	}
@@ -201,7 +190,6 @@ func TestSpotGetOrder(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-v1-get-order.json"
@@ -210,12 +198,11 @@ func TestSpotGetOrder(t *testing.T) {
 	}
 	// clean order
 	{
-		res, err := client.Spot().V1.SpotDeleteOrder(bybit.SpotDeleteOrderParam{
+		_, err := client.Spot().V1.SpotDeleteOrder(bybit.SpotDeleteOrderParam{
 			OrderID: &orderID,
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "", res.RetMsg)
 		}
 	}
 }
@@ -235,7 +222,6 @@ func TestSpotDeleteOrder(t *testing.T) {
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "", res.RetMsg)
 		}
 		orderID = res.Result.OrderID
 	}
@@ -245,7 +231,6 @@ func TestSpotDeleteOrder(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-v1-delete-order.json"
@@ -270,7 +255,6 @@ func TestSpotDeleteFastOrder(t *testing.T) {
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "", res.RetMsg)
 		}
 		orderID = res.Result.OrderID
 		symbol = bybit.SymbolSpot(res.Result.Symbol)
@@ -282,7 +266,6 @@ func TestSpotDeleteFastOrder(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-v1-delete-order-fast.json"
@@ -306,7 +289,6 @@ func TestSpotOrderBatchCancel(t *testing.T) {
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "", res.RetMsg)
 		}
 		symbol = bybit.SymbolSpot(res.Result.Symbol)
 	}
@@ -316,7 +298,6 @@ func TestSpotOrderBatchCancel(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-v1-order-batch-cancel.json"
@@ -340,7 +321,6 @@ func TestSpotOrderBatchFastCancel(t *testing.T) {
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "", res.RetMsg)
 		}
 		symbol = bybit.SymbolSpot(res.Result.Symbol)
 	}
@@ -350,7 +330,6 @@ func TestSpotOrderBatchFastCancel(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-v1-order-batch-fast-cancel.json"
@@ -374,7 +353,6 @@ func TestSpotOrderBatchCancelByIDs(t *testing.T) {
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "", res.RetMsg)
 		}
 		orderID = res.Result.OrderID
 	}
@@ -382,7 +360,6 @@ func TestSpotOrderBatchCancelByIDs(t *testing.T) {
 	res, err := client.Spot().V1.SpotOrderBatchCancelByIDs([]string{orderID})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1/spot-v1-order-batch-cancel-by-ids.json"
