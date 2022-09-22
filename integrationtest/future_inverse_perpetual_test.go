@@ -13,12 +13,12 @@ import (
 func TestBalance(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
-		res, err := client.Feature().InversePerpetual.Balance(bybit.CoinUSDT)
+		res, err := client.Future().InversePerpetual.Balance(bybit.CoinUSDT)
 		{
 			require.NoError(t, err)
 		}
 		{
-			goldenFilename := "./testdata/feature-inverse-perpetual/v2-private-wallet-balance.json"
+			goldenFilename := "./testdata/future-inverse-perpetual/v2-private-wallet-balance.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		}
@@ -26,7 +26,7 @@ func TestBalance(t *testing.T) {
 
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
-		_, err := client.Feature().InversePerpetual.Balance(bybit.CoinBTC)
+		_, err := client.Future().InversePerpetual.Balance(bybit.CoinBTC)
 		require.Error(t, err)
 	})
 }

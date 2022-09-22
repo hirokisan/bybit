@@ -1,0 +1,27 @@
+[
+  {
+    "symbol": "BTCUSDT",
+    "bid_price": "18706.5",
+    "ask_price": "18753.5",
+    "last_price": "18753.50",
+    "last_tick_direction": "ZeroPlusTick",
+    "prev_price_24h": "19071.50",
+    "price_24h_pcnt": "-0.016674",
+    "high_price_24h": "19808.00",
+    "low_price_24h": "18148.50",
+    "prev_price_1h": "18683.50",
+    "price_1h_pcnt": "",
+    "mark_price": "18716.20",
+    "index_price": "18715.24",
+    "open_interest": 42830.848,
+    "open_value": "",
+    "total_turnover": "",
+    "turnover_24h": "1449869606.1920037",
+    "total_volume": 0,
+    "volume_24h": 76646.73299999,
+    "funding_rate": "0.0001",
+    "predicted_funding_rate": "",
+    "next_funding_time": "2022-09-22T08:00:00Z",
+    "countdown_hour": 0
+  }
+]

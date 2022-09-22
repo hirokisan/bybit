@@ -12,13 +12,12 @@ import (
 
 func TestLinearTickers(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Market().LinearTickers(bybit.SymbolUSDTBTC)
+	res, err := client.Future().Common.LinearTickers(bybit.SymbolUSDTBTC)
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
-		goldenFilename := "./testdata/v2-public-tickers.json"
+		goldenFilename := "./testdata/future-common/v2-public-tickers.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}

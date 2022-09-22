@@ -2,6 +2,11 @@ package bybit
 
 import "net/url"
 
+// FutureCommonService :
+type FutureCommonService struct {
+	client *Client
+}
+
 // LinearTickersResponse :
 type LinearTickersResponse struct {
 	CommonResponse `json:",inline"`
@@ -36,13 +41,13 @@ type LinearTickersResult struct {
 }
 
 // LinearTickers :
-func (s *MarketService) LinearTickers(symbol SymbolUSDT) (*LinearTickersResponse, error) {
+func (s *FutureCommonService) LinearTickers(symbol SymbolUSDT) (*LinearTickersResponse, error) {
 	var res LinearTickersResponse
 
 	query := url.Values{}
 	query.Add("symbol", string(symbol))
 
-	if err := s.Client.getPublicly("/v2/public/tickers", query, &res); err != nil {
+	if err := s.client.getPublicly("/v2/public/tickers", query, &res); err != nil {
 		return nil, err
 	}
 

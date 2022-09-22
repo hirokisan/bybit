@@ -14,19 +14,21 @@ func (c *Client) Spot() *SpotService {
 	}
 }
 
-// FeatureService :
-type FeatureService struct {
-	InversePerpetual *FeatureInversePerpetualService
-	USDTPerpetual    *FeatureUSDTPerpetualService
-	InverseFuture    *FeatureInverseFutureService
+// FutureService :
+type FutureService struct {
+	InversePerpetual *FutureInversePerpetualService
+	USDTPerpetual    *FutureUSDTPerpetualService
+	InverseFuture    *FutureInverseFutureService
+	Common           *FutureCommonService
 }
 
-// Feature :
-func (c *Client) Feature() *FeatureService {
-	return &FeatureService{
-		InversePerpetual: &FeatureInversePerpetualService{c},
-		USDTPerpetual:    &FeatureUSDTPerpetualService{c},
-		InverseFuture:    &FeatureInverseFutureService{c},
+// Future :
+func (c *Client) Future() *FutureService {
+	return &FutureService{
+		InversePerpetual: &FutureInversePerpetualService{c},
+		USDTPerpetual:    &FutureUSDTPerpetualService{c},
+		InverseFuture:    &FutureInverseFutureService{c},
+		Common:           &FutureCommonService{c},
 	}
 }
 

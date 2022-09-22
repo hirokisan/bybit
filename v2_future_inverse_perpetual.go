@@ -5,8 +5,8 @@ import (
 	"net/url"
 )
 
-// FeatureInversePerpetualService :
-type FeatureInversePerpetualService struct {
+// FutureInversePerpetualService :
+type FutureInversePerpetualService struct {
 	client *Client
 }
 
@@ -52,7 +52,7 @@ type Balance struct {
 }
 
 // Balance :
-func (s *FeatureInversePerpetualService) Balance(coin Coin) (*BalanceResponse, error) {
+func (s *FutureInversePerpetualService) Balance(coin Coin) (*BalanceResponse, error) {
 	var res BalanceResponse
 
 	query := url.Values{}
