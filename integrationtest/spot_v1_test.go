@@ -12,13 +12,13 @@ import (
 
 func TestSpotSymbols(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Market().SpotSymbols()
+	res, err := client.Spot().V1.SpotSymbols()
 	{
 		require.NoError(t, err)
 		require.Equal(t, "", res.RetMsg)
 	}
 	{
-		goldenFilename := "./testdata/spot-v1-symbols.json"
+		goldenFilename := "./testdata/spot-v1/spot-v1-symbols.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -26,7 +26,7 @@ func TestSpotSymbols(t *testing.T) {
 
 func TestSpotQuoteDepth(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Market().SpotQuoteDepth(bybit.SpotQuoteDepthParam{
+	res, err := client.Spot().V1.SpotQuoteDepth(bybit.SpotQuoteDepthParam{
 		Symbol: bybit.SymbolSpotBTCUSDT,
 	})
 	{
@@ -34,7 +34,7 @@ func TestSpotQuoteDepth(t *testing.T) {
 		require.Equal(t, "", res.RetMsg)
 	}
 	{
-		goldenFilename := "./testdata/spot-quote-v1-depth.json"
+		goldenFilename := "./testdata/spot-v1/spot-quote-v1-depth.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -42,7 +42,7 @@ func TestSpotQuoteDepth(t *testing.T) {
 
 func TestSpotQuoteDepthMerged(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Market().SpotQuoteDepthMerged(bybit.SpotQuoteDepthMergedParam{
+	res, err := client.Spot().V1.SpotQuoteDepthMerged(bybit.SpotQuoteDepthMergedParam{
 		Symbol: bybit.SymbolSpotBTCUSDT,
 	})
 	{
@@ -50,7 +50,7 @@ func TestSpotQuoteDepthMerged(t *testing.T) {
 		require.Equal(t, "", res.RetMsg)
 	}
 	{
-		goldenFilename := "./testdata/spot-quote-v1-depth-merged.json"
+		goldenFilename := "./testdata/spot-v1/spot-quote-v1-depth-merged.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -58,7 +58,7 @@ func TestSpotQuoteDepthMerged(t *testing.T) {
 
 func TestSpotQuoteTrades(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Market().SpotQuoteTrades(bybit.SpotQuoteTradesParam{
+	res, err := client.Spot().V1.SpotQuoteTrades(bybit.SpotQuoteTradesParam{
 		Symbol: bybit.SymbolSpotBTCUSDT,
 	})
 	{
@@ -66,7 +66,7 @@ func TestSpotQuoteTrades(t *testing.T) {
 		require.Equal(t, "", res.RetMsg)
 	}
 	{
-		goldenFilename := "./testdata/spot-quote-v1-trades.json"
+		goldenFilename := "./testdata/spot-v1/spot-quote-v1-trades.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -74,7 +74,7 @@ func TestSpotQuoteTrades(t *testing.T) {
 
 func TestSpotQuoteKline(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Market().SpotQuoteKline(bybit.SpotQuoteKlineParam{
+	res, err := client.Spot().V1.SpotQuoteKline(bybit.SpotQuoteKlineParam{
 		Symbol:   bybit.SymbolSpotBTCUSDT,
 		Interval: bybit.SpotInterval1d,
 	})
@@ -83,7 +83,7 @@ func TestSpotQuoteKline(t *testing.T) {
 		require.Equal(t, "", res.RetMsg)
 	}
 	{
-		goldenFilename := "./testdata/spot-quote-v1-kline.json"
+		goldenFilename := "./testdata/spot-v1/spot-quote-v1-kline.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -92,7 +92,7 @@ func TestSpotQuoteKline(t *testing.T) {
 func TestSpotQuoteTicker24hr(t *testing.T) {
 	client := bybit.NewTestClient()
 	symbol := bybit.SymbolSpotBTCUSDT
-	res, err := client.Market().SpotQuoteTicker24hr(bybit.SpotQuoteTicker24hrParam{
+	res, err := client.Spot().V1.SpotQuoteTicker24hr(bybit.SpotQuoteTicker24hrParam{
 		Symbol: &symbol,
 	})
 	{
@@ -100,7 +100,7 @@ func TestSpotQuoteTicker24hr(t *testing.T) {
 		require.Equal(t, "", res.RetMsg)
 	}
 	{
-		goldenFilename := "./testdata/spot-quote-v1-ticker-24hr.json"
+		goldenFilename := "./testdata/spot-v1/spot-quote-v1-ticker-24hr.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -109,7 +109,7 @@ func TestSpotQuoteTicker24hr(t *testing.T) {
 func TestSpotQuoteTickerPrice(t *testing.T) {
 	client := bybit.NewTestClient()
 	symbol := bybit.SymbolSpotBTCUSDT
-	res, err := client.Market().SpotQuoteTickerPrice(bybit.SpotQuoteTickerPriceParam{
+	res, err := client.Spot().V1.SpotQuoteTickerPrice(bybit.SpotQuoteTickerPriceParam{
 		Symbol: &symbol,
 	})
 	{
@@ -117,7 +117,7 @@ func TestSpotQuoteTickerPrice(t *testing.T) {
 		require.Equal(t, "", res.RetMsg)
 	}
 	{
-		goldenFilename := "./testdata/spot-quote-v1-ticker-price.json"
+		goldenFilename := "./testdata/spot-v1/spot-quote-v1-ticker-price.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -126,7 +126,7 @@ func TestSpotQuoteTickerPrice(t *testing.T) {
 func TestSpotQuoteTickerBookTicker(t *testing.T) {
 	client := bybit.NewTestClient()
 	symbol := bybit.SymbolSpotBTCUSDT
-	res, err := client.Market().SpotQuoteTickerBookTicker(bybit.SpotQuoteTickerBookTickerParam{
+	res, err := client.Spot().V1.SpotQuoteTickerBookTicker(bybit.SpotQuoteTickerBookTickerParam{
 		Symbol: &symbol,
 	})
 	{
@@ -134,7 +134,7 @@ func TestSpotQuoteTickerBookTicker(t *testing.T) {
 		require.Equal(t, "", res.RetMsg)
 	}
 	{
-		goldenFilename := "./testdata/spot-quote-v1-ticker-book-ticker.json"
+		goldenFilename := "./testdata/spot-v1/spot-quote-v1-ticker-book-ticker.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
