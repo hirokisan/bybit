@@ -6,6 +6,23 @@ import (
 	"net/url"
 )
 
+// FutureUSDTPerpetualServiceI :
+type FutureUSDTPerpetualServiceI interface {
+	OrderBook(SymbolInverse) (*OrderBookResponse, error)
+	Tickers(SymbolInverse) (*TickersResponse, error)
+	Symbols() (*SymbolsResponse, error)
+	OpenInterest(OpenInterestParam) (*OpenInterestResponse, error)
+	BigDeal(BigDealParam) (*BigDealResponse, error)
+	AccountRatio(AccountRatioParam) (*AccountRatioResponse, error)
+	CreateLinearOrder(CreateLinearOrderParam) (*CreateLinearOrderResponse, error)
+	ListLinearPosition(SymbolUSDT) (*ListLinearPositionResponse, error)
+	ListLinearPositions() (*ListLinearPositionsResponse, error)
+	CancelLinearOrder(CancelLinearOrderParam) (*CancelLinearOrderResponse, error)
+	SaveLinearLeverage(SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error)
+	LinearExecutionList(LinearExecutionListParam) (*LinearExecutionListResponse, error)
+	LinearCancelAllOrder(LinearCancelAllParam) (*LinearCancelAllResponse, error)
+}
+
 // FutureUSDTPerpetualService :
 type FutureUSDTPerpetualService struct {
 	client *Client

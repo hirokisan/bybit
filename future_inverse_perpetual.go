@@ -8,6 +8,27 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// FutureInversePerpetualServiceI :
+type FutureInversePerpetualServiceI interface {
+	Balance(Coin) (*BalanceResponse, error)
+	OrderBook(SymbolInverse) (*OrderBookResponse, error)
+	ListKline(ListKlineParam) (*ListKlineResponse, error)
+	Tickers(SymbolInverse) (*TickersResponse, error)
+	TradingRecords(TradingRecordsParam) (*TradingRecordsResponse, error)
+	Symbols() (*SymbolsResponse, error)
+	IndexPriceKline(IndexPriceKlineParam) (*IndexPriceKlineResponse, error)
+	OpenInterest(OpenInterestParam) (*OpenInterestResponse, error)
+	BigDeal(BigDealParam) (*BigDealResponse, error)
+	AccountRatio(AccountRatioParam) (*AccountRatioResponse, error)
+	PremiumIndexKline(PremiumIndexKlineParam) (*PremiumIndexKlineResponse, error)
+	CreateOrder(CreateOrderParam) (*CreateOrderResponse, error)
+	ListOrder(ListOrderParam) (*ListOrderResponse, error)
+	ListPosition(SymbolInverse) (*ListPositionResponse, error)
+	ListPositions() (*ListPositionsResponse, error)
+	CancelOrder(CancelOrderParam) (*CancelOrderResponse, error)
+	SaveLeverage(SaveLeverageParam) (*SaveLeverageResponse, error)
+}
+
 // FutureInversePerpetualService :
 type FutureInversePerpetualService struct {
 	client *Client

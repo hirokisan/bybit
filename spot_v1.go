@@ -10,6 +10,25 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// SpotV1ServiceI :
+type SpotV1ServiceI interface {
+	SpotSymbols() (*SpotSymbolsResponse, error)
+	SpotQuoteDepth(SpotQuoteDepthParam) (*SpotQuoteDepthResponse, error)
+	SpotQuoteDepthMerged(SpotQuoteDepthMergedParam) (*SpotQuoteDepthMergedResponse, error)
+	SpotQuoteTrades(SpotQuoteTradesParam) (*SpotQuoteTradesResponse, error)
+	SpotQuoteKline(SpotQuoteKlineParam) (*SpotQuoteKlineResponse, error)
+	SpotQuoteTicker24hr(SpotQuoteTicker24hrParam) (*SpotQuoteTicker24hrResponse, error)
+	SpotQuoteTickerPrice(SpotQuoteTickerPriceParam) (*SpotQuoteTickerPriceResponse, error)
+	SpotQuoteTickerBookTicker(SpotQuoteTickerBookTickerParam) (*SpotQuoteTickerBookTickerResponse, error)
+	SpotPostOrder(SpotPostOrderParam) (*SpotPostOrderResponse, error)
+	SpotGetOrder(SpotGetOrderParam) (*SpotGetOrderResponse, error)
+	SpotDeleteOrder(SpotDeleteOrderParam) (*SpotDeleteOrderResponse, error)
+	SpotDeleteOrderFast(SpotDeleteOrderFastParam) (*SpotDeleteOrderFastResponse, error)
+	SpotOrderBatchCancel(SpotOrderBatchCancelParam) (*SpotOrderBatchCancelResponse, error)
+	SpotOrderBatchFastCancel(SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error)
+	SpotOrderBatchCancelByIDs(orderIDs []string) (*SpotOrderBatchCancelByIDsResponse, error)
+}
+
 // SpotV1Service :
 type SpotV1Service struct {
 	client *Client

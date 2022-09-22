@@ -2,7 +2,7 @@ package bybit
 
 // SpotService :
 type SpotService struct {
-	V1 *SpotV1Service
+	V1 SpotV1ServiceI
 	V3 *SpotV3Service
 }
 
@@ -16,9 +16,9 @@ func (c *Client) Spot() *SpotService {
 
 // FutureService :
 type FutureService struct {
-	InversePerpetual *FutureInversePerpetualService
-	USDTPerpetual    *FutureUSDTPerpetualService
-	InverseFuture    *FutureInverseFutureService
+	InversePerpetual FutureInversePerpetualServiceI
+	USDTPerpetual    FutureUSDTPerpetualServiceI
+	InverseFuture    FutureInverseFutureServiceI
 }
 
 // Future :
