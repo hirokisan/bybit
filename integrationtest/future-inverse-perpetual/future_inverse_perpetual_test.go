@@ -14,7 +14,7 @@ import (
 func TestBalance(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
-		res, err := client.Future().InversePerpetual.Balance(bybit.CoinUSDT)
+		res, err := client.Future().InversePerpetual().Balance(bybit.CoinUSDT)
 		{
 			require.NoError(t, err)
 		}
@@ -27,14 +27,14 @@ func TestBalance(t *testing.T) {
 
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
-		_, err := client.Future().InversePerpetual.Balance(bybit.CoinBTC)
+		_, err := client.Future().InversePerpetual().Balance(bybit.CoinBTC)
 		require.Error(t, err)
 	})
 }
 
 func TestOrderBook(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InversePerpetual.OrderBook(bybit.SymbolInverseBTCUSD)
+	res, err := client.Future().InversePerpetual().OrderBook(bybit.SymbolInverseBTCUSD)
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
@@ -48,7 +48,7 @@ func TestOrderBook(t *testing.T) {
 
 func TestListKline(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InversePerpetual.ListKline(bybit.ListKlineParam{
+	res, err := client.Future().InversePerpetual().ListKline(bybit.ListKlineParam{
 		Symbol:   bybit.SymbolInverseBTCUSD,
 		Interval: bybit.Interval120,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
@@ -66,7 +66,7 @@ func TestListKline(t *testing.T) {
 
 func TestTickers(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InversePerpetual.Tickers(bybit.SymbolInverseBTCUSD)
+	res, err := client.Future().InversePerpetual().Tickers(bybit.SymbolInverseBTCUSD)
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
@@ -81,7 +81,7 @@ func TestTickers(t *testing.T) {
 func TestTradingRecords(t *testing.T) {
 	client := bybit.NewTestClient()
 	limit := 10
-	res, err := client.Future().InversePerpetual.TradingRecords(bybit.TradingRecordsParam{
+	res, err := client.Future().InversePerpetual().TradingRecords(bybit.TradingRecordsParam{
 		Symbol: bybit.SymbolInverseBTCUSD,
 		Limit:  &limit,
 	})
@@ -98,7 +98,7 @@ func TestTradingRecords(t *testing.T) {
 
 func TestSymbols(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InversePerpetual.Symbols()
+	res, err := client.Future().InversePerpetual().Symbols()
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
@@ -112,7 +112,7 @@ func TestSymbols(t *testing.T) {
 
 func TestIndexPriceKline(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InversePerpetual.IndexPriceKline(bybit.IndexPriceKlineParam{
+	res, err := client.Future().InversePerpetual().IndexPriceKline(bybit.IndexPriceKlineParam{
 		Symbol:   bybit.SymbolInverseBTCUSD,
 		Interval: bybit.IntervalD,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
@@ -130,7 +130,7 @@ func TestIndexPriceKline(t *testing.T) {
 
 func TestOpenInterest(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InversePerpetual.OpenInterest(bybit.OpenInterestParam{
+	res, err := client.Future().InversePerpetual().OpenInterest(bybit.OpenInterestParam{
 		Symbol: bybit.SymbolInverseBTCUSD,
 		Period: bybit.Period1h,
 	})
@@ -147,7 +147,7 @@ func TestOpenInterest(t *testing.T) {
 
 func TestBigDeal(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InversePerpetual.BigDeal(bybit.BigDealParam{
+	res, err := client.Future().InversePerpetual().BigDeal(bybit.BigDealParam{
 		Symbol: bybit.SymbolInverseBTCUSD,
 	})
 	{
@@ -164,7 +164,7 @@ func TestBigDeal(t *testing.T) {
 func TestAccountRatio(t *testing.T) {
 	client := bybit.NewTestClient()
 	limit := 10
-	res, err := client.Future().InversePerpetual.AccountRatio(bybit.AccountRatioParam{
+	res, err := client.Future().InversePerpetual().AccountRatio(bybit.AccountRatioParam{
 		Symbol: bybit.SymbolInverseBTCUSD,
 		Period: bybit.Period1h,
 		Limit:  &limit,
@@ -182,7 +182,7 @@ func TestAccountRatio(t *testing.T) {
 
 func TestPremiumIndexKline(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InversePerpetual.PremiumIndexKline(bybit.PremiumIndexKlineParam{
+	res, err := client.Future().InversePerpetual().PremiumIndexKline(bybit.PremiumIndexKlineParam{
 		Symbol:   bybit.SymbolInverseBTCUSD,
 		Interval: bybit.Interval120,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
@@ -202,7 +202,7 @@ func TestCreateOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		price := 28383.5
-		res, err := client.Future().InversePerpetual.CreateOrder(bybit.CreateOrderParam{
+		res, err := client.Future().InversePerpetual().CreateOrder(bybit.CreateOrderParam{
 			Side:        bybit.SideBuy,
 			Symbol:      bybit.SymbolInverseBTCUSD,
 			OrderType:   bybit.OrderTypeLimit,
@@ -222,7 +222,7 @@ func TestCreateOrder(t *testing.T) {
 		// clean
 		{
 			orderID := res.Result.OrderID
-			res, err := client.Future().InversePerpetual.CancelOrder(bybit.CancelOrderParam{
+			res, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{
 				Symbol:  bybit.SymbolInverseBTCUSD,
 				OrderID: &orderID,
 			})
@@ -234,7 +234,7 @@ func TestCreateOrder(t *testing.T) {
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
 		price := 28383.5
-		_, err := client.Future().InversePerpetual.CreateOrder(bybit.CreateOrderParam{
+		_, err := client.Future().InversePerpetual().CreateOrder(bybit.CreateOrderParam{
 			Side:        bybit.SideBuy,
 			Symbol:      bybit.SymbolInverseBTCUSD,
 			OrderType:   bybit.OrderTypeLimit,
@@ -252,7 +252,7 @@ func TestListOrder(t *testing.T) {
 		var orderID string
 		{
 			price := 10000.0
-			res, err := client.Future().InversePerpetual.CreateOrder(bybit.CreateOrderParam{
+			res, err := client.Future().InversePerpetual().CreateOrder(bybit.CreateOrderParam{
 				Side:        bybit.SideBuy,
 				Symbol:      bybit.SymbolInverseBTCUSD,
 				OrderType:   bybit.OrderTypeLimit,
@@ -266,7 +266,7 @@ func TestListOrder(t *testing.T) {
 			}
 			orderID = res.Result.OrderID
 		}
-		res, err := client.Future().InversePerpetual.ListOrder(bybit.ListOrderParam{
+		res, err := client.Future().InversePerpetual().ListOrder(bybit.ListOrderParam{
 			Symbol: bybit.SymbolInverseBTCUSD,
 		})
 		{
@@ -280,7 +280,7 @@ func TestListOrder(t *testing.T) {
 		}
 		// clean
 		{
-			res, err := client.Future().InversePerpetual.CancelOrder(bybit.CancelOrderParam{
+			res, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{
 				Symbol:  bybit.SymbolInverseBTCUSD,
 				OrderID: &orderID,
 			})
@@ -292,7 +292,7 @@ func TestListOrder(t *testing.T) {
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
 		price := 28383.5
-		_, err := client.Future().InversePerpetual.CreateOrder(bybit.CreateOrderParam{
+		_, err := client.Future().InversePerpetual().CreateOrder(bybit.CreateOrderParam{
 			Side:        bybit.SideBuy,
 			Symbol:      bybit.SymbolInverseBTCUSD,
 			OrderType:   bybit.OrderTypeLimit,
@@ -307,7 +307,7 @@ func TestListOrder(t *testing.T) {
 func TestListPosition(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
-		res, err := client.Future().InversePerpetual.ListPosition(bybit.SymbolInverseBTCUSD)
+		res, err := client.Future().InversePerpetual().ListPosition(bybit.SymbolInverseBTCUSD)
 		{
 			require.NoError(t, err)
 			require.Equal(t, "OK", res.RetMsg)
@@ -320,7 +320,7 @@ func TestListPosition(t *testing.T) {
 	})
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
-		_, err := client.Future().InversePerpetual.ListPosition(bybit.SymbolInverseBTCUSD)
+		_, err := client.Future().InversePerpetual().ListPosition(bybit.SymbolInverseBTCUSD)
 		require.Error(t, err)
 	})
 }
@@ -328,7 +328,7 @@ func TestListPosition(t *testing.T) {
 func TestListPositions(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
-		res, err := client.Future().InversePerpetual.ListPositions()
+		res, err := client.Future().InversePerpetual().ListPositions()
 		{
 			require.NoError(t, err)
 			require.Equal(t, "OK", res.RetMsg)
@@ -341,7 +341,7 @@ func TestListPositions(t *testing.T) {
 	})
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
-		_, err := client.Future().InversePerpetual.ListPositions()
+		_, err := client.Future().InversePerpetual().ListPositions()
 		require.Error(t, err)
 	})
 }
@@ -352,7 +352,7 @@ func TestCancelOrder(t *testing.T) {
 		var orderID string
 		{
 			price := 28383.5
-			res, err := client.Future().InversePerpetual.CreateOrder(bybit.CreateOrderParam{
+			res, err := client.Future().InversePerpetual().CreateOrder(bybit.CreateOrderParam{
 				Side:        bybit.SideBuy,
 				Symbol:      bybit.SymbolInverseBTCUSD,
 				OrderType:   bybit.OrderTypeLimit,
@@ -366,7 +366,7 @@ func TestCancelOrder(t *testing.T) {
 			}
 			orderID = res.Result.OrderID
 		}
-		res, err := client.Future().InversePerpetual.CancelOrder(bybit.CancelOrderParam{
+		res, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{
 			Symbol:  bybit.SymbolInverseBTCUSD,
 			OrderID: &orderID,
 		})
@@ -383,7 +383,7 @@ func TestCancelOrder(t *testing.T) {
 
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
-		_, err := client.Future().InversePerpetual.CancelOrder(bybit.CancelOrderParam{})
+		_, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{})
 		require.Error(t, err)
 	})
 }
@@ -392,7 +392,7 @@ func TestSaveLeverage(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		{
-			res, err := client.Future().InversePerpetual.SaveLeverage(bybit.SaveLeverageParam{
+			res, err := client.Future().InversePerpetual().SaveLeverage(bybit.SaveLeverageParam{
 				Symbol:   bybit.SymbolInverseBTCUSD,
 				Leverage: 2.0,
 			})
@@ -409,7 +409,7 @@ func TestSaveLeverage(t *testing.T) {
 	})
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
-		_, err := client.Future().InversePerpetual.CancelOrder(bybit.CancelOrderParam{})
+		_, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{})
 		require.Error(t, err)
 	})
 }

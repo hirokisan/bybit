@@ -59,7 +59,7 @@ func TestCreateOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual.CreateOrder(param)
+		resp, err := client.Future().InversePerpetual().CreateOrder(param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -112,7 +112,7 @@ func TestCreateOrder(t *testing.T) {
 		client := NewClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual.CreateOrder(param)
+		_, err = client.Future().InversePerpetual().CreateOrder(param)
 		assert.Error(t, err)
 	})
 }
@@ -167,7 +167,7 @@ func TestListOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual.ListOrder(param)
+		resp, err := client.Future().InversePerpetual().ListOrder(param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -221,7 +221,7 @@ func TestListOrder(t *testing.T) {
 		client := NewClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual.ListOrder(param)
+		_, err = client.Future().InversePerpetual().ListOrder(param)
 		assert.Error(t, err)
 	})
 }

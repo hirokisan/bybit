@@ -16,7 +16,7 @@ import (
 
 func TestSpotSymbols(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Spot().V1.SpotSymbols()
+	res, err := client.Spot().V1().SpotSymbols()
 	{
 		require.NoError(t, err)
 	}
@@ -29,7 +29,7 @@ func TestSpotSymbols(t *testing.T) {
 
 func TestSpotQuoteDepth(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Spot().V1.SpotQuoteDepth(bybit.SpotQuoteDepthParam{
+	res, err := client.Spot().V1().SpotQuoteDepth(bybit.SpotQuoteDepthParam{
 		Symbol: bybit.SymbolSpotBTCUSDT,
 	})
 	{
@@ -44,7 +44,7 @@ func TestSpotQuoteDepth(t *testing.T) {
 
 func TestSpotQuoteDepthMerged(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Spot().V1.SpotQuoteDepthMerged(bybit.SpotQuoteDepthMergedParam{
+	res, err := client.Spot().V1().SpotQuoteDepthMerged(bybit.SpotQuoteDepthMergedParam{
 		Symbol: bybit.SymbolSpotBTCUSDT,
 	})
 	{
@@ -59,7 +59,7 @@ func TestSpotQuoteDepthMerged(t *testing.T) {
 
 func TestSpotQuoteTrades(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Spot().V1.SpotQuoteTrades(bybit.SpotQuoteTradesParam{
+	res, err := client.Spot().V1().SpotQuoteTrades(bybit.SpotQuoteTradesParam{
 		Symbol: bybit.SymbolSpotBTCUSDT,
 	})
 	{
@@ -74,7 +74,7 @@ func TestSpotQuoteTrades(t *testing.T) {
 
 func TestSpotQuoteKline(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Spot().V1.SpotQuoteKline(bybit.SpotQuoteKlineParam{
+	res, err := client.Spot().V1().SpotQuoteKline(bybit.SpotQuoteKlineParam{
 		Symbol:   bybit.SymbolSpotBTCUSDT,
 		Interval: bybit.SpotInterval1d,
 	})
@@ -91,7 +91,7 @@ func TestSpotQuoteKline(t *testing.T) {
 func TestSpotQuoteTicker24hr(t *testing.T) {
 	client := bybit.NewTestClient()
 	symbol := bybit.SymbolSpotBTCUSDT
-	res, err := client.Spot().V1.SpotQuoteTicker24hr(bybit.SpotQuoteTicker24hrParam{
+	res, err := client.Spot().V1().SpotQuoteTicker24hr(bybit.SpotQuoteTicker24hrParam{
 		Symbol: &symbol,
 	})
 	{
@@ -107,7 +107,7 @@ func TestSpotQuoteTicker24hr(t *testing.T) {
 func TestSpotQuoteTickerPrice(t *testing.T) {
 	client := bybit.NewTestClient()
 	symbol := bybit.SymbolSpotBTCUSDT
-	res, err := client.Spot().V1.SpotQuoteTickerPrice(bybit.SpotQuoteTickerPriceParam{
+	res, err := client.Spot().V1().SpotQuoteTickerPrice(bybit.SpotQuoteTickerPriceParam{
 		Symbol: &symbol,
 	})
 	{
@@ -123,7 +123,7 @@ func TestSpotQuoteTickerPrice(t *testing.T) {
 func TestSpotQuoteTickerBookTicker(t *testing.T) {
 	client := bybit.NewTestClient()
 	symbol := bybit.SymbolSpotBTCUSDT
-	res, err := client.Spot().V1.SpotQuoteTickerBookTicker(bybit.SpotQuoteTickerBookTickerParam{
+	res, err := client.Spot().V1().SpotQuoteTickerBookTicker(bybit.SpotQuoteTickerBookTickerParam{
 		Symbol: &symbol,
 	})
 	{
@@ -139,7 +139,7 @@ func TestSpotQuoteTickerBookTicker(t *testing.T) {
 func TestSpotPostOrder(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
 	price := 18383.5
-	res, err := client.Spot().V1.SpotPostOrder(bybit.SpotPostOrderParam{
+	res, err := client.Spot().V1().SpotPostOrder(bybit.SpotPostOrderParam{
 		Symbol: bybit.SymbolSpotBTCUSDT,
 		Qty:    0.01,
 		Side:   bybit.SideBuy,
@@ -157,7 +157,7 @@ func TestSpotPostOrder(t *testing.T) {
 	// clean order
 	orderID := res.Result.OrderID
 	{
-		_, err := client.Spot().V1.SpotDeleteOrder(bybit.SpotDeleteOrderParam{
+		_, err := client.Spot().V1().SpotDeleteOrder(bybit.SpotDeleteOrderParam{
 			OrderID: &orderID,
 		})
 		{
@@ -172,7 +172,7 @@ func TestSpotGetOrder(t *testing.T) {
 	var orderID string
 	{
 		price := 28383.5
-		res, err := client.Spot().V1.SpotPostOrder(bybit.SpotPostOrderParam{
+		res, err := client.Spot().V1().SpotPostOrder(bybit.SpotPostOrderParam{
 			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
 			Side:   bybit.SideBuy,
@@ -185,7 +185,7 @@ func TestSpotGetOrder(t *testing.T) {
 		orderID = res.Result.OrderID
 	}
 
-	res, err := client.Spot().V1.SpotGetOrder(bybit.SpotGetOrderParam{
+	res, err := client.Spot().V1().SpotGetOrder(bybit.SpotGetOrderParam{
 		OrderID: &orderID,
 	})
 	{
@@ -198,7 +198,7 @@ func TestSpotGetOrder(t *testing.T) {
 	}
 	// clean order
 	{
-		_, err := client.Spot().V1.SpotDeleteOrder(bybit.SpotDeleteOrderParam{
+		_, err := client.Spot().V1().SpotDeleteOrder(bybit.SpotDeleteOrderParam{
 			OrderID: &orderID,
 		})
 		{
@@ -213,7 +213,7 @@ func TestSpotDeleteOrder(t *testing.T) {
 	var orderID string
 	{
 		price := 28383.5
-		res, err := client.Spot().V1.SpotPostOrder(bybit.SpotPostOrderParam{
+		res, err := client.Spot().V1().SpotPostOrder(bybit.SpotPostOrderParam{
 			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
 			Side:   bybit.SideBuy,
@@ -226,7 +226,7 @@ func TestSpotDeleteOrder(t *testing.T) {
 		orderID = res.Result.OrderID
 	}
 
-	res, err := client.Spot().V1.SpotDeleteOrder(bybit.SpotDeleteOrderParam{
+	res, err := client.Spot().V1().SpotDeleteOrder(bybit.SpotDeleteOrderParam{
 		OrderID: &orderID,
 	})
 	{
@@ -246,7 +246,7 @@ func TestSpotDeleteFastOrder(t *testing.T) {
 	var symbol bybit.SymbolSpot
 	{
 		price := 28383.5
-		res, err := client.Spot().V1.SpotPostOrder(bybit.SpotPostOrderParam{
+		res, err := client.Spot().V1().SpotPostOrder(bybit.SpotPostOrderParam{
 			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
 			Side:   bybit.SideBuy,
@@ -260,7 +260,7 @@ func TestSpotDeleteFastOrder(t *testing.T) {
 		symbol = bybit.SymbolSpot(res.Result.Symbol)
 	}
 
-	res, err := client.Spot().V1.SpotDeleteOrderFast(bybit.SpotDeleteOrderFastParam{
+	res, err := client.Spot().V1().SpotDeleteOrderFast(bybit.SpotDeleteOrderFastParam{
 		Symbol:  symbol,
 		OrderID: &orderID,
 	})
@@ -280,7 +280,7 @@ func TestSpotOrderBatchCancel(t *testing.T) {
 	var symbol bybit.SymbolSpot
 	{
 		price := 28383.5
-		res, err := client.Spot().V1.SpotPostOrder(bybit.SpotPostOrderParam{
+		res, err := client.Spot().V1().SpotPostOrder(bybit.SpotPostOrderParam{
 			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
 			Side:   bybit.SideBuy,
@@ -293,7 +293,7 @@ func TestSpotOrderBatchCancel(t *testing.T) {
 		symbol = bybit.SymbolSpot(res.Result.Symbol)
 	}
 
-	res, err := client.Spot().V1.SpotOrderBatchCancel(bybit.SpotOrderBatchCancelParam{
+	res, err := client.Spot().V1().SpotOrderBatchCancel(bybit.SpotOrderBatchCancelParam{
 		Symbol: symbol,
 	})
 	{
@@ -312,7 +312,7 @@ func TestSpotOrderBatchFastCancel(t *testing.T) {
 	var symbol bybit.SymbolSpot
 	{
 		price := 28383.5
-		res, err := client.Spot().V1.SpotPostOrder(bybit.SpotPostOrderParam{
+		res, err := client.Spot().V1().SpotPostOrder(bybit.SpotPostOrderParam{
 			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
 			Side:   bybit.SideBuy,
@@ -325,7 +325,7 @@ func TestSpotOrderBatchFastCancel(t *testing.T) {
 		symbol = bybit.SymbolSpot(res.Result.Symbol)
 	}
 
-	res, err := client.Spot().V1.SpotOrderBatchFastCancel(bybit.SpotOrderBatchFastCancelParam{
+	res, err := client.Spot().V1().SpotOrderBatchFastCancel(bybit.SpotOrderBatchFastCancelParam{
 		Symbol: symbol,
 	})
 	{
@@ -344,7 +344,7 @@ func TestSpotOrderBatchCancelByIDs(t *testing.T) {
 	var orderID string
 	{
 		price := 28383.5
-		res, err := client.Spot().V1.SpotPostOrder(bybit.SpotPostOrderParam{
+		res, err := client.Spot().V1().SpotPostOrder(bybit.SpotPostOrderParam{
 			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,
 			Side:   bybit.SideBuy,
@@ -357,7 +357,7 @@ func TestSpotOrderBatchCancelByIDs(t *testing.T) {
 		orderID = res.Result.OrderID
 	}
 
-	res, err := client.Spot().V1.SpotOrderBatchCancelByIDs([]string{orderID})
+	res, err := client.Spot().V1().SpotOrderBatchCancelByIDs([]string{orderID})
 	{
 		require.NoError(t, err)
 	}
