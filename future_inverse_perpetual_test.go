@@ -55,7 +55,7 @@ func TestCreateOrder(t *testing.T) {
 		)
 		defer teardown()
 
-		client := NewClient().
+		client := NewTestClient().
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
@@ -109,7 +109,7 @@ func TestCreateOrder(t *testing.T) {
 		)
 		defer teardown()
 
-		client := NewClient().
+		client := NewTestClient().
 			WithBaseURL(server.URL)
 
 		_, err = client.Future().InversePerpetual().CreateOrder(param)
@@ -163,7 +163,7 @@ func TestListOrder(t *testing.T) {
 		)
 		defer teardown()
 
-		client := NewClient().
+		client := NewTestClient().
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
@@ -218,7 +218,7 @@ func TestListOrder(t *testing.T) {
 		)
 		defer teardown()
 
-		client := NewClient().
+		client := NewTestClient().
 			WithBaseURL(server.URL)
 
 		_, err = client.Future().InversePerpetual().ListOrder(param)
