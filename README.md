@@ -11,7 +11,7 @@ bybit is an bybit client for the Go programing language.
 import "github.com/hirokisan/bybit"
 
 client := bybit.NewClient().WithAuth("your api key", "your api secret")
-res, err := client.Wallet().Balance(bybit.CoinBTC)
+res, err := client.Future().InversePerpetual().Balance(bybit.CoinBTC)
 // do as you want
 ```
 
@@ -40,6 +40,8 @@ The following API endpoints have been implemented
 - `/v2/private/order/create` Place Active Order
 - `/v2/private/order/list` Get Active Order
 - `/v2/private/order/cancel` Cancel Active Order
+- `/v2/private/position/list` My Position
+- `/v2/private/position/leverage/save` Set Leverage
 
 #### Wallet Data Endpoints
 

@@ -9,7 +9,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -19,80 +18,33 @@ import (
 const (
 	// MainNetBaseURL :
 	MainNetBaseURL = "https://api.bybit.com"
-	// TestNetBaseURL :
-	TestNetBaseURL = "https://api-testnet.bybit.com"
 )
 
 // Client :
 type Client struct {
-	BaseURL string
-	Key     string
-	Secret  string
+	baseURL string
+	key     string
+	secret  string
 }
 
 // NewClient :
 func NewClient() *Client {
 	return &Client{
-		BaseURL: MainNetBaseURL,
+		baseURL: MainNetBaseURL,
 	}
-}
-
-// NewTestClient :
-func NewTestClient() *Client {
-	return &Client{
-		BaseURL: TestNetBaseURL,
-	}
-}
-
-// WithBaseURL :
-func (c *Client) WithBaseURL(url string) *Client {
-	c.BaseURL = url
-
-	return c
 }
 
 // WithAuth :
 func (c *Client) WithAuth(key string, secret string) *Client {
-	c.Key = key
-	c.Secret = secret
+	c.key = key
+	c.secret = secret
 
 	return c
 }
 
-// WithAuthFromEnv :
-func (c *Client) WithAuthFromEnv() *Client {
-	key, ok := os.LookupEnv("BYBIT_TEST_KEY")
-	if !ok {
-		panic("need BYBIT_TEST_KEY as environment variable")
-	}
-	secret, ok := os.LookupEnv("BYBIT_TEST_SECRET")
-	if !ok {
-		panic("need BYBIT_TEST_SECRET as environment variable")
-	}
-	c.Key = key
-	c.Secret = secret
-
-	return c
-}
-
-// HasAuth : check has auth key and secret
-func (c *Client) HasAuth() bool {
-	return c.Key != "" && c.Secret != ""
-}
-
-// Wallet :
-func (c *Client) Wallet() *WalletService {
-	return &WalletService{c}
-}
-
-// Account :
-func (c *Client) Account() *AccountService {
-	return &AccountService{c}
-}
-
-// Market :
-func (c *Client) Market() *MarketService {
-	return &MarketService{c}
+// hasAuth : check has auth key and secret
+func (c *Client) hasAuth() bool {
+	return c.key != "" && c.secret != ""
 }
 
 func (c *Client) populateSignature(src url.Values) url.Values {
@@ -103,9 +55,9 @@ func (c *Client) populateSignature(src url.Values) url.Values {
 		src = url.Values{}
 	}
 
-	src.Add("api_key", c.Key)
+	src.Add("api_key", c.key)
 	src.Add("timestamp", now)
-	src.Add("sign", getSignature(src, c.Secret))
+	src.Add("sign", getSignature(src, c.secret))
 
 	return src
 }
@@ -133,7 +85,7 @@ func getSignature(src url.Values, key string) string {
 }
 
 func (c *Client) getPublicly(path string, query url.Values, dst interface{}) error {
-	u, err := url.Parse(c.BaseURL)
+	u, err := url.Parse(c.baseURL)
 	if err != nil {
 		return err
 	}
@@ -154,11 +106,11 @@ func (c *Client) getPublicly(path string, query url.Values, dst interface{}) err
 }
 
 func (c *Client) getPrivately(path string, query url.Values, dst interface{}) error {
-	if !c.HasAuth() {
+	if !c.hasAuth() {
 		return fmt.Errorf("this is private endpoint, please set api key and secret")
 	}
 
-	u, err := url.Parse(c.BaseURL)
+	u, err := url.Parse(c.baseURL)
 	if err != nil {
 		return err
 	}
@@ -179,11 +131,11 @@ func (c *Client) getPrivately(path string, query url.Values, dst interface{}) er
 }
 
 func (c *Client) postJSON(path string, body []byte, dst interface{}) error {
-	if !c.HasAuth() {
+	if !c.hasAuth() {
 		return fmt.Errorf("this is private endpoint, please set api key and secret")
 	}
 
-	u, err := url.Parse(c.BaseURL)
+	u, err := url.Parse(c.baseURL)
 	if err != nil {
 		return err
 	}
@@ -206,11 +158,11 @@ func (c *Client) postJSON(path string, body []byte, dst interface{}) error {
 }
 
 func (c *Client) postForm(path string, body url.Values, dst interface{}) error {
-	if !c.HasAuth() {
+	if !c.hasAuth() {
 		return fmt.Errorf("this is private endpoint, please set api key and secret")
 	}
 
-	u, err := url.Parse(c.BaseURL)
+	u, err := url.Parse(c.baseURL)
 	if err != nil {
 		return nil
 	}
@@ -231,11 +183,11 @@ func (c *Client) postForm(path string, body url.Values, dst interface{}) error {
 }
 
 func (c *Client) deletePrivately(path string, query url.Values, dst interface{}) error {
-	if !c.HasAuth() {
+	if !c.hasAuth() {
 		return fmt.Errorf("this is private endpoint, please set api key and secret")
 	}
 
-	u, err := url.Parse(c.BaseURL)
+	u, err := url.Parse(c.baseURL)
 	if err != nil {
 		return err
 	}

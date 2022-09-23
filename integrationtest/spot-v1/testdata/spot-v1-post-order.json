@@ -1,0 +1,15 @@
+{
+  "orderId": "1250640429299375616",
+  "orderLinkId": "1663823957054638",
+  "symbol": "BTCUSDT",
+  "transactTime": "1663823957060",
+  "price": "18383.5",
+  "origQty": "0.01",
+  "type": "LIMIT",
+  "side": "BUY",
+  "status": "NEW",
+  "timeInForce": "GTC",
+  "accountId": "213998",
+  "symbolName": "BTCUSDT",
+  "executedQty": "0"
+}
