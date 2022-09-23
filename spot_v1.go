@@ -3,7 +3,6 @@ package bybit
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/url"
 	"strings"
 
@@ -99,7 +98,6 @@ func (r *SpotQuoteDepthBidsAsks) UnmarshalJSON(data []byte) error {
 	items := SpotQuoteDepthBidsAsks{}
 	for _, item := range parsedData {
 		item := item
-		fmt.Println("item", item)
 		if len(item) != 2 {
 			return errors.New("so far len(item) must be 2, please check it on documents")
 		}

@@ -15,6 +15,7 @@ func TestSpotSymbols(t *testing.T) {
 	res, err := client.Spot().V1().SpotSymbols()
 	{
 		require.NoError(t, err)
+		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1-symbols.json"
@@ -30,6 +31,7 @@ func TestSpotQuoteDepth(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
+		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-quote-v1-depth.json"
@@ -45,6 +47,7 @@ func TestSpotQuoteDepthMerged(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
+		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-quote-v1-depth-merged.json"
@@ -339,7 +342,7 @@ func TestSpotOrderBatchCancelByIDs(t *testing.T) {
 
 	var orderID string
 	{
-		price := 28383.5
+		price := 1.0
 		res, err := client.Spot().V1().SpotPostOrder(bybit.SpotPostOrderParam{
 			Symbol: bybit.SymbolSpotBTCUSDT,
 			Qty:    0.01,

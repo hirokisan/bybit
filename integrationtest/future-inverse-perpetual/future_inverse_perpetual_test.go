@@ -17,6 +17,7 @@ func TestBalance(t *testing.T) {
 		res, err := client.Future().InversePerpetual().Balance(bybit.CoinUSDT)
 		{
 			require.NoError(t, err)
+			require.Equal(t, "OK", res.RetMsg)
 		}
 		{
 			goldenFilename := "./testdata/v2-private-wallet-balance.json"
