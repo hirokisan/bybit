@@ -10,23 +10,29 @@ import (
 
 // FutureInversePerpetualServiceI :
 type FutureInversePerpetualServiceI interface {
-	Balance(Coin) (*BalanceResponse, error)
+	// Market Data Endpoints
 	OrderBook(SymbolInverse) (*OrderBookResponse, error)
 	ListKline(ListKlineParam) (*ListKlineResponse, error)
 	Tickers(SymbolInverse) (*TickersResponse, error)
 	TradingRecords(TradingRecordsParam) (*TradingRecordsResponse, error)
 	Symbols() (*SymbolsResponse, error)
+	MarkPriceKline(MarkPriceKlineParam) (*MarkPriceKlineResponse, error)
 	IndexPriceKline(IndexPriceKlineParam) (*IndexPriceKlineResponse, error)
+	PremiumIndexKline(PremiumIndexKlineParam) (*PremiumIndexKlineResponse, error)
 	OpenInterest(OpenInterestParam) (*OpenInterestResponse, error)
 	BigDeal(BigDealParam) (*BigDealResponse, error)
 	AccountRatio(AccountRatioParam) (*AccountRatioResponse, error)
-	PremiumIndexKline(PremiumIndexKlineParam) (*PremiumIndexKlineResponse, error)
+
+	// Account Data Endpoints
 	CreateOrder(CreateOrderParam) (*CreateOrderResponse, error)
 	ListOrder(ListOrderParam) (*ListOrderResponse, error)
+	CancelOrder(CancelOrderParam) (*CancelOrderResponse, error)
 	ListPosition(SymbolInverse) (*ListPositionResponse, error)
 	ListPositions() (*ListPositionsResponse, error)
-	CancelOrder(CancelOrderParam) (*CancelOrderResponse, error)
 	SaveLeverage(SaveLeverageParam) (*SaveLeverageResponse, error)
+
+	// Wallet Data Endpoints
+	Balance(Coin) (*BalanceResponse, error)
 }
 
 // FutureInversePerpetualService :

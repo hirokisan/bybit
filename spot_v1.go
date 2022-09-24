@@ -11,6 +11,7 @@ import (
 
 // SpotV1ServiceI :
 type SpotV1ServiceI interface {
+	// Market Data Endpoints
 	SpotSymbols() (*SpotSymbolsResponse, error)
 	SpotQuoteDepth(SpotQuoteDepthParam) (*SpotQuoteDepthResponse, error)
 	SpotQuoteDepthMerged(SpotQuoteDepthMergedParam) (*SpotQuoteDepthMergedResponse, error)
@@ -19,6 +20,8 @@ type SpotV1ServiceI interface {
 	SpotQuoteTicker24hr(SpotQuoteTicker24hrParam) (*SpotQuoteTicker24hrResponse, error)
 	SpotQuoteTickerPrice(SpotQuoteTickerPriceParam) (*SpotQuoteTickerPriceResponse, error)
 	SpotQuoteTickerBookTicker(SpotQuoteTickerBookTickerParam) (*SpotQuoteTickerBookTickerResponse, error)
+
+	// Account Data Endpoints
 	SpotPostOrder(SpotPostOrderParam) (*SpotPostOrderResponse, error)
 	SpotGetOrder(SpotGetOrderParam) (*SpotGetOrderResponse, error)
 	SpotDeleteOrder(SpotDeleteOrderParam) (*SpotDeleteOrderResponse, error)

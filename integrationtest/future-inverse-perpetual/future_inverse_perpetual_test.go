@@ -111,6 +111,24 @@ func TestSymbols(t *testing.T) {
 	}
 }
 
+func TestMarkPriceKline(t *testing.T) {
+	client := bybit.NewTestClient()
+	res, err := client.Future().InverseFuture().MarkPriceKline(bybit.MarkPriceKlineParam{
+		Symbol:   bybit.SymbolInverseBTCUSD,
+		Interval: bybit.IntervalD,
+		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
+	})
+	{
+		require.NoError(t, err)
+		require.Equal(t, "OK", res.RetMsg)
+	}
+	{
+		goldenFilename := "./testdata/v2-public-mark-price-kline.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
+
 func TestIndexPriceKline(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().InversePerpetual().IndexPriceKline(bybit.IndexPriceKlineParam{
