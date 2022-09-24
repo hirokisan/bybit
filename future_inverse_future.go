@@ -2,6 +2,7 @@ package bybit
 
 // FutureInverseFutureServiceI :
 type FutureInverseFutureServiceI interface {
+	Balance(Coin) (*BalanceResponse, error)
 	OrderBook(SymbolInverse) (*OrderBookResponse, error)
 	ListKline(ListKlineParam) (*ListKlineResponse, error)
 	Tickers(SymbolInverse) (*TickersResponse, error)

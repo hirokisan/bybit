@@ -8,6 +8,7 @@ import (
 
 // FutureUSDTPerpetualServiceI :
 type FutureUSDTPerpetualServiceI interface {
+	Balance(Coin) (*BalanceResponse, error)
 	OrderBook(SymbolInverse) (*OrderBookResponse, error)
 	Tickers(SymbolInverse) (*TickersResponse, error)
 	Symbols() (*SymbolsResponse, error)
