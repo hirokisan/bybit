@@ -79,6 +79,7 @@ The following API endpoints have been implemented
 - `/v2/public/kline/list` Query Kline
 - `/v2/public/tickers` Latest Information for Symbol
 - `/v2/public/trading-records` Public Trading Records
+- `/v2/public/symbols` Query Symbol
 - `/v2/public/mark-price-kline` Query Index Price Kline
 - `/v2/public/index-price-kline` Query Index Price Kline
 - `/v2/public/open-interest` Open Interest
