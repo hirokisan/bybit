@@ -21,3 +21,16 @@ func (s *SpotWebsocketV1Service) PublicV1() (*SpotWebsocketV1PublicV1Service, er
 		paramTradeMap: map[SpotWebsocketV1PublicV1TradeParamKey]func(SpotWebsocketV1PublicV1TradeResponse) error{},
 	}, nil
 }
+
+// PublicV2 :
+func (s *SpotWebsocketV1Service) PublicV2() (*SpotWebsocketV1PublicV2Service, error) {
+	u := url.URL{Scheme: WebsocketScheme, Host: WebsocketHost, Path: SpotWebsocketV1PublicV2Path}
+	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+	return &SpotWebsocketV1PublicV2Service{
+		connection:    c,
+		paramTradeMap: map[SpotWebsocketV1PublicV2TradeParamKey]func(SpotWebsocketV1PublicV2TradeResponse) error{},
+	}, nil
+}
