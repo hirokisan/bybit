@@ -187,9 +187,14 @@ func (s *SpotWebsocketV1PublicV2Service) Start(ctx context.Context) {
 
 	go func() {
 		defer close(done)
-		if err := s.Run(); err != nil {
-			log.Println(err)
-			return
+		for {
+			if err := s.Run(); err != nil {
+				if IsErrWebsocketClosed(err) {
+					return
+				}
+				log.Println(err)
+				return
+			}
 		}
 	}()
 
@@ -224,34 +229,30 @@ func (s *SpotWebsocketV1PublicV2Service) Start(ctx context.Context) {
 
 // Run :
 func (s *SpotWebsocketV1PublicV2Service) Run() error {
-	for {
-		_, message, err := s.connection.ReadMessage()
-		if err != nil {
-			if websocket.IsCloseError(err, websocket.CloseNormalClosure) {
-				return nil
-			}
-			return err
-		}
+	_, message, err := s.connection.ReadMessage()
+	if err != nil {
+		return err
+	}
 
-		topic, err := s.judgeTopic(message)
+	topic, err := s.judgeTopic(message)
+	if err != nil {
+		return err
+	}
+	switch topic {
+	case SpotWebsocketV1PublicV2TopicTrade:
+		var resp SpotWebsocketV1PublicV2TradeResponse
+		if err := s.parseResponse(message, &resp); err != nil {
+			return err
+		}
+		f, err := s.retrieveTradeFunc(resp.Key())
 		if err != nil {
 			return err
 		}
-		switch topic {
-		case SpotWebsocketV1PublicV2TopicTrade:
-			var resp SpotWebsocketV1PublicV2TradeResponse
-			if err := s.parseResponse(message, &resp); err != nil {
-				return err
-			}
-			f, err := s.retrieveTradeFunc(resp.Key())
-			if err != nil {
-				return err
-			}
-			if err := f(resp); err != nil {
-				return err
-			}
+		if err := f(resp); err != nil {
+			return err
 		}
 	}
+	return nil
 }
 
 // Ping :
