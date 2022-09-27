@@ -13,7 +13,7 @@ type SpotWebsocketV1Service struct {
 
 // PublicV1 :
 func (s *SpotWebsocketV1Service) PublicV1() (*SpotWebsocketV1PublicV1Service, error) {
-	u := url.URL{Scheme: WebsocketScheme, Host: WebsocketHost, Path: SpotWebsocketV1PublicV1Path}
+	u := url.URL{Scheme: WebsocketScheme, Host: s.client.baseHost, Path: SpotWebsocketV1PublicV1Path}
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
 		return nil, err
@@ -26,7 +26,7 @@ func (s *SpotWebsocketV1Service) PublicV1() (*SpotWebsocketV1PublicV1Service, er
 
 // PublicV2 :
 func (s *SpotWebsocketV1Service) PublicV2() (*SpotWebsocketV1PublicV2Service, error) {
-	u := url.URL{Scheme: WebsocketScheme, Host: WebsocketHost, Path: SpotWebsocketV1PublicV2Path}
+	u := url.URL{Scheme: WebsocketScheme, Host: s.client.baseHost, Path: SpotWebsocketV1PublicV2Path}
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (s *SpotWebsocketV1Service) PublicV2() (*SpotWebsocketV1PublicV2Service, er
 
 // Private :
 func (s *SpotWebsocketV1Service) Private() (*SpotWebsocketV1PrivateService, error) {
-	u := url.URL{Scheme: WebsocketScheme, Host: WebsocketHost, Path: SpotWebsocketV1PrivatePath}
+	u := url.URL{Scheme: WebsocketScheme, Host: s.client.baseHost, Path: SpotWebsocketV1PrivatePath}
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
 		return nil, err

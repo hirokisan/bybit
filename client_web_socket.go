@@ -16,19 +16,21 @@ const (
 	// WebsocketScheme :
 	WebsocketScheme = "wss"
 	// WebsocketHost :
-	//WebsocketHost = "stream-testnet.bybit.com"
-	WebsocketHost = "stream-testnet.bybit.com"
+	WebsocketHost = "stream.bybit.com"
 )
 
 // WebSocketClient :
 type WebSocketClient struct {
-	key    string
-	secret string
+	baseHost string
+	key      string
+	secret   string
 }
 
 // NewWebsocketClient :
 func NewWebsocketClient() *WebSocketClient {
-	return &WebSocketClient{}
+	return &WebSocketClient{
+		baseHost: WebsocketHost,
+	}
 }
 
 // WithAuth :
