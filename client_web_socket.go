@@ -5,6 +5,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -41,22 +42,26 @@ func (c *WebSocketClient) WithAuth(key string, secret string) *WebSocketClient {
 	return c
 }
 
-type authParam struct {
-	Op   string        `json:"op"`
-	Args []interface{} `json:"args"`
-}
-
-func (c *WebSocketClient) buildAuthParam() authParam {
+func (c *WebSocketClient) buildAuthParam() ([]byte, error) {
 	expires := time.Now().Unix()*1000 + 10000
 	req := fmt.Sprintf("GET/realtime%d", expires)
-	sig := hmac.New(sha256.New, []byte(c.secret))
-	sig.Write([]byte(req))
-	signature := hex.EncodeToString(sig.Sum(nil))
-	param := authParam{
+	s := hmac.New(sha256.New, []byte(c.secret))
+	if _, err := s.Write([]byte(req)); err != nil {
+		return nil, err
+	}
+	signature := hex.EncodeToString(s.Sum(nil))
+	param := struct {
+		Op   string        `json:"op"`
+		Args []interface{} `json:"args"`
+	}{
 		Op:   "auth",
 		Args: []interface{}{c.key, expires, signature},
 	}
-	return param
+	buf, err := json.Marshal(param)
+	if err != nil {
+		return nil, err
+	}
+	return buf, nil
 }
 
 // SpotWebsocketService :

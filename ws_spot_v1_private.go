@@ -115,21 +115,26 @@ type spotWebsocketV1PrivateEventJudge struct {
 
 func (r *spotWebsocketV1PrivateEventJudge) UnmarshalJSON(data []byte) error {
 	parsedData := map[string]interface{}{}
-	if err := json.Unmarshal(data, &parsedData); err != nil {
-		parsedArrayData := []map[string]interface{}{}
-		if err := json.Unmarshal(data, &parsedArrayData); err != nil {
-			return err
+	if err := json.Unmarshal(data, &parsedData); err == nil {
+		if event, ok := parsedData["e"].(string); ok {
+			r.EventType = SpotWebsocketV1PrivateEventType(event)
 		}
-		if len(parsedArrayData) != 1 {
-			return errors.New("unexpected response")
+		if authStatus, ok := parsedData["auth"].(string); ok {
+			if authStatus != "success" {
+				return errors.New("auth failed")
+			}
 		}
-		r.EventType = SpotWebsocketV1PrivateEventType(parsedArrayData[0]["e"].(string))
 		return nil
 	}
 
-	if event, ok := parsedData["e"].(string); ok {
-		r.EventType = SpotWebsocketV1PrivateEventType(event)
+	parsedArrayData := []map[string]interface{}{}
+	if err := json.Unmarshal(data, &parsedArrayData); err != nil {
+		return err
 	}
+	if len(parsedArrayData) != 1 {
+		return errors.New("unexpected response")
+	}
+	r.EventType = SpotWebsocketV1PrivateEventType(parsedArrayData[0]["e"].(string))
 	return nil
 }
 
@@ -152,11 +157,11 @@ func (s *SpotWebsocketV1PrivateService) parseResponse(respBody []byte, response 
 
 // Subscribe :
 func (s *SpotWebsocketV1PrivateService) Subscribe() error {
-	buf, err := json.Marshal(s.client.buildAuthParam())
+	param, err := s.client.buildAuthParam()
 	if err != nil {
 		return err
 	}
-	if err := s.connection.WriteMessage(websocket.TextMessage, []byte(buf)); err != nil {
+	if err := s.connection.WriteMessage(websocket.TextMessage, param); err != nil {
 		return err
 	}
 	return nil
