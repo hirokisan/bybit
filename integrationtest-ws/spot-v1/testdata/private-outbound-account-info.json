@@ -1,0 +1,16 @@
+{
+  "Content": {
+    "e": "outboundAccountInfo",
+    "E": "1664285837492",
+    "T": true,
+    "W": true,
+    "D": true,
+    "B": [
+      {
+        "a": "USDT",
+        "f": "250.117543",
+        "l": "10"
+      }
+    ]
+  }
+}
