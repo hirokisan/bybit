@@ -14,23 +14,21 @@ import (
 )
 
 const (
-	// WebsocketScheme :
-	WebsocketScheme = "wss"
-	// WebsocketHost :
-	WebsocketHost = "stream.bybit.com"
+	// WebsocketBaseURL :
+	WebsocketBaseURL = "wss://stream.bybit.com"
 )
 
 // WebSocketClient :
 type WebSocketClient struct {
-	baseHost string
-	key      string
-	secret   string
+	baseURL string
+	key     string
+	secret  string
 }
 
 // NewWebsocketClient :
 func NewWebsocketClient() *WebSocketClient {
 	return &WebSocketClient{
-		baseHost: WebsocketHost,
+		baseURL: WebsocketBaseURL,
 	}
 }
 

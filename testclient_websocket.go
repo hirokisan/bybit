@@ -3,8 +3,8 @@ package bybit
 import "os"
 
 const (
-	// TestWebsocketHost :
-	TestWebsocketHost = "stream-testnet.bybit.com"
+	// TestWebsocketBaseURL :
+	TestWebsocketBaseURL = "wss://stream-testnet.bybit.com"
 )
 
 // TestWebSocketClient :
@@ -16,9 +16,16 @@ type TestWebSocketClient struct {
 func NewTestWebsocketClient() *TestWebSocketClient {
 	return &TestWebSocketClient{
 		WebSocketClient: &WebSocketClient{
-			baseHost: TestWebsocketHost,
+			baseURL: TestWebsocketBaseURL,
 		},
 	}
+}
+
+// WithBaseURL :
+func (c *TestWebSocketClient) WithBaseURL(url string) *TestWebSocketClient {
+	c.baseURL = url
+
+	return c
 }
 
 // WithAuthFromEnv :
