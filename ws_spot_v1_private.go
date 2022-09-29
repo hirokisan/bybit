@@ -79,6 +79,11 @@ func (r *SpotWebsocketV1PrivateOutboundAccountInfoResponse) UnmarshalJSON(data [
 	return nil
 }
 
+// MarshalJSON :
+func (r *SpotWebsocketV1PrivateOutboundAccountInfoResponse) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Content)
+}
+
 // Key :
 func (r *SpotWebsocketV1PrivateOutboundAccountInfoResponse) Key() SpotWebsocketV1PrivateParamKey {
 	return SpotWebsocketV1PrivateParamKey{
