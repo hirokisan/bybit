@@ -100,11 +100,6 @@ func (s *SpotWebsocketV1PrivateService) addParamOutboundAccountInfoFunc(param Sp
 	return nil
 }
 
-// removeParamOutboundAccountInfoFunc :
-func (s *SpotWebsocketV1PrivateService) removeParamOutboundAccountInfoFunc(key SpotWebsocketV1PrivateParamKey) {
-	delete(s.paramOutboundAccountInfoMap, key)
-}
-
 // retrieveOutboundAccountInfoFunc :
 func (s *SpotWebsocketV1PrivateService) retrieveOutboundAccountInfoFunc(key SpotWebsocketV1PrivateParamKey) (func(SpotWebsocketV1PrivateOutboundAccountInfoResponse) error, error) {
 	f, exist := s.paramOutboundAccountInfoMap[key]

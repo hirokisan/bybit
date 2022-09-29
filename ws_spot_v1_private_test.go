@@ -44,10 +44,10 @@ func TestSpotWebsocketV1PrivateOutboundAccountInfo(t *testing.T) {
 
 	require.NoError(t, svc.Subscribe())
 
-	svc.RegisterFuncOutboundAccountInfo(func(response SpotWebsocketV1PrivateOutboundAccountInfoResponse) error {
+	require.NoError(t, svc.RegisterFuncOutboundAccountInfo(func(response SpotWebsocketV1PrivateOutboundAccountInfoResponse) error {
 		assert.Equal(t, respBody[0], response)
 		return nil
-	})
+	}))
 
 	assert.NoError(t, svc.Run())
 	assert.NoError(t, svc.Ping())
