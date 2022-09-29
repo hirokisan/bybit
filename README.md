@@ -39,6 +39,8 @@ svc.Start(context.Background())
 
 for multiple use
 ```
+import "github.com/hirokisan/bybit"
+
 wsClient := bybit.NewWebsocketClient()
 
 executors := []bybit.WebsocketExecutor{}
