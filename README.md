@@ -23,7 +23,7 @@ for single use
 ```
 import "github.com/hirokisan/bybit"
 
-sClient := bybit.NewWebsocketClient()
+wsClient := bybit.NewWebsocketClient()
 svc, err := wsClient.Spot().V1().PublicV1()
 if err != nil {
 	return err
