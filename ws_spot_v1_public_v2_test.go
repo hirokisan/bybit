@@ -2,7 +2,6 @@ package bybit
 
 import (
 	"encoding/json"
-	"fmt"
 	"testing"
 
 	"github.com/hirokisan/bybit/testhelper"
@@ -40,7 +39,6 @@ func TestSpotWebsocketV1PublicV2Trade(t *testing.T) {
 	require.NoError(t, err)
 
 	unsubscribe, err := svc.SubscribeTrade(SymbolSpotBTCUSDT, func(response SpotWebsocketV1PublicV2TradeResponse) error {
-		fmt.Printf("%+v", response)
 		assert.Equal(t, respBody, response)
 		return nil
 	})
