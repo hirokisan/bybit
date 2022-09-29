@@ -7,6 +7,8 @@ bybit is an bybit client for the Go programing language.
 
 ## Usage
 
+### REST API
+
 ```
 import "github.com/hirokisan/bybit"
 
@@ -15,13 +17,72 @@ res, err := client.Future().InversePerpetual().Balance(bybit.CoinBTC)
 // do as you want
 ```
 
+### WebSocket API
+
+for single use
+```
+import "github.com/hirokisan/bybit"
+
+sClient := bybit.NewWebsocketClient()
+svc, err := wsClient.Spot().V1().PublicV1()
+if err != nil {
+	return err
+}
+_, err = svc.SubscribeTrade(bybit.SymbolSpotBTCUSDT, func(response bybit.SpotWebsocketV1PublicV1TradeResponse) error {
+	// do as you want
+})
+if err != nil {
+	return err
+}
+svc.Start(context.Background())
+```
+
+for multiple use
+```
+wsClient := bybit.NewWebsocketClient()
+
+executors := []bybit.WebsocketExecutor{}
+
+svcRoot := wsClient.Spot().V1()
+{
+	svc, err := svcRoot.PublicV1()
+	if err != nil {
+		return err
+	}
+	_, err = svc.SubscribeTrade(bybit.SymbolSpotBTCUSDT, func(response bybit.SpotWebsocketV1PublicV1TradeResponse) error {
+		// do as you want
+	})
+	if err != nil {
+		return err
+	}
+	executors = append(executors, svc)
+}
+{
+	svc, err := svcRoot.PublicV2()
+	if err != nil {
+		return err
+	}
+	_, err = svc.SubscribeTrade(bybit.SymbolSpotBTCUSDT, func(response bybit.SpotWebsocketV1PublicV2TradeResponse) error {
+		// do as you want
+	})
+	if err != nil {
+		return err
+	}
+	executors = append(executors, svc)
+}
+
+wsClient.Start(context.Background(), executors)
+```
+
 ## Implemented
 
 The following API endpoints have been implemented
 
-### [Inverse Perpetual](https://bybit-exchange.github.io/docs/inverse)
+### REST API
 
-#### Market Data Endpoints
+#### [Inverse Perpetual](https://bybit-exchange.github.io/docs/inverse)
+
+##### Market Data Endpoints
 
 - `/v2/public/orderBook/L2` Order Book
 - `/v2/public/kline/list` Query Kline
@@ -35,7 +96,7 @@ The following API endpoints have been implemented
 - `/v2/public/big-deal` Latest Big Deal
 - `/v2/public/account-ratio` Long-Short Ratio
 
-#### Account Data Endpoints
+##### Account Data Endpoints
 
 - `/v2/private/order/create` Place Active Order
 - `/v2/private/order/list` Get Active Order
@@ -43,13 +104,13 @@ The following API endpoints have been implemented
 - `/v2/private/position/list` My Position
 - `/v2/private/position/leverage/save` Set Leverage
 
-#### Wallet Data Endpoints
+##### Wallet Data Endpoints
 
 - `/v2/private/wallet/balance` Get Wallet Balance
 
-### [USDT Perpetual](https://bybit-exchange.github.io/docs/linear)
+#### [USDT Perpetual](https://bybit-exchange.github.io/docs/linear)
 
-#### Market Data Endpoints
+##### Market Data Endpoints
 
 - `/v2/public/orderBook/L2` Order Book
 - `/v2/public/tickers` Latest Information for Symbol
@@ -58,7 +119,7 @@ The following API endpoints have been implemented
 - `/v2/public/big-deal` Latest Big Deal
 - `/v2/public/account-ratio` Long-Short Ratio
 
-#### Account Data Endpoints
+##### Account Data Endpoints
 
 - `/private/linear/order/create` Place Active Order
 - `/private/linear/order/cancel` Cancel Active Order
@@ -67,13 +128,13 @@ The following API endpoints have been implemented
 - `/private/linear/position/set-leverage` Set Leverage
 - `/private/linear/trade/execution/list` User Trade Records
 
-#### Wallet Data Endpoints
+##### Wallet Data Endpoints
 
 - `/v2/private/wallet/balance` Get Wallet Balance
 
-### [Inverse Future](https://bybit-exchange.github.io/docs/inverse_futures)
+#### [Inverse Future](https://bybit-exchange.github.io/docs/inverse_futures)
 
-#### Market Data Endpoints
+##### Market Data Endpoints
 
 - `/v2/public/orderBook/L2` Order Book
 - `/v2/public/kline/list` Query Kline
@@ -86,13 +147,13 @@ The following API endpoints have been implemented
 - `/v2/public/big-deal` Latest Big Deal
 - `/v2/public/account-ratio` Long-Short Ratio
 
-#### Wallet Data Endpoints
+##### Wallet Data Endpoints
 
 - `/v2/private/wallet/balance` Get Wallet Balance
 
-### [Spot](https://bybit-exchange.github.io/docs/spot)
+#### [Spot](https://bybit-exchange.github.io/docs/spot)
 
-#### Market Data Endpoints
+##### Market Data Endpoints
 
 - `/spot/v1/symbols` Query Symbol
 - `/spot/quote/v1/depth` Order Book
@@ -103,7 +164,7 @@ The following API endpoints have been implemented
 - `/spot/quote/v1/ticker/price` Last Traded Price
 - `/spot/quote/v1/ticker/book_ticker` Best Bid/Ask Price
 
-#### Account Data Endpoints
+##### Account Data Endpoints
 
 - `/spot/v1/order`
   - Place Active Order
@@ -114,3 +175,19 @@ The following API endpoints have been implemented
 - `/spot/order/batch-cancel` Batch Cancel Active Order
 - `/spot/order/batch-fast-cancel` Batch Fast Cancel Active Order
 - `/spot/order/batch-cancel-by-ids` Batch Cancel Active Order By IDs
+
+### WebSocket API
+
+#### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
+
+##### Public Topics
+
+- trade
+
+##### Public Topics V2
+
+- trade
+
+##### Private Topics
+
+- outboundAccountInfo
