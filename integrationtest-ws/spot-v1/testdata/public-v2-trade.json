@@ -1,0 +1,15 @@
+{
+  "topic": "trade",
+  "params": {
+    "symbol": "BTCUSDT",
+    "symbolName": "BTCUSDT",
+    "binary": "false"
+  },
+  "data": {
+    "v": "2100000000002571636",
+    "t": 1664284492519,
+    "p": "19999.99",
+    "q": "0.015",
+    "m": false
+  }
+}
