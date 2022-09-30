@@ -40,7 +40,16 @@ func (c *WebSocketClient) WithAuth(key string, secret string) *WebSocketClient {
 	return c
 }
 
+// hasAuth : check has auth key and secret
+func (c *WebSocketClient) hasAuth() bool {
+	return c.key != "" && c.secret != ""
+}
+
 func (c *WebSocketClient) buildAuthParam() ([]byte, error) {
+	if !c.hasAuth() {
+		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
 	expires := time.Now().Unix()*1000 + 10000
 	req := fmt.Sprintf("GET/realtime%d", expires)
 	s := hmac.New(sha256.New, []byte(c.secret))

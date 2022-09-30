@@ -37,7 +37,8 @@ func TestSpotWebsocketV1PrivateOutboundAccountInfo(t *testing.T) {
 	defer teardown()
 
 	wsClient := NewTestWebsocketClient().
-		WithBaseURL(server.URL)
+		WithBaseURL(server.URL).
+		WithAuth("test", "test")
 
 	svc, err := wsClient.Spot().V1().Private()
 	require.NoError(t, err)
