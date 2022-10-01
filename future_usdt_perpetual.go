@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+
+	"github.com/google/go-querystring/query"
 )
 
 // FutureUSDTPerpetualServiceI :
@@ -281,26 +283,25 @@ type LinearExecutionList struct {
 
 // LinearExecutionListParam :
 type LinearExecutionListParam struct {
-	Symbol SymbolUSDT `json:"symbol"`
+	Symbol SymbolUSDT `url:"symbol"`
 
-	StartTime *int      `json:"start_time"`
-	EndTime   *int      `json:"end_time"`
-	ExecType  *ExecType `json:"exec_type"`
-	Page      *int      `json:"page"`
-	Limit     *int      `json:"limit"`
+	StartTime *int      `url:"start_time,omitempty"`
+	EndTime   *int      `url:"end_time,omitempty"`
+	ExecType  *ExecType `url:"exec_type,omitempty"`
+	Page      *int      `url:"page,omitempty"`
+	Limit     *int      `url:"limit,omitempty"`
 }
 
 // LinearExecutionList :
-// NOTE(TODO) : somehow got EOF 404(path not found)
 func (s *FutureUSDTPerpetualService) LinearExecutionList(param LinearExecutionListParam) (*LinearExecutionListResponse, error) {
 	var res LinearExecutionListResponse
 
-	body, err := json.Marshal(param)
+	queryString, err := query.Values(param)
 	if err != nil {
-		return nil, fmt.Errorf("json marshal for LinearExecutionListParam: %w", err)
+		return nil, err
 	}
 
-	if err := s.client.postJSON("/private/linear/trade/execution/list", body, &res); err != nil {
+	if err := s.client.getPrivately("/private/linear/trade/execution/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
