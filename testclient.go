@@ -1,6 +1,9 @@
 package bybit
 
-import "os"
+import (
+	"net/http"
+	"os"
+)
 
 const (
 	// TestNetBaseURL :
@@ -16,7 +19,8 @@ type TestClient struct {
 func NewTestClient() *TestClient {
 	return &TestClient{
 		Client: &Client{
-			baseURL: TestNetBaseURL,
+			httpClient: &http.Client{},
+			baseURL:    TestNetBaseURL,
 		},
 	}
 }

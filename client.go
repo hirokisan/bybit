@@ -22,6 +22,8 @@ const (
 
 // Client :
 type Client struct {
+	httpClient *http.Client
+
 	baseURL string
 	key     string
 	secret  string
@@ -30,8 +32,17 @@ type Client struct {
 // NewClient :
 func NewClient() *Client {
 	return &Client{
+		httpClient: &http.Client{},
+
 		baseURL: MainNetBaseURL,
 	}
+}
+
+// WithHTTPClient :
+func (c *Client) WithHTTPClient(httpClient *http.Client) *Client {
+	c.httpClient = httpClient
+
+	return c
 }
 
 // WithAuth :
@@ -92,7 +103,7 @@ func (c *Client) getPublicly(path string, query url.Values, dst interface{}) err
 	u.Path = path
 	u.RawQuery = query.Encode()
 
-	resp, err := http.Get(u.String())
+	resp, err := c.httpClient.Get(u.String())
 	if err != nil {
 		return err
 	}
@@ -118,7 +129,7 @@ func (c *Client) getPrivately(path string, query url.Values, dst interface{}) er
 	query = c.populateSignature(query)
 	u.RawQuery = query.Encode()
 
-	resp, err := http.Get(u.String())
+	resp, err := c.httpClient.Get(u.String())
 	if err != nil {
 		return err
 	}
@@ -145,7 +156,7 @@ func (c *Client) postJSON(path string, body []byte, dst interface{}) error {
 	query = c.populateSignature(query)
 	u.RawQuery = query.Encode()
 
-	resp, err := http.Post(u.String(), "application/json", bytes.NewBuffer(body))
+	resp, err := c.httpClient.Post(u.String(), "application/json", bytes.NewBuffer(body))
 	if err != nil {
 		return err
 	}
@@ -170,7 +181,7 @@ func (c *Client) postForm(path string, body url.Values, dst interface{}) error {
 
 	body = c.populateSignature(body)
 
-	resp, err := http.Post(u.String(), "application/x-www-form-urlencoded", strings.NewReader(body.Encode()))
+	resp, err := c.httpClient.Post(u.String(), "application/x-www-form-urlencoded", strings.NewReader(body.Encode()))
 	if err != nil {
 		return err
 	}
@@ -199,8 +210,7 @@ func (c *Client) deletePrivately(path string, query url.Values, dst interface{})
 	if err != nil {
 		return err
 	}
-	client := new(http.Client)
-	resp, err := client.Do(req)
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return err
 	}
