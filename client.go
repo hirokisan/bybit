@@ -5,6 +5,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -51,6 +52,44 @@ func (c *Client) WithAuth(key string, secret string) *Client {
 	c.secret = secret
 
 	return c
+}
+
+// Request :
+func (c *Client) Request(req *http.Request, dst interface{}) error {
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	switch {
+	case 200 <= resp.StatusCode && resp.StatusCode <= 299:
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		if err := json.Unmarshal(body, &dst); err != nil {
+			return err
+		}
+
+		{
+			rateLimitError := &RateLimitError{}
+			if err := json.Unmarshal(body, rateLimitError); err != nil {
+				return err
+			}
+			if rateLimitError.RetCode == 10006 {
+				return rateLimitError
+			}
+		}
+
+		return nil
+	case resp.StatusCode == http.StatusForbidden:
+		return ErrAccessDenied
+	case resp.StatusCode == http.StatusNotFound:
+		return ErrPathNotFound
+	default:
+		return errors.New("unexpected error")
+	}
 }
 
 // hasAuth : check has auth key and secret
@@ -103,13 +142,12 @@ func (c *Client) getPublicly(path string, query url.Values, dst interface{}) err
 	u.Path = path
 	u.RawQuery = query.Encode()
 
-	resp, err := c.httpClient.Get(u.String())
+	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
 
-	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+	if err := c.Request(req, &dst); err != nil {
 		return err
 	}
 
@@ -129,12 +167,12 @@ func (c *Client) getPrivately(path string, query url.Values, dst interface{}) er
 	query = c.populateSignature(query)
 	u.RawQuery = query.Encode()
 
-	resp, err := c.httpClient.Get(u.String())
+	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+
+	if err := c.Request(req, &dst); err != nil {
 		return err
 	}
 
@@ -156,12 +194,13 @@ func (c *Client) postJSON(path string, body []byte, dst interface{}) error {
 	query = c.populateSignature(query)
 	u.RawQuery = query.Encode()
 
-	resp, err := c.httpClient.Post(u.String(), "application/json", bytes.NewBuffer(body))
+	req, err := http.NewRequest(http.MethodPost, u.String(), bytes.NewBuffer(body))
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+	req.Header.Set("Content-Type", "application/json")
+
+	if err := c.Request(req, &dst); err != nil {
 		return err
 	}
 
@@ -181,12 +220,16 @@ func (c *Client) postForm(path string, body url.Values, dst interface{}) error {
 
 	body = c.populateSignature(body)
 
-	resp, err := c.httpClient.Post(u.String(), "application/x-www-form-urlencoded", strings.NewReader(body.Encode()))
+	req, err := http.NewRequest(http.MethodPost, u.String(), strings.NewReader(body.Encode()))
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	if err != nil {
+		return err
+	}
+
+	if err := c.Request(req, &dst); err != nil {
 		return err
 	}
 
@@ -210,12 +253,8 @@ func (c *Client) deletePrivately(path string, query url.Values, dst interface{})
 	if err != nil {
 		return err
 	}
-	resp, err := c.httpClient.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&dst); err != nil {
+
+	if err := c.Request(req, &dst); err != nil {
 		return err
 	}
 

@@ -25,8 +25,8 @@ func WithHandlerOption(
 		mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
 			if r.Method == method {
-				_, _ = w.Write(respBody)
 				w.WriteHeader(status)
+				_, _ = w.Write(respBody)
 			}
 		})
 	}
