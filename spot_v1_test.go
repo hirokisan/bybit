@@ -140,3 +140,108 @@ func TestSpotOrderBatchFastCancelParam(t *testing.T) {
 
 	assert.Equal(t, want, queryString)
 }
+
+func TestSpotOpenOrders(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		symbol := SymbolSpotBTCUSDT
+		param := SpotOpenOrdersParam{
+			Symbol: &symbol,
+		}
+
+		path := "/spot/v1/open-orders"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := SpotOpenOrdersResponse{
+			Result: []SpotOpenOrdersResult{
+				{
+					AccountID:           "213998",
+					ExchangeID:          "301",
+					Symbol:              "BTCUSDT",
+					SymbolName:          "BTCUSDT",
+					OrderLinkID:         "1664962738850574",
+					OrderID:             "1260193223383517952",
+					Price:               "1",
+					OrigQty:             "0.01",
+					ExecutedQty:         "0",
+					CummulativeQuoteQty: "0",
+					AvgPrice:            "0",
+					Status:              "NEW",
+					TimeInForce:         "GTC",
+					Type:                "LIMIT",
+					Side:                "BUY",
+					StopPrice:           "0.0",
+					IcebergQty:          "0.0",
+					Time:                "1664962738856",
+					UpdateTime:          "1664962738874",
+					IsWorking:           true,
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Spot().V1().SpotOpenOrders(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		symbol := SymbolSpotBTCUSDT
+		param := SpotOpenOrdersParam{
+			Symbol: &symbol,
+		}
+
+		path := "/spot/v1/open-orders"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := SpotOpenOrdersResponse{
+			Result: []SpotOpenOrdersResult{
+				{
+					AccountID:           "213998",
+					ExchangeID:          "301",
+					Symbol:              "BTCUSDT",
+					SymbolName:          "BTCUSDT",
+					OrderLinkID:         "1664962738850574",
+					OrderID:             "1260193223383517952",
+					Price:               "1",
+					OrigQty:             "0.01",
+					ExecutedQty:         "0",
+					CummulativeQuoteQty: "0",
+					AvgPrice:            "0",
+					Status:              "NEW",
+					TimeInForce:         "GTC",
+					Type:                "LIMIT",
+					Side:                "BUY",
+					StopPrice:           "0.0",
+					IcebergQty:          "0.0",
+					Time:                "1664962738856",
+					UpdateTime:          "1664962738874",
+					IsWorking:           true,
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Spot().V1().SpotOpenOrders(param)
+		assert.Error(t, err)
+	})
+}
