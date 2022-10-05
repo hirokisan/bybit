@@ -1,0 +1,24 @@
+[
+  {
+    "accountId": "213998",
+    "exchangeId": "301",
+    "symbol": "BTCUSDT",
+    "symbolName": "BTCUSDT",
+    "orderLinkId": "1664962738850574",
+    "orderId": "1260193223383517952",
+    "price": "1",
+    "origQty": "0.01",
+    "executedQty": "0",
+    "cummulativeQuoteQty": "0",
+    "avgPrice": "0",
+    "status": "NEW",
+    "timeInForce": "GTC",
+    "type": "LIMIT",
+    "side": "BUY",
+    "stopPrice": "0.0",
+    "icebergQty": "0.0",
+    "time": "1664962738856",
+    "updateTime": "1664962738874",
+    "isWorking": true
+  }
+]

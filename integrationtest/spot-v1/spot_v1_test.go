@@ -366,3 +366,42 @@ func TestSpotOrderBatchCancelByIDs(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSpotOpenOrders(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+
+	var orderID string
+	{
+		price := 1.0
+		res, err := client.Spot().V1().SpotPostOrder(bybit.SpotPostOrderParam{
+			Symbol: bybit.SymbolSpotBTCUSDT,
+			Qty:    0.01,
+			Side:   bybit.SideBuy,
+			Type:   bybit.OrderTypeSpotLimit,
+			Price:  &price,
+		})
+		{
+			require.NoError(t, err)
+		}
+		orderID = res.Result.OrderID
+	}
+
+	res, err := client.Spot().V1().SpotOpenOrders(bybit.SpotOpenOrdersParam{})
+	{
+		require.NoError(t, err)
+	}
+	{
+		goldenFilename := "./testdata/spot-v1-open-orders.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+
+	{
+		_, err := client.Spot().V1().SpotDeleteOrder(bybit.SpotDeleteOrderParam{
+			OrderID: &orderID,
+		})
+		{
+			require.NoError(t, err)
+		}
+	}
+}
