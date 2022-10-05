@@ -29,6 +29,7 @@ type SpotV1ServiceI interface {
 	SpotOrderBatchCancel(SpotOrderBatchCancelParam) (*SpotOrderBatchCancelResponse, error)
 	SpotOrderBatchFastCancel(SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error)
 	SpotOrderBatchCancelByIDs(orderIDs []string) (*SpotOrderBatchCancelByIDsResponse, error)
+	SpotOpenOrders(SpotOpenOrdersParam) (*SpotOpenOrdersResponse, error)
 }
 
 // SpotV1Service :
@@ -659,6 +660,59 @@ func (s *SpotV1Service) SpotOrderBatchCancelByIDs(orderIDs []string) (*SpotOrder
 	query := url.Values{}
 	query.Add("orderIds", strings.Join(orderIDs, ","))
 	if err := s.client.deletePrivately("/spot/order/batch-cancel-by-ids", query, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// SpotOpenOrdersParam :
+type SpotOpenOrdersParam struct {
+	Symbol  *SymbolSpot `url:"symbol,omitempty"`
+	OrderID *string     `url:"orderId,omitempty"`
+	Limit   *int        `url:"limit,omitempty"`
+}
+
+// SpotOpenOrdersResponse :
+type SpotOpenOrdersResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []SpotOpenOrdersResult `json:"result"`
+}
+
+// SpotOpenOrdersResult :
+type SpotOpenOrdersResult struct {
+	AccountID           string `json:"accountId"`
+	ExchangeID          string `json:"exchangeId"`
+	Symbol              string `json:"symbol"`
+	SymbolName          string `json:"symbolName"`
+	OrderLinkID         string `json:"orderLinkId"`
+	OrderID             string `json:"orderId"`
+	Price               string `json:"price"`
+	OrigQty             string `json:"origQty"`
+	ExecutedQty         string `json:"executedQty"`
+	CummulativeQuoteQty string `json:"cummulativeQuoteQty"`
+	AvgPrice            string `json:"avgPrice"`
+	Status              string `json:"status"`
+	TimeInForce         string `json:"timeInForce"`
+	Type                string `json:"type"`
+	Side                string `json:"side"`
+	StopPrice           string `json:"stopPrice"`
+	IcebergQty          string `json:"icebergQty"`
+	Time                string `json:"time"`
+	UpdateTime          string `json:"updateTime"`
+	IsWorking           bool   `json:"isWorking"`
+}
+
+// SpotOpenOrders :
+func (s *SpotV1Service) SpotOpenOrders(param SpotOpenOrdersParam) (*SpotOpenOrdersResponse, error) {
+	var res SpotOpenOrdersResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/spot/v1/open-orders", queryString, &res); err != nil {
 		return nil, err
 	}
 

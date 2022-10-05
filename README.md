@@ -177,6 +177,7 @@ The following API endpoints have been implemented
 - `/spot/order/batch-cancel` Batch Cancel Active Order
 - `/spot/order/batch-fast-cancel` Batch Fast Cancel Active Order
 - `/spot/order/batch-cancel-by-ids` Batch Cancel Active Order By IDs
+- `/spot/v1/open-orders` Open Orders
 
 ### WebSocket API
 
