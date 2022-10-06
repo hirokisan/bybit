@@ -30,6 +30,9 @@ type SpotV1ServiceI interface {
 	SpotOrderBatchFastCancel(SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error)
 	SpotOrderBatchCancelByIDs(orderIDs []string) (*SpotOrderBatchCancelByIDsResponse, error)
 	SpotOpenOrders(SpotOpenOrdersParam) (*SpotOpenOrdersResponse, error)
+
+	// Wallet Data Endpoints
+	SpotGetWalletBalance() (*SpotGetWalletBalanceResponse, error)
 }
 
 // SpotV1Service :
@@ -713,6 +716,43 @@ func (s *SpotV1Service) SpotOpenOrders(param SpotOpenOrdersParam) (*SpotOpenOrde
 	}
 
 	if err := s.client.getPrivately("/spot/v1/open-orders", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// SpotGetWalletBalanceResponse :
+type SpotGetWalletBalanceResponse struct {
+	CommonResponse `json:",inline"`
+	Result         SpotGetWalletBalanceResult `json:"result"`
+}
+
+// SpotGetWalletBalanceResult :
+type SpotGetWalletBalanceResult struct {
+	Balances []SpotGetWalletBalanceResultBalance `json:"balances"`
+}
+
+// SpotGetWalletBalanceResultBalance :
+type SpotGetWalletBalanceResultBalance struct {
+	Coin     string `json:"coin"`
+	CoinID   string `json:"coinId"`
+	CoinName string `json:"coinName"`
+	Total    string `json:"total"`
+	Free     string `json:"free"`
+	Locked   string `json:"locked"`
+}
+
+// SpotGetWalletBalance :
+func (s *SpotV1Service) SpotGetWalletBalance() (*SpotGetWalletBalanceResponse, error) {
+	var res SpotGetWalletBalanceResponse
+
+	queryString, err := query.Values(nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/spot/v1/account", queryString, &res); err != nil {
 		return nil, err
 	}
 
