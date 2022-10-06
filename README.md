@@ -179,6 +179,10 @@ The following API endpoints have been implemented
 - `/spot/order/batch-cancel-by-ids` Batch Cancel Active Order By IDs
 - `/spot/v1/open-orders` Open Orders
 
+##### Wallet Data Endpoints
+
+- `/spot/v1/account` Get Wallet Balance
+
 ### WebSocket API
 
 #### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
