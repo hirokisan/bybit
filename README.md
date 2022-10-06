@@ -153,7 +153,7 @@ The following API endpoints have been implemented
 
 - `/v2/private/wallet/balance` Get Wallet Balance
 
-#### [Spot](https://bybit-exchange.github.io/docs/spot)
+#### [Spot V1](https://bybit-exchange.github.io/docs/spot/v1)
 
 ##### Market Data Endpoints
 
