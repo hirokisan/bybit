@@ -405,3 +405,17 @@ func TestSpotOpenOrders(t *testing.T) {
 		}
 	}
 }
+
+func TestSpotGetWalletBalance(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+
+	res, err := client.Spot().V1().SpotGetWalletBalance()
+	{
+		require.NoError(t, err)
+	}
+	{
+		goldenFilename := "./testdata/spot-v1-get-wallet-balance.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}

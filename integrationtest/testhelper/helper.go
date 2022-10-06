@@ -25,6 +25,7 @@ func Compare(
 	case os.ErrNotExist:
 		// noop
 	default:
+		t.Log(string(got))
 		t.Error(fmt.Errorf("unexpected error happened: %w", err))
 	}
 }

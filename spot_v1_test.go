@@ -245,3 +245,74 @@ func TestSpotOpenOrders(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestSpotGetWalletBalance(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		path := "/spot/v1/account"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := SpotGetWalletBalanceResponse{
+			Result: SpotGetWalletBalanceResult{
+				Balances: []SpotGetWalletBalanceResultBalance{
+					{
+						Coin:     "BTC",
+						CoinID:   "BTC",
+						CoinName: "BTC",
+						Total:    "1.258926",
+						Free:     "1.258926",
+						Locked:   "0",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Spot().V1().SpotGetWalletBalance()
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		path := "/spot/v1/account"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := SpotGetWalletBalanceResponse{
+			Result: SpotGetWalletBalanceResult{
+				Balances: []SpotGetWalletBalanceResultBalance{
+					{
+						Coin:     "BTC",
+						CoinID:   "BTC",
+						CoinName: "BTC",
+						Total:    "1.258926",
+						Free:     "1.258926",
+						Locked:   "0",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Spot().V1().SpotGetWalletBalance()
+		assert.Error(t, err)
+	})
+}
