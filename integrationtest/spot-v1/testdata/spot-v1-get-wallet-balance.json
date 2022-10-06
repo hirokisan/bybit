@@ -1,0 +1,20 @@
+{
+  "balances": [
+    {
+      "coin": "BTC",
+      "coinId": "BTC",
+      "coinName": "BTC",
+      "total": "1.258926",
+      "free": "1.258926",
+      "locked": "0"
+    },
+    {
+      "coin": "USDT",
+      "coinId": "USDT",
+      "coinName": "USDT",
+      "total": "230.12937712",
+      "free": "230.12937712",
+      "locked": "0"
+    }
+  ]
+}
