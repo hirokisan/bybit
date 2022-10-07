@@ -16,20 +16,6 @@ const (
 	CoinUSDT = "USDT"
 )
 
-// SymbolInverse :
-type SymbolInverse string
-
-const (
-	// SymbolInverseBTCUSD :
-	SymbolInverseBTCUSD = SymbolInverse("BTCUSD")
-	// SymbolInverseETHUSD :
-	SymbolInverseETHUSD = SymbolInverse("ETHUSD")
-	// SymbolInverseEOSUSD :
-	SymbolInverseEOSUSD = SymbolInverse("EOSUSD")
-	// SymbolInverseXRPUSD :
-	SymbolInverseXRPUSD = SymbolInverse("XRPUSD")
-)
-
 // SymbolUSDT :
 type SymbolUSDT string
 
