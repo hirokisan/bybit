@@ -163,6 +163,58 @@ func TestCreateLinearOrder(t *testing.T) {
 	})
 }
 
+func TestListLinearOrder(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+
+	symbol := bybit.SymbolUSDTBTC
+
+	var orderID string
+	{
+		price := 10000.0
+		res, err := client.Future().USDTPerpetual().CreateLinearOrder(bybit.CreateLinearOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      symbol,
+			OrderType:   bybit.OrderTypeLimit,
+			Qty:         0.001,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
+			Price:       &price,
+		})
+		{
+			require.NoError(t, err)
+		}
+		orderID = res.Result.OrderID
+		t.Log(res)
+	}
+
+	{
+		orderStatus := bybit.OrderStatusNew
+		res, err := client.Future().USDTPerpetual().ListLinearOrder(bybit.ListLinearOrderParam{
+			Symbol:      symbol,
+			OrderStatus: &orderStatus,
+		})
+		{
+			require.NoError(t, err)
+			require.Equal(t, "OK", res.RetMsg)
+		}
+		{
+			goldenFilename := "./testdata/private-linear-order-list.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	}
+
+	{
+		res, err := client.Future().USDTPerpetual().CancelLinearOrder(bybit.CancelLinearOrderParam{
+			Symbol:  symbol,
+			OrderID: &orderID,
+		})
+		{
+			require.NoError(t, err)
+			require.Equal(t, "OK", res.RetMsg)
+		}
+	}
+}
+
 func TestListLinearPosition(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()

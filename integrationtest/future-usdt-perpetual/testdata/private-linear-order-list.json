@@ -1,0 +1,29 @@
+{
+  "current_page": 1,
+  "data": [
+    {
+      "order_id": "08f55183-76ce-4269-9039-433ce6881632",
+      "user_id": 146940,
+      "symbol": "BTCUSDT",
+      "side": "Buy",
+      "order_type": "Limit",
+      "price": 10000,
+      "qty": 0.001,
+      "time_in_force": "GoodTillCancel",
+      "order_status": "New",
+      "last_exec_price": 0,
+      "cum_exec_qty": 0,
+      "cum_exec_value": 0,
+      "cum_exec_fee": 0,
+      "reduce_only": false,
+      "close_on_trigger": false,
+      "order_link_id": "",
+      "created_time": "2022-10-07T08:48:50Z",
+      "updated_time": "2022-10-07T08:48:50Z",
+      "take_profit": 0,
+      "stop_loss": 0,
+      "tp_trigger_by": "UNKNOWN",
+      "sl_trigger_by": "UNKNOWN"
+    }
+  ]
+}

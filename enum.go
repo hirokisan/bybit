@@ -168,6 +168,16 @@ const (
 	OrderStatusSpotRejected = OrderStatusSpot("REJECTED")
 )
 
+// Order :
+type Order string
+
+const (
+	// OrderDesc :
+	OrderDesc = "desc"
+	// OrderAsc :
+	OrderAsc = "asc"
+)
+
 // TimeInForce :
 type TimeInForce string
 

@@ -124,6 +124,7 @@ The following API endpoints have been implemented
 ##### Account Data Endpoints
 
 - `/private/linear/order/create` Place Active Order
+- `/private/linear/order/list` Get Active Order
 - `/private/linear/order/cancel` Cancel Active Order
 - `/private/linear/order/cancel-all` Cancel All Active Orders
 - `/private/linear/position/list` My Position
@@ -153,7 +154,7 @@ The following API endpoints have been implemented
 
 - `/v2/private/wallet/balance` Get Wallet Balance
 
-#### [Spot V1](https://bybit-exchange.github.io/docs/spot/v1)
+#### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1)
 
 ##### Market Data Endpoints
 
