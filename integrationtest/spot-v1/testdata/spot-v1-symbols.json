@@ -65,7 +65,7 @@
     "minTradeQuantity": "1",
     "minTradeAmount": "10",
     "minPricePrecision": "0.0001",
-    "maxTradeQuantity": "20000011",
+    "maxTradeQuantity": "2816139.115742",
     "maxTradeAmount": "1000011",
     "category": 1
   },
@@ -823,20 +823,6 @@
     "minPricePrecision": "12",
     "maxTradeQuantity": "0",
     "maxTradeAmount": "0",
-    "category": 1
-  },
-  {
-    "name": "ETH3SUSDT",
-    "alias": "ETH3SUSDT",
-    "baseCurrency": "ETH3S",
-    "quoteCurrency": "USDT",
-    "basePrecision": "0.0001",
-    "quotePrecision": "0.00000001",
-    "minTradeQuantity": "1",
-    "minTradeAmount": "10",
-    "minPricePrecision": "0.0001",
-    "maxTradeQuantity": "500",
-    "maxTradeAmount": "5000",
     "category": 1
   },
   {
@@ -2335,20 +2321,6 @@
     "minPricePrecision": "0.001",
     "maxTradeQuantity": "1000000",
     "maxTradeAmount": "1000000",
-    "category": 1
-  },
-  {
-    "name": "PMTEST15XRP",
-    "alias": "PMTEST15XRP",
-    "baseCurrency": "PMTEST15",
-    "quoteCurrency": "XRP",
-    "basePrecision": "0.1",
-    "quotePrecision": "0.01",
-    "minTradeQuantity": "0.1",
-    "minTradeAmount": "0.1",
-    "minPricePrecision": "0.1",
-    "maxTradeQuantity": "100000",
-    "maxTradeAmount": "100000",
     "category": 1
   }
 ]
