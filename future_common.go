@@ -408,7 +408,7 @@ type BigDealResult struct {
 	Symbol    SymbolFuture `json:"symbol"`
 	Side      Side         `json:"side"`
 	Timestamp int          `json:"timestamp"`
-	Value     int          `json:"value"`
+	Value     float64      `json:"value"`
 }
 
 // BigDealParam :
