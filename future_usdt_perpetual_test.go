@@ -13,7 +13,7 @@ import (
 func TestListLinearOrder(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := ListLinearOrderParam{
-			Symbol: SymbolUSDTBTC,
+			Symbol: SymbolFutureBTCUSDT,
 		}
 
 		path := "/private/linear/order/list"
@@ -26,7 +26,7 @@ func TestListLinearOrder(t *testing.T) {
 					{
 						OrderID:        "08f55183-76ce-4269-9039-433ce6881632",
 						UserID:         146940,
-						Symbol:         SymbolUSDTBTC,
+						Symbol:         SymbolFutureBTCUSDT,
 						Side:           SideBuy,
 						OrderType:      OrderTypeLimit,
 						Price:          10000.0,
@@ -71,7 +71,7 @@ func TestListLinearOrder(t *testing.T) {
 
 	t.Run("authentication required", func(t *testing.T) {
 		param := ListLinearOrderParam{
-			Symbol: SymbolUSDTBTC,
+			Symbol: SymbolFutureBTCUSDT,
 		}
 
 		path := "/private/linear/order/list"
@@ -84,7 +84,7 @@ func TestListLinearOrder(t *testing.T) {
 					{
 						OrderID:        "08f55183-76ce-4269-9039-433ce6881632",
 						UserID:         146940,
-						Symbol:         SymbolUSDTBTC,
+						Symbol:         SymbolFutureBTCUSDT,
 						Side:           SideBuy,
 						OrderType:      OrderTypeLimit,
 						Price:          10000.0,

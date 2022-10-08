@@ -35,7 +35,7 @@ func TestBalance(t *testing.T) {
 
 func TestOrderBook(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InverseFuture().OrderBook(bybit.SymbolInverseBTCUSD)
+	res, err := client.Future().InverseFuture().OrderBook(bybit.SymbolFutureBTCUSD)
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
@@ -50,7 +50,7 @@ func TestOrderBook(t *testing.T) {
 func TestListKline(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().InverseFuture().ListKline(bybit.ListKlineParam{
-		Symbol:   bybit.SymbolInverseBTCUSD,
+		Symbol:   bybit.SymbolFutureBTCUSD,
 		Interval: bybit.Interval120,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
@@ -67,7 +67,7 @@ func TestListKline(t *testing.T) {
 
 func TestTickers(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().InverseFuture().Tickers(bybit.SymbolInverseBTCUSD)
+	res, err := client.Future().InverseFuture().Tickers(bybit.SymbolFutureBTCUSD)
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
@@ -83,7 +83,7 @@ func TestTradingRecords(t *testing.T) {
 	client := bybit.NewTestClient()
 	limit := 10
 	res, err := client.Future().InverseFuture().TradingRecords(bybit.TradingRecordsParam{
-		Symbol: bybit.SymbolInverseBTCUSD,
+		Symbol: bybit.SymbolFutureBTCUSD,
 		Limit:  &limit,
 	})
 	{
@@ -114,7 +114,7 @@ func TestSymbols(t *testing.T) {
 func TestMarkPriceKline(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().InverseFuture().MarkPriceKline(bybit.MarkPriceKlineParam{
-		Symbol:   bybit.SymbolInverseBTCUSD,
+		Symbol:   bybit.SymbolFutureBTCUSD,
 		Interval: bybit.IntervalD,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
@@ -132,7 +132,7 @@ func TestMarkPriceKline(t *testing.T) {
 func TestIndexPriceKline(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().InverseFuture().IndexPriceKline(bybit.IndexPriceKlineParam{
-		Symbol:   bybit.SymbolInverseBTCUSD,
+		Symbol:   bybit.SymbolFutureBTCUSD,
 		Interval: bybit.IntervalD,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
@@ -150,7 +150,7 @@ func TestIndexPriceKline(t *testing.T) {
 func TestOpenInterest(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().InverseFuture().OpenInterest(bybit.OpenInterestParam{
-		Symbol: bybit.SymbolInverseBTCUSD,
+		Symbol: bybit.SymbolFutureBTCUSD,
 		Period: bybit.Period1h,
 	})
 	{
@@ -167,7 +167,7 @@ func TestOpenInterest(t *testing.T) {
 func TestBigDeal(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().InverseFuture().BigDeal(bybit.BigDealParam{
-		Symbol: bybit.SymbolInverseBTCUSD,
+		Symbol: bybit.SymbolFutureBTCUSD,
 	})
 	{
 		require.NoError(t, err)
@@ -184,7 +184,7 @@ func TestAccountRatio(t *testing.T) {
 	client := bybit.NewTestClient()
 	limit := 10
 	res, err := client.Future().InverseFuture().AccountRatio(bybit.AccountRatioParam{
-		Symbol: bybit.SymbolInverseBTCUSD,
+		Symbol: bybit.SymbolFutureBTCUSD,
 		Period: bybit.Period1h,
 		Limit:  &limit,
 	})

@@ -74,14 +74,14 @@ type OrderBookResponse struct {
 
 // OrderBookResult :
 type OrderBookResult struct {
-	Symbol SymbolInverse `json:"symbol"`
+	Symbol SymbolFuture `json:"symbol"`
 	Price  string        `json:"price"`
 	Size   float64       `json:"size"`
 	Side   Side          `json:"side"`
 }
 
 // OrderBook :
-func (s *FutureCommonService) OrderBook(symbol SymbolInverse) (*OrderBookResponse, error) {
+func (s *FutureCommonService) OrderBook(symbol SymbolFuture) (*OrderBookResponse, error) {
 	var res OrderBookResponse
 
 	query := url.Values{}
@@ -96,7 +96,7 @@ func (s *FutureCommonService) OrderBook(symbol SymbolInverse) (*OrderBookRespons
 
 // ListKlineParam :
 type ListKlineParam struct {
-	Symbol   SymbolInverse `url:"symbol"`
+	Symbol   SymbolFuture `url:"symbol"`
 	Interval Interval      `url:"interval"`
 	From     int           `url:"from"`
 
@@ -111,7 +111,7 @@ type ListKlineResponse struct {
 
 // ListKlineResult :
 type ListKlineResult struct {
-	Symbol   SymbolInverse `json:"symbol"`
+	Symbol   SymbolFuture `json:"symbol"`
 	Interval string        `json:"interval"`
 	OpenTime int           `json:"open_time"`
 	Open     string        `json:"open"`
@@ -146,7 +146,7 @@ type TickersResponse struct {
 
 // TickersResult :
 type TickersResult struct {
-	Symbol               SymbolInverse `json:"symbol"`
+	Symbol               SymbolFuture `json:"symbol"`
 	BidPrice             string        `json:"bid_price"`
 	AskPrice             string        `json:"ask_price"`
 	LastPrice            string        `json:"last_price"`
@@ -172,7 +172,7 @@ type TickersResult struct {
 }
 
 // Tickers :
-func (s *FutureCommonService) Tickers(symbol SymbolInverse) (*TickersResponse, error) {
+func (s *FutureCommonService) Tickers(symbol SymbolFuture) (*TickersResponse, error) {
 	var res TickersResponse
 
 	query := url.Values{}
@@ -187,7 +187,7 @@ func (s *FutureCommonService) Tickers(symbol SymbolInverse) (*TickersResponse, e
 
 // TradingRecordsParam :
 type TradingRecordsParam struct {
-	Symbol SymbolInverse `url:"symbol"`
+	Symbol SymbolFuture `url:"symbol"`
 
 	From  *int `url:"from,omitempty"`
 	Limit *int `url:"limit,omitempty"`
@@ -202,7 +202,7 @@ type TradingRecordsResponse struct {
 // TradingRecordsResult :
 type TradingRecordsResult struct {
 	ID     float64       `json:"id"`
-	Symbol SymbolInverse `json:"symbol"`
+	Symbol SymbolFuture `json:"symbol"`
 	Price  float64       `json:"price"`
 	Qty    float64       `json:"qty"`
 	Side   Side          `json:"side"`
@@ -284,7 +284,7 @@ type MarkPriceKlineResponse struct {
 
 // MarkPriceKlineResult :
 type MarkPriceKlineResult struct {
-	Symbol  SymbolInverse `json:"symbol"`
+	Symbol  SymbolFuture `json:"symbol"`
 	Period  Period        `json:"period"`
 	StartAt int           `json:"start_at"`
 	Open    float64       `json:"open"`
@@ -295,7 +295,7 @@ type MarkPriceKlineResult struct {
 
 // MarkPriceKlineParam :
 type MarkPriceKlineParam struct {
-	Symbol   SymbolInverse `url:"symbol"`
+	Symbol   SymbolFuture `url:"symbol"`
 	Interval Interval      `url:"interval"`
 	From     int           `url:"from"`
 
@@ -326,7 +326,7 @@ type IndexPriceKlineResponse struct {
 
 // IndexPriceKlineResult :
 type IndexPriceKlineResult struct {
-	Symbol   SymbolInverse `json:"symbol"`
+	Symbol   SymbolFuture `json:"symbol"`
 	Period   Period        `json:"period"`
 	OpenTime int           `json:"open_time"`
 	Open     string        `json:"open"`
@@ -337,7 +337,7 @@ type IndexPriceKlineResult struct {
 
 // IndexPriceKlineParam :
 type IndexPriceKlineParam struct {
-	Symbol   SymbolInverse `url:"symbol"`
+	Symbol   SymbolFuture `url:"symbol"`
 	Interval Interval      `url:"interval"`
 	From     int           `url:"from"`
 
@@ -370,12 +370,12 @@ type OpenInterestResponse struct {
 type OpenInterestResult struct {
 	OpenInterest int           `json:"open_interest"`
 	Timestamp    int           `json:"timestamp"`
-	Symbol       SymbolInverse `json:"symbol"`
+	Symbol       SymbolFuture `json:"symbol"`
 }
 
 // OpenInterestParam :
 type OpenInterestParam struct {
-	Symbol SymbolInverse `url:"symbol"`
+	Symbol SymbolFuture `url:"symbol"`
 	Period Period        `url:"period"`
 
 	Limit *int `url:"limit,omitempty"`
@@ -405,7 +405,7 @@ type BigDealResponse struct {
 
 // BigDealResult :
 type BigDealResult struct {
-	Symbol    SymbolInverse `json:"symbol"`
+	Symbol    SymbolFuture `json:"symbol"`
 	Side      Side          `json:"side"`
 	Timestamp int           `json:"timestamp"`
 	Value     int           `json:"value"`
@@ -413,7 +413,7 @@ type BigDealResult struct {
 
 // BigDealParam :
 type BigDealParam struct {
-	Symbol SymbolInverse `url:"symbol"`
+	Symbol SymbolFuture `url:"symbol"`
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -442,7 +442,7 @@ type AccountRatioResponse struct {
 
 // AccountRatioResult :
 type AccountRatioResult struct {
-	Symbol    SymbolInverse `json:"symbol"`
+	Symbol    SymbolFuture `json:"symbol"`
 	BuyRatio  float64       `json:"buy_ratio"`
 	SellRatio float64       `json:"sell_ratio"`
 	Timestamp int           `json:"timestamp"`
@@ -450,7 +450,7 @@ type AccountRatioResult struct {
 
 // AccountRatioParam :
 type AccountRatioParam struct {
-	Symbol SymbolInverse `url:"symbol"`
+	Symbol SymbolFuture `url:"symbol"`
 	Period Period        `url:"period"`
 
 	Limit *int `url:"limit,omitempty"`

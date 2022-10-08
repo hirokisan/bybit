@@ -14,7 +14,7 @@ func TestCreateOrder(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := CreateOrderParam{
 			Side:        SideBuy,
-			Symbol:      SymbolInverseBTCUSD,
+			Symbol:      SymbolFutureBTCUSD,
 			OrderType:   OrderTypeLimit,
 			Qty:         10,
 			TimeInForce: TimeInForceGoodTillCancel,
@@ -68,7 +68,7 @@ func TestCreateOrder(t *testing.T) {
 	t.Run("authentication required", func(t *testing.T) {
 		param := CreateOrderParam{
 			Side:        SideBuy,
-			Symbol:      SymbolInverseBTCUSD,
+			Symbol:      SymbolFutureBTCUSD,
 			OrderType:   OrderTypeLimit,
 			Qty:         10,
 			TimeInForce: TimeInForceGoodTillCancel,
@@ -120,7 +120,7 @@ func TestCreateOrder(t *testing.T) {
 func TestListOrder(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := ListOrderParam{
-			Symbol: SymbolInverseBTCUSD,
+			Symbol: SymbolFutureBTCUSD,
 		}
 
 		path := "/v2/private/order/list"
@@ -175,7 +175,7 @@ func TestListOrder(t *testing.T) {
 	})
 	t.Run("authentication required", func(t *testing.T) {
 		param := ListOrderParam{
-			Symbol: SymbolInverseBTCUSD,
+			Symbol: SymbolFutureBTCUSD,
 		}
 
 		path := "/v2/private/order/list"

@@ -34,7 +34,7 @@ func TestBalance(t *testing.T) {
 
 func TestOrderBook(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().USDTPerpetual().OrderBook(bybit.SymbolInverseBTCUSD)
+	res, err := client.Future().USDTPerpetual().OrderBook(bybit.SymbolFutureBTCUSD)
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
@@ -48,7 +48,7 @@ func TestOrderBook(t *testing.T) {
 
 func TestTickers(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Future().USDTPerpetual().Tickers(bybit.SymbolInverseBTCUSD)
+	res, err := client.Future().USDTPerpetual().Tickers(bybit.SymbolFutureBTCUSD)
 	{
 		require.NoError(t, err)
 		require.Equal(t, "OK", res.RetMsg)
@@ -77,7 +77,7 @@ func TestSymbols(t *testing.T) {
 func TestOpenInterest(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().USDTPerpetual().OpenInterest(bybit.OpenInterestParam{
-		Symbol: bybit.SymbolInverseBTCUSD,
+		Symbol: bybit.SymbolFutureBTCUSD,
 		Period: bybit.Period1h,
 	})
 	{
@@ -94,7 +94,7 @@ func TestOpenInterest(t *testing.T) {
 func TestBigDeal(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().USDTPerpetual().BigDeal(bybit.BigDealParam{
-		Symbol: bybit.SymbolInverseBTCUSD,
+		Symbol: bybit.SymbolFutureBTCUSD,
 	})
 	{
 		require.NoError(t, err)
@@ -111,7 +111,7 @@ func TestAccountRatio(t *testing.T) {
 	client := bybit.NewTestClient()
 	limit := 10
 	res, err := client.Future().USDTPerpetual().AccountRatio(bybit.AccountRatioParam{
-		Symbol: bybit.SymbolInverseBTCUSD,
+		Symbol: bybit.SymbolFutureBTCUSD,
 		Period: bybit.Period1h,
 		Limit:  &limit,
 	})
@@ -132,7 +132,7 @@ func TestCreateLinearOrder(t *testing.T) {
 		price := 28383.5
 		res, err := client.Future().USDTPerpetual().CreateLinearOrder(bybit.CreateLinearOrderParam{
 			Side:        bybit.SideBuy,
-			Symbol:      bybit.SymbolUSDTBTC,
+			Symbol:      bybit.SymbolFutureBTCUSDT,
 			OrderType:   bybit.OrderTypeLimit,
 			Qty:         0.001,
 			TimeInForce: bybit.TimeInForceGoodTillCancel,
@@ -153,7 +153,7 @@ func TestCreateLinearOrder(t *testing.T) {
 		price := 28383.5
 		_, err := client.Future().USDTPerpetual().CreateLinearOrder(bybit.CreateLinearOrderParam{
 			Side:        bybit.SideBuy,
-			Symbol:      bybit.SymbolUSDTBTC,
+			Symbol:      bybit.SymbolFutureBTCUSDT,
 			OrderType:   bybit.OrderTypeLimit,
 			Qty:         0.001,
 			TimeInForce: bybit.TimeInForceGoodTillCancel,
@@ -166,7 +166,7 @@ func TestCreateLinearOrder(t *testing.T) {
 func TestListLinearOrder(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
 
-	symbol := bybit.SymbolUSDTBTC
+	symbol := bybit.SymbolFutureBTCUSDT
 
 	var orderID string
 	{
@@ -218,7 +218,7 @@ func TestListLinearOrder(t *testing.T) {
 func TestListLinearPosition(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
-		res, err := client.Future().USDTPerpetual().ListLinearPosition(bybit.SymbolUSDTBTC)
+		res, err := client.Future().USDTPerpetual().ListLinearPosition(bybit.SymbolFutureBTCUSDT)
 		{
 			require.NoError(t, err)
 			require.Equal(t, "OK", res.RetMsg)
@@ -231,7 +231,7 @@ func TestListLinearPosition(t *testing.T) {
 	})
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
-		_, err := client.Future().USDTPerpetual().ListLinearPosition(bybit.SymbolUSDTBTC)
+		_, err := client.Future().USDTPerpetual().ListLinearPosition(bybit.SymbolFutureBTCUSDT)
 		require.Error(t, err)
 	})
 }
@@ -266,7 +266,7 @@ func TestCancelLinearOrder(t *testing.T) {
 			price := 47000.0
 			res, err := client.Future().USDTPerpetual().CreateLinearOrder(bybit.CreateLinearOrderParam{
 				Side:        bybit.SideBuy,
-				Symbol:      bybit.SymbolUSDTBTC,
+				Symbol:      bybit.SymbolFutureBTCUSDT,
 				OrderType:   bybit.OrderTypeLimit,
 				Qty:         0.001,
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
@@ -277,7 +277,7 @@ func TestCancelLinearOrder(t *testing.T) {
 			orderID = res.Result.OrderID
 		}
 		res, err := client.Future().USDTPerpetual().CancelLinearOrder(bybit.CancelLinearOrderParam{
-			Symbol:  bybit.SymbolUSDTBTC,
+			Symbol:  bybit.SymbolFutureBTCUSDT,
 			OrderID: &orderID,
 		})
 		{
@@ -302,7 +302,7 @@ func TestSaveLinearLeverage(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		res, err := client.Future().USDTPerpetual().SaveLinearLeverage(bybit.SaveLinearLeverageParam{
-			Symbol:       bybit.SymbolUSDTBTC,
+			Symbol:       bybit.SymbolFutureBTCUSDT,
 			BuyLeverage:  2.0,
 			SellLeverage: 2.0,
 		})
@@ -323,7 +323,7 @@ func TestLinearExecutionList(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		res, err := client.Future().USDTPerpetual().LinearExecutionList(bybit.LinearExecutionListParam{
-			Symbol: bybit.SymbolUSDTBTC,
+			Symbol: bybit.SymbolFutureBTCUSDT,
 		})
 		{
 			require.NoError(t, err)
@@ -346,7 +346,7 @@ func TestAccountService_LinearCancelAllOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		res, err := client.Future().USDTPerpetual().LinearCancelAllOrder(bybit.LinearCancelAllParam{
-			Symbol: bybit.SymbolUSDTBTC,
+			Symbol: bybit.SymbolFutureBTCUSDT,
 		})
 		{
 			require.NoError(t, err)

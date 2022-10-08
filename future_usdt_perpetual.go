@@ -11,8 +11,8 @@ import (
 // FutureUSDTPerpetualServiceI :
 type FutureUSDTPerpetualServiceI interface {
 	// Market Data Endpoints
-	OrderBook(SymbolInverse) (*OrderBookResponse, error)
-	Tickers(SymbolInverse) (*TickersResponse, error)
+	OrderBook(SymbolFuture) (*OrderBookResponse, error)
+	Tickers(SymbolFuture) (*TickersResponse, error)
 	Symbols() (*SymbolsResponse, error)
 	OpenInterest(OpenInterestParam) (*OpenInterestResponse, error)
 	BigDeal(BigDealParam) (*BigDealResponse, error)
@@ -23,7 +23,7 @@ type FutureUSDTPerpetualServiceI interface {
 	ListLinearOrder(ListLinearOrderParam) (*ListLinearOrderResponse, error)
 	CancelLinearOrder(CancelLinearOrderParam) (*CancelLinearOrderResponse, error)
 	LinearCancelAllOrder(LinearCancelAllParam) (*LinearCancelAllResponse, error)
-	ListLinearPosition(SymbolUSDT) (*ListLinearPositionResponse, error)
+	ListLinearPosition(SymbolFuture) (*ListLinearPositionResponse, error)
 	ListLinearPositions() (*ListLinearPositionsResponse, error)
 	SaveLinearLeverage(SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error)
 	LinearExecutionList(LinearExecutionListParam) (*LinearExecutionListResponse, error)
@@ -54,7 +54,7 @@ type CreateLinearOrderResult struct {
 type CreateLinearOrder struct {
 	OrderID        string      `json:"order_id"`
 	UserID         int         `json:"user_id"`
-	Symbol         SymbolUSDT  `json:"symbol"`
+	Symbol         SymbolFuture  `json:"symbol"`
 	Side           Side        `json:"side"`
 	OrderType      OrderType   `json:"order_type"`
 	Price          float64     `json:"price"`
@@ -79,7 +79,7 @@ type CreateLinearOrder struct {
 // CreateLinearOrderParam :
 type CreateLinearOrderParam struct {
 	Side           Side        `json:"side"`
-	Symbol         SymbolUSDT  `json:"symbol"`
+	Symbol         SymbolFuture  `json:"symbol"`
 	OrderType      OrderType   `json:"order_type"`
 	Qty            float64     `json:"qty"`
 	TimeInForce    TimeInForce `json:"time_in_force"`
@@ -126,7 +126,7 @@ type ListLinearOrderResult struct {
 type ListLinearOrderResultContent struct {
 	OrderID        string      `json:"order_id"`
 	UserID         int         `json:"user_id"`
-	Symbol         SymbolUSDT  `json:"symbol"`
+	Symbol         SymbolFuture  `json:"symbol"`
 	Side           Side        `json:"side"`
 	OrderType      OrderType   `json:"order_type"`
 	Price          float64     `json:"price"`
@@ -150,7 +150,7 @@ type ListLinearOrderResultContent struct {
 
 // ListLinearOrderParam :
 type ListLinearOrderParam struct {
-	Symbol SymbolUSDT `url:"symbol"`
+	Symbol SymbolFuture `url:"symbol"`
 
 	OrderID     *string      `url:"order_id,omitempty"`
 	OrderLinkID *string      `url:"order_link_id,omitempty"`
@@ -185,7 +185,7 @@ type ListLinearPositionResponse struct {
 // ListLinearPositionResult :
 type ListLinearPositionResult struct {
 	UserID              int           `json:"user_id"`
-	Symbol              SymbolInverse `json:"symbol"`
+	Symbol              SymbolFuture `json:"symbol"`
 	Side                Side          `json:"side"`
 	Size                float64       `json:"size"`
 	PositionValue       float64       `json:"position_value"`
@@ -207,7 +207,7 @@ type ListLinearPositionResult struct {
 }
 
 // ListLinearPosition :
-func (s *FutureUSDTPerpetualService) ListLinearPosition(symbol SymbolUSDT) (*ListLinearPositionResponse, error) {
+func (s *FutureUSDTPerpetualService) ListLinearPosition(symbol SymbolFuture) (*ListLinearPositionResponse, error) {
 	var res ListLinearPositionResponse
 
 	query := url.Values{}
@@ -261,7 +261,7 @@ type CancelLinearOrder struct {
 
 // CancelLinearOrderParam :
 type CancelLinearOrderParam struct {
-	Symbol SymbolUSDT `json:"symbol"`
+	Symbol SymbolFuture `json:"symbol"`
 
 	OrderID     *string `json:"order_id,omitempty"`
 	OrderLinkID *string `json:"order_link_id,omitempty"`
@@ -294,7 +294,7 @@ type SaveLinearLeverageResponse struct {
 
 // SaveLinearLeverageParam :
 type SaveLinearLeverageParam struct {
-	Symbol       SymbolUSDT `json:"symbol"`
+	Symbol       SymbolFuture `json:"symbol"`
 	BuyLeverage  float64    `json:"buy_leverage"`
 	SellLeverage float64    `json:"sell_leverage"`
 }
@@ -332,7 +332,7 @@ type LinearExecutionList struct {
 	OrderID          string     `json:"order_id"`
 	OrderLinkID      string     `json:"order_link_id"`
 	Side             Side       `json:"side"`
-	Symbol           SymbolUSDT `json:"symbol"`
+	Symbol           SymbolFuture `json:"symbol"`
 	OrderPrice       float64    `json:"order_price"`
 	OrderQty         float64    `json:"order_qty"`
 	OrderType        OrderType  `json:"order_type"`
@@ -350,7 +350,7 @@ type LinearExecutionList struct {
 
 // LinearExecutionListParam :
 type LinearExecutionListParam struct {
-	Symbol SymbolUSDT `url:"symbol"`
+	Symbol SymbolFuture `url:"symbol"`
 
 	StartTime *int      `url:"start_time,omitempty"`
 	EndTime   *int      `url:"end_time,omitempty"`
@@ -377,7 +377,7 @@ func (s *FutureUSDTPerpetualService) LinearExecutionList(param LinearExecutionLi
 
 // LinearCancelAllParam : Parameters to be supplied to cancel all endpoint
 type LinearCancelAllParam struct {
-	Symbol SymbolUSDT `json:"symbol"`
+	Symbol SymbolFuture `json:"symbol"`
 }
 
 // LinearCancelAllResponse : Response from cancel all endpoint

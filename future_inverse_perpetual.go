@@ -11,9 +11,9 @@ import (
 // FutureInversePerpetualServiceI :
 type FutureInversePerpetualServiceI interface {
 	// Market Data Endpoints
-	OrderBook(SymbolInverse) (*OrderBookResponse, error)
+	OrderBook(SymbolFuture) (*OrderBookResponse, error)
 	ListKline(ListKlineParam) (*ListKlineResponse, error)
-	Tickers(SymbolInverse) (*TickersResponse, error)
+	Tickers(SymbolFuture) (*TickersResponse, error)
 	TradingRecords(TradingRecordsParam) (*TradingRecordsResponse, error)
 	Symbols() (*SymbolsResponse, error)
 	MarkPriceKline(MarkPriceKlineParam) (*MarkPriceKlineResponse, error)
@@ -27,7 +27,7 @@ type FutureInversePerpetualServiceI interface {
 	CreateOrder(CreateOrderParam) (*CreateOrderResponse, error)
 	ListOrder(ListOrderParam) (*ListOrderResponse, error)
 	CancelOrder(CancelOrderParam) (*CancelOrderResponse, error)
-	ListPosition(SymbolInverse) (*ListPositionResponse, error)
+	ListPosition(SymbolFuture) (*ListPositionResponse, error)
 	ListPositions() (*ListPositionsResponse, error)
 	SaveLeverage(SaveLeverageParam) (*SaveLeverageResponse, error)
 
@@ -50,7 +50,7 @@ type PremiumIndexKlineResponse struct {
 
 // PremiumIndexKlineResult :
 type PremiumIndexKlineResult struct {
-	Symbol   SymbolInverse `json:"symbol"`
+	Symbol   SymbolFuture `json:"symbol"`
 	Period   Period        `json:"period"`
 	OpenTime int           `json:"open_time"`
 	Open     string        `json:"open"`
@@ -61,7 +61,7 @@ type PremiumIndexKlineResult struct {
 
 // PremiumIndexKlineParam :
 type PremiumIndexKlineParam struct {
-	Symbol   SymbolInverse `url:"symbol"`
+	Symbol   SymbolFuture `url:"symbol"`
 	Interval Interval      `url:"interval"`
 	From     int           `url:"from"`
 
@@ -99,7 +99,7 @@ type CreateOrderResult struct {
 type CreateOrder struct {
 	UserID        int           `json:"user_id"`
 	OrderID       string        `json:"order_id"`
-	Symbol        SymbolInverse `json:"symbol"`
+	Symbol        SymbolFuture `json:"symbol"`
 	Side          Side          `json:"side"`
 	OrderType     OrderType     `json:"order_type"`
 	Price         float64       `json:"price"`
@@ -121,7 +121,7 @@ type CreateOrder struct {
 // CreateOrderParam :
 type CreateOrderParam struct {
 	Side        Side          `json:"side"`
-	Symbol      SymbolInverse `json:"symbol"`
+	Symbol      SymbolFuture `json:"symbol"`
 	OrderType   OrderType     `json:"order_type"`
 	Qty         int           `json:"qty"`
 	TimeInForce TimeInForce   `json:"time_in_force"`
@@ -164,7 +164,7 @@ type ListOrderResult struct {
 // ListOrder :
 type ListOrder struct {
 	UserID       int           `json:"user_id"`
-	Symbol       SymbolInverse `json:"symbol"`
+	Symbol       SymbolFuture `json:"symbol"`
 	Side         Side          `json:"side"`
 	OrderType    OrderType     `json:"order_type"`
 	Price        string        `json:"price"`
@@ -188,7 +188,7 @@ type ListOrder struct {
 
 // ListOrderParam :
 type ListOrderParam struct {
-	Symbol SymbolInverse `url:"symbol"`
+	Symbol SymbolFuture `url:"symbol"`
 
 	OrderStatus *OrderStatus `url:"order_status,omitempty"`
 	Direction   *Direction   `url:"direction,omitempty"`
@@ -223,7 +223,7 @@ type ListPositionResult struct {
 	ID                  int           `json:"id"`
 	UserID              int           `json:"user_id"`
 	RiskID              int           `json:"risk_id"`
-	Symbol              SymbolInverse `json:"symbol"`
+	Symbol              SymbolFuture `json:"symbol"`
 	Side                Side          `json:"side"`
 	Size                float64       `json:"size"`
 	PositionValue       string        `json:"position_value"`
@@ -255,7 +255,7 @@ type ListPositionResult struct {
 }
 
 // ListPosition :
-func (s *FutureInversePerpetualService) ListPosition(symbol SymbolInverse) (*ListPositionResponse, error) {
+func (s *FutureInversePerpetualService) ListPosition(symbol SymbolFuture) (*ListPositionResponse, error) {
 	var res ListPositionResponse
 
 	query := url.Values{}
@@ -307,7 +307,7 @@ type CancelOrderResult struct {
 type CancelOrder struct {
 	UserID        int           `json:"user_id"`
 	OrderID       string        `json:"order_id"`
-	Symbol        SymbolInverse `json:"symbol"`
+	Symbol        SymbolFuture `json:"symbol"`
 	Side          Side          `json:"side"`
 	OrderType     OrderType     `json:"order_type"`
 	Price         float64       `json:"price"`
@@ -328,7 +328,7 @@ type CancelOrder struct {
 
 // CancelOrderParam :
 type CancelOrderParam struct {
-	Symbol SymbolInverse `json:"symbol"`
+	Symbol SymbolFuture `json:"symbol"`
 
 	OrderID     *string `json:"order_id,omitempty"`
 	OrderLinkID *string `json:"order_link_id,omitempty"`
@@ -362,7 +362,7 @@ type SaveLeverageResponse struct {
 
 // SaveLeverageParam :
 type SaveLeverageParam struct {
-	Symbol   SymbolInverse `json:"symbol"`
+	Symbol   SymbolFuture `json:"symbol"`
 	Leverage float64       `json:"leverage"`
 }
 
