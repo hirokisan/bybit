@@ -72,14 +72,8 @@ func (c *Client) Request(req *http.Request, dst interface{}) error {
 			return err
 		}
 
-		{
-			rateLimitError := &RateLimitError{}
-			if err := json.Unmarshal(body, rateLimitError); err != nil {
-				return err
-			}
-			if rateLimitError.RetCode == 10006 {
-				return rateLimitError
-			}
+		if err := c.checkResponseBody(body); err != nil {
+			return err
 		}
 
 		return nil
@@ -89,6 +83,29 @@ func (c *Client) Request(req *http.Request, dst interface{}) error {
 		return ErrPathNotFound
 	default:
 		return errors.New("unexpected error")
+	}
+}
+
+func (c *Client) checkResponseBody(body []byte) error {
+	var commonResponse CommonResponse
+	if err := json.Unmarshal(body, &commonResponse); err != nil {
+		return err
+	}
+
+	switch {
+	case commonResponse.RetCode == 10006:
+		rateLimitError := &RateLimitError{}
+		if err := json.Unmarshal(body, rateLimitError); err != nil {
+			return err
+		}
+		return rateLimitError
+	case commonResponse.RetCode != 0:
+		return &ErrorResponse{
+			RetCode: commonResponse.RetCode,
+			RetMsg:  commonResponse.RetMsg,
+		}
+	default:
+		return nil
 	}
 }
 
