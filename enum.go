@@ -16,30 +16,6 @@ const (
 	CoinUSDT = "USDT"
 )
 
-// SymbolUSDT :
-type SymbolUSDT string
-
-const (
-	// SymbolUSDTBTC :
-	SymbolUSDTBTC = SymbolUSDT("BTCUSDT")
-	// SymbolUSDTETH :
-	SymbolUSDTETH = SymbolUSDT("ETHUSDT")
-	// SymbolUSDTLTC :
-	SymbolUSDTLTC = SymbolUSDT("LTCUSDT")
-	// SymbolUSDTLINK :
-	SymbolUSDTLINK = SymbolUSDT("LINKUSDT")
-	// SymbolUSDTXTZ :
-	SymbolUSDTXTZ = SymbolUSDT("XTZUSDT")
-	// SymbolUSDTBCH :
-	SymbolUSDTBCH = SymbolUSDT("BCHUSDT")
-	// SymbolUSDTADA :
-	SymbolUSDTADA = SymbolUSDT("ADAUSDT")
-	// SymbolUSDTDOT :
-	SymbolUSDTDOT = SymbolUSDT("DOTUSDT")
-	// SymbolUSDTUNI :
-	SymbolUSDTUNI = SymbolUSDT("UNIUSDT")
-)
-
 // Side :
 type Side string
 
@@ -193,32 +169,6 @@ const (
 	// ExecTypeBustTrade :
 	ExecTypeBustTrade = ExecType("BustTrade")
 )
-
-// MinimumVolumeUSDT :
-func MinimumVolumeUSDT(symbol SymbolUSDT) float64 {
-	switch symbol {
-	case SymbolUSDTBTC:
-		return 0.001
-	case SymbolUSDTETH:
-		return 0.01
-	case SymbolUSDTBCH:
-		return 0.01
-	case SymbolUSDTLTC:
-		return 0.1
-	case SymbolUSDTLINK:
-		return 0.1
-	case SymbolUSDTXTZ:
-		return 0.1
-	case SymbolUSDTDOT:
-		return 0.1
-	case SymbolUSDTUNI:
-		return 0.1
-	case SymbolUSDTADA:
-		return 1
-	default:
-		panic("nothing")
-	}
-}
 
 // Direction :
 type Direction string

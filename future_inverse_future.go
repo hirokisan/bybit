@@ -3,9 +3,9 @@ package bybit
 // FutureInverseFutureServiceI :
 type FutureInverseFutureServiceI interface {
 	// Market Data Endpoints
-	OrderBook(SymbolInverse) (*OrderBookResponse, error)
+	OrderBook(SymbolFuture) (*OrderBookResponse, error)
 	ListKline(ListKlineParam) (*ListKlineResponse, error)
-	Tickers(SymbolInverse) (*TickersResponse, error)
+	Tickers(SymbolFuture) (*TickersResponse, error)
 	TradingRecords(TradingRecordsParam) (*TradingRecordsResponse, error)
 	Symbols() (*SymbolsResponse, error)
 	MarkPriceKline(MarkPriceKlineParam) (*MarkPriceKlineResponse, error)
