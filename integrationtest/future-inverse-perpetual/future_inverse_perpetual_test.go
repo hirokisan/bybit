@@ -17,7 +17,6 @@ func TestBalance(t *testing.T) {
 		res, err := client.Future().InversePerpetual().Balance(bybit.CoinUSDT)
 		{
 			require.NoError(t, err)
-			require.Equal(t, "OK", res.RetMsg)
 		}
 		{
 			goldenFilename := "./testdata/v2-private-wallet-balance.json"
@@ -38,7 +37,6 @@ func TestOrderBook(t *testing.T) {
 	res, err := client.Future().InversePerpetual().OrderBook(bybit.SymbolFutureBTCUSD)
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-order-book-l2.json"
@@ -56,7 +54,6 @@ func TestListKline(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-kline-list.json"
@@ -70,7 +67,6 @@ func TestTickers(t *testing.T) {
 	res, err := client.Future().InversePerpetual().Tickers(bybit.SymbolFutureBTCUSD)
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-tickers.json"
@@ -88,7 +84,6 @@ func TestTradingRecords(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-trading-records.json"
@@ -102,7 +97,6 @@ func TestSymbols(t *testing.T) {
 	res, err := client.Future().InversePerpetual().Symbols()
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-symbols.json"
@@ -120,7 +114,6 @@ func TestMarkPriceKline(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-mark-price-kline.json"
@@ -138,7 +131,6 @@ func TestIndexPriceKline(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-index-price-kline.json"
@@ -155,7 +147,6 @@ func TestOpenInterest(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-open-interest.json"
@@ -171,7 +162,6 @@ func TestBigDeal(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-big-deal.json"
@@ -190,7 +180,6 @@ func TestAccountRatio(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-account-ratio.json"
@@ -208,7 +197,6 @@ func TestPremiumIndexKline(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-premium-index-kline.json"
@@ -231,7 +219,6 @@ func TestCreateOrder(t *testing.T) {
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "OK", res.RetMsg)
 		}
 		{
 			goldenFilename := "./testdata/v2-private-order-create.json"
@@ -241,12 +228,11 @@ func TestCreateOrder(t *testing.T) {
 		// clean
 		{
 			orderID := res.Result.OrderID
-			res, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{
+			_, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{
 				Symbol:  bybit.SymbolFutureBTCUSD,
 				OrderID: &orderID,
 			})
 			require.NoError(t, err)
-			require.Equal(t, "OK", res.RetMsg)
 		}
 	})
 
@@ -281,7 +267,6 @@ func TestListOrder(t *testing.T) {
 			})
 			{
 				require.NoError(t, err)
-				require.Equal(t, "OK", res.RetMsg)
 			}
 			orderID = res.Result.OrderID
 		}
@@ -290,7 +275,6 @@ func TestListOrder(t *testing.T) {
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "OK", res.RetMsg)
 		}
 		{
 			goldenFilename := "./testdata/v2-private-order-list.json"
@@ -299,12 +283,11 @@ func TestListOrder(t *testing.T) {
 		}
 		// clean
 		{
-			res, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{
+			_, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{
 				Symbol:  bybit.SymbolFutureBTCUSD,
 				OrderID: &orderID,
 			})
 			require.NoError(t, err)
-			require.Equal(t, "OK", res.RetMsg)
 		}
 	})
 
@@ -329,7 +312,6 @@ func TestListPosition(t *testing.T) {
 		res, err := client.Future().InversePerpetual().ListPosition(bybit.SymbolFutureBTCUSD)
 		{
 			require.NoError(t, err)
-			require.Equal(t, "OK", res.RetMsg)
 		}
 		{
 			goldenFilename := "./testdata/v2-private-position-list.json"
@@ -350,7 +332,6 @@ func TestListPositions(t *testing.T) {
 		res, err := client.Future().InversePerpetual().ListPositions()
 		{
 			require.NoError(t, err)
-			require.Equal(t, "OK", res.RetMsg)
 		}
 		{
 			goldenFilename := "./testdata/v2-private-position-lists.json"
@@ -381,7 +362,6 @@ func TestCancelOrder(t *testing.T) {
 			})
 			{
 				require.NoError(t, err)
-				require.Equal(t, "OK", res.RetMsg)
 			}
 			orderID = res.Result.OrderID
 		}
@@ -391,7 +371,6 @@ func TestCancelOrder(t *testing.T) {
 		})
 		{
 			require.NoError(t, err)
-			require.Equal(t, "OK", res.RetMsg)
 		}
 		{
 			goldenFilename := "./testdata/v2-private-order-cancel.json"
@@ -417,7 +396,6 @@ func TestSaveLeverage(t *testing.T) {
 			})
 			{
 				require.NoError(t, err)
-				require.Equal(t, "leverage not modified", res.RetMsg)
 			}
 			{
 				goldenFilename := "./testdata/v2-private-position-leverage-save.json"
