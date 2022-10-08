@@ -17,7 +17,6 @@ func TestBalance(t *testing.T) {
 		res, err := client.Future().InverseFuture().Balance(bybit.CoinUSDT)
 		{
 			require.NoError(t, err)
-			require.Equal(t, "OK", res.RetMsg)
 		}
 		{
 			goldenFilename := "./testdata/v2-private-wallet-balance.json"
@@ -38,7 +37,6 @@ func TestOrderBook(t *testing.T) {
 	res, err := client.Future().InverseFuture().OrderBook(bybit.SymbolFutureBTCUSD)
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-order-book-l2.json"
@@ -56,7 +54,6 @@ func TestListKline(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-kline-list.json"
@@ -70,7 +67,6 @@ func TestTickers(t *testing.T) {
 	res, err := client.Future().InverseFuture().Tickers(bybit.SymbolFutureBTCUSD)
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-tickers.json"
@@ -88,7 +84,6 @@ func TestTradingRecords(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-trading-records.json"
@@ -102,7 +97,6 @@ func TestSymbols(t *testing.T) {
 	res, err := client.Future().InverseFuture().Symbols()
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-symbols.json"
@@ -120,7 +114,6 @@ func TestMarkPriceKline(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-mark-price-kline.json"
@@ -138,7 +131,6 @@ func TestIndexPriceKline(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-index-price-kline.json"
@@ -155,7 +147,6 @@ func TestOpenInterest(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-open-interest.json"
@@ -171,7 +162,6 @@ func TestBigDeal(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-big-deal.json"
@@ -190,7 +180,6 @@ func TestAccountRatio(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/v2-public-account-ratio.json"

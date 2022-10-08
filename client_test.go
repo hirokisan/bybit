@@ -56,6 +56,51 @@ func TestClient(t *testing.T) {
 		assert.ErrorAs(t, gotErr, &wantErr)
 	})
 
+	t.Run("34036, leverage not modified", func(t *testing.T) {
+		path := "/test"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := struct {
+			RetCode          int    `json:"ret_code"`
+			RetMsg           string `json:"ret_msg"`
+			ExtCode          string `json:"ext_code"`
+			ExtInfo          string `json:"ext_info"`
+			TimeNow          string `json:"time_now"`
+			RateLimitStatus  int    `json:"rate_limit_status"`
+			RateLimitResetMs int    `json:"rate_limit_reset_ms"`
+			RateLimit        int    `json:"rate_limit"`
+		}{
+			RetCode:          34036,
+			RetMsg:           "leverage not modified",
+			ExtCode:          "",
+			ExtInfo:          "",
+			TimeNow:          "1664610970.291886",
+			RateLimitStatus:  0,
+			RateLimitResetMs: 1664611023016,
+			RateLimit:        75,
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		req, err := http.NewRequest(method, server.URL+path, nil)
+		require.NoError(t, err)
+
+		client := bybit.NewTestClient().
+			WithBaseURL(server.URL)
+
+		var got interface{}
+		var wantErr *bybit.ErrorResponse
+
+		gotErr := client.Request(req, &got)
+		assert.ErrorAs(t, gotErr, &wantErr)
+		t.Log(gotErr)
+	})
+
 	t.Run("403, access denied", func(t *testing.T) {
 		path := "/test"
 		method := http.MethodGet

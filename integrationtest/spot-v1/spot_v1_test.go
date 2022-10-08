@@ -15,7 +15,6 @@ func TestSpotSymbols(t *testing.T) {
 	res, err := client.Spot().V1().SpotSymbols()
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-v1-symbols.json"
@@ -31,7 +30,6 @@ func TestSpotQuoteDepth(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "OK", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-quote-v1-depth.json"
@@ -47,7 +45,6 @@ func TestSpotQuoteDepthMerged(t *testing.T) {
 	})
 	{
 		require.NoError(t, err)
-		require.Equal(t, "", res.RetMsg)
 	}
 	{
 		goldenFilename := "./testdata/spot-quote-v1-depth-merged.json"

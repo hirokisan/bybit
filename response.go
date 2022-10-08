@@ -18,6 +18,17 @@ type CommonResponse struct {
 	RateLimit        int    `json:"rate_limit"`
 }
 
+// ErrorResponse :
+type ErrorResponse struct {
+	RetCode int    `json:"ret_code"`
+	RetMsg  string `json:"ret_msg"`
+}
+
+// Error :
+func (r *ErrorResponse) Error() string {
+	return fmt.Sprintf("%d, %s", r.RetCode, r.RetMsg)
+}
+
 // RateLimitError :
 type RateLimitError struct {
 	*CommonResponse `json:",inline"`
