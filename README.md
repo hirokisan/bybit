@@ -199,3 +199,12 @@ The following API endpoints have been implemented
 ##### Private Topics
 
 - outboundAccountInfo
+
+## Integration Tests
+
+There are tests so that we can get to know the changes of bybit api response.
+
+See below
+
+- [REST API Integration Test](./integrationtest/README.md)
+- [Websocket API Integration Test](./integrationtest-ws/README.md)
