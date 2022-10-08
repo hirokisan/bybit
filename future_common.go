@@ -75,9 +75,9 @@ type OrderBookResponse struct {
 // OrderBookResult :
 type OrderBookResult struct {
 	Symbol SymbolFuture `json:"symbol"`
-	Price  string        `json:"price"`
-	Size   float64       `json:"size"`
-	Side   Side          `json:"side"`
+	Price  string       `json:"price"`
+	Size   float64      `json:"size"`
+	Side   Side         `json:"side"`
 }
 
 // OrderBook :
@@ -97,8 +97,8 @@ func (s *FutureCommonService) OrderBook(symbol SymbolFuture) (*OrderBookResponse
 // ListKlineParam :
 type ListKlineParam struct {
 	Symbol   SymbolFuture `url:"symbol"`
-	Interval Interval      `url:"interval"`
-	From     int           `url:"from"`
+	Interval Interval     `url:"interval"`
+	From     int          `url:"from"`
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -112,14 +112,14 @@ type ListKlineResponse struct {
 // ListKlineResult :
 type ListKlineResult struct {
 	Symbol   SymbolFuture `json:"symbol"`
-	Interval string        `json:"interval"`
-	OpenTime int           `json:"open_time"`
-	Open     string        `json:"open"`
-	High     string        `json:"high"`
-	Low      string        `json:"low"`
-	Close    string        `json:"close"`
-	Volume   string        `json:"volume"`
-	Turnover string        `json:"turnover"`
+	Interval string       `json:"interval"`
+	OpenTime int          `json:"open_time"`
+	Open     string       `json:"open"`
+	High     string       `json:"high"`
+	Low      string       `json:"low"`
+	Close    string       `json:"close"`
+	Volume   string       `json:"volume"`
+	Turnover string       `json:"turnover"`
 }
 
 // ListKline :
@@ -146,7 +146,7 @@ type TickersResponse struct {
 
 // TickersResult :
 type TickersResult struct {
-	Symbol               SymbolFuture `json:"symbol"`
+	Symbol               SymbolFuture  `json:"symbol"`
 	BidPrice             string        `json:"bid_price"`
 	AskPrice             string        `json:"ask_price"`
 	LastPrice            string        `json:"last_price"`
@@ -201,12 +201,12 @@ type TradingRecordsResponse struct {
 
 // TradingRecordsResult :
 type TradingRecordsResult struct {
-	ID     float64       `json:"id"`
+	ID     float64      `json:"id"`
 	Symbol SymbolFuture `json:"symbol"`
-	Price  float64       `json:"price"`
-	Qty    float64       `json:"qty"`
-	Side   Side          `json:"side"`
-	Time   string        `json:"time"`
+	Price  float64      `json:"price"`
+	Qty    float64      `json:"qty"`
+	Side   Side         `json:"side"`
+	Time   string       `json:"time"`
 }
 
 // TradingRecords :
@@ -285,19 +285,19 @@ type MarkPriceKlineResponse struct {
 // MarkPriceKlineResult :
 type MarkPriceKlineResult struct {
 	Symbol  SymbolFuture `json:"symbol"`
-	Period  Period        `json:"period"`
-	StartAt int           `json:"start_at"`
-	Open    float64       `json:"open"`
-	High    float64       `json:"high"`
-	Low     float64       `json:"low"`
-	Close   float64       `json:"close"`
+	Period  Period       `json:"period"`
+	StartAt int          `json:"start_at"`
+	Open    float64      `json:"open"`
+	High    float64      `json:"high"`
+	Low     float64      `json:"low"`
+	Close   float64      `json:"close"`
 }
 
 // MarkPriceKlineParam :
 type MarkPriceKlineParam struct {
 	Symbol   SymbolFuture `url:"symbol"`
-	Interval Interval      `url:"interval"`
-	From     int           `url:"from"`
+	Interval Interval     `url:"interval"`
+	From     int          `url:"from"`
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -327,19 +327,19 @@ type IndexPriceKlineResponse struct {
 // IndexPriceKlineResult :
 type IndexPriceKlineResult struct {
 	Symbol   SymbolFuture `json:"symbol"`
-	Period   Period        `json:"period"`
-	OpenTime int           `json:"open_time"`
-	Open     string        `json:"open"`
-	High     string        `json:"high"`
-	Low      string        `json:"low"`
-	Close    string        `json:"close"`
+	Period   Period       `json:"period"`
+	OpenTime int          `json:"open_time"`
+	Open     string       `json:"open"`
+	High     string       `json:"high"`
+	Low      string       `json:"low"`
+	Close    string       `json:"close"`
 }
 
 // IndexPriceKlineParam :
 type IndexPriceKlineParam struct {
 	Symbol   SymbolFuture `url:"symbol"`
-	Interval Interval      `url:"interval"`
-	From     int           `url:"from"`
+	Interval Interval     `url:"interval"`
+	From     int          `url:"from"`
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -368,15 +368,15 @@ type OpenInterestResponse struct {
 
 // OpenInterestResult :
 type OpenInterestResult struct {
-	OpenInterest int           `json:"open_interest"`
-	Timestamp    int           `json:"timestamp"`
+	OpenInterest float64      `json:"open_interest"`
+	Timestamp    int          `json:"timestamp"`
 	Symbol       SymbolFuture `json:"symbol"`
 }
 
 // OpenInterestParam :
 type OpenInterestParam struct {
 	Symbol SymbolFuture `url:"symbol"`
-	Period Period        `url:"period"`
+	Period Period       `url:"period"`
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -406,9 +406,9 @@ type BigDealResponse struct {
 // BigDealResult :
 type BigDealResult struct {
 	Symbol    SymbolFuture `json:"symbol"`
-	Side      Side          `json:"side"`
-	Timestamp int           `json:"timestamp"`
-	Value     int           `json:"value"`
+	Side      Side         `json:"side"`
+	Timestamp int          `json:"timestamp"`
+	Value     int          `json:"value"`
 }
 
 // BigDealParam :
@@ -443,15 +443,15 @@ type AccountRatioResponse struct {
 // AccountRatioResult :
 type AccountRatioResult struct {
 	Symbol    SymbolFuture `json:"symbol"`
-	BuyRatio  float64       `json:"buy_ratio"`
-	SellRatio float64       `json:"sell_ratio"`
-	Timestamp int           `json:"timestamp"`
+	BuyRatio  float64      `json:"buy_ratio"`
+	SellRatio float64      `json:"sell_ratio"`
+	Timestamp int          `json:"timestamp"`
 }
 
 // AccountRatioParam :
 type AccountRatioParam struct {
 	Symbol SymbolFuture `url:"symbol"`
-	Period Period        `url:"period"`
+	Period Period       `url:"period"`
 
 	Limit *int `url:"limit,omitempty"`
 }
