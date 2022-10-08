@@ -10,7 +10,7 @@ bybit is an bybit client for the Go programing language.
 ### REST API
 
 ```
-import "github.com/hirokisan/bybit"
+import "github.com/hirokisan/bybit/v2"
 
 client := bybit.NewClient().WithAuth("your api key", "your api secret")
 res, err := client.Future().InversePerpetual().Balance(bybit.CoinBTC)
@@ -21,7 +21,7 @@ res, err := client.Future().InversePerpetual().Balance(bybit.CoinBTC)
 
 for single use
 ```
-import "github.com/hirokisan/bybit"
+import "github.com/hirokisan/bybit/v2"
 
 wsClient := bybit.NewWebsocketClient()
 svc, err := wsClient.Spot().V1().PublicV1()
@@ -39,7 +39,7 @@ svc.Start(context.Background())
 
 for multiple use
 ```
-import "github.com/hirokisan/bybit"
+import "github.com/hirokisan/bybit/v2"
 
 wsClient := bybit.NewWebsocketClient()
 
