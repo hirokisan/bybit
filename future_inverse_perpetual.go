@@ -28,6 +28,7 @@ type FutureInversePerpetualServiceI interface {
 	ListOrder(ListOrderParam) (*ListOrderResponse, error)
 	CancelOrder(CancelOrderParam) (*CancelOrderResponse, error)
 	CancelAllOrder(CancelAllOrderParam) (*CancelAllOrderResponse, error)
+	QueryOrder(QueryOrderParam) (*QueryOrderResponse, error)
 	ListPosition(SymbolFuture) (*ListPositionResponse, error)
 	ListPositions() (*ListPositionsResponse, error)
 	SaveLeverage(SaveLeverageParam) (*SaveLeverageResponse, error)
@@ -398,6 +399,66 @@ func (s *FutureInversePerpetualService) CancelAllOrder(param CancelAllOrderParam
 	}
 
 	if err := s.client.postJSON("/v2/private/order/cancelAll", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// QueryOrderResponse :
+type QueryOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []QueryOrderResult `json:"result"`
+}
+
+// QueryOrderResult :
+type QueryOrderResult struct {
+	UserID       int                    `json:"user_id"`
+	PositionIdx  int                    `json:"position_idx"`
+	Symbol       SymbolFuture           `json:"symbol"`
+	Side         Side                   `json:"side"`
+	OrderType    OrderType              `json:"order_type"`
+	Price        string                 `json:"price"`
+	Qty          float64                `json:"qty"`
+	TimeInForce  TimeInForce            `json:"time_in_force"`
+	OrderStatus  OrderStatus            `json:"order_status"`
+	ExtFields    map[string]interface{} `json:"ext_fields"`
+	LastExecTime string                 `json:"last_exec_time"`
+	LeavesQty    int                    `json:"leaves_qty"`
+	LeavesValue  string                 `json:"leaves_value"`
+	CumExecQty   int                    `json:"cum_exec_qty"`
+	CumExecValue string                 `json:"cum_exec_value"`
+	CumExecFee   string                 `json:"cum_exec_fee"`
+	RejectReason string                 `json:"reject_reason"`
+	CancelType   string                 `json:"cancel_type"`
+	OrderLinkID  string                 `json:"order_link_id"`
+	CreatedAt    string                 `json:"created_at"`
+	UpdatedAt    string                 `json:"updated_at"`
+	OrderID      string                 `json:"order_id"`
+	TakeProfit   string                 `json:"take_profit"`
+	StopLoss     string                 `json:"stop_loss"`
+	TpTriggerBy  string                 `json:"tp_trigger_by"`
+	SlTriggerBy  string                 `json:"sl_trigger_by"`
+}
+
+// QueryOrderParam :
+type QueryOrderParam struct {
+	Symbol SymbolFuture `url:"symbol"`
+
+	OrderID     *string `url:"order_id,omitempty"`
+	OrderLinkID *string `url:"order_link_id,omitempty"`
+}
+
+// QueryOrder :
+func (s *FutureInversePerpetualService) QueryOrder(param QueryOrderParam) (*QueryOrderResponse, error) {
+	var res QueryOrderResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/v2/private/order", queryString, &res); err != nil {
 		return nil, err
 	}
 
