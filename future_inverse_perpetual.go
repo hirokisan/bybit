@@ -27,6 +27,7 @@ type FutureInversePerpetualServiceI interface {
 	CreateOrder(CreateOrderParam) (*CreateOrderResponse, error)
 	ListOrder(ListOrderParam) (*ListOrderResponse, error)
 	CancelOrder(CancelOrderParam) (*CancelOrderResponse, error)
+	CancelAllOrder(CancelAllOrderParam) (*CancelAllOrderResponse, error)
 	ListPosition(SymbolFuture) (*ListPositionResponse, error)
 	ListPositions() (*ListPositionsResponse, error)
 	SaveLeverage(SaveLeverageParam) (*SaveLeverageResponse, error)
@@ -51,19 +52,19 @@ type PremiumIndexKlineResponse struct {
 // PremiumIndexKlineResult :
 type PremiumIndexKlineResult struct {
 	Symbol   SymbolFuture `json:"symbol"`
-	Period   Period        `json:"period"`
-	OpenTime int           `json:"open_time"`
-	Open     string        `json:"open"`
-	High     string        `json:"high"`
-	Low      string        `json:"low"`
-	Close    string        `json:"close"`
+	Period   Period       `json:"period"`
+	OpenTime int          `json:"open_time"`
+	Open     string       `json:"open"`
+	High     string       `json:"high"`
+	Low      string       `json:"low"`
+	Close    string       `json:"close"`
 }
 
 // PremiumIndexKlineParam :
 type PremiumIndexKlineParam struct {
 	Symbol   SymbolFuture `url:"symbol"`
-	Interval Interval      `url:"interval"`
-	From     int           `url:"from"`
+	Interval Interval     `url:"interval"`
+	From     int          `url:"from"`
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -97,34 +98,34 @@ type CreateOrderResult struct {
 
 // CreateOrder :
 type CreateOrder struct {
-	UserID        int           `json:"user_id"`
-	OrderID       string        `json:"order_id"`
+	UserID        int          `json:"user_id"`
+	OrderID       string       `json:"order_id"`
 	Symbol        SymbolFuture `json:"symbol"`
-	Side          Side          `json:"side"`
-	OrderType     OrderType     `json:"order_type"`
-	Price         float64       `json:"price"`
-	Qty           float64       `json:"qty"`
-	TimeInForce   TimeInForce   `json:"time_in_force"`
-	OrderStatus   OrderStatus   `json:"order_status"`
-	LastExecTime  float64       `json:"last_exec_time"`
-	LastExecPrice float64       `json:"last_exec_price"`
-	LeavesQty     float64       `json:"leaves_qty"`
-	CumExecQty    float64       `json:"cum_exec_qty"`
-	CumExecValue  float64       `json:"cum_exec_value"`
-	CumExecFee    float64       `json:"cum_exec_fee"`
-	RejectReason  string        `json:"reject_reason"`
-	OrderLinkID   string        `json:"order_link_id"`
-	CreatedAt     string        `json:"created_at"`
-	UpdatedAt     string        `json:"updated_at"`
+	Side          Side         `json:"side"`
+	OrderType     OrderType    `json:"order_type"`
+	Price         float64      `json:"price"`
+	Qty           float64      `json:"qty"`
+	TimeInForce   TimeInForce  `json:"time_in_force"`
+	OrderStatus   OrderStatus  `json:"order_status"`
+	LastExecTime  float64      `json:"last_exec_time"`
+	LastExecPrice float64      `json:"last_exec_price"`
+	LeavesQty     float64      `json:"leaves_qty"`
+	CumExecQty    float64      `json:"cum_exec_qty"`
+	CumExecValue  float64      `json:"cum_exec_value"`
+	CumExecFee    float64      `json:"cum_exec_fee"`
+	RejectReason  string       `json:"reject_reason"`
+	OrderLinkID   string       `json:"order_link_id"`
+	CreatedAt     string       `json:"created_at"`
+	UpdatedAt     string       `json:"updated_at"`
 }
 
 // CreateOrderParam :
 type CreateOrderParam struct {
-	Side        Side          `json:"side"`
+	Side        Side         `json:"side"`
 	Symbol      SymbolFuture `json:"symbol"`
-	OrderType   OrderType     `json:"order_type"`
-	Qty         int           `json:"qty"`
-	TimeInForce TimeInForce   `json:"time_in_force"`
+	OrderType   OrderType    `json:"order_type"`
+	Qty         int          `json:"qty"`
+	TimeInForce TimeInForce  `json:"time_in_force"`
 
 	Price          *float64 `json:"price,omitempty"`
 	TakeProfit     *float64 `json:"take_profit,omitempty"`
@@ -163,27 +164,27 @@ type ListOrderResult struct {
 
 // ListOrder :
 type ListOrder struct {
-	UserID       int           `json:"user_id"`
+	UserID       int          `json:"user_id"`
 	Symbol       SymbolFuture `json:"symbol"`
-	Side         Side          `json:"side"`
-	OrderType    OrderType     `json:"order_type"`
-	Price        string        `json:"price"`
-	Qty          string        `json:"qty"`
-	TimeInForce  TimeInForce   `json:"time_in_force"`
-	OrderStatus  OrderStatus   `json:"order_status"`
-	LeavesQty    string        `json:"leaves_qty"`
-	LeavesValue  string        `json:"leaves_value"`
-	CumExecQty   string        `json:"cum_exec_qty"`
-	CumExecValue string        `json:"cum_exec_value"`
-	CumExecFee   string        `json:"cum_exec_fee"`
-	RejectReason string        `json:"reject_reason"`
-	OrderLinkID  string        `json:"order_link_id"`
-	CreatedAt    string        `json:"created_at"`
-	OrderID      string        `json:"order_id"`
-	TakeProfit   string        `json:"take_profit"`
-	StopLoss     string        `json:"stop_loss"`
-	TpTriggerBy  string        `json:"tp_trigger_by"`
-	SlTriggerBy  string        `json:"sl_trigger_by"`
+	Side         Side         `json:"side"`
+	OrderType    OrderType    `json:"order_type"`
+	Price        string       `json:"price"`
+	Qty          string       `json:"qty"`
+	TimeInForce  TimeInForce  `json:"time_in_force"`
+	OrderStatus  OrderStatus  `json:"order_status"`
+	LeavesQty    string       `json:"leaves_qty"`
+	LeavesValue  string       `json:"leaves_value"`
+	CumExecQty   string       `json:"cum_exec_qty"`
+	CumExecValue string       `json:"cum_exec_value"`
+	CumExecFee   string       `json:"cum_exec_fee"`
+	RejectReason string       `json:"reject_reason"`
+	OrderLinkID  string       `json:"order_link_id"`
+	CreatedAt    string       `json:"created_at"`
+	OrderID      string       `json:"order_id"`
+	TakeProfit   string       `json:"take_profit"`
+	StopLoss     string       `json:"stop_loss"`
+	TpTriggerBy  string       `json:"tp_trigger_by"`
+	SlTriggerBy  string       `json:"sl_trigger_by"`
 }
 
 // ListOrderParam :
@@ -220,38 +221,38 @@ type ListPositionResponse struct {
 
 // ListPositionResult :
 type ListPositionResult struct {
-	ID                  int           `json:"id"`
-	UserID              int           `json:"user_id"`
-	RiskID              int           `json:"risk_id"`
+	ID                  int          `json:"id"`
+	UserID              int          `json:"user_id"`
+	RiskID              int          `json:"risk_id"`
 	Symbol              SymbolFuture `json:"symbol"`
-	Side                Side          `json:"side"`
-	Size                float64       `json:"size"`
-	PositionValue       string        `json:"position_value"`
-	EntryPrice          string        `json:"entry_price"`
-	IsIsolated          bool          `json:"is_isolated"`
-	AutoAddMargin       float64       `json:"auto_add_margin"`
-	Leverage            string        `json:"leverage"`
-	EffectiveLeverage   string        `json:"effective_leverage"`
-	PositionMargin      string        `json:"position_margin"`
-	LiqPrice            string        `json:"liq_price"`
-	BustPrice           string        `json:"bust_price"`
-	OccClosingFee       string        `json:"occ_closing_fee"`
-	OccFundingFee       string        `json:"occ_funding_fee"`
-	TakeProfit          string        `json:"take_profit"`
-	StopLoss            string        `json:"stop_loss"`
-	TrailingStop        string        `json:"trailing_stop"`
-	PositionStatus      string        `json:"position_status"`
-	DeleverageIndicator int           `json:"deleverage_indicator"`
-	OcCalcData          string        `json:"oc_calc_data"`
-	OrderMargin         string        `json:"order_margin"`
-	WalletBalance       string        `json:"wallet_balance"`
-	RealisedPnl         string        `json:"realised_pnl"`
-	UnrealisedPnl       float64       `json:"unrealised_pnl"`
-	CumRealisedPnl      string        `json:"cum_realised_pnl"`
-	CrossSeq            float64       `json:"cross_seq"`
-	PositionSeq         float64       `json:"position_seq"`
-	CreatedAt           string        `json:"created_at"`
-	UpdatedAt           string        `json:"updated_at"`
+	Side                Side         `json:"side"`
+	Size                float64      `json:"size"`
+	PositionValue       string       `json:"position_value"`
+	EntryPrice          string       `json:"entry_price"`
+	IsIsolated          bool         `json:"is_isolated"`
+	AutoAddMargin       float64      `json:"auto_add_margin"`
+	Leverage            string       `json:"leverage"`
+	EffectiveLeverage   string       `json:"effective_leverage"`
+	PositionMargin      string       `json:"position_margin"`
+	LiqPrice            string       `json:"liq_price"`
+	BustPrice           string       `json:"bust_price"`
+	OccClosingFee       string       `json:"occ_closing_fee"`
+	OccFundingFee       string       `json:"occ_funding_fee"`
+	TakeProfit          string       `json:"take_profit"`
+	StopLoss            string       `json:"stop_loss"`
+	TrailingStop        string       `json:"trailing_stop"`
+	PositionStatus      string       `json:"position_status"`
+	DeleverageIndicator int          `json:"deleverage_indicator"`
+	OcCalcData          string       `json:"oc_calc_data"`
+	OrderMargin         string       `json:"order_margin"`
+	WalletBalance       string       `json:"wallet_balance"`
+	RealisedPnl         string       `json:"realised_pnl"`
+	UnrealisedPnl       float64      `json:"unrealised_pnl"`
+	CumRealisedPnl      string       `json:"cum_realised_pnl"`
+	CrossSeq            float64      `json:"cross_seq"`
+	PositionSeq         float64      `json:"position_seq"`
+	CreatedAt           string       `json:"created_at"`
+	UpdatedAt           string       `json:"updated_at"`
 }
 
 // ListPosition :
@@ -305,25 +306,25 @@ type CancelOrderResult struct {
 // CancelOrder :
 // so far, same as CreateOrder
 type CancelOrder struct {
-	UserID        int           `json:"user_id"`
-	OrderID       string        `json:"order_id"`
+	UserID        int          `json:"user_id"`
+	OrderID       string       `json:"order_id"`
 	Symbol        SymbolFuture `json:"symbol"`
-	Side          Side          `json:"side"`
-	OrderType     OrderType     `json:"order_type"`
-	Price         float64       `json:"price"`
-	Qty           float64       `json:"qty"`
-	TimeInForce   TimeInForce   `json:"time_in_force"`
-	OrderStatus   OrderStatus   `json:"order_status"`
-	LastExecTime  float64       `json:"last_exec_time"`
-	LastExecPrice float64       `json:"last_exec_price"`
-	LeavesQty     float64       `json:"leaves_qty"`
-	CumExecQty    float64       `json:"cum_exec_qty"`
-	CumExecValue  float64       `json:"cum_exec_value"`
-	CumExecFee    float64       `json:"cum_exec_fee"`
-	RejectReason  string        `json:"reject_reason"`
-	OrderLinkID   string        `json:"order_link_id"`
-	CreatedAt     string        `json:"created_at"`
-	UpdatedAt     string        `json:"updated_at"`
+	Side          Side         `json:"side"`
+	OrderType     OrderType    `json:"order_type"`
+	Price         float64      `json:"price"`
+	Qty           float64      `json:"qty"`
+	TimeInForce   TimeInForce  `json:"time_in_force"`
+	OrderStatus   OrderStatus  `json:"order_status"`
+	LastExecTime  float64      `json:"last_exec_time"`
+	LastExecPrice float64      `json:"last_exec_price"`
+	LeavesQty     float64      `json:"leaves_qty"`
+	CumExecQty    float64      `json:"cum_exec_qty"`
+	CumExecValue  float64      `json:"cum_exec_value"`
+	CumExecFee    float64      `json:"cum_exec_fee"`
+	RejectReason  string       `json:"reject_reason"`
+	OrderLinkID   string       `json:"order_link_id"`
+	CreatedAt     string       `json:"created_at"`
+	UpdatedAt     string       `json:"updated_at"`
 }
 
 // CancelOrderParam :
@@ -354,6 +355,55 @@ func (s *FutureInversePerpetualService) CancelOrder(param CancelOrderParam) (*Ca
 	return &res, nil
 }
 
+// CancelAllOrderResponse :
+type CancelAllOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []CancelAllOrderResult `json:"result"`
+}
+
+// CancelAllOrderResult :
+type CancelAllOrderResult struct {
+	ClOrdID     string       `json:"clOrdID"`
+	OrderLinkID string       `json:"order_link_id"`
+	UserID      int          `json:"user_id"`
+	Symbol      SymbolFuture `json:"symbol"`
+	Side        Side         `json:"side"`
+	OrderType   OrderType    `json:"order_type"`
+	Price       string       `json:"price"`
+	Qty         float64      `json:"qty"`
+	TimeInForce TimeInForce  `json:"time_in_force"`
+	CreateType  string       `json:"create_type"`
+	CancelType  string       `json:"cancel_type"`
+	OrderStatus OrderStatus  `json:"order_status"`
+	LeavesQty   float64      `json:"leaves_qty"`
+	LeavesValue string       `json:"leaves_value"`
+	CreatedAt   string       `json:"created_at"`
+	UpdatedAt   string       `json:"updated_at"`
+	CrossStatus string       `json:"cross_status"`
+	CrossSeq    int          `json:"cross_seq"`
+}
+
+// CancelAllOrderParam :
+type CancelAllOrderParam struct {
+	Symbol SymbolFuture `url:"symbol"`
+}
+
+// CancelAllOrder :
+func (s *FutureInversePerpetualService) CancelAllOrder(param CancelAllOrderParam) (*CancelAllOrderResponse, error) {
+	var res CancelAllOrderResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CancelAllOrderParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/v2/private/order/cancelAll", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
 // SaveLeverageResponse :
 type SaveLeverageResponse struct {
 	CommonResponse `json:",inline"`
@@ -363,7 +413,7 @@ type SaveLeverageResponse struct {
 // SaveLeverageParam :
 type SaveLeverageParam struct {
 	Symbol   SymbolFuture `json:"symbol"`
-	Leverage float64       `json:"leverage"`
+	Leverage float64      `json:"leverage"`
 }
 
 // SaveLeverage :

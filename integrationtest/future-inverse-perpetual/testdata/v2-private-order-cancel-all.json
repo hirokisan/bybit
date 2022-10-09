@@ -1,0 +1,22 @@
+[
+  {
+    "clOrdID": "d1a86997-d6c7-45b5-bd58-1b3caf17387f",
+    "order_link_id": "",
+    "user_id": 146940,
+    "symbol": "BTCUSD",
+    "side": "Buy",
+    "order_type": "Limit",
+    "price": "10000",
+    "qty": 1,
+    "time_in_force": "GoodTillCancel",
+    "create_type": "CreateByUser",
+    "cancel_type": "CancelByUser",
+    "order_status": "",
+    "leaves_qty": 1,
+    "leaves_value": "0",
+    "created_at": "2022-10-09T12:04:22.633327064Z",
+    "updated_at": "2022-10-09T12:04:22.72531757Z",
+    "cross_status": "PendingCancel",
+    "cross_seq": 5542233074
+  }
+]

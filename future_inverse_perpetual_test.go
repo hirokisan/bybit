@@ -225,3 +225,102 @@ func TestListOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestCancelAllOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := CancelAllOrderParam{
+			Symbol: SymbolFutureBTCUSD,
+		}
+
+		path := "/v2/private/order/cancelAll"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelAllOrderResponse{
+			Result: []CancelAllOrderResult{
+				{
+					ClOrdID:     "d1a86997-d6c7-45b5-bd58-1b3caf17387f",
+					OrderLinkID: "",
+					UserID:      146940,
+					Symbol:      "BTCUSD",
+					Side:        "Buy",
+					OrderType:   "Limit",
+					Price:       "10000",
+					Qty:         1,
+					TimeInForce: "GoodTillCancel",
+					CreateType:  "CreateByUser",
+					CancelType:  "CancelByUser",
+					OrderStatus: "",
+					LeavesQty:   1,
+					LeavesValue: "0",
+					CreatedAt:   "2022-10-09T12:04:22.633327064Z",
+					UpdatedAt:   "2022-10-09T12:04:22.72531757Z",
+					CrossStatus: "PendingCancel",
+					CrossSeq:    5542233074,
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InversePerpetual().CancelAllOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := CancelAllOrderParam{
+			Symbol: SymbolFutureBTCUSD,
+		}
+
+		path := "/v2/private/order/cancelAll"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelAllOrderResponse{
+			Result: []CancelAllOrderResult{
+				{
+					ClOrdID:     "d1a86997-d6c7-45b5-bd58-1b3caf17387f",
+					OrderLinkID: "",
+					UserID:      146940,
+					Symbol:      "BTCUSD",
+					Side:        "Buy",
+					OrderType:   "Limit",
+					Price:       "10000",
+					Qty:         1,
+					TimeInForce: "GoodTillCancel",
+					CreateType:  "CreateByUser",
+					CancelType:  "CancelByUser",
+					OrderStatus: "",
+					LeavesQty:   1,
+					LeavesValue: "0",
+					CreatedAt:   "2022-10-09T12:04:22.633327064Z",
+					UpdatedAt:   "2022-10-09T12:04:22.72531757Z",
+					CrossStatus: "PendingCancel",
+					CrossSeq:    5542233074,
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InversePerpetual().CancelAllOrder(param)
+		assert.Error(t, err)
+	})
+}
