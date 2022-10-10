@@ -398,6 +398,8 @@ const (
 type TriggerByFuture string
 
 const (
+	// TriggerByFutureUNKNOWN : only for response
+	TriggerByFutureUNKNOWN = TriggerByFuture("UNKNOWN")
 	// TriggerByFutureLastPrice :
 	TriggerByFutureLastPrice = TriggerByFuture("LastPrice")
 	// TriggerByFutureIndexPrice :

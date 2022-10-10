@@ -166,27 +166,27 @@ type ListOrderResult struct {
 
 // ListOrder :
 type ListOrder struct {
-	UserID       int          `json:"user_id"`
-	Symbol       SymbolFuture `json:"symbol"`
-	Side         Side         `json:"side"`
-	OrderType    OrderType    `json:"order_type"`
-	Price        string       `json:"price"`
-	Qty          string       `json:"qty"`
-	TimeInForce  TimeInForce  `json:"time_in_force"`
-	OrderStatus  OrderStatus  `json:"order_status"`
-	LeavesQty    string       `json:"leaves_qty"`
-	LeavesValue  string       `json:"leaves_value"`
-	CumExecQty   string       `json:"cum_exec_qty"`
-	CumExecValue string       `json:"cum_exec_value"`
-	CumExecFee   string       `json:"cum_exec_fee"`
-	RejectReason string       `json:"reject_reason"`
-	OrderLinkID  string       `json:"order_link_id"`
-	CreatedAt    string       `json:"created_at"`
-	OrderID      string       `json:"order_id"`
-	TakeProfit   string       `json:"take_profit"`
-	StopLoss     string       `json:"stop_loss"`
-	TpTriggerBy  string       `json:"tp_trigger_by"`
-	SlTriggerBy  string       `json:"sl_trigger_by"`
+	UserID       int             `json:"user_id"`
+	Symbol       SymbolFuture    `json:"symbol"`
+	Side         Side            `json:"side"`
+	OrderType    OrderType       `json:"order_type"`
+	Price        string          `json:"price"`
+	Qty          string          `json:"qty"`
+	TimeInForce  TimeInForce     `json:"time_in_force"`
+	OrderStatus  OrderStatus     `json:"order_status"`
+	LeavesQty    string          `json:"leaves_qty"`
+	LeavesValue  string          `json:"leaves_value"`
+	CumExecQty   string          `json:"cum_exec_qty"`
+	CumExecValue string          `json:"cum_exec_value"`
+	CumExecFee   string          `json:"cum_exec_fee"`
+	RejectReason string          `json:"reject_reason"`
+	OrderLinkID  string          `json:"order_link_id"`
+	CreatedAt    string          `json:"created_at"`
+	OrderID      string          `json:"order_id"`
+	TakeProfit   string          `json:"take_profit"`
+	StopLoss     string          `json:"stop_loss"`
+	TpTriggerBy  TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy  TriggerByFuture `json:"sl_trigger_by"`
 }
 
 // ListOrderParam :
@@ -438,8 +438,8 @@ type QueryOrderResult struct {
 	OrderID      string                 `json:"order_id"`
 	TakeProfit   string                 `json:"take_profit"`
 	StopLoss     string                 `json:"stop_loss"`
-	TpTriggerBy  string                 `json:"tp_trigger_by"`
-	SlTriggerBy  string                 `json:"sl_trigger_by"`
+	TpTriggerBy  TriggerByFuture        `json:"tp_trigger_by"`
+	SlTriggerBy  TriggerByFuture        `json:"sl_trigger_by"`
 }
 
 // QueryOrderParam :
@@ -492,8 +492,8 @@ type CreateStopOrderResult struct {
 	BasePrice    string          `json:"base_price"`
 	CreatedAt    string          `json:"created_at"`
 	UpdatedAt    string          `json:"updated_at"`
-	TpTriggerBy  string          `json:"tp_trigger_by"`
-	SlTriggerBy  string          `json:"sl_trigger_by"`
+	TpTriggerBy  TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy  TriggerByFuture `json:"sl_trigger_by"`
 	TakeProfit   string          `json:"take_profit"`
 	StopLoss     string          `json:"stop_loss"`
 }

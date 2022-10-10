@@ -52,46 +52,46 @@ type CreateLinearOrderResult struct {
 
 // CreateLinearOrder :
 type CreateLinearOrder struct {
-	OrderID        string      `json:"order_id"`
-	UserID         int         `json:"user_id"`
-	Symbol         SymbolFuture  `json:"symbol"`
-	Side           Side        `json:"side"`
-	OrderType      OrderType   `json:"order_type"`
-	Price          float64     `json:"price"`
-	Qty            float64     `json:"qty"`
-	TimeInForce    TimeInForce `json:"time_in_force"`
-	OrderStatus    OrderStatus `json:"order_status"`
-	LastExecPrice  float64     `json:"last_exec_price"`
-	CumExecQty     float64     `json:"cum_exec_qty"`
-	CumExecValue   float64     `json:"cum_exec_value"`
-	CumExecFee     float64     `json:"cum_exec_fee"`
-	ReduceOnly     bool        `json:"reduce_only"`
-	CloseOnTrigger bool        `json:"close_on_trigger"`
-	OrderLinkID    string      `json:"order_link_id"`
-	CreatedTime    string      `json:"created_time"`
-	UpdatedTime    string      `json:"updated_time"`
-	TakeProfit     float64     `json:"take_profit"`
-	StopLoss       float64     `json:"stop_loss"`
-	TpTriggerBy    string      `json:"tp_trigger_by"`
-	SlTriggerBy    string      `json:"sl_trigger_by"`
+	OrderID        string          `json:"order_id"`
+	UserID         int             `json:"user_id"`
+	Symbol         SymbolFuture    `json:"symbol"`
+	Side           Side            `json:"side"`
+	OrderType      OrderType       `json:"order_type"`
+	Price          float64         `json:"price"`
+	Qty            float64         `json:"qty"`
+	TimeInForce    TimeInForce     `json:"time_in_force"`
+	OrderStatus    OrderStatus     `json:"order_status"`
+	LastExecPrice  float64         `json:"last_exec_price"`
+	CumExecQty     float64         `json:"cum_exec_qty"`
+	CumExecValue   float64         `json:"cum_exec_value"`
+	CumExecFee     float64         `json:"cum_exec_fee"`
+	ReduceOnly     bool            `json:"reduce_only"`
+	CloseOnTrigger bool            `json:"close_on_trigger"`
+	OrderLinkID    string          `json:"order_link_id"`
+	CreatedTime    string          `json:"created_time"`
+	UpdatedTime    string          `json:"updated_time"`
+	TakeProfit     float64         `json:"take_profit"`
+	StopLoss       float64         `json:"stop_loss"`
+	TpTriggerBy    TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy    TriggerByFuture `json:"sl_trigger_by"`
 }
 
 // CreateLinearOrderParam :
 type CreateLinearOrderParam struct {
-	Side           Side        `json:"side"`
-	Symbol         SymbolFuture  `json:"symbol"`
-	OrderType      OrderType   `json:"order_type"`
-	Qty            float64     `json:"qty"`
-	TimeInForce    TimeInForce `json:"time_in_force"`
-	ReduceOnly     bool        `json:"reduce_only"`
-	CloseOnTrigger bool        `json:"close_on_trigger"`
+	Side           Side         `json:"side"`
+	Symbol         SymbolFuture `json:"symbol"`
+	OrderType      OrderType    `json:"order_type"`
+	Qty            float64      `json:"qty"`
+	TimeInForce    TimeInForce  `json:"time_in_force"`
+	ReduceOnly     bool         `json:"reduce_only"`
+	CloseOnTrigger bool         `json:"close_on_trigger"`
 
-	Price       *float64 `json:"price,omitempty"`
-	TakeProfit  *float64 `json:"take_profit,omitempty"`
-	StopLoss    *float64 `json:"stop_loss,omitempty"`
-	TpTriggerBy *string  `json:"tp_trigger_by"`
-	SlTriggerBy *string  `json:"sl_trigger_by"`
-	OrderLinkID *string  `json:"order_link_id,omitempty"`
+	Price       *float64         `json:"price,omitempty"`
+	TakeProfit  *float64         `json:"take_profit,omitempty"`
+	StopLoss    *float64         `json:"stop_loss,omitempty"`
+	TpTriggerBy *TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy *TriggerByFuture `json:"sl_trigger_by"`
+	OrderLinkID *string          `json:"order_link_id,omitempty"`
 }
 
 // CreateLinearOrder :
@@ -124,28 +124,28 @@ type ListLinearOrderResult struct {
 
 // ListLinearOrderResultContent :
 type ListLinearOrderResultContent struct {
-	OrderID        string      `json:"order_id"`
-	UserID         int         `json:"user_id"`
-	Symbol         SymbolFuture  `json:"symbol"`
-	Side           Side        `json:"side"`
-	OrderType      OrderType   `json:"order_type"`
-	Price          float64     `json:"price"`
-	Qty            float64     `json:"qty"`
-	TimeInForce    TimeInForce `json:"time_in_force"`
-	OrderStatus    OrderStatus `json:"order_status"`
-	LastExecPrice  float64     `json:"last_exec_price"`
-	CumExecQty     float64     `json:"cum_exec_qty"`
-	CumExecValue   float64     `json:"cum_exec_value"`
-	CumExecFee     float64     `json:"cum_exec_fee"`
-	ReduceOnly     bool        `json:"reduce_only"`
-	CloseOnTrigger bool        `json:"close_on_trigger"`
-	OrderLinkID    string      `json:"order_link_id"`
-	CreatedTime    string      `json:"created_time"`
-	UpdatedTime    string      `json:"updated_time"`
-	TakeProfit     float64     `json:"take_profit"`
-	StopLoss       float64     `json:"stop_loss"`
-	TpTriggerBy    string      `json:"tp_trigger_by"`
-	SlTriggerBy    string      `json:"sl_trigger_by"`
+	OrderID        string          `json:"order_id"`
+	UserID         int             `json:"user_id"`
+	Symbol         SymbolFuture    `json:"symbol"`
+	Side           Side            `json:"side"`
+	OrderType      OrderType       `json:"order_type"`
+	Price          float64         `json:"price"`
+	Qty            float64         `json:"qty"`
+	TimeInForce    TimeInForce     `json:"time_in_force"`
+	OrderStatus    OrderStatus     `json:"order_status"`
+	LastExecPrice  float64         `json:"last_exec_price"`
+	CumExecQty     float64         `json:"cum_exec_qty"`
+	CumExecValue   float64         `json:"cum_exec_value"`
+	CumExecFee     float64         `json:"cum_exec_fee"`
+	ReduceOnly     bool            `json:"reduce_only"`
+	CloseOnTrigger bool            `json:"close_on_trigger"`
+	OrderLinkID    string          `json:"order_link_id"`
+	CreatedTime    string          `json:"created_time"`
+	UpdatedTime    string          `json:"updated_time"`
+	TakeProfit     float64         `json:"take_profit"`
+	StopLoss       float64         `json:"stop_loss"`
+	TpTriggerBy    TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy    TriggerByFuture `json:"sl_trigger_by"`
 }
 
 // ListLinearOrderParam :
@@ -184,26 +184,26 @@ type ListLinearPositionResponse struct {
 
 // ListLinearPositionResult :
 type ListLinearPositionResult struct {
-	UserID              int           `json:"user_id"`
+	UserID              int          `json:"user_id"`
 	Symbol              SymbolFuture `json:"symbol"`
-	Side                Side          `json:"side"`
-	Size                float64       `json:"size"`
-	PositionValue       float64       `json:"position_value"`
-	EntryPrice          float64       `json:"entry_price"`
-	LiqPrice            float64       `json:"liq_price"`
-	BustPrice           float64       `json:"bust_price"`
-	Leverage            float64       `json:"leverage"`
-	AutoAddMargin       float64       `json:"auto_add_margin"`
-	IsIsolated          bool          `json:"is_isolated"`
-	PositionMargin      float64       `json:"position_margin"`
-	OccClosingFee       float64       `json:"occ_closing_fee"`
-	RealisedPnl         float64       `json:"realised_pnl"`
-	CumRealisedPnl      float64       `json:"cum_realised_pnl"`
-	FreeQty             float64       `json:"free_qty"`
-	TpSlMode            TpSlMode      `json:"tp_sl_mode"`
-	DeleverageIndicator int           `json:"deleverage_indicator"`
-	UnrealisedPnl       float64       `json:"unrealised_pnl"`
-	RiskID              int           `json:"risk_id"`
+	Side                Side         `json:"side"`
+	Size                float64      `json:"size"`
+	PositionValue       float64      `json:"position_value"`
+	EntryPrice          float64      `json:"entry_price"`
+	LiqPrice            float64      `json:"liq_price"`
+	BustPrice           float64      `json:"bust_price"`
+	Leverage            float64      `json:"leverage"`
+	AutoAddMargin       float64      `json:"auto_add_margin"`
+	IsIsolated          bool         `json:"is_isolated"`
+	PositionMargin      float64      `json:"position_margin"`
+	OccClosingFee       float64      `json:"occ_closing_fee"`
+	RealisedPnl         float64      `json:"realised_pnl"`
+	CumRealisedPnl      float64      `json:"cum_realised_pnl"`
+	FreeQty             float64      `json:"free_qty"`
+	TpSlMode            TpSlMode     `json:"tp_sl_mode"`
+	DeleverageIndicator int          `json:"deleverage_indicator"`
+	UnrealisedPnl       float64      `json:"unrealised_pnl"`
+	RiskID              int          `json:"risk_id"`
 }
 
 // ListLinearPosition :
@@ -295,8 +295,8 @@ type SaveLinearLeverageResponse struct {
 // SaveLinearLeverageParam :
 type SaveLinearLeverageParam struct {
 	Symbol       SymbolFuture `json:"symbol"`
-	BuyLeverage  float64    `json:"buy_leverage"`
-	SellLeverage float64    `json:"sell_leverage"`
+	BuyLeverage  float64      `json:"buy_leverage"`
+	SellLeverage float64      `json:"sell_leverage"`
 }
 
 // SaveLinearLeverage :
@@ -329,23 +329,23 @@ type LinearExecutionListResult struct {
 
 // LinearExecutionList :
 type LinearExecutionList struct {
-	OrderID          string     `json:"order_id"`
-	OrderLinkID      string     `json:"order_link_id"`
-	Side             Side       `json:"side"`
+	OrderID          string       `json:"order_id"`
+	OrderLinkID      string       `json:"order_link_id"`
+	Side             Side         `json:"side"`
 	Symbol           SymbolFuture `json:"symbol"`
-	OrderPrice       float64    `json:"order_price"`
-	OrderQty         float64    `json:"order_qty"`
-	OrderType        OrderType  `json:"order_type"`
-	FeeRate          float64    `json:"fee_rate"`
-	ExecPrice        float64    `json:"exec_price"`
-	ExecType         ExecType   `json:"exec_type"`
-	ExecQty          float64    `json:"exec_qty"`
-	ExecFee          float64    `json:"exec_fee"`
-	ExecValue        float64    `json:"exec_value"`
-	LeavesQty        float64    `json:"leaves_qty"`
-	ClosedSize       float64    `json:"closed_size"`
-	LastLiquidityInd string     `json:"last_liquidity_ind"`
-	TradeTimeMs      float64    `json:"trade_time_ms"`
+	OrderPrice       float64      `json:"order_price"`
+	OrderQty         float64      `json:"order_qty"`
+	OrderType        OrderType    `json:"order_type"`
+	FeeRate          float64      `json:"fee_rate"`
+	ExecPrice        float64      `json:"exec_price"`
+	ExecType         ExecType     `json:"exec_type"`
+	ExecQty          float64      `json:"exec_qty"`
+	ExecFee          float64      `json:"exec_fee"`
+	ExecValue        float64      `json:"exec_value"`
+	LeavesQty        float64      `json:"leaves_qty"`
+	ClosedSize       float64      `json:"closed_size"`
+	LastLiquidityInd string       `json:"last_liquidity_ind"`
+	TradeTimeMs      float64      `json:"trade_time_ms"`
 }
 
 // LinearExecutionListParam :
