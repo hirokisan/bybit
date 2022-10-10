@@ -393,3 +393,15 @@ const (
 	// SymbolFutureZRXUSDT :
 	SymbolFutureZRXUSDT = SymbolFuture("ZRXUSDT")
 )
+
+// TriggerByFuture :
+type TriggerByFuture string
+
+const (
+	// TriggerByFutureLastPrice :
+	TriggerByFutureLastPrice = TriggerByFuture("LastPrice")
+	// TriggerByFutureIndexPrice :
+	TriggerByFutureIndexPrice = TriggerByFuture("IndexPrice")
+	// TriggerByFutureMarkPrice :
+	TriggerByFutureMarkPrice = TriggerByFuture("MarkPrice")
+)
