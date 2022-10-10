@@ -443,3 +443,120 @@ func TestQueryOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestCreateStopOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		price := 19400.5
+		param := CreateStopOrderParam{
+			Side:        SideBuy,
+			Symbol:      SymbolFutureBTCUSD,
+			OrderType:   OrderTypeLimit,
+			Qty:         1,
+			BasePrice:   price,
+			StopPx:      price + 200,
+			TimeInForce: TimeInForceGoodTillCancel,
+		}
+
+		path := "/v2/private/stop-order/create"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CreateStopOrderResponse{
+			Result: CreateStopOrderResult{
+				UserID:       146940,
+				Symbol:       "BTCUSD",
+				Side:         "Buy",
+				OrderType:    "Market",
+				Price:        "0.00",
+				Qty:          "1",
+				TimeInForce:  "ImmediateOrCancel",
+				Remark:       "221.112.162.57",
+				LeavesQty:    "1",
+				LeavesValue:  "0.00000000",
+				StopPx:       "19600.50",
+				RejectReason: "EC_NoError",
+				StopOrderID:  "0519f1e6-1188-4519-9a4c-34fe9a611169",
+				OrderLinkID:  "",
+				TriggerBy:    "LastPrice",
+				BasePrice:    "19400.50",
+				CreatedAt:    "2022-10-10T04:35:47.925Z",
+				UpdatedAt:    "2022-10-10T04:35:47.925Z",
+				TpTriggerBy:  "UNKNOWN",
+				SlTriggerBy:  "UNKNOWN",
+				TakeProfit:   "0.00",
+				StopLoss:     "0.00",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InversePerpetual().CreateStopOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		price := 19400.5
+		param := CreateStopOrderParam{
+			Side:        SideBuy,
+			Symbol:      SymbolFutureBTCUSD,
+			OrderType:   OrderTypeLimit,
+			Qty:         1,
+			BasePrice:   price,
+			StopPx:      price + 200,
+			TimeInForce: TimeInForceGoodTillCancel,
+		}
+
+		path := "/v2/private/stop-order/create"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CreateStopOrderResponse{
+			Result: CreateStopOrderResult{
+				UserID:       146940,
+				Symbol:       "BTCUSD",
+				Side:         "Buy",
+				OrderType:    "Market",
+				Price:        "0.00",
+				Qty:          "1",
+				TimeInForce:  "ImmediateOrCancel",
+				Remark:       "221.112.162.57",
+				LeavesQty:    "1",
+				LeavesValue:  "0.00000000",
+				StopPx:       "19600.50",
+				RejectReason: "EC_NoError",
+				StopOrderID:  "0519f1e6-1188-4519-9a4c-34fe9a611169",
+				OrderLinkID:  "",
+				TriggerBy:    "LastPrice",
+				BasePrice:    "19400.50",
+				CreatedAt:    "2022-10-10T04:35:47.925Z",
+				UpdatedAt:    "2022-10-10T04:35:47.925Z",
+				TpTriggerBy:  "UNKNOWN",
+				SlTriggerBy:  "UNKNOWN",
+				TakeProfit:   "0.00",
+				StopLoss:     "0.00",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InversePerpetual().CreateStopOrder(param)
+		assert.Error(t, err)
+	})
+}
