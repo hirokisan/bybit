@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "user_id": 146940,
+      "position_idx": 0,
+      "stop_order_status": "Untriggered",
+      "symbol": "BTCUSD",
+      "side": "Buy",
+      "order_type": "Market",
+      "price": "0",
+      "qty": "1",
+      "time_in_force": "ImmediateOrCancel",
+      "stop_order_type": "Stop",
+      "trigger_by": "LastPrice",
+      "base_price": "19400.50",
+      "order_link_id": "",
+      "created_at": "2022-10-10T09:51:46.81Z",
+      "updated_at": "2022-10-10T09:51:46.81Z",
+      "stop_px": "19600.50",
+      "stop_order_id": "647479dd-5679-48e8-88d9-0664d5ce4d2a",
+      "take_profit": "0.00",
+      "stop_loss": "0.00",
+      "tp_trigger_by": "UNKNOWN",
+      "sl_trigger_by": "UNKNOWN",
+      "cursor": ""
+    }
+  ]
+}

@@ -56,6 +56,15 @@ const (
 	OrderStatusCancelled = OrderStatus("Cancelled")
 	// OrderStatusPendingCancel :
 	OrderStatusPendingCancel = OrderStatus("PendingCancel")
+
+	// OrderStatusUntriggered : Only for conditional orders
+	OrderStatusUntriggered = OrderStatus("Untriggered")
+	// OrderStatusDeactivated : Only for conditional orders
+	OrderStatusDeactivated = OrderStatus("Deactivated")
+	// OrderStatusTriggered : Only for conditional orders
+	OrderStatusTriggered = OrderStatus("Triggered")
+	// OrderStatusActive : Only for conditional orders
+	OrderStatusActive = OrderStatus("Active")
 )
 
 // Order :
