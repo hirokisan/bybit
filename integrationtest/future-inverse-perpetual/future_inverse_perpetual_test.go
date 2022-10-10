@@ -425,6 +425,59 @@ func TestCancelAllOrder(t *testing.T) {
 	})
 }
 
+func TestQueryOrder(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		symbol := bybit.SymbolFutureBTCUSD
+		var orderID string
+		{
+			price := 10000.0
+			res, err := client.Future().InversePerpetual().CreateOrder(bybit.CreateOrderParam{
+				Side:        bybit.SideBuy,
+				Symbol:      symbol,
+				OrderType:   bybit.OrderTypeLimit,
+				Qty:         1,
+				TimeInForce: bybit.TimeInForceGoodTillCancel,
+				Price:       &price,
+			})
+			{
+				require.NoError(t, err)
+			}
+			orderID = res.Result.OrderID
+		}
+
+		res, err := client.Future().InversePerpetual().QueryOrder(bybit.QueryOrderParam{
+			Symbol: symbol,
+		})
+		{
+			require.NoError(t, err)
+		}
+		{
+			goldenFilename := "./testdata/v2-private-order.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+
+		{
+			_, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{
+				Symbol:  symbol,
+				OrderID: &orderID,
+			})
+			{
+				require.NoError(t, err)
+			}
+		}
+	})
+
+	t.Run("auth error", func(t *testing.T) {
+		client := bybit.NewTestClient()
+		_, err := client.Future().InversePerpetual().QueryOrder(bybit.QueryOrderParam{
+			Symbol: bybit.SymbolFutureBTCUSD,
+		})
+		require.Error(t, err)
+	})
+}
+
 func TestSaveLeverage(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
