@@ -407,3 +407,17 @@ const (
 	// TriggerByFutureMarkPrice :
 	TriggerByFutureMarkPrice = TriggerByFuture("MarkPrice")
 )
+
+// StopOrderTypeFuture :
+type StopOrderTypeFuture string
+
+const (
+	// StopOrderTypeFutureTakeProfit :
+	StopOrderTypeFutureTakeProfit = StopOrderTypeFuture("TakeProfit")
+	// StopOrderTypeFutureStopLoss :
+	StopOrderTypeFutureStopLoss = StopOrderTypeFuture("StopLoss")
+	// StopOrderTypeFutureTrailingStop :
+	StopOrderTypeFutureTrailingStop = StopOrderTypeFuture("TrailingStop")
+	// StopOrderTypeFutureStop :
+	StopOrderTypeFutureStop = StopOrderTypeFuture("Stop")
+)
