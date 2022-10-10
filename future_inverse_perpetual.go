@@ -387,7 +387,7 @@ type CancelAllOrderResult struct {
 
 // CancelAllOrderParam :
 type CancelAllOrderParam struct {
-	Symbol SymbolFuture `url:"symbol"`
+	Symbol SymbolFuture `json:"symbol"`
 }
 
 // CancelAllOrder :
