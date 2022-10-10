@@ -502,3 +502,45 @@ func TestSaveLeverage(t *testing.T) {
 		require.Error(t, err)
 	})
 }
+
+func TestCreateStopOrder(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		price := 19400.5
+		res, err := client.Future().InversePerpetual().CreateStopOrder(bybit.CreateStopOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolFutureBTCUSD,
+			OrderType:   bybit.OrderTypeMarket,
+			Qty:         1,
+			BasePrice:   price,
+			StopPx:      price + 200,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
+		})
+		{
+			require.NoError(t, err)
+		}
+		{
+			goldenFilename := "./testdata/v2-private-stop-order-create.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+		// clean
+		{
+			// TODO
+		}
+	})
+
+	t.Run("auth error", func(t *testing.T) {
+		client := bybit.NewTestClient()
+		price := 10000.0
+		_, err := client.Future().InversePerpetual().CreateStopOrder(bybit.CreateStopOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolFutureBTCUSD,
+			OrderType:   bybit.OrderTypeLimit,
+			Qty:         1,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
+			Price:       &price,
+		})
+		require.Error(t, err)
+	})
+}
