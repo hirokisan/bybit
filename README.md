@@ -108,6 +108,7 @@ The following API endpoints have been implemented
 - `/v2/private/stop-order/create` Place Conditional Order
 - `/v2/private/stop-order/list` Get Conditional Order
 - `/v2/private/stop-order/cancel` Cancel Conditional Order
+- `/v2/private/stop-order/cancelAll` Cancel All Conditional Orders
 - `/v2/private/position/list` My Position
 - `/v2/private/position/leverage/save` Set Leverage
 
