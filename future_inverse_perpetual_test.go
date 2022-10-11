@@ -671,3 +671,66 @@ func TestListStopOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestCancelStopOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		stopOrderID := "f13236dd-4988-41e8-8558-011d875d4282"
+		param := CancelStopOrderParam{
+			Symbol:      SymbolFutureBTCUSD,
+			StopOrderID: &stopOrderID,
+		}
+
+		path := "/v2/private/stop-order/cancel"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelStopOrderResponse{
+			Result: CancelStopOrderResult{
+				StopOrderID: stopOrderID,
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InversePerpetual().CancelStopOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := CancelStopOrderParam{
+			Symbol: SymbolFutureBTCUSD,
+		}
+
+		path := "/v2/private/stop-order/cancel"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelStopOrderResponse{
+			Result: CancelStopOrderResult{
+				StopOrderID: "f13236dd-4988-41e8-8558-011d875d4282",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InversePerpetual().CancelStopOrder(param)
+		assert.Error(t, err)
+	})
+}

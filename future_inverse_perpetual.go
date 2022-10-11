@@ -31,6 +31,7 @@ type FutureInversePerpetualServiceI interface {
 	QueryOrder(QueryOrderParam) (*QueryOrderResponse, error)
 	CreateStopOrder(CreateStopOrderParam) (*CreateStopOrderResponse, error)
 	ListStopOrder(ListStopOrderParam) (*ListStopOrderResponse, error)
+	CancelStopOrder(CancelStopOrderParam) (*CancelStopOrderResponse, error)
 	ListPosition(SymbolFuture) (*ListPositionResponse, error)
 	ListPositions() (*ListPositionsResponse, error)
 	SaveLeverage(SaveLeverageParam) (*SaveLeverageResponse, error)
@@ -592,6 +593,45 @@ func (s *FutureInversePerpetualService) ListStopOrder(param ListStopOrderParam) 
 	}
 
 	if err := s.client.getPrivately("/v2/private/stop-order/list", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// CancelStopOrderResponse :
+type CancelStopOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         CancelStopOrderResult `json:"result"`
+}
+
+// CancelStopOrderResult :
+type CancelStopOrderResult struct {
+	StopOrderID string `json:"stop_order_id"`
+}
+
+// CancelStopOrderParam :
+type CancelStopOrderParam struct {
+	Symbol SymbolFuture `json:"symbol"`
+
+	StopOrderID *string `json:"stop_order_id,omitempty"`
+	OrderLinkID *string `json:"order_link_id,omitempty"`
+}
+
+// CancelStopOrder :
+func (s *FutureInversePerpetualService) CancelStopOrder(param CancelStopOrderParam) (*CancelStopOrderResponse, error) {
+	var res CancelStopOrderResponse
+
+	if param.StopOrderID == nil && param.OrderLinkID == nil {
+		return nil, fmt.Errorf("either StopOrderID or OrderLinkID needed")
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CancelStopOrderParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/v2/private/stop-order/cancel", body, &res); err != nil {
 		return nil, err
 	}
 
