@@ -293,14 +293,8 @@ func TestListOrder(t *testing.T) {
 
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
-		price := 28383.5
-		_, err := client.Future().InversePerpetual().CreateOrder(bybit.CreateOrderParam{
-			Side:        bybit.SideBuy,
-			Symbol:      bybit.SymbolFutureBTCUSD,
-			OrderType:   bybit.OrderTypeLimit,
-			Qty:         1,
-			TimeInForce: bybit.TimeInForceGoodTillCancel,
-			Price:       &price,
+		_, err := client.Future().InversePerpetual().ListOrder(bybit.ListOrderParam{
+			Symbol: bybit.SymbolFutureBTCUSD,
 		})
 		require.Error(t, err)
 	})
