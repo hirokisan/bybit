@@ -841,3 +841,124 @@ func TestCancelAllStopOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestQueryStopOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := QueryStopOrderParam{
+			Symbol: SymbolFutureBTCUSD,
+		}
+
+		path := "/v2/private/stop-order"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := QueryStopOrderResponse{
+			Result: []QueryStopOrderResult{
+				{
+					UserID:          146940,
+					PositionIdx:     0,
+					Symbol:          "BTCUSD",
+					Side:            "Buy",
+					OrderType:       "Market",
+					Price:           "0",
+					Qty:             1,
+					StopPx:          "19600.50",
+					BasePrice:       "19400.50",
+					TimeInForce:     "ImmediateOrCancel",
+					StopOrderStatus: "",
+					ExtFields: map[string]interface{}{
+						"o_req_num": float64(43061877),
+					},
+					LeavesQty:    1,
+					LeavesValue:  "0",
+					CumExecQty:   0,
+					CumExecValue: "",
+					CumExecFee:   "",
+					RejectReason: "EC_NoError",
+					OrderLinkID:  "",
+					CreatedAt:    "2022-10-12T07:00:10.006460855Z",
+					UpdatedAt:    "2022-10-12T07:00:10.006460855Z",
+					OrderID:      "8891fda6-eb85-4d22-af1b-27833bbfe276",
+					TriggerBy:    "LastPrice",
+					TakeProfit:   "0.00",
+					StopLoss:     "0.00",
+					TpTriggerBy:  "UNKNOWN",
+					SlTriggerBy:  "UNKNOWN",
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InversePerpetual().QueryStopOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := QueryStopOrderParam{
+			Symbol: SymbolFutureBTCUSD,
+		}
+
+		path := "/v2/private/stop-order"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := QueryStopOrderResponse{
+			Result: []QueryStopOrderResult{
+				{
+					UserID:          146940,
+					PositionIdx:     0,
+					Symbol:          "BTCUSD",
+					Side:            "Buy",
+					OrderType:       "Market",
+					Price:           "0",
+					Qty:             1,
+					StopPx:          "19600.50",
+					BasePrice:       "19400.50",
+					TimeInForce:     "ImmediateOrCancel",
+					StopOrderStatus: "",
+					ExtFields: map[string]interface{}{
+						"o_req_num": float64(43061877),
+					},
+					LeavesQty:    1,
+					LeavesValue:  "0",
+					CumExecQty:   0,
+					CumExecValue: "",
+					CumExecFee:   "",
+					RejectReason: "EC_NoError",
+					OrderLinkID:  "",
+					CreatedAt:    "2022-10-12T07:00:10.006460855Z",
+					UpdatedAt:    "2022-10-12T07:00:10.006460855Z",
+					OrderID:      "8891fda6-eb85-4d22-af1b-27833bbfe276",
+					TriggerBy:    "LastPrice",
+					TakeProfit:   "0.00",
+					StopLoss:     "0.00",
+					TpTriggerBy:  "UNKNOWN",
+					SlTriggerBy:  "UNKNOWN",
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InversePerpetual().QueryStopOrder(param)
+		assert.Error(t, err)
+	})
+}
