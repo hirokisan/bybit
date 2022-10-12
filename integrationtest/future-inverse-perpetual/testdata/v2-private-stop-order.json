@@ -1,0 +1,33 @@
+[
+  {
+    "user_id": 146940,
+    "position_idx": 0,
+    "symbol": "BTCUSD",
+    "side": "Buy",
+    "order_type": "Market",
+    "price": "0",
+    "qty": 1,
+    "stop_px": "19600.50",
+    "base_price": "19400.50",
+    "time_in_force": "ImmediateOrCancel",
+    "stop_order_status": "",
+    "ext_fields": {
+      "o_req_num": 43061877
+    },
+    "leaves_qty": 1,
+    "leaves_value": "0",
+    "cum_exec_qty": 0,
+    "cum_exec_value": "",
+    "cum_exec_fee": "",
+    "reject_reason": "EC_NoError",
+    "order_link_id": "",
+    "created_at": "2022-10-12T07:00:10.006460855Z",
+    "updated_at": "2022-10-12T07:00:10.006460855Z",
+    "order_id": "8891fda6-eb85-4d22-af1b-27833bbfe276",
+    "trigger_by": "LastPrice",
+    "take_profit": "0.00",
+    "stop_loss": "0.00",
+    "tp_trigger_by": "UNKNOWN",
+    "sl_trigger_by": "UNKNOWN"
+  }
+]
