@@ -12,6 +12,7 @@ import (
 type FutureUSDTPerpetualServiceI interface {
 	// Market Data Endpoints
 	OrderBook(SymbolFuture) (*OrderBookResponse, error)
+	ListLinearKline(ListLinearKlineParam) (*ListLinearKlineResponse, error)
 	Tickers(SymbolFuture) (*TickersResponse, error)
 	Symbols() (*SymbolsResponse, error)
 	OpenInterest(OpenInterestParam) (*OpenInterestResponse, error)
@@ -37,6 +38,52 @@ type FutureUSDTPerpetualService struct {
 	client *Client
 
 	*FutureCommonService
+}
+
+// ListLinearKlineParam :
+type ListLinearKlineParam struct {
+	Symbol   SymbolFuture `url:"symbol"`
+	Interval Interval     `url:"interval"`
+	From     int          `url:"from"`
+
+	Limit *int `url:"limit,omitempty"`
+}
+
+// ListLinearKlineResponse :
+type ListLinearKlineResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []ListLinearKlineResult `json:"result"`
+}
+
+// ListLinearKlineResult :
+type ListLinearKlineResult struct {
+	Symbol   SymbolFuture `json:"symbol"`
+	Period   Period       `json:"period"`
+	Interval string       `json:"interval"`
+	StartAt  int          `json:"start_at"`
+	OpenTime int          `json:"open_time"`
+	Volume   float64      `json:"volume"`
+	Open     float64      `json:"open"`
+	High     float64      `json:"high"`
+	Low      float64      `json:"low"`
+	Close    float64      `json:"close"`
+	Turnover float64      `json:"turnover"`
+}
+
+// ListLinearKline :
+func (s *FutureCommonService) ListLinearKline(param ListLinearKlineParam) (*ListLinearKlineResponse, error) {
+	var res ListLinearKlineResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/public/linear/kline", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 // CreateLinearOrderResponse :

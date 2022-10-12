@@ -4,6 +4,7 @@ package integrationtestfutureusdtperpetual
 
 import (
 	"testing"
+	"time"
 
 	"github.com/hirokisan/bybit/v2"
 	"github.com/hirokisan/bybit/v2/integrationtest/testhelper"
@@ -39,6 +40,23 @@ func TestOrderBook(t *testing.T) {
 	}
 	{
 		goldenFilename := "./testdata/v2-public-order-book-l2.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
+
+func TestListLinearKline(t *testing.T) {
+	client := bybit.NewTestClient()
+	res, err := client.Future().USDTPerpetual().ListLinearKline(bybit.ListLinearKlineParam{
+		Symbol:   bybit.SymbolFutureBTCUSDT,
+		Interval: bybit.Interval120,
+		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
+	})
+	{
+		require.NoError(t, err)
+	}
+	{
+		goldenFilename := "./testdata/public-linear-kline.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
@@ -195,7 +213,7 @@ func TestListLinearOrder(t *testing.T) {
 	}
 
 	{
-		res, err := client.Future().USDTPerpetual().CancelLinearOrder(bybit.CancelLinearOrderParam{
+		_, err := client.Future().USDTPerpetual().CancelLinearOrder(bybit.CancelLinearOrderParam{
 			Symbol:  symbol,
 			OrderID: &orderID,
 		})
@@ -287,7 +305,7 @@ func TestCancelLinearOrder(t *testing.T) {
 func TestSaveLinearLeverage(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
-		res, err := client.Future().USDTPerpetual().SaveLinearLeverage(bybit.SaveLinearLeverageParam{
+		_, err := client.Future().USDTPerpetual().SaveLinearLeverage(bybit.SaveLinearLeverageParam{
 			Symbol:       bybit.SymbolFutureBTCUSDT,
 			BuyLeverage:  2.0,
 			SellLeverage: 2.0,
