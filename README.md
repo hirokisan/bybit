@@ -122,6 +122,7 @@ The following API endpoints have been implemented
 ##### Market Data Endpoints
 
 - `/v2/public/orderBook/L2` Order Book
+- `/public/linear/kline` Query Kline
 - `/v2/public/tickers` Latest Information for Symbol
 - `/v2/public/symbols` Query Symbol
 - `/v2/public/open-interest` Open Interest
