@@ -166,3 +166,110 @@ func TestListLinearOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestQueryLinearKline(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := QueryLinearOrderParam{
+			Symbol: SymbolFutureBTCUSDT,
+		}
+
+		path := "/private/linear/order/search"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := QueryLinearOrderResponse{
+			Result: []QueryLinearOrderResult{
+				{
+					OrderID:        "d8bc8319-17b1-41a5-bff6-728458f35248",
+					UserID:         146940,
+					Symbol:         "BTCUSDT",
+					Side:           "Buy",
+					OrderType:      "Limit",
+					Price:          10000,
+					Qty:            0.001,
+					TimeInForce:    "GoodTillCancel",
+					OrderStatus:    "New",
+					LastExecPrice:  0,
+					CumExecQty:     0,
+					CumExecValue:   0,
+					CumExecFee:     0,
+					ReduceOnly:     false,
+					CloseOnTrigger: false,
+					OrderLinkID:    "",
+					CreatedTime:    "2022-10-13T02:55:01Z",
+					UpdatedTime:    "2022-10-13T02:55:01Z",
+					TakeProfit:     0,
+					StopLoss:       0,
+					TpTriggerBy:    "UNKNOWN",
+					SlTriggerBy:    "UNKNOWN",
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().USDTPerpetual().QueryLinearOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := QueryLinearOrderParam{
+			Symbol: SymbolFutureBTCUSDT,
+		}
+
+		path := "/private/linear/order/search"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := QueryLinearOrderResponse{
+			Result: []QueryLinearOrderResult{
+				{
+					OrderID:        "d8bc8319-17b1-41a5-bff6-728458f35248",
+					UserID:         146940,
+					Symbol:         "BTCUSDT",
+					Side:           "Buy",
+					OrderType:      "Limit",
+					Price:          10000,
+					Qty:            0.001,
+					TimeInForce:    "GoodTillCancel",
+					OrderStatus:    "New",
+					LastExecPrice:  0,
+					CumExecQty:     0,
+					CumExecValue:   0,
+					CumExecFee:     0,
+					ReduceOnly:     false,
+					CloseOnTrigger: false,
+					OrderLinkID:    "",
+					CreatedTime:    "2022-10-13T02:55:01Z",
+					UpdatedTime:    "2022-10-13T02:55:01Z",
+					TakeProfit:     0,
+					StopLoss:       0,
+					TpTriggerBy:    "UNKNOWN",
+					SlTriggerBy:    "UNKNOWN",
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().USDTPerpetual().QueryLinearOrder(param)
+		assert.Error(t, err)
+	})
+}
