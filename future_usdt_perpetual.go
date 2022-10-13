@@ -24,6 +24,7 @@ type FutureUSDTPerpetualServiceI interface {
 	ListLinearOrder(ListLinearOrderParam) (*ListLinearOrderResponse, error)
 	CancelLinearOrder(CancelLinearOrderParam) (*CancelLinearOrderResponse, error)
 	LinearCancelAllOrder(LinearCancelAllParam) (*LinearCancelAllResponse, error)
+	QueryLinearOrder(QueryLinearOrderParam) (*QueryLinearOrderResponse, error)
 	ListLinearPosition(SymbolFuture) (*ListLinearPositionResponse, error)
 	ListLinearPositions() (*ListLinearPositionsResponse, error)
 	SaveLinearLeverage(SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error)
@@ -446,6 +447,62 @@ func (s *FutureUSDTPerpetualService) LinearCancelAllOrder(param LinearCancelAllP
 
 	if err := s.client.postJSON("/private/linear/order/cancel-all", body, &res); err != nil {
 		return &res, err
+	}
+
+	return &res, nil
+}
+
+// QueryLinearOrderResponse :
+type QueryLinearOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []QueryLinearOrderResult `json:"result"`
+}
+
+// QueryLinearOrderResult :
+type QueryLinearOrderResult struct {
+	OrderID        string          `json:"order_id"`
+	UserID         int             `json:"user_id"`
+	Symbol         SymbolFuture    `json:"symbol"`
+	Side           Side            `json:"side"`
+	OrderType      OrderType       `json:"order_type"`
+	Price          float64         `json:"price"`
+	Qty            float64         `json:"qty"`
+	TimeInForce    TimeInForce     `json:"time_in_force"`
+	OrderStatus    OrderStatus     `json:"order_status"`
+	LastExecPrice  float64         `json:"last_exec_price"`
+	CumExecQty     float64         `json:"cum_exec_qty"`
+	CumExecValue   float64         `json:"cum_exec_value"`
+	CumExecFee     float64         `json:"cum_exec_fee"`
+	ReduceOnly     bool            `json:"reduce_only"`
+	CloseOnTrigger bool            `json:"close_on_trigger"`
+	OrderLinkID    string          `json:"order_link_id"`
+	CreatedTime    string          `json:"created_time"`
+	UpdatedTime    string          `json:"updated_time"`
+	TakeProfit     float64         `json:"take_profit"`
+	StopLoss       float64         `json:"stop_loss"`
+	TpTriggerBy    TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy    TriggerByFuture `json:"sl_trigger_by"`
+}
+
+// QueryLinearOrderParam :
+type QueryLinearOrderParam struct {
+	Symbol SymbolFuture `url:"symbol"`
+
+	OrderID     *string `url:"order_id,omitempty"`
+	OrderLinkID *string `url:"order_link_id,omitempty"`
+}
+
+// QueryLinearOrder :
+func (s *FutureUSDTPerpetualService) QueryLinearOrder(param QueryLinearOrderParam) (*QueryLinearOrderResponse, error) {
+	var res QueryLinearOrderResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/private/linear/order/search", queryString, &res); err != nil {
+		return nil, err
 	}
 
 	return &res, nil
