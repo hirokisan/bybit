@@ -575,3 +575,64 @@ func TestCancelLinearStopOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestCancelAllLinearStopOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := CancelAllLinearStopOrderParam{
+			Symbol: SymbolFutureBTCUSD,
+		}
+
+		path := "/private/linear/stop-order/cancel-all"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelAllLinearStopOrderResponse{
+			Result: CancelAllLinearStopOrderResult{
+				"ab39efc4-e15f-4538-92d5-2e02a14f4845",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().USDTPerpetual().CancelAllLinearStopOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := CancelAllLinearStopOrderParam{
+			Symbol: SymbolFutureBTCUSD,
+		}
+
+		path := "/private/linear/stop-order/cancel-all"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelAllLinearStopOrderResponse{
+			Result: CancelAllLinearStopOrderResult{
+				"ab39efc4-e15f-4538-92d5-2e02a14f4845",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().USDTPerpetual().CancelAllLinearStopOrder(param)
+		assert.Error(t, err)
+	})
+}
