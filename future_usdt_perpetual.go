@@ -27,6 +27,7 @@ type FutureUSDTPerpetualServiceI interface {
 	QueryLinearOrder(QueryLinearOrderParam) (*QueryLinearOrderResponse, error)
 	CreateLinearStopOrder(CreateLinearStopOrderParam) (*CreateLinearStopOrderResponse, error)
 	ListLinearStopOrder(ListLinearStopOrderParam) (*ListLinearStopOrderResponse, error)
+	CancelLinearStopOrder(CancelLinearStopOrderParam) (*CancelLinearStopOrderResponse, error)
 	ListLinearPosition(SymbolFuture) (*ListLinearPositionResponse, error)
 	ListLinearPositions() (*ListLinearPositionsResponse, error)
 	SaveLinearLeverage(SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error)
@@ -640,6 +641,45 @@ func (s *FutureUSDTPerpetualService) ListLinearStopOrder(param ListLinearStopOrd
 	}
 
 	if err := s.client.getPrivately("/private/linear/stop-order/list", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// CancelLinearStopOrderResponse :
+type CancelLinearStopOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         CancelLinearStopOrderResult `json:"result"`
+}
+
+// CancelLinearStopOrderResult :
+type CancelLinearStopOrderResult struct {
+	StopOrderID string `json:"stop_order_id"`
+}
+
+// CancelLinearStopOrderParam :
+type CancelLinearStopOrderParam struct {
+	Symbol SymbolFuture `json:"symbol"`
+
+	StopOrderID *string `json:"stop_order_id,omitempty"`
+	OrderLinkID *string `json:"order_link_id,omitempty"`
+}
+
+// CancelLinearStopOrder :
+func (s *FutureUSDTPerpetualService) CancelLinearStopOrder(param CancelLinearStopOrderParam) (*CancelLinearStopOrderResponse, error) {
+	var res CancelLinearStopOrderResponse
+
+	if param.StopOrderID == nil && param.OrderLinkID == nil {
+		return nil, fmt.Errorf("either StopOrderID or OrderLinkID needed")
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CancelLinearStopOrderParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/private/linear/stop-order/cancel", body, &res); err != nil {
 		return nil, err
 	}
 
