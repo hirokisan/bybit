@@ -344,7 +344,7 @@ func TestLinearExecutionList(t *testing.T) {
 	})
 }
 
-func TestAccountService_LinearCancelAllOrder(t *testing.T) {
+func TestLinearCancelAllOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		res, err := client.Future().USDTPerpetual().LinearCancelAllOrder(bybit.LinearCancelAllParam{
