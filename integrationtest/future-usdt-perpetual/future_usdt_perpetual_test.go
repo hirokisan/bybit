@@ -572,3 +572,46 @@ func TestCancelLinearStopOrder(t *testing.T) {
 		require.Error(t, err)
 	})
 }
+
+func TestCancelAllLinearStopOrder(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := bybit.NewTestClient().WithAuthFromEnv()
+
+		symbol := bybit.SymbolFutureBTCUSDT
+		{
+			price := 19800.5
+			_, err := client.Future().USDTPerpetual().CreateLinearStopOrder(bybit.CreateLinearStopOrderParam{
+				Side:           bybit.SideBuy,
+				Symbol:         symbol,
+				OrderType:      bybit.OrderTypeMarket,
+				Qty:            0.001,
+				BasePrice:      price,
+				StopPx:         price + 200,
+				TimeInForce:    bybit.TimeInForceGoodTillCancel,
+				TriggerBy:      bybit.TriggerByFutureLastPrice,
+				ReduceOnly:     true,
+				CloseOnTrigger: true,
+			})
+			{
+				require.NoError(t, err)
+			}
+		}
+		res, err := client.Future().USDTPerpetual().CancelAllLinearStopOrder(bybit.CancelAllLinearStopOrderParam{
+			Symbol: symbol,
+		})
+		{
+			require.NoError(t, err)
+		}
+		{
+			goldenFilename := "./testdata/private-linear-stop-order-cancel-all.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	})
+
+	t.Run("auth error", func(t *testing.T) {
+		client := bybit.NewTestClient()
+		_, err := client.Future().USDTPerpetual().CancelAllLinearStopOrder(bybit.CancelAllLinearStopOrderParam{})
+		require.Error(t, err)
+	})
+}
