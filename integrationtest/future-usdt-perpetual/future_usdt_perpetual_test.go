@@ -412,3 +412,48 @@ func TestQueryLinearOrder(t *testing.T) {
 		}
 	}
 }
+
+func TestCreateLinearStopOrder(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		price := 19400.5
+		res, err := client.Future().USDTPerpetual().CreateLinearStopOrder(bybit.CreateLinearStopOrderParam{
+			Side:           bybit.SideBuy,
+			Symbol:         bybit.SymbolFutureBTCUSDT,
+			OrderType:      bybit.OrderTypeMarket,
+			Qty:            0.001,
+			BasePrice:      price,
+			StopPx:         price + 200,
+			TimeInForce:    bybit.TimeInForceGoodTillCancel,
+			TriggerBy:      bybit.TriggerByFutureLastPrice,
+			ReduceOnly:     true,
+			CloseOnTrigger: true,
+		})
+		{
+			require.NoError(t, err)
+		}
+		{
+			goldenFilename := "./testdata/private-linear-stop-order-create.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+		// TODO : clean
+	})
+	t.Run("auth error", func(t *testing.T) {
+		client := bybit.NewTestClient()
+		price := 19400.5
+		_, err := client.Future().USDTPerpetual().CreateLinearStopOrder(bybit.CreateLinearStopOrderParam{
+			Side:           bybit.SideBuy,
+			Symbol:         bybit.SymbolFutureBTCUSDT,
+			OrderType:      bybit.OrderTypeMarket,
+			Qty:            0.001,
+			BasePrice:      price,
+			StopPx:         price + 200,
+			TimeInForce:    bybit.TimeInForceGoodTillCancel,
+			TriggerBy:      bybit.TriggerByFutureLastPrice,
+			ReduceOnly:     true,
+			CloseOnTrigger: true,
+		})
+		require.Error(t, err)
+	})
+}
