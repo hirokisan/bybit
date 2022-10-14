@@ -136,6 +136,7 @@ The following API endpoints have been implemented
 - `/private/linear/order/cancel` Cancel Active Order
 - `/private/linear/order/cancel-all` Cancel All Active Orders
 - `/private/linear/order/search` Query Active Order (real-time)
+- `/private/linear/stop-order/create` Place Conditional Order
 - `/private/linear/position/list` My Position
 - `/private/linear/position/set-leverage` Set Leverage
 - `/private/linear/trade/execution/list` User Trade Records
