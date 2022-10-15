@@ -143,6 +143,7 @@ The following API endpoints have been implemented
 - `/private/linear/stop-order/search` Query Conditional Order (real-time)
 - `/private/linear/position/list` My Position
 - `/private/linear/position/set-leverage` Set Leverage
+- `/private/linear/position/trading-stop` Set Trading-Stop
 - `/private/linear/trade/execution/list` User Trade Records
 
 ##### Wallet Data Endpoints
