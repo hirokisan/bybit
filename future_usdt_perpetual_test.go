@@ -741,3 +741,62 @@ func TestQueryLinearStopOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestLinearTradingStop(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		price := 20000.0
+		param := LinearTradingStopParam{
+			Symbol:     SymbolFutureBTCUSDT,
+			Side:       SideBuy,
+			TakeProfit: &price,
+		}
+
+		path := "/private/linear/position/trading-stop"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := LinearTradingStopResponse{}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().USDTPerpetual().LinearTradingStop(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		price := 20000.0
+		param := LinearTradingStopParam{
+			Symbol:     SymbolFutureBTCUSDT,
+			Side:       SideBuy,
+			TakeProfit: &price,
+		}
+
+		path := "/private/linear/position/trading-stop"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := LinearTradingStopResponse{}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().USDTPerpetual().LinearTradingStop(param)
+		assert.Error(t, err)
+	})
+}
