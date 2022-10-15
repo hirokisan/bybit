@@ -666,3 +666,32 @@ func TestQueryLinearStopOrder(t *testing.T) {
 		}
 	}
 }
+
+func TestLinearTradingStop(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+
+	{
+		_, err := client.Future().USDTPerpetual().CreateLinearOrder(bybit.CreateLinearOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolFutureBTCUSDT,
+			OrderType:   bybit.OrderTypeMarket,
+			Qty:         0.001,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
+		})
+		{
+			require.NoError(t, err)
+		}
+	}
+
+	{
+		price := 20000.0
+		_, err := client.Future().USDTPerpetual().LinearTradingStop(bybit.LinearTradingStopParam{
+			Symbol:     bybit.SymbolFutureBTCUSDT,
+			Side:       bybit.SideBuy,
+			TakeProfit: &price,
+		})
+		{
+			require.NoError(t, err)
+		}
+	}
+}

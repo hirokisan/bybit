@@ -33,6 +33,7 @@ type FutureUSDTPerpetualServiceI interface {
 	ListLinearPosition(SymbolFuture) (*ListLinearPositionResponse, error)
 	ListLinearPositions() (*ListLinearPositionsResponse, error)
 	SaveLinearLeverage(SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error)
+	LinearTradingStop(LinearTradingStopParam) (*LinearTradingStopResponse, error)
 	LinearExecutionList(LinearExecutionListParam) (*LinearExecutionListResponse, error)
 
 	// Wallet Data Endpoints
@@ -362,6 +363,42 @@ func (s *FutureUSDTPerpetualService) SaveLinearLeverage(param SaveLinearLeverage
 	}
 
 	if err := s.client.postJSON("/private/linear/position/set-leverage", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// LinearTradingStopResponse :
+type LinearTradingStopResponse struct {
+	CommonResponse `json:",inline"`
+}
+
+// LinearTradingStopParam :
+type LinearTradingStopParam struct {
+	Symbol SymbolFuture `json:"symbol"`
+	Side   Side         `json:"side"`
+
+	TakeProfit   *float64         `json:"take_profit,omitempty"`
+	StopLoss     *float64         `json:"stop_loss,omitempty"`
+	TrailingStop *float64         `json:"trailing_stop,omitempty"`
+	TpTriggerBy  *TriggerByFuture `json:"tp_trigger_by,omitempty"`
+	SlTriggerBy  *TriggerByFuture `json:"sl_trigger_by,omitempty"`
+	SlSize       *float64         `json:"sl_size,omitempty"`
+	TpSize       *float64         `json:"tp_size,omitempty"`
+	PositionIdx  *int             `json:"position_idx,omitempty"`
+}
+
+// LinearTradingStop :
+func (s *FutureUSDTPerpetualService) LinearTradingStop(param LinearTradingStopParam) (*LinearTradingStopResponse, error) {
+	var res LinearTradingStopResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for LinearTradingStopParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/private/linear/position/trading-stop", body, &res); err != nil {
 		return nil, err
 	}
 
