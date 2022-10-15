@@ -1,0 +1,25 @@
+[
+  {
+    "stop_order_id": "98674e2e-779b-4c5d-8a9f-bbcd45ccbcf4",
+    "user_id": 146940,
+    "symbol": "BTCUSDT",
+    "side": "Buy",
+    "order_type": "Market",
+    "price": 0,
+    "qty": 0.001,
+    "time_in_force": "ImmediateOrCancel",
+    "order_status": "Untriggered",
+    "trigger_price": 20000.5,
+    "base_price": "19800.50",
+    "order_link_id": "",
+    "created_time": "2022-10-15T04:02:36.000Z",
+    "updated_time": "2022-10-15T04:02:36.000Z",
+    "take_profit": 0,
+    "stop_loss": 0,
+    "tp_trigger_by": "UNKNOWN",
+    "sl_trigger_by": "UNKNOWN",
+    "trigger_by": "LastPrice",
+    "reduce_only": true,
+    "close_on_trigger": true
+  }
+]
