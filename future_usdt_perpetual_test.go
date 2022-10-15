@@ -636,3 +636,108 @@ func TestCancelAllLinearStopOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestQueryLinearStopOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := QueryLinearStopOrderParam{
+			Symbol: SymbolFutureBTCUSDT,
+		}
+
+		path := "/private/linear/stop-order/search"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := QueryLinearStopOrderResponse{
+			Result: []QueryLinearStopOrderResult{
+				{
+					StopOrderID:    "98674e2e-779b-4c5d-8a9f-bbcd45ccbcf4",
+					UserID:         146940,
+					Symbol:         "BTCUSDT",
+					Side:           "Buy",
+					OrderType:      "Market",
+					Price:          0,
+					Qty:            0.001,
+					TimeInForce:    "ImmediateOrCancel",
+					OrderStatus:    "Untriggered",
+					TriggerPrice:   20000.5,
+					BasePrice:      "19800.50",
+					OrderLinkID:    "",
+					CreatedTime:    "2022-10-15T04:02:36.000Z",
+					UpdatedTime:    "2022-10-15T04:02:36.000Z",
+					TakeProfit:     0,
+					StopLoss:       0,
+					TpTriggerBy:    "UNKNOWN",
+					SlTriggerBy:    "UNKNOWN",
+					TriggerBy:      "LastPrice",
+					ReduceOnly:     true,
+					CloseOnTrigger: true,
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().USDTPerpetual().QueryLinearStopOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := QueryLinearStopOrderParam{
+			Symbol: SymbolFutureBTCUSDT,
+		}
+
+		path := "/private/linear/stop-order/search"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := QueryLinearStopOrderResponse{
+			Result: []QueryLinearStopOrderResult{
+				{
+					StopOrderID:    "98674e2e-779b-4c5d-8a9f-bbcd45ccbcf4",
+					UserID:         146940,
+					Symbol:         "BTCUSDT",
+					Side:           "Buy",
+					OrderType:      "Market",
+					Price:          0,
+					Qty:            0.001,
+					TimeInForce:    "ImmediateOrCancel",
+					OrderStatus:    "Untriggered",
+					TriggerPrice:   20000.5,
+					BasePrice:      "19800.50",
+					OrderLinkID:    "",
+					CreatedTime:    "2022-10-15T04:02:36.000Z",
+					UpdatedTime:    "2022-10-15T04:02:36.000Z",
+					TakeProfit:     0,
+					StopLoss:       0,
+					TpTriggerBy:    "UNKNOWN",
+					SlTriggerBy:    "UNKNOWN",
+					TriggerBy:      "LastPrice",
+					ReduceOnly:     true,
+					CloseOnTrigger: true,
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().USDTPerpetual().QueryLinearStopOrder(param)
+		assert.Error(t, err)
+	})
+}
