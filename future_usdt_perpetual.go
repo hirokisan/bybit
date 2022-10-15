@@ -29,6 +29,7 @@ type FutureUSDTPerpetualServiceI interface {
 	ListLinearStopOrder(ListLinearStopOrderParam) (*ListLinearStopOrderResponse, error)
 	CancelLinearStopOrder(CancelLinearStopOrderParam) (*CancelLinearStopOrderResponse, error)
 	CancelAllLinearStopOrder(CancelAllLinearStopOrderParam) (*CancelAllLinearStopOrderResponse, error)
+	QueryLinearStopOrder(QueryLinearStopOrderParam) (*QueryLinearStopOrderResponse, error)
 	ListLinearPosition(SymbolFuture) (*ListLinearPositionResponse, error)
 	ListLinearPositions() (*ListLinearPositionsResponse, error)
 	SaveLinearLeverage(SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error)
@@ -711,6 +712,61 @@ func (s *FutureUSDTPerpetualService) CancelAllLinearStopOrder(param CancelAllLin
 	}
 
 	if err := s.client.postJSON("/private/linear/stop-order/cancel-all", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// QueryLinearStopOrderResponse :
+type QueryLinearStopOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []QueryLinearStopOrderResult `json:"result"`
+}
+
+// QueryLinearStopOrderResult :
+type QueryLinearStopOrderResult struct {
+	StopOrderID    string          `json:"stop_order_id"`
+	UserID         int             `json:"user_id"`
+	Symbol         SymbolFuture    `json:"symbol"`
+	Side           Side            `json:"side"`
+	OrderType      OrderType       `json:"order_type"`
+	Price          float64         `json:"price"`
+	Qty            float64         `json:"qty"`
+	TimeInForce    TimeInForce     `json:"time_in_force"`
+	OrderStatus    OrderStatus     `json:"order_status"`
+	TriggerPrice   float64         `json:"trigger_price"`
+	BasePrice      string          `json:"base_price"`
+	OrderLinkID    string          `json:"order_link_id"`
+	CreatedTime    string          `json:"created_time"`
+	UpdatedTime    string          `json:"updated_time"`
+	TakeProfit     float64         `json:"take_profit"`
+	StopLoss       float64         `json:"stop_loss"`
+	TpTriggerBy    TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy    TriggerByFuture `json:"sl_trigger_by"`
+	TriggerBy      TriggerByFuture `json:"trigger_by"`
+	ReduceOnly     bool            `json:"reduce_only"`
+	CloseOnTrigger bool            `json:"close_on_trigger"`
+}
+
+// QueryLinearStopOrderParam :
+type QueryLinearStopOrderParam struct {
+	Symbol SymbolFuture `url:"symbol"`
+
+	StopOrderID *string `url:"stop_order_id,omitempty"`
+	OrderLinkID *string `url:"order_link_id,omitempty"`
+}
+
+// QueryLinearStopOrder :
+func (s *FutureUSDTPerpetualService) QueryLinearStopOrder(param QueryLinearStopOrderParam) (*QueryLinearStopOrderResponse, error) {
+	var res QueryLinearStopOrderResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/private/linear/stop-order/search", queryString, &res); err != nil {
 		return nil, err
 	}
 

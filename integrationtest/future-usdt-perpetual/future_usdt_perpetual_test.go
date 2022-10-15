@@ -615,3 +615,54 @@ func TestCancelAllLinearStopOrder(t *testing.T) {
 		require.Error(t, err)
 	})
 }
+
+func TestQueryLinearStopOrder(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+
+	symbol := bybit.SymbolFutureBTCUSDT
+
+	var stopOrderID string
+	{
+		price := 19800.5
+		res, err := client.Future().USDTPerpetual().CreateLinearStopOrder(bybit.CreateLinearStopOrderParam{
+			Side:           bybit.SideBuy,
+			Symbol:         symbol,
+			OrderType:      bybit.OrderTypeMarket,
+			Qty:            0.001,
+			BasePrice:      price,
+			StopPx:         price + 200,
+			TimeInForce:    bybit.TimeInForceGoodTillCancel,
+			TriggerBy:      bybit.TriggerByFutureLastPrice,
+			ReduceOnly:     true,
+			CloseOnTrigger: true,
+		})
+		{
+			require.NoError(t, err)
+		}
+		stopOrderID = res.Result.StopOrderID
+	}
+
+	{
+		res, err := client.Future().USDTPerpetual().QueryLinearStopOrder(bybit.QueryLinearStopOrderParam{
+			Symbol: symbol,
+		})
+		{
+			require.NoError(t, err)
+		}
+		{
+			goldenFilename := "./testdata/private-linear-stop-order-search.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	}
+
+	{
+		_, err := client.Future().USDTPerpetual().CancelLinearStopOrder(bybit.CancelLinearStopOrderParam{
+			Symbol:      symbol,
+			StopOrderID: &stopOrderID,
+		})
+		{
+			require.NoError(t, err)
+		}
+	}
+}
