@@ -167,7 +167,7 @@ func TestListLinearOrder(t *testing.T) {
 	})
 }
 
-func TestQueryLinearKline(t *testing.T) {
+func TestQueryLinearOrder(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := QueryLinearOrderParam{
 			Symbol: SymbolFutureBTCUSDT,
