@@ -165,6 +165,10 @@ The following API endpoints have been implemented
 - `/v2/public/big-deal` Latest Big Deal
 - `/v2/public/account-ratio` Long-Short Ratio
 
+##### Account Data Endpoints
+
+- `/futures/private/order/create` Place Active Order
+
 ##### Wallet Data Endpoints
 
 - `/v2/private/wallet/balance` Get Wallet Balance

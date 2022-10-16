@@ -1,5 +1,10 @@
 package bybit
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
 // FutureInverseFutureServiceI :
 type FutureInverseFutureServiceI interface {
 	// Market Data Endpoints
@@ -14,6 +19,9 @@ type FutureInverseFutureServiceI interface {
 	BigDeal(BigDealParam) (*BigDealResponse, error)
 	AccountRatio(AccountRatioParam) (*AccountRatioResponse, error)
 
+	// Account Data Endpoints
+	CreateFuturesOrder(CreateFuturesOrderParam) (*CreateFuturesOrderResponse, error)
+
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
 }
@@ -23,4 +31,72 @@ type FutureInverseFutureService struct {
 	client *Client
 
 	*FutureCommonService
+}
+
+// CreateFuturesOrderResponse :
+type CreateFuturesOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         CreateFuturesOrderResult `json:"result"`
+}
+
+// CreateFuturesOrderResult :
+type CreateFuturesOrderResult struct {
+	UserID        int             `json:"user_id"`
+	OrderID       string          `json:"order_id"`
+	Symbol        SymbolFuture    `json:"symbol"`
+	Side          Side            `json:"side"`
+	OrderType     OrderType       `json:"order_type"`
+	Price         float64         `json:"price"`
+	Qty           float64         `json:"qty"`
+	TimeInForce   TimeInForce     `json:"time_in_force"`
+	OrderStatus   OrderStatus     `json:"order_status"`
+	LastExecTime  float64         `json:"last_exec_time"`
+	LastExecPrice float64         `json:"last_exec_price"`
+	LeavesQty     float64         `json:"leaves_qty"`
+	CumExecQty    float64         `json:"cum_exec_qty"`
+	CumExecValue  float64         `json:"cum_exec_value"`
+	CumExecFee    float64         `json:"cum_exec_fee"`
+	RejectReason  string          `json:"reject_reason"`
+	OrderLinkID   string          `json:"order_link_id"`
+	CreatedAt     string          `json:"created_at"`
+	UpdatedAt     string          `json:"updated_at"`
+	TakeProfit    string          `json:"take_profit"`
+	StopLoss      string          `json:"stop_loss"`
+	TpTriggerBy   TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy   TriggerByFuture `json:"sl_trigger_by"`
+}
+
+// CreateFuturesOrderParam :
+type CreateFuturesOrderParam struct {
+	Side        Side         `json:"side"`
+	Symbol      SymbolFuture `json:"symbol"`
+	OrderType   OrderType    `json:"order_type"`
+	Qty         int          `json:"qty"`
+	TimeInForce TimeInForce  `json:"time_in_force"`
+
+	Price          *float64         `json:"price,omitempty"`
+	PositionIdx    *int             `json:"position_idx,omitempty"`
+	ReduceOnly     *bool            `json:"reduce_only,omitempty"`
+	CloseOnTrigger *bool            `json:"close_on_trigger,omitempty"`
+	OrderLinkID    *string          `json:"order_link_id,omitempty"`
+	TakeProfit     *float64         `json:"take_profit,omitempty"`
+	StopLoss       *float64         `json:"stop_loss,omitempty"`
+	TpTriggerBy    *TriggerByFuture `json:"tp_trigger_by,omitempty"`
+	SlTriggerBy    *TriggerByFuture `json:"sl_trigger_by,omitempty"`
+}
+
+// CreateFuturesOrder :
+func (s *FutureInverseFutureService) CreateFuturesOrder(param CreateFuturesOrderParam) (*CreateFuturesOrderResponse, error) {
+	var res CreateFuturesOrderResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CreateFuturesOrderParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/futures/private/order/create", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
