@@ -187,3 +187,44 @@ func TestAccountRatio(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestCreateFuturesOrder(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		price := 10000.0
+		res, err := client.Future().InverseFuture().CreateFuturesOrder(bybit.CreateFuturesOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolFutureBTCUSD,
+			OrderType:   bybit.OrderTypeLimit,
+			Qty:         1,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
+			Price:       &price,
+		})
+		{
+			require.NoError(t, err)
+		}
+		{
+			goldenFilename := "./testdata/futures-private-order-create.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+		// clean
+		{
+			// TODO
+		}
+	})
+
+	t.Run("auth error", func(t *testing.T) {
+		client := bybit.NewTestClient()
+		price := 10000.0
+		_, err := client.Future().InverseFuture().CreateFuturesOrder(bybit.CreateFuturesOrderParam{
+			Side:        bybit.SideBuy,
+			Symbol:      bybit.SymbolFutureBTCUSD,
+			OrderType:   bybit.OrderTypeLimit,
+			Qty:         1,
+			TimeInForce: bybit.TimeInForceGoodTillCancel,
+			Price:       &price,
+		})
+		require.Error(t, err)
+	})
+}
