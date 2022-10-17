@@ -245,3 +245,104 @@ func TestFuturesListOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestCancelFuturesOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		orderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
+		param := CancelFuturesOrderParam{
+			Symbol:  SymbolFutureBTCUSD,
+			OrderID: &orderID,
+		}
+
+		path := "/futures/private/order/cancel"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelFuturesOrderResponse{
+			Result: CancelFuturesOrderResult{
+				UserID:        146940,
+				OrderID:       "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787",
+				Symbol:        "BTCUSD",
+				Side:          "Buy",
+				OrderType:     "Limit",
+				Price:         10000,
+				Qty:           1,
+				TimeInForce:   "GoodTillCancel",
+				OrderStatus:   "New",
+				LastExecTime:  1665991158.845237,
+				LastExecPrice: 0,
+				LeavesQty:     1,
+				CumExecQty:    0,
+				CumExecValue:  0,
+				CumExecFee:    0,
+				RejectReason:  "EC_NoError",
+				OrderLinkID:   "",
+				CreatedAt:     "2022-10-17T07:19:18.845Z",
+				UpdatedAt:     "2022-10-17T07:19:19.067Z",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InverseFuture().CancelFuturesOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		orderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
+		param := CancelFuturesOrderParam{
+			Symbol:  SymbolFutureBTCUSD,
+			OrderID: &orderID,
+		}
+
+		path := "/futures/private/order/cancel"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelFuturesOrderResponse{
+			Result: CancelFuturesOrderResult{
+				UserID:        146940,
+				OrderID:       "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787",
+				Symbol:        "BTCUSD",
+				Side:          "Buy",
+				OrderType:     "Limit",
+				Price:         10000,
+				Qty:           1,
+				TimeInForce:   "GoodTillCancel",
+				OrderStatus:   "New",
+				LastExecTime:  1665991158.845237,
+				LastExecPrice: 0,
+				LeavesQty:     1,
+				CumExecQty:    0,
+				CumExecValue:  0,
+				CumExecFee:    0,
+				RejectReason:  "EC_NoError",
+				OrderLinkID:   "",
+				CreatedAt:     "2022-10-17T07:19:18.845Z",
+				UpdatedAt:     "2022-10-17T07:19:19.067Z",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InverseFuture().CancelFuturesOrder(param)
+		assert.Error(t, err)
+	})
+}
