@@ -191,26 +191,37 @@ func TestAccountRatio(t *testing.T) {
 func TestCreateFuturesOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
-		price := 10000.0
-		res, err := client.Future().InverseFuture().CreateFuturesOrder(bybit.CreateFuturesOrderParam{
-			Side:        bybit.SideBuy,
-			Symbol:      bybit.SymbolFutureBTCUSD,
-			OrderType:   bybit.OrderTypeLimit,
-			Qty:         1,
-			TimeInForce: bybit.TimeInForceGoodTillCancel,
-			Price:       &price,
-		})
+		symbol := bybit.SymbolFutureBTCUSD
+		var orderID string
 		{
-			require.NoError(t, err)
-		}
-		{
-			goldenFilename := "./testdata/futures-private-order-create.json"
-			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
-			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			price := 10000.0
+			res, err := client.Future().InverseFuture().CreateFuturesOrder(bybit.CreateFuturesOrderParam{
+				Side:        bybit.SideBuy,
+				Symbol:      symbol,
+				OrderType:   bybit.OrderTypeLimit,
+				Qty:         1,
+				TimeInForce: bybit.TimeInForceGoodTillCancel,
+				Price:       &price,
+			})
+			{
+				require.NoError(t, err)
+			}
+			{
+				goldenFilename := "./testdata/futures-private-order-create.json"
+				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+				testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			}
+			orderID = res.Result.OrderID
 		}
 		// clean
 		{
-			// TODO
+			_, err := client.Future().InverseFuture().CancelFuturesOrder(bybit.CancelFuturesOrderParam{
+				Symbol:  symbol,
+				OrderID: &orderID,
+			})
+			{
+				require.NoError(t, err)
+			}
 		}
 	})
 
@@ -232,11 +243,13 @@ func TestCreateFuturesOrder(t *testing.T) {
 func TestListFuturesOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
+		symbol := bybit.SymbolFutureBTCUSD
+		var orderID string
 		{
 			price := 10000.0
-			_, err := client.Future().InverseFuture().CreateFuturesOrder(bybit.CreateFuturesOrderParam{
+			res, err := client.Future().InverseFuture().CreateFuturesOrder(bybit.CreateFuturesOrderParam{
 				Side:        bybit.SideBuy,
-				Symbol:      bybit.SymbolFutureBTCUSD,
+				Symbol:      symbol,
 				OrderType:   bybit.OrderTypeLimit,
 				Qty:         1,
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
@@ -245,6 +258,7 @@ func TestListFuturesOrder(t *testing.T) {
 			{
 				require.NoError(t, err)
 			}
+			orderID = res.Result.OrderID
 		}
 
 		// need to wait until the order status become new
@@ -253,7 +267,7 @@ func TestListFuturesOrder(t *testing.T) {
 		{
 			status := bybit.OrderStatusNew
 			res, err := client.Future().InverseFuture().ListFuturesOrder(bybit.ListFuturesOrderParam{
-				Symbol:      bybit.SymbolFutureBTCUSD,
+				Symbol:      symbol,
 				OrderStatus: &status,
 			})
 			{
@@ -267,7 +281,13 @@ func TestListFuturesOrder(t *testing.T) {
 		}
 		// clean
 		{
-			// TODO
+			_, err := client.Future().InverseFuture().CancelFuturesOrder(bybit.CancelFuturesOrderParam{
+				Symbol:  symbol,
+				OrderID: &orderID,
+			})
+			{
+				require.NoError(t, err)
+			}
 		}
 	})
 
