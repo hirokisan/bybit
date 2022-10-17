@@ -228,3 +228,54 @@ func TestCreateFuturesOrder(t *testing.T) {
 		require.Error(t, err)
 	})
 }
+
+func TestListFuturesOrder(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		{
+			price := 10000.0
+			_, err := client.Future().InverseFuture().CreateFuturesOrder(bybit.CreateFuturesOrderParam{
+				Side:        bybit.SideBuy,
+				Symbol:      bybit.SymbolFutureBTCUSD,
+				OrderType:   bybit.OrderTypeLimit,
+				Qty:         1,
+				TimeInForce: bybit.TimeInForceGoodTillCancel,
+				Price:       &price,
+			})
+			{
+				require.NoError(t, err)
+			}
+		}
+
+		// need to wait until the order status become new
+		time.Sleep(10 * time.Second)
+
+		{
+			status := bybit.OrderStatusNew
+			res, err := client.Future().InverseFuture().ListFuturesOrder(bybit.ListFuturesOrderParam{
+				Symbol:      bybit.SymbolFutureBTCUSD,
+				OrderStatus: &status,
+			})
+			{
+				require.NoError(t, err)
+			}
+			{
+				goldenFilename := "./testdata/futures-private-order-list.json"
+				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+				testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			}
+		}
+		// clean
+		{
+			// TODO
+		}
+	})
+
+	t.Run("auth error", func(t *testing.T) {
+		client := bybit.NewTestClient()
+		_, err := client.Future().InverseFuture().ListFuturesOrder(bybit.ListFuturesOrderParam{
+			Symbol: bybit.SymbolFutureBTCUSD,
+		})
+		require.Error(t, err)
+	})
+}
