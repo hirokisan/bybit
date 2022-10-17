@@ -168,6 +168,7 @@ The following API endpoints have been implemented
 ##### Account Data Endpoints
 
 - `/futures/private/order/create` Place Active Order
+- `/futures/private/order/list` Get Active Order
 
 ##### Wallet Data Endpoints
 
