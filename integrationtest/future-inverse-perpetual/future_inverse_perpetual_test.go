@@ -15,9 +15,7 @@ func TestBalance(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		res, err := client.Future().InversePerpetual().Balance(bybit.CoinUSDT)
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-wallet-balance.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -35,9 +33,7 @@ func TestBalance(t *testing.T) {
 func TestOrderBook(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().InversePerpetual().OrderBook(bybit.SymbolFutureBTCUSD)
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-order-book-l2.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -52,9 +48,7 @@ func TestListKline(t *testing.T) {
 		Interval: bybit.Interval120,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-kline-list.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -65,9 +59,7 @@ func TestListKline(t *testing.T) {
 func TestTickers(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().InversePerpetual().Tickers(bybit.SymbolFutureBTCUSD)
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-tickers.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -82,9 +74,7 @@ func TestTradingRecords(t *testing.T) {
 		Symbol: bybit.SymbolFutureBTCUSD,
 		Limit:  &limit,
 	})
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-trading-records.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -95,9 +85,7 @@ func TestTradingRecords(t *testing.T) {
 func TestSymbols(t *testing.T) {
 	client := bybit.NewTestClient()
 	res, err := client.Future().InversePerpetual().Symbols()
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-symbols.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -112,9 +100,7 @@ func TestMarkPriceKline(t *testing.T) {
 		Interval: bybit.IntervalD,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-mark-price-kline.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -129,9 +115,7 @@ func TestIndexPriceKline(t *testing.T) {
 		Interval: bybit.IntervalD,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-index-price-kline.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -145,9 +129,7 @@ func TestOpenInterest(t *testing.T) {
 		Symbol: bybit.SymbolFutureBTCUSD,
 		Period: bybit.Period1h,
 	})
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-open-interest.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -160,9 +142,7 @@ func TestBigDeal(t *testing.T) {
 	res, err := client.Future().InversePerpetual().BigDeal(bybit.BigDealParam{
 		Symbol: bybit.SymbolFutureBTCUSD,
 	})
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-big-deal.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -178,9 +158,7 @@ func TestAccountRatio(t *testing.T) {
 		Period: bybit.Period1h,
 		Limit:  &limit,
 	})
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-account-ratio.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -195,9 +173,7 @@ func TestPremiumIndexKline(t *testing.T) {
 		Interval: bybit.Interval120,
 		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
 	})
-	{
-		require.NoError(t, err)
-	}
+	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v2-public-premium-index-kline.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -217,9 +193,7 @@ func TestCreateOrder(t *testing.T) {
 			TimeInForce: bybit.TimeInForceGoodTillCancel,
 			Price:       &price,
 		})
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-order-create.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -265,21 +239,19 @@ func TestListOrder(t *testing.T) {
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 				Price:       &price,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 			orderID = res.Result.OrderID
 		}
-		res, err := client.Future().InversePerpetual().ListOrder(bybit.ListOrderParam{
-			Symbol: bybit.SymbolFutureBTCUSD,
-		})
 		{
+			res, err := client.Future().InversePerpetual().ListOrder(bybit.ListOrderParam{
+				Symbol: bybit.SymbolFutureBTCUSD,
+			})
 			require.NoError(t, err)
-		}
-		{
-			goldenFilename := "./testdata/v2-private-order-list.json"
-			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
-			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			{
+				goldenFilename := "./testdata/v2-private-order-list.json"
+				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+				testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			}
 		}
 		// clean
 		{
@@ -304,9 +276,7 @@ func TestListPosition(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		res, err := client.Future().InversePerpetual().ListPosition(bybit.SymbolFutureBTCUSD)
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-position-list.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -324,9 +294,7 @@ func TestListPositions(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		res, err := client.Future().InversePerpetual().ListPositions()
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-position-lists.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -354,18 +322,15 @@ func TestCancelOrder(t *testing.T) {
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 				Price:       &price,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 			orderID = res.Result.OrderID
 		}
+
 		res, err := client.Future().InversePerpetual().CancelOrder(bybit.CancelOrderParam{
 			Symbol:  bybit.SymbolFutureBTCUSD,
 			OrderID: &orderID,
 		})
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-order-cancel.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -393,16 +358,12 @@ func TestCancelAllOrder(t *testing.T) {
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 				Price:       &price,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 		}
 		res, err := client.Future().InversePerpetual().CancelAllOrder(bybit.CancelAllOrderParam{
 			Symbol: bybit.SymbolFutureBTCUSD,
 		})
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-order-cancel-all.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -434,18 +395,14 @@ func TestQueryOrder(t *testing.T) {
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 				Price:       &price,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 			orderID = res.Result.OrderID
 		}
 
 		res, err := client.Future().InversePerpetual().QueryOrder(bybit.QueryOrderParam{
 			Symbol: symbol,
 		})
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-order.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -457,9 +414,7 @@ func TestQueryOrder(t *testing.T) {
 				Symbol:  symbol,
 				OrderID: &orderID,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 		}
 	})
 
@@ -480,9 +435,7 @@ func TestSaveLeverage(t *testing.T) {
 				Symbol:   bybit.SymbolFutureBTCUSD,
 				Leverage: 2.0,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 			{
 				goldenFilename := "./testdata/v2-private-position-leverage-save.json"
 				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -512,9 +465,7 @@ func TestCreateStopOrder(t *testing.T) {
 				StopPx:      price + 200,
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 			{
 				goldenFilename := "./testdata/v2-private-stop-order-create.json"
 				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -528,9 +479,7 @@ func TestCreateStopOrder(t *testing.T) {
 				Symbol:      bybit.SymbolFutureBTCUSD,
 				StopOrderID: &stopOrderID,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 		}
 	})
 
@@ -565,9 +514,7 @@ func TestListStopOrder(t *testing.T) {
 				StopPx:      price + 200,
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 			stopOrderID = res.Result.StopOrderID
 		}
 
@@ -579,9 +526,7 @@ func TestListStopOrder(t *testing.T) {
 			Symbol:          symbol,
 			StopOrderStatus: &status,
 		})
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-stop-order-list.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -594,9 +539,7 @@ func TestListStopOrder(t *testing.T) {
 				Symbol:      bybit.SymbolFutureBTCUSD,
 				StopOrderID: &stopOrderID,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 		}
 	})
 
@@ -624,18 +567,14 @@ func TestCancelStopOrder(t *testing.T) {
 				StopPx:      price + 200,
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 			stopOrderID = res.Result.StopOrderID
 		}
 		res, err := client.Future().InversePerpetual().CancelStopOrder(bybit.CancelStopOrderParam{
 			Symbol:      bybit.SymbolFutureBTCUSD,
 			StopOrderID: &stopOrderID,
 		})
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-stop-order-cancel.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -666,16 +605,12 @@ func TestCancelAllStopOrder(t *testing.T) {
 				StopPx:      price + 200,
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 		}
 		res, err := client.Future().InversePerpetual().CancelAllStopOrder(bybit.CancelAllStopOrderParam{
 			Symbol: bybit.SymbolFutureBTCUSD,
 		})
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-stop-order-cancel-all.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -708,18 +643,14 @@ func TestQueryStopOrder(t *testing.T) {
 				StopPx:      price + 200,
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 			stopOrderID = res.Result.StopOrderID
 		}
 
 		res, err := client.Future().InversePerpetual().QueryStopOrder(bybit.QueryStopOrderParam{
 			Symbol: symbol,
 		})
-		{
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-stop-order.json"
 			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
@@ -731,9 +662,7 @@ func TestQueryStopOrder(t *testing.T) {
 				Symbol:      symbol,
 				StopOrderID: &stopOrderID,
 			})
-			{
-				require.NoError(t, err)
-			}
+			require.NoError(t, err)
 		}
 	})
 
