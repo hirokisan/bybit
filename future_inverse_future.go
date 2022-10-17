@@ -3,6 +3,8 @@ package bybit
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/google/go-querystring/query"
 )
 
 // FutureInverseFutureServiceI :
@@ -21,6 +23,7 @@ type FutureInverseFutureServiceI interface {
 
 	// Account Data Endpoints
 	CreateFuturesOrder(CreateFuturesOrderParam) (*CreateFuturesOrderResponse, error)
+	ListFuturesOrder(ListFuturesOrderParam) (*ListFuturesOrderResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
@@ -95,6 +98,71 @@ func (s *FutureInverseFutureService) CreateFuturesOrder(param CreateFuturesOrder
 	}
 
 	if err := s.client.postJSON("/futures/private/order/create", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// ListFuturesOrderResponse :
+type ListFuturesOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         ListFuturesOrderResult `json:"result"`
+}
+
+// ListFuturesOrderResult :
+type ListFuturesOrderResult struct {
+	ListFuturesOrders []ListFuturesOrder `json:"data"`
+}
+
+// ListFuturesOrder :
+type ListFuturesOrder struct {
+	UserID       int             `json:"user_id"`
+	PositionIdx  int             `json:"position_idx"`
+	Symbol       SymbolFuture    `json:"symbol"`
+	Side         Side            `json:"side"`
+	OrderType    OrderType       `json:"order_type"`
+	Price        string          `json:"price"`
+	Qty          string          `json:"qty"`
+	TimeInForce  TimeInForce     `json:"time_in_force"`
+	OrderLinkID  string          `json:"order_link_id"`
+	OrderID      string          `json:"order_id"`
+	CreatedAt    string          `json:"created_at"`
+	UpdatedAt    string          `json:"updated_at"`
+	OrderStatus  OrderStatus     `json:"order_status"`
+	LeavesQty    string          `json:"leaves_qty"`
+	LeavesValue  string          `json:"leaves_value"`
+	CumExecQty   string          `json:"cum_exec_qty"`
+	CumExecValue string          `json:"cum_exec_value"`
+	CumExecFee   string          `json:"cum_exec_fee"`
+	RejectReason string          `json:"reject_reason"`
+	TakeProfit   string          `json:"take_profit"`
+	StopLoss     string          `json:"stop_loss"`
+	TpTriggerBy  TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy  TriggerByFuture `json:"sl_trigger_by"`
+	Cursor       string          `json:"cursor"`
+}
+
+// ListFuturesOrderParam :
+type ListFuturesOrderParam struct {
+	Symbol SymbolFuture `url:"symbol"`
+
+	OrderStatus *OrderStatus `url:"order_status,omitempty"`
+	Direction   *Direction   `url:"direction,omitempty"`
+	Limit       *int         `url:"limit,omitempty"`
+	Cursor      *string      `url:"cursor,omitempty"`
+}
+
+// ListFuturesOrder :
+func (s *FutureInverseFutureService) ListFuturesOrder(param ListFuturesOrderParam) (*ListFuturesOrderResponse, error) {
+	var res ListFuturesOrderResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/futures/private/order/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
