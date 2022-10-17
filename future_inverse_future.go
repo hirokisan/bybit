@@ -24,6 +24,7 @@ type FutureInverseFutureServiceI interface {
 	// Account Data Endpoints
 	CreateFuturesOrder(CreateFuturesOrderParam) (*CreateFuturesOrderResponse, error)
 	ListFuturesOrder(ListFuturesOrderParam) (*ListFuturesOrderResponse, error)
+	CancelFuturesOrder(CancelFuturesOrderParam) (*CancelFuturesOrderResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
@@ -163,6 +164,59 @@ func (s *FutureInverseFutureService) ListFuturesOrder(param ListFuturesOrderPara
 	}
 
 	if err := s.client.getPrivately("/futures/private/order/list", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// CancelFuturesOrderResponse :
+type CancelFuturesOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         CancelFuturesOrderResult `json:"result"`
+}
+
+// CancelFuturesOrderResult :
+type CancelFuturesOrderResult struct {
+	UserID        int          `json:"user_id"`
+	OrderID       string       `json:"order_id"`
+	Symbol        SymbolFuture `json:"symbol"`
+	Side          Side         `json:"side"`
+	OrderType     OrderType    `json:"order_type"`
+	Price         float64      `json:"price"`
+	Qty           float64      `json:"qty"`
+	TimeInForce   TimeInForce  `json:"time_in_force"`
+	OrderStatus   OrderStatus  `json:"order_status"`
+	LastExecTime  float64      `json:"last_exec_time"`
+	LastExecPrice float64      `json:"last_exec_price"`
+	LeavesQty     float64      `json:"leaves_qty"`
+	CumExecQty    float64      `json:"cum_exec_qty"`
+	CumExecValue  float64      `json:"cum_exec_value"`
+	CumExecFee    float64      `json:"cum_exec_fee"`
+	RejectReason  string       `json:"reject_reason"`
+	OrderLinkID   string       `json:"order_link_id"`
+	CreatedAt     string       `json:"created_at"`
+	UpdatedAt     string       `json:"updated_at"`
+}
+
+// CancelFuturesOrderParam :
+type CancelFuturesOrderParam struct {
+	Symbol SymbolFuture `json:"symbol"`
+
+	OrderID     *string `json:"order_id,omitempty"`
+	OrderLinkID *string `json:"order_link_id,omitempty"`
+}
+
+// CancelFuturesOrder :
+func (s *FutureInverseFutureService) CancelFuturesOrder(param CancelFuturesOrderParam) (*CancelFuturesOrderResponse, error) {
+	var res CancelFuturesOrderResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CancelFuturesOrderParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/futures/private/order/cancel", body, &res); err != nil {
 		return nil, err
 	}
 
