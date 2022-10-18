@@ -25,6 +25,7 @@ type FutureInverseFutureServiceI interface {
 	CreateFuturesOrder(CreateFuturesOrderParam) (*CreateFuturesOrderResponse, error)
 	ListFuturesOrder(ListFuturesOrderParam) (*ListFuturesOrderResponse, error)
 	CancelFuturesOrder(CancelFuturesOrderParam) (*CancelFuturesOrderResponse, error)
+	CancelAllFuturesOrder(CancelAllFuturesOrderParam) (*CancelAllFuturesOrderResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
@@ -217,6 +218,54 @@ func (s *FutureInverseFutureService) CancelFuturesOrder(param CancelFuturesOrder
 	}
 
 	if err := s.client.postJSON("/futures/private/order/cancel", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// CancelAllFuturesOrderResponse :
+type CancelAllFuturesOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []CancelAllFuturesOrderResult `json:"result"`
+}
+
+// CancelAllFuturesOrderResult :
+type CancelAllFuturesOrderResult struct {
+	ClOrdID     string       `json:"clOrdID"`
+	UserID      int          `json:"user_id"`
+	Symbol      SymbolFuture `json:"symbol"`
+	Side        Side         `json:"side"`
+	OrderType   OrderType    `json:"order_type"`
+	Price       string       `json:"price"`
+	Qty         float64      `json:"qty"`
+	TimeInForce TimeInForce  `json:"time_in_force"`
+	CreateType  string       `json:"create_type"`
+	CancelType  string       `json:"cancel_type"`
+	OrderStatus OrderStatus  `json:"order_status"`
+	LeavesQty   float64      `json:"leaves_qty"`
+	LeavesValue string       `json:"leaves_value"`
+	CreatedAt   string       `json:"created_at"`
+	UpdatedAt   string       `json:"updated_at"`
+	CrossStatus string       `json:"cross_status"`
+	CrossSeq    int          `json:"cross_seq"`
+}
+
+// CancelAllFuturesOrderParam :
+type CancelAllFuturesOrderParam struct {
+	Symbol SymbolFuture `json:"symbol"`
+}
+
+// CancelAllFuturesOrder :
+func (s *FutureInverseFutureService) CancelAllFuturesOrder(param CancelAllFuturesOrderParam) (*CancelAllFuturesOrderResponse, error) {
+	var res CancelAllFuturesOrderResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CancelAllFuturesOrderParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/futures/private/order/cancelAll", body, &res); err != nil {
 		return nil, err
 	}
 
