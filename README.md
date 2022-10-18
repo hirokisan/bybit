@@ -231,3 +231,9 @@ See below
 
 - [REST API Integration Test](./integrationtest/README.md)
 - [Websocket API Integration Test](./integrationtest-ws/README.md)
+
+## Contributing
+
+I would like to cover Bybit API and contributions are always welcome. The calling pattern is established, so adding new methods is relatively straightforward. See some PRs like https://github.com/hirokisan/bybit/pull/44.
+
+To submit issues, PRs, and every other help is welcome.
