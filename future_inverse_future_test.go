@@ -681,3 +681,118 @@ func TestCreateFuturesStopOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestFuturesListStopOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		orderStatus := OrderStatusUntriggered
+		param := ListFuturesStopOrderParam{
+			Symbol:          SymbolFutureBTCUSDH23,
+			StopOrderStatus: &orderStatus,
+		}
+
+		path := "/futures/private/stop-order/list"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := ListFuturesStopOrderResponse{
+			Result: ListFuturesStopOrderResult{
+				ListFuturesStopOrders: []ListFuturesStopOrder{
+					{
+						UserID:          146940,
+						PositionIdx:     0,
+						StopOrderStatus: "Untriggered",
+						Symbol:          "BTCUSDH23",
+						Side:            "Buy",
+						OrderType:       "Market",
+						StopOrderType:   "Stop",
+						Price:           "0",
+						Qty:             "1",
+						TimeInForce:     "ImmediateOrCancel",
+						BasePrice:       "19400.50",
+						OrderLinkID:     "",
+						CreatedAt:       "2022-10-19T12:49:49.063Z",
+						UpdatedAt:       "2022-10-19T12:49:49.063Z",
+						StopPx:          "19600.50",
+						StopOrderID:     "9df68792-204a-4394-8e92-5a8c7827d99d",
+						TriggerBy:       "LastPrice",
+						TakeProfit:      "0.00",
+						StopLoss:        "0.00",
+						TpTriggerBy:     "UNKNOWN",
+						SlTriggerBy:     "UNKNOWN",
+						Cursor:          "",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InverseFuture().ListFuturesStopOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		orderStatus := OrderStatusUntriggered
+		param := ListFuturesStopOrderParam{
+			Symbol:          SymbolFutureBTCUSDH23,
+			StopOrderStatus: &orderStatus,
+		}
+
+		path := "/futures/private/stop-order/list"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := ListFuturesStopOrderResponse{
+			Result: ListFuturesStopOrderResult{
+				ListFuturesStopOrders: []ListFuturesStopOrder{
+					{
+						UserID:          146940,
+						PositionIdx:     0,
+						StopOrderStatus: "Untriggered",
+						Symbol:          "BTCUSDH23",
+						Side:            "Buy",
+						OrderType:       "Market",
+						StopOrderType:   "Stop",
+						Price:           "0",
+						Qty:             "1",
+						TimeInForce:     "ImmediateOrCancel",
+						BasePrice:       "19400.50",
+						OrderLinkID:     "",
+						CreatedAt:       "2022-10-19T12:49:49.063Z",
+						UpdatedAt:       "2022-10-19T12:49:49.063Z",
+						StopPx:          "19600.50",
+						StopOrderID:     "9df68792-204a-4394-8e92-5a8c7827d99d",
+						TriggerBy:       "LastPrice",
+						TakeProfit:      "0.00",
+						StopLoss:        "0.00",
+						TpTriggerBy:     "UNKNOWN",
+						SlTriggerBy:     "UNKNOWN",
+						Cursor:          "",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InverseFuture().ListFuturesStopOrder(param)
+		assert.Error(t, err)
+	})
+}
