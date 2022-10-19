@@ -443,3 +443,122 @@ func TestAllCancelFuturesOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestQueryFuturesOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		orderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
+		param := QueryFuturesOrderParam{
+			Symbol:  SymbolFutureBTCUSD,
+			OrderID: &orderID,
+		}
+
+		path := "/futures/private/order"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := QueryFuturesOrderResponse{
+			Result: QueryFuturesOrderResult{
+				UserID:      146940,
+				PositionIdx: 0,
+				Symbol:      "BTCUSD",
+				Side:        "Buy",
+				OrderType:   "Limit",
+				Price:       "10000",
+				Qty:         1,
+				TimeInForce: "GoodTillCancel",
+				OrderStatus: "New",
+				ExtFields: map[string]interface{}{
+					"o_req_num": float64(2492237),
+				},
+				LastExecTime: "1666138015.344325",
+				LeavesQty:    1,
+				LeavesValue:  "0.0001",
+				CumExecQty:   0,
+				CumExecValue: "",
+				CumExecFee:   "",
+				RejectReason: "EC_NoError",
+				CancelType:   "UNKNOWN",
+				OrderLinkID:  "",
+				CreatedAt:    "2022-10-19T00:06:55.3441555Z",
+				UpdatedAt:    "2022-10-19T00:06:55.347065879Z",
+				OrderID:      "40a03f42-db73-4395-8ce9-9ac720f9ffdb",
+				TakeProfit:   "0.00",
+				StopLoss:     "0.00",
+				TpTriggerBy:  "UNKNOWN",
+				SlTriggerBy:  "UNKNOWN",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InverseFuture().QueryFuturesOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		orderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
+		param := QueryFuturesOrderParam{
+			Symbol:  SymbolFutureBTCUSD,
+			OrderID: &orderID,
+		}
+
+		path := "/futures/private/order"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := QueryFuturesOrderResponse{
+			Result: QueryFuturesOrderResult{
+				UserID:      146940,
+				PositionIdx: 0,
+				Symbol:      "BTCUSD",
+				Side:        "Buy",
+				OrderType:   "Limit",
+				Price:       "10000",
+				Qty:         1,
+				TimeInForce: "GoodTillCancel",
+				OrderStatus: "New",
+				ExtFields: map[string]interface{}{
+					"o_req_num": float64(2492237),
+				},
+				LastExecTime: "1666138015.344325",
+				LeavesQty:    1,
+				LeavesValue:  "0.0001",
+				CumExecQty:   0,
+				CumExecValue: "",
+				CumExecFee:   "",
+				RejectReason: "EC_NoError",
+				CancelType:   "UNKNOWN",
+				OrderLinkID:  "",
+				CreatedAt:    "2022-10-19T00:06:55.3441555Z",
+				UpdatedAt:    "2022-10-19T00:06:55.347065879Z",
+				OrderID:      "40a03f42-db73-4395-8ce9-9ac720f9ffdb",
+				TakeProfit:   "0.00",
+				StopLoss:     "0.00",
+				TpTriggerBy:  "UNKNOWN",
+				SlTriggerBy:  "UNKNOWN",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InverseFuture().QueryFuturesOrder(param)
+		assert.Error(t, err)
+	})
+}
