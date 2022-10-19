@@ -173,6 +173,7 @@ The following API endpoints have been implemented
 - `/futures/private/order/cancel` Cancel Active Order
 - `/futures/private/order/cancelAll` Cancel All Active Orders
 - `/futures/private/order` Query Active Order (real-time)
+- `/futures/private/stop-order/create` Place Conditional Order
 
 ##### Wallet Data Endpoints
 

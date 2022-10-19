@@ -27,6 +27,7 @@ type FutureInverseFutureServiceI interface {
 	CancelFuturesOrder(CancelFuturesOrderParam) (*CancelFuturesOrderResponse, error)
 	CancelAllFuturesOrder(CancelAllFuturesOrderParam) (*CancelAllFuturesOrderResponse, error)
 	QueryFuturesOrder(QueryFuturesOrderParam) (*QueryFuturesOrderResponse, error)
+	CreateFuturesStopOrder(CreateFuturesStopOrderParam) (*CreateFuturesStopOrderResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
@@ -327,6 +328,75 @@ func (s *FutureInverseFutureService) QueryFuturesOrder(param QueryFuturesOrderPa
 	}
 
 	if err := s.client.getPrivately("/futures/private/order", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// CreateFuturesStopOrderResponse :
+type CreateFuturesStopOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         CreateFuturesStopOrderResult `json:"result"`
+}
+
+// CreateFuturesStopOrderResult :
+type CreateFuturesStopOrderResult struct {
+	UserID       int             `json:"user_id"`
+	Symbol       SymbolFuture    `json:"symbol"`
+	Side         Side            `json:"side"`
+	OrderType    OrderType       `json:"order_type"`
+	Price        string          `json:"price"`
+	Qty          string          `json:"qty"`
+	TimeInForce  TimeInForce     `json:"time_in_force"`
+	Remark       string          `json:"remark"`
+	LeavesQty    string          `json:"leaves_qty"`
+	LeavesValue  string          `json:"leaves_value"`
+	StopPx       string          `json:"stop_px"`
+	RejectReason string          `json:"reject_reason"`
+	StopOrderID  string          `json:"stop_order_id"`
+	OrderLinkID  string          `json:"order_link_id"`
+	TriggerBy    TriggerByFuture `json:"trigger_by"`
+	BasePrice    string          `json:"base_price"`
+	CreatedAt    string          `json:"created_at"`
+	UpdatedAt    string          `json:"updated_at"`
+	TpTriggerBy  TriggerByFuture `json:"tp_trigger_by"`
+	SlTriggerBy  TriggerByFuture `json:"sl_trigger_by"`
+	TakeProfit   string          `json:"take_profit"`
+	StopLoss     string          `json:"stop_loss"`
+}
+
+// CreateFuturesStopOrderParam :
+type CreateFuturesStopOrderParam struct {
+	Side        Side         `json:"side"`
+	Symbol      SymbolFuture `json:"symbol"`
+	OrderType   OrderType    `json:"order_type"`
+	Qty         float64      `json:"qty"`
+	BasePrice   float64      `json:"base_price"`
+	StopPx      float64      `json:"stop_px"`
+	TimeInForce TimeInForce  `json:"time_in_force"`
+
+	PositionIdx    *int             `json:"position_idx,omitempty"`
+	Price          *float64         `json:"price,omitempty"`
+	TriggerBy      *TriggerByFuture `json:"trigger_by,omitempty"`
+	CloseOnTrigger *bool            `json:"close_on_trigger,omitempty"`
+	OrderLinkID    *string          `json:"order_link_id,omitempty"`
+	TakeProfit     *float64         `json:"take_profit,omitempty"`
+	StopLoss       *float64         `json:"stop_loss,omitempty"`
+	TpTriggerBy    *TriggerByFuture `json:"tp_trigger_by,omitempty"`
+	SlTriggerBy    *TriggerByFuture `json:"sl_trigger_by,omitempty"`
+}
+
+// CreateFuturesStopOrder :
+func (s *FutureInverseFutureService) CreateFuturesStopOrder(param CreateFuturesStopOrderParam) (*CreateFuturesStopOrderResponse, error) {
+	var res CreateFuturesStopOrderResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CreateFuturesStopOrderParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/futures/private/stop-order/create", body, &res); err != nil {
 		return nil, err
 	}
 
