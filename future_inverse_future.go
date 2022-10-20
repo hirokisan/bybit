@@ -29,6 +29,7 @@ type FutureInverseFutureServiceI interface {
 	QueryFuturesOrder(QueryFuturesOrderParam) (*QueryFuturesOrderResponse, error)
 	CreateFuturesStopOrder(CreateFuturesStopOrderParam) (*CreateFuturesStopOrderResponse, error)
 	ListFuturesStopOrder(ListFuturesStopOrderParam) (*ListFuturesStopOrderResponse, error)
+	CancelFuturesStopOrder(CancelFuturesStopOrderParam) (*CancelFuturesStopOrderResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
@@ -461,6 +462,41 @@ func (s *FutureInverseFutureService) ListFuturesStopOrder(param ListFuturesStopO
 	}
 
 	if err := s.client.getPrivately("/futures/private/stop-order/list", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// CancelFuturesStopOrderResponse :
+type CancelFuturesStopOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         CancelFuturesStopOrderResult `json:"result"`
+}
+
+// CancelFuturesStopOrderResult :
+type CancelFuturesStopOrderResult struct {
+	StopOrderID string `json:"stop_order_id"`
+}
+
+// CancelFuturesStopOrderParam :
+type CancelFuturesStopOrderParam struct {
+	Symbol SymbolFuture `json:"symbol"`
+
+	StopOrderID *string `json:"stop_order_id,omitempty"`
+	OrderLinkID *string `json:"order_link_id,omitempty"`
+}
+
+// CancelFuturesStopOrder :
+func (s *FutureInverseFutureService) CancelFuturesStopOrder(param CancelFuturesStopOrderParam) (*CancelFuturesStopOrderResponse, error) {
+	var res CancelFuturesStopOrderResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for CancelFuturesStopOrderParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/futures/private/stop-order/cancel", body, &res); err != nil {
 		return nil, err
 	}
 

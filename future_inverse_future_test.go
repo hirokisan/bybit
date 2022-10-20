@@ -796,3 +796,68 @@ func TestFuturesListStopOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestCancelFuturesStopOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		stopOrderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
+		param := CancelFuturesStopOrderParam{
+			Symbol:      SymbolFutureBTCUSD,
+			StopOrderID: &stopOrderID,
+		}
+
+		path := "/futures/private/stop-order/cancel"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelFuturesStopOrderResponse{
+			Result: CancelFuturesStopOrderResult{
+				StopOrderID: "7b9b5a49-8aea-4684-a1ac-4df472dc789c",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InverseFuture().CancelFuturesStopOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		stopOrderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
+		param := CancelFuturesStopOrderParam{
+			Symbol:      SymbolFutureBTCUSD,
+			StopOrderID: &stopOrderID,
+		}
+
+		path := "/futures/private/stop-order/cancel"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelFuturesStopOrderResponse{
+			Result: CancelFuturesStopOrderResult{
+				StopOrderID: "7b9b5a49-8aea-4684-a1ac-4df472dc789c",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InverseFuture().CancelFuturesStopOrder(param)
+		assert.Error(t, err)
+	})
+}
