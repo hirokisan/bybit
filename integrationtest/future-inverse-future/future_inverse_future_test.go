@@ -399,7 +399,7 @@ func TestCreateFuturesStopOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		symbol := bybit.SymbolFutureBTCUSD
-		//var stopOrderID string
+		var stopOrderID string
 		{
 			price := 19400.5
 			res, err := client.Future().InverseFuture().CreateFuturesStopOrder(bybit.CreateFuturesStopOrderParam{
@@ -417,11 +417,15 @@ func TestCreateFuturesStopOrder(t *testing.T) {
 				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 				testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 			}
-			//stopOrderID = res.Result.OrderID
+			stopOrderID = res.Result.StopOrderID
 		}
 		// clean
 		{
-			// TODO
+			_, err := client.Future().InverseFuture().CancelFuturesStopOrder(bybit.CancelFuturesStopOrderParam{
+				Symbol:      symbol,
+				StopOrderID: &stopOrderID,
+			})
+			require.NoError(t, err)
 		}
 	})
 
@@ -445,10 +449,10 @@ func TestListFuturesStopOrder(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
 		symbol := bybit.SymbolFutureBTCUSDH23
-		//var stopOrderID string
+		var stopOrderID string
 		{
 			price := 19400.5
-			_, err := client.Future().InverseFuture().CreateFuturesStopOrder(bybit.CreateFuturesStopOrderParam{
+			res, err := client.Future().InverseFuture().CreateFuturesStopOrder(bybit.CreateFuturesStopOrderParam{
 				Side:        bybit.SideBuy,
 				Symbol:      symbol,
 				OrderType:   bybit.OrderTypeMarket,
@@ -458,7 +462,7 @@ func TestListFuturesStopOrder(t *testing.T) {
 				TimeInForce: bybit.TimeInForceGoodTillCancel,
 			})
 			require.NoError(t, err)
-			//stopOrderID = res.Result.OrderID
+			stopOrderID = res.Result.StopOrderID
 		}
 
 		// need to wait until the order status becode untriggered
@@ -478,7 +482,11 @@ func TestListFuturesStopOrder(t *testing.T) {
 		}
 		// clean
 		{
-			// TODO
+			_, err := client.Future().InverseFuture().CancelFuturesStopOrder(bybit.CancelFuturesStopOrderParam{
+				Symbol:      symbol,
+				StopOrderID: &stopOrderID,
+			})
+			require.NoError(t, err)
 		}
 	})
 
