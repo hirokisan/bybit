@@ -861,3 +861,108 @@ func TestCancelFuturesStopOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestCancelAllFuturesStopOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := CancelAllFuturesStopOrderParam{
+			Symbol: SymbolFutureBTCUSD,
+		}
+
+		path := "/futures/private/stop-order/cancelAll"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelAllFuturesStopOrderResponse{
+			Result: []CancelAllFuturesStopOrderResult{
+				{
+					ClOrdID:           "56d4e0b1-ce57-46d9-8d1d-216f118399d8",
+					UserID:            146940,
+					Symbol:            "BTCUSD",
+					Side:              "Buy",
+					OrderType:         "Market",
+					Price:             "0",
+					Qty:               1,
+					TimeInForce:       "ImmediateOrCancel",
+					CreateType:        "CreateByStopOrder",
+					CancelType:        "CancelByUser",
+					OrderStatus:       "",
+					LeavesQty:         0,
+					LeavesValue:       "0",
+					CreatedAt:         "2022-10-21T09:34:28.326445671Z",
+					UpdatedAt:         "2022-10-21T09:34:28.411727842Z",
+					CrossStatus:       "Deactivated",
+					CrossSeq:          -1,
+					StopOrderType:     "Stop",
+					TriggerBy:         "LastPrice",
+					BasePrice:         "19400.5",
+					ExpectedDirection: "Rising",
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InverseFuture().CancelAllFuturesStopOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := CancelAllFuturesStopOrderParam{
+			Symbol: SymbolFutureBTCUSD,
+		}
+
+		path := "/futures/private/stop-order/cancelAll"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := CancelAllFuturesStopOrderResponse{
+			Result: []CancelAllFuturesStopOrderResult{
+				{
+					ClOrdID:           "56d4e0b1-ce57-46d9-8d1d-216f118399d8",
+					UserID:            146940,
+					Symbol:            "BTCUSD",
+					Side:              "Buy",
+					OrderType:         "Market",
+					Price:             "0",
+					Qty:               1,
+					TimeInForce:       "ImmediateOrCancel",
+					CreateType:        "CreateByStopOrder",
+					CancelType:        "CancelByUser",
+					OrderStatus:       "",
+					LeavesQty:         0,
+					LeavesValue:       "0",
+					CreatedAt:         "2022-10-21T09:34:28.326445671Z",
+					UpdatedAt:         "2022-10-21T09:34:28.411727842Z",
+					CrossStatus:       "Deactivated",
+					CrossSeq:          -1,
+					StopOrderType:     "Stop",
+					TriggerBy:         "LastPrice",
+					BasePrice:         "19400.5",
+					ExpectedDirection: "Rising",
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InverseFuture().CancelAllFuturesStopOrder(param)
+		assert.Error(t, err)
+	})
+}
