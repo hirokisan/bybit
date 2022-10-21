@@ -541,3 +541,43 @@ func TestCancelFuturesStopOrder(t *testing.T) {
 		require.Error(t, err)
 	})
 }
+
+func TestCancelAllFuturesStopOrder(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		symbol := bybit.SymbolFutureBTCUSD
+		{
+			price := 19400.5
+			_, err := client.Future().InverseFuture().CreateFuturesStopOrder(bybit.CreateFuturesStopOrderParam{
+				Side:        bybit.SideBuy,
+				Symbol:      symbol,
+				OrderType:   bybit.OrderTypeMarket,
+				Qty:         1,
+				BasePrice:   price,
+				StopPx:      price + 200,
+				TimeInForce: bybit.TimeInForceGoodTillCancel,
+			})
+			require.NoError(t, err)
+		}
+		// clean
+		{
+			res, err := client.Future().InverseFuture().CancelAllFuturesStopOrder(bybit.CancelAllFuturesStopOrderParam{
+				Symbol: symbol,
+			})
+			require.NoError(t, err)
+			{
+				goldenFilename := "./testdata/futures-private-stop-order-cancel-all.json"
+				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+				testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			}
+		}
+	})
+
+	t.Run("auth error", func(t *testing.T) {
+		client := bybit.NewTestClient()
+		_, err := client.Future().InverseFuture().CancelAllFuturesStopOrder(bybit.CancelAllFuturesStopOrderParam{
+			Symbol: bybit.SymbolFutureBTCUSD,
+		})
+		require.Error(t, err)
+	})
+}
