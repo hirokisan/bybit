@@ -176,6 +176,7 @@ The following API endpoints have been implemented
 - `/futures/private/stop-order/create` Place Conditional Order
 - `/futures/private/stop-order/list` Get Conditional Order
 - `/futures/private/stop-order/cancel` Cancel Conditional Order
+- `/futures/private/stop-order/cancelAll` Cancel All Conditional Orders
 
 ##### Wallet Data Endpoints
 
