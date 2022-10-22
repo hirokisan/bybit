@@ -31,6 +31,7 @@ type FutureInverseFutureServiceI interface {
 	ListFuturesStopOrder(ListFuturesStopOrderParam) (*ListFuturesStopOrderResponse, error)
 	CancelFuturesStopOrder(CancelFuturesStopOrderParam) (*CancelFuturesStopOrderResponse, error)
 	CancelAllFuturesStopOrder(CancelAllFuturesStopOrderParam) (*CancelAllFuturesStopOrderResponse, error)
+	QueryFuturesStopOrder(QueryFuturesStopOrderParam) (*QueryFuturesStopOrderResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
@@ -550,6 +551,67 @@ func (s *FutureInverseFutureService) CancelAllFuturesStopOrder(param CancelAllFu
 	}
 
 	if err := s.client.postJSON("/futures/private/stop-order/cancelAll", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// QueryFuturesStopOrderResponse :
+type QueryFuturesStopOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         QueryFuturesStopOrderResult `json:"result"`
+}
+
+// QueryFuturesStopOrderResult :
+type QueryFuturesStopOrderResult struct {
+	UserID       int                    `json:"user_id"`
+	PositionIdx  int                    `json:"position_idx"`
+	Symbol       SymbolFuture           `json:"symbol"`
+	Side         Side                   `json:"side"`
+	OrderType    OrderType              `json:"order_type"`
+	Price        string                 `json:"price"`
+	Qty          float64                `json:"qty"`
+	StopPx       string                 `json:"stop_px"`
+	BasePrice    string                 `json:"base_price"`
+	TimeInForce  TimeInForce            `json:"time_in_force"`
+	OrderStatus  OrderStatus            `json:"order_status"`
+	ExtFields    map[string]interface{} `json:"ext_fields"`
+	LeavesQty    int                    `json:"leaves_qty"`
+	LeavesValue  string                 `json:"leaves_value"`
+	CumExecQty   int                    `json:"cum_exec_qty"`
+	CumExecValue string                 `json:"cum_exec_value"`
+	CumExecFee   string                 `json:"cum_exec_fee"`
+	RejectReason string                 `json:"reject_reason"`
+	OrderLinkID  string                 `json:"order_link_id"`
+	CreatedAt    string                 `json:"created_at"`
+	UpdatedAt    string                 `json:"updated_at"`
+	OrderID      string                 `json:"order_id"`
+	TriggerBy    TriggerByFuture        `json:"trigger_by"`
+	TakeProfit   string                 `json:"take_profit"`
+	StopLoss     string                 `json:"stop_loss"`
+	TpTriggerBy  TriggerByFuture        `json:"tp_trigger_by"`
+	SlTriggerBy  TriggerByFuture        `json:"sl_trigger_by"`
+}
+
+// QueryFuturesStopOrderParam :
+type QueryFuturesStopOrderParam struct {
+	Symbol SymbolFuture `url:"symbol"`
+
+	StopOrderID *string `url:"stop_order_id,omitempty"`
+	OrderLinkID *string `url:"order_link_id,omitempty"`
+}
+
+// QueryFuturesStopOrder :
+func (s *FutureInverseFutureService) QueryFuturesStopOrder(param QueryFuturesStopOrderParam) (*QueryFuturesStopOrderResponse, error) {
+	var res QueryFuturesStopOrderResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/futures/private/stop-order", queryString, &res); err != nil {
 		return nil, err
 	}
 
