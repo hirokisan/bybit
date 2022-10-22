@@ -3,6 +3,7 @@ package bybit
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 
 	"github.com/google/go-querystring/query"
 )
@@ -32,6 +33,7 @@ type FutureInverseFutureServiceI interface {
 	CancelFuturesStopOrder(CancelFuturesStopOrderParam) (*CancelFuturesStopOrderResponse, error)
 	CancelAllFuturesStopOrder(CancelAllFuturesStopOrderParam) (*CancelAllFuturesStopOrderResponse, error)
 	QueryFuturesStopOrder(QueryFuturesStopOrderParam) (*QueryFuturesStopOrderResponse, error)
+	ListFuturesPositions(SymbolFuture) (*ListFuturesPositionsResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
@@ -612,6 +614,70 @@ func (s *FutureInverseFutureService) QueryFuturesStopOrder(param QueryFuturesSto
 	}
 
 	if err := s.client.getPrivately("/futures/private/stop-order", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// ListFuturesPositionsResponse :
+type ListFuturesPositionsResponse struct {
+	CommonResponse `json:",inline"`
+	Result         []ListFuturesPositionsResult `json:"result"`
+}
+
+// ListFuturesPositionsResult :
+type ListFuturesPositionsResult struct {
+	Data ListFuturesPositionsResultData `json:"data"`
+}
+
+// ListFuturesPositionsResultData :
+type ListFuturesPositionsResultData struct {
+	ID                  int          `json:"id"`
+	PositionIdx         int          `json:"position_idx"`
+	Mode                int          `json:"mode"`
+	UserID              int          `json:"user_id"`
+	RiskID              int          `json:"risk_id"`
+	Symbol              SymbolFuture `json:"symbol"`
+	Side                Side         `json:"side"`
+	Size                float64      `json:"size"`
+	PositionValue       string       `json:"position_value"`
+	EntryPrice          string       `json:"entry_price"`
+	IsIsolated          bool         `json:"is_isolated"`
+	AutoAddMargin       float64      `json:"auto_add_margin"`
+	Leverage            string       `json:"leverage"`
+	EffectiveLeverage   string       `json:"effective_leverage"`
+	PositionMargin      string       `json:"position_margin"`
+	LiqPrice            string       `json:"liq_price"`
+	BustPrice           string       `json:"bust_price"`
+	OccClosingFee       string       `json:"occ_closing_fee"`
+	OccFundingFee       string       `json:"occ_funding_fee"`
+	TakeProfit          string       `json:"take_profit"`
+	StopLoss            string       `json:"stop_loss"`
+	TrailingStop        string       `json:"trailing_stop"`
+	PositionStatus      string       `json:"position_status"`
+	DeleverageIndicator int          `json:"deleverage_indicator"`
+	OcCalcData          string       `json:"oc_calc_data"`
+	OrderMargin         string       `json:"order_margin"`
+	WalletBalance       string       `json:"wallet_balance"`
+	RealisedPnl         string       `json:"realised_pnl"`
+	UnrealisedPnl       float64      `json:"unrealised_pnl"`
+	CumRealisedPnl      string       `json:"cum_realised_pnl"`
+	CrossSeq            float64      `json:"cross_seq"`
+	PositionSeq         float64      `json:"position_seq"`
+	CreatedAt           string       `json:"created_at"`
+	UpdatedAt           string       `json:"updated_at"`
+	TpSlMode            TpSlMode     `json:"tp_sl_mode"`
+}
+
+// ListFuturesPositions :
+func (s *FutureInverseFutureService) ListFuturesPositions(symbol SymbolFuture) (*ListFuturesPositionsResponse, error) {
+	var res ListFuturesPositionsResponse
+
+	query := url.Values{}
+	query.Add("symbol", string(symbol))
+
+	if err := s.client.getPrivately("/futures/private/position/list", query, &res); err != nil {
 		return nil, err
 	}
 
