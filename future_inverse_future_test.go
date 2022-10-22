@@ -1087,3 +1087,134 @@ func TestQueryFuturesStopOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestListFuturesPositions(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		path := "/futures/private/position/list"
+		symbol := SymbolFutureBTCUSDH23
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := ListFuturesPositionsResponse{
+			Result: []ListFuturesPositionsResult{
+				{
+					Data: ListFuturesPositionsResultData{
+						ID:                  0,
+						PositionIdx:         0,
+						Mode:                0,
+						UserID:              146940,
+						RiskID:              1,
+						Symbol:              symbol,
+						Side:                "Buy",
+						Size:                11,
+						PositionValue:       "0.00057007",
+						EntryPrice:          "19295.87594506",
+						IsIsolated:          false,
+						AutoAddMargin:       1,
+						Leverage:            "10",
+						EffectiveLeverage:   "0.01",
+						PositionMargin:      "0.00005771",
+						LiqPrice:            "145.5",
+						BustPrice:           "145.5",
+						OccClosingFee:       "0.00004537",
+						OccFundingFee:       "0",
+						TakeProfit:          "0",
+						StopLoss:            "0",
+						TrailingStop:        "0",
+						PositionStatus:      "Normal",
+						DeleverageIndicator: 2,
+						OcCalcData:          "{\"blq\":0,\"slq\":0,\"bmp\":0,\"smp\":0,\"fq\":-11,\"bv2c\":0.10126,\"sv2c\":0.10114}",
+						OrderMargin:         "0",
+						WalletBalance:       "0.07517288",
+						RealisedPnl:         "-0.00000044",
+						UnrealisedPnl:       -3.2e-7,
+						CumRealisedPnl:      "-0.00000044",
+						CrossSeq:            11197489281,
+						PositionSeq:         0,
+						CreatedAt:           "2022-10-18T08:10:15.341162025Z",
+						UpdatedAt:           "2022-10-22T01:14:23.079856983Z",
+						TpSlMode:            "Full",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InverseFuture().ListFuturesPositions(symbol)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		path := "/futures/private/position/list"
+		symbol := SymbolFutureBTCUSDH23
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := ListFuturesPositionsResponse{
+			Result: []ListFuturesPositionsResult{
+				{
+					Data: ListFuturesPositionsResultData{
+						ID:                  0,
+						PositionIdx:         0,
+						Mode:                0,
+						UserID:              146940,
+						RiskID:              1,
+						Symbol:              symbol,
+						Side:                "Buy",
+						Size:                11,
+						PositionValue:       "0.00057007",
+						EntryPrice:          "19295.87594506",
+						IsIsolated:          false,
+						AutoAddMargin:       1,
+						Leverage:            "10",
+						EffectiveLeverage:   "0.01",
+						PositionMargin:      "0.00005771",
+						LiqPrice:            "145.5",
+						BustPrice:           "145.5",
+						OccClosingFee:       "0.00004537",
+						OccFundingFee:       "0",
+						TakeProfit:          "0",
+						StopLoss:            "0",
+						TrailingStop:        "0",
+						PositionStatus:      "Normal",
+						DeleverageIndicator: 2,
+						OcCalcData:          "{\"blq\":0,\"slq\":0,\"bmp\":0,\"smp\":0,\"fq\":-11,\"bv2c\":0.10126,\"sv2c\":0.10114}",
+						OrderMargin:         "0",
+						WalletBalance:       "0.07517288",
+						RealisedPnl:         "-0.00000044",
+						UnrealisedPnl:       -3.2e-7,
+						CumRealisedPnl:      "-0.00000044",
+						CrossSeq:            11197489281,
+						PositionSeq:         0,
+						CreatedAt:           "2022-10-18T08:10:15.341162025Z",
+						UpdatedAt:           "2022-10-22T01:14:23.079856983Z",
+						TpSlMode:            "Full",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InverseFuture().ListFuturesPositions(symbol)
+		assert.Error(t, err)
+	})
+}
