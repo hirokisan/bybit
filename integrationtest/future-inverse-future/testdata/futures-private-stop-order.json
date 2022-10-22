@@ -1,0 +1,31 @@
+{
+  "user_id": 146940,
+  "position_idx": 0,
+  "symbol": "BTCUSDH23",
+  "side": "Buy",
+  "order_type": "Market",
+  "price": "0",
+  "qty": 1,
+  "stop_px": "19600.50",
+  "base_price": "19400.50",
+  "time_in_force": "ImmediateOrCancel",
+  "order_status": "Untriggered",
+  "ext_fields": {
+    "o_req_num": 1721953
+  },
+  "leaves_qty": 1,
+  "leaves_value": "0",
+  "cum_exec_qty": 0,
+  "cum_exec_value": "",
+  "cum_exec_fee": "",
+  "reject_reason": "EC_NoError",
+  "order_link_id": "",
+  "created_at": "2022-10-22T00:35:39.646905702Z",
+  "updated_at": "2022-10-22T00:35:39.646905702Z",
+  "order_id": "2a73ba68-c901-4cd6-b157-5c725d6dae09",
+  "trigger_by": "LastPrice",
+  "take_profit": "0.00",
+  "stop_loss": "0.00",
+  "tp_trigger_by": "UNKNOWN",
+  "sl_trigger_by": "UNKNOWN"
+}
