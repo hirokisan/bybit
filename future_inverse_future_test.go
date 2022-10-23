@@ -1218,3 +1218,132 @@ func TestListFuturesPositions(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestFuturesTradingStop(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		path := "/futures/private/position/trading-stop"
+		param := FuturesTradingStopParam{
+			Symbol: SymbolFutureBTCUSDH23,
+		}
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := FuturesTradingStopResponse{
+			Result: FuturesTradingStopResult{
+				ID:                  0,
+				UserID:              146940,
+				Symbol:              "BTCUSDH23",
+				Side:                "Buy",
+				Size:                1,
+				PositionValue:       0.00005183,
+				EntryPrice:          19293.84526336,
+				RiskID:              1,
+				AutoAddMargin:       1,
+				Leverage:            10,
+				PositionMargin:      0.07512557,
+				LiqPrice:            13.5,
+				BustPrice:           13.5,
+				OccClosingFee:       0.00004445,
+				OccFundingFee:       0,
+				TakeProfit:          20000,
+				StopLoss:            0,
+				TrailingStop:        0,
+				PositionStatus:      "Normal",
+				DeleverageIndicator: 2,
+				OcCalcData:          "{\"blq\":0,\"slq\":0,\"bmp\":0,\"smp\":0,\"fq\":-1,\"bv2c\":0.10126,\"sv2c\":0.10114}",
+				OrderMargin:         0,
+				WalletBalance:       0.07517002,
+				RealisedPnl:         -0.00000113,
+				CumRealisedPnl:      -0.0000033,
+				CumCommission:       0,
+				CrossSeq:            11204025388,
+				PositionSeq:         0,
+				CreatedAt:           "2022-10-18T08:10:15.341162025Z",
+				UpdatedAt:           "2022-10-23T06:47:21.217263983Z",
+				ExtFields: map[string]interface{}{
+					"mm":              float64(0),
+					"tp_trigger_by":   "LastPrice",
+					"trailing_active": "0",
+					"v":               float64(799626),
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InverseFuture().FuturesTradingStop(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		path := "/futures/private/position/trading-stop"
+		param := FuturesTradingStopParam{
+			Symbol: SymbolFutureBTCUSDH23,
+		}
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := FuturesTradingStopResponse{
+			Result: FuturesTradingStopResult{
+				ID:                  0,
+				UserID:              146940,
+				Symbol:              "BTCUSDH23",
+				Side:                "Buy",
+				Size:                1,
+				PositionValue:       0.00005183,
+				EntryPrice:          19293.84526336,
+				RiskID:              1,
+				AutoAddMargin:       1,
+				Leverage:            10,
+				PositionMargin:      0.07512557,
+				LiqPrice:            13.5,
+				BustPrice:           13.5,
+				OccClosingFee:       0.00004445,
+				OccFundingFee:       0,
+				TakeProfit:          20000,
+				StopLoss:            0,
+				TrailingStop:        0,
+				PositionStatus:      "Normal",
+				DeleverageIndicator: 2,
+				OcCalcData:          "{\"blq\":0,\"slq\":0,\"bmp\":0,\"smp\":0,\"fq\":-1,\"bv2c\":0.10126,\"sv2c\":0.10114}",
+				OrderMargin:         0,
+				WalletBalance:       0.07517002,
+				RealisedPnl:         -0.00000113,
+				CumRealisedPnl:      -0.0000033,
+				CumCommission:       0,
+				CrossSeq:            11204025388,
+				PositionSeq:         0,
+				CreatedAt:           "2022-10-18T08:10:15.341162025Z",
+				UpdatedAt:           "2022-10-23T06:47:21.217263983Z",
+				ExtFields: map[string]interface{}{
+					"mm":              float64(0),
+					"tp_trigger_by":   "LastPrice",
+					"trailing_active": "0",
+					"v":               float64(799626),
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InverseFuture().FuturesTradingStop(param)
+		assert.Error(t, err)
+	})
+}

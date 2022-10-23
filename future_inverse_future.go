@@ -34,6 +34,7 @@ type FutureInverseFutureServiceI interface {
 	CancelAllFuturesStopOrder(CancelAllFuturesStopOrderParam) (*CancelAllFuturesStopOrderResponse, error)
 	QueryFuturesStopOrder(QueryFuturesStopOrderParam) (*QueryFuturesStopOrderResponse, error)
 	ListFuturesPositions(SymbolFuture) (*ListFuturesPositionsResponse, error)
+	FuturesTradingStop(FuturesTradingStopParam) (*FuturesTradingStopResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
@@ -678,6 +679,78 @@ func (s *FutureInverseFutureService) ListFuturesPositions(symbol SymbolFuture) (
 	query.Add("symbol", string(symbol))
 
 	if err := s.client.getPrivately("/futures/private/position/list", query, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// FuturesTradingStopResponse :
+type FuturesTradingStopResponse struct {
+	CommonResponse `json:",inline"`
+	Result         FuturesTradingStopResult `json:"result"`
+}
+
+// FuturesTradingStopResult :
+type FuturesTradingStopResult struct {
+	ID                  int                    `json:"id"`
+	UserID              int                    `json:"user_id"`
+	Symbol              SymbolFuture           `json:"symbol"`
+	Side                Side                   `json:"side"`
+	Size                float64                `json:"size"`
+	PositionValue       float64                `json:"position_value"`
+	EntryPrice          float64                `json:"entry_price"`
+	RiskID              int                    `json:"risk_id"`
+	AutoAddMargin       float64                `json:"auto_add_margin"`
+	Leverage            float64                `json:"leverage"`
+	PositionMargin      float64                `json:"position_margin"`
+	LiqPrice            float64                `json:"liq_price"`
+	BustPrice           float64                `json:"bust_price"`
+	OccClosingFee       float64                `json:"occ_closing_fee"`
+	OccFundingFee       float64                `json:"occ_funding_fee"`
+	TakeProfit          float64                `json:"take_profit"`
+	StopLoss            float64                `json:"stop_loss"`
+	TrailingStop        float64                `json:"trailing_stop"`
+	PositionStatus      string                 `json:"position_status"`
+	DeleverageIndicator int                    `json:"deleverage_indicator"`
+	OcCalcData          string                 `json:"oc_calc_data"`
+	OrderMargin         float64                `json:"order_margin"`
+	WalletBalance       float64                `json:"wallet_balance"`
+	RealisedPnl         float64                `json:"realised_pnl"`
+	CumRealisedPnl      float64                `json:"cum_realised_pnl"`
+	CumCommission       float64                `json:"cum_commission"`
+	CrossSeq            float64                `json:"cross_seq"`
+	PositionSeq         float64                `json:"position_seq"`
+	CreatedAt           string                 `json:"created_at"`
+	UpdatedAt           string                 `json:"updated_at"`
+	ExtFields           map[string]interface{} `json:"ext_fields"`
+}
+
+// FuturesTradingStopParam :
+type FuturesTradingStopParam struct {
+	Symbol SymbolFuture `json:"symbol"`
+
+	PositionIdx       *int             `json:"position_idx,omitempty"`
+	TakeProfit        *float64         `json:"take_profit,omitempty"`
+	StopLoss          *float64         `json:"stop_loss,omitempty"`
+	TrailingStop      *float64         `json:"trailing_stop,omitempty"`
+	TpTriggerBy       *TriggerByFuture `json:"tp_trigger_by,omitempty"`
+	SlTriggerBy       *TriggerByFuture `json:"sl_trigger_by,omitempty"`
+	NewTrailingActive *float64         `json:"new_trailing_active,omitempty"`
+	SlSize            *float64         `json:"sl_size,omitempty"`
+	TpSize            *float64         `json:"tp_size,omitempty"`
+}
+
+// FuturesTradingStop :
+func (s *FutureInverseFutureService) FuturesTradingStop(param FuturesTradingStopParam) (*FuturesTradingStopResponse, error) {
+	var res FuturesTradingStopResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for FuturesTradingStopParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/futures/private/position/trading-stop", body, &res); err != nil {
 		return nil, err
 	}
 
