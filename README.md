@@ -180,6 +180,7 @@ The following API endpoints have been implemented
 - `/futures/private/stop-order` Query Conditional Order (real-time)
 - `/futures/private/position/list` My Position
 - `/futures/private/position/trading-stop` Set Trading-Stop
+- `/futures/private/position/leverage/save` Set Leverage
 
 ##### Wallet Data Endpoints
 

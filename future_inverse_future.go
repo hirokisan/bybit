@@ -35,6 +35,7 @@ type FutureInverseFutureServiceI interface {
 	QueryFuturesStopOrder(QueryFuturesStopOrderParam) (*QueryFuturesStopOrderResponse, error)
 	ListFuturesPositions(SymbolFuture) (*ListFuturesPositionsResponse, error)
 	FuturesTradingStop(FuturesTradingStopParam) (*FuturesTradingStopResponse, error)
+	FuturesSaveLeverage(FuturesSaveLeverageParam) (*FuturesSaveLeverageResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
@@ -751,6 +752,35 @@ func (s *FutureInverseFutureService) FuturesTradingStop(param FuturesTradingStop
 	}
 
 	if err := s.client.postJSON("/futures/private/position/trading-stop", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// FuturesSaveLeverageResponse :
+type FuturesSaveLeverageResponse struct {
+	CommonResponse `json:",inline"`
+	Result         float64 `json:"result"`
+}
+
+// FuturesSaveLeverageParam :
+type FuturesSaveLeverageParam struct {
+	Symbol       SymbolFuture `json:"symbol"`
+	BuyLeverage  float64      `json:"buy_leverage"`
+	SellLeverage float64      `json:"sell_leverage"`
+}
+
+// FuturesSaveLeverage :
+func (s *FutureInverseFutureService) FuturesSaveLeverage(param FuturesSaveLeverageParam) (*FuturesSaveLeverageResponse, error) {
+	var res FuturesSaveLeverageResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for FuturesSaveLeverageParam: %w", err)
+	}
+
+	if err := s.client.postJSON("/futures/private/position/leverage/save", body, &res); err != nil {
 		return nil, err
 	}
 
