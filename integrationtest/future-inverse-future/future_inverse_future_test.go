@@ -721,3 +721,31 @@ func TestFuturesTradingStop(t *testing.T) {
 		require.Error(t, err)
 	})
 }
+
+func TestFuturesSaveLeverage(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := bybit.NewTestClient().WithAuthFromEnv()
+		{
+			res, err := client.Future().InverseFuture().FuturesSaveLeverage(bybit.FuturesSaveLeverageParam{
+				Symbol:       bybit.SymbolFutureBTCUSDH23,
+				BuyLeverage:  10.0,
+				SellLeverage: 10.0,
+			})
+			require.NoError(t, err)
+			{
+				goldenFilename := "./testdata/futures-private-position-leverage-save.json"
+				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+				testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			}
+		}
+	})
+	t.Run("auth error", func(t *testing.T) {
+		client := bybit.NewTestClient()
+		_, err := client.Future().InverseFuture().FuturesSaveLeverage(bybit.FuturesSaveLeverageParam{
+			Symbol:       bybit.SymbolFutureBTCUSD,
+			BuyLeverage:  10.0,
+			SellLeverage: 10.0,
+		})
+		require.Error(t, err)
+	})
+}
