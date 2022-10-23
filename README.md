@@ -179,6 +179,7 @@ The following API endpoints have been implemented
 - `/futures/private/stop-order/cancelAll` Cancel All Conditional Orders
 - `/futures/private/stop-order` Query Conditional Order (real-time)
 - `/futures/private/position/list` My Position
+- `/futures/private/position/trading-stop` Set Trading-Stop
 
 ##### Wallet Data Endpoints
 
