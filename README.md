@@ -112,6 +112,7 @@ The following API endpoints have been implemented
 - `/v2/private/stop-order/cancelAll` Cancel All Conditional Orders
 - `/v2/private/stop-order` Query Conditional Order (real-time)
 - `/v2/private/position/list` My Position
+- `/v2/private/position/trading-stop` Set Trading-Stop
 - `/v2/private/position/leverage/save` Set Leverage
 
 ##### Wallet Data Endpoints
