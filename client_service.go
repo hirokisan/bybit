@@ -67,8 +67,35 @@ func (c *Client) Future() FutureServiceI {
 	return &FutureService{c}
 }
 
+// DerivativeServiceI :
+type DerivativeServiceI interface {
+	UnifiedMargin() DerivativeUnifiedMarginServiceI
+	Contract() DerivativeContractServiceI
+}
+
+// DerivativeService :
+type DerivativeService struct {
+	client *Client
+}
+
+// UnifiedMargin :
+func (s *DerivativeService) UnifiedMargin() DerivativeUnifiedMarginServiceI {
+	return &DerivativeUnifiedMarginService{
+		client:                  s.client,
+		DerivativeCommonService: &DerivativeCommonService{s.client},
+	}
+}
+
+// Contract :
+func (s *DerivativeService) Contract() DerivativeContractServiceI {
+	return &DerivativeContractService{
+		client:                  s.client,
+		DerivativeCommonService: &DerivativeCommonService{s.client},
+	}
+}
+
 // Derivative :
-func (c *Client) Derivative() *DerivativeService {
+func (c *Client) Derivative() DerivativeServiceI {
 	return &DerivativeService{c}
 }
 
