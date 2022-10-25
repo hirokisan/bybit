@@ -83,7 +83,7 @@ The following API endpoints have been implemented
 
 ### REST API
 
-#### [Inverse Perpetual](https://bybit-exchange.github.io/docs/inverse)
+#### [Inverse Perpetual](https://bybit-exchange.github.io/docs/futuresV2/inverse)
 
 ##### Market Data Endpoints
 
@@ -119,7 +119,7 @@ The following API endpoints have been implemented
 
 - `/v2/private/wallet/balance` Get Wallet Balance
 
-#### [USDT Perpetual](https://bybit-exchange.github.io/docs/linear)
+#### [USDT Perpetual](https://bybit-exchange.github.io/docs/futuresV2/linear)
 
 ##### Market Data Endpoints
 
@@ -152,7 +152,7 @@ The following API endpoints have been implemented
 
 - `/v2/private/wallet/balance` Get Wallet Balance
 
-#### [Inverse Future](https://bybit-exchange.github.io/docs/inverse_futures)
+#### [Inverse Future](https://bybit-exchange.github.io/docs/futuresV2/inverse_futures)
 
 ##### Market Data Endpoints
 
