@@ -1,7 +1,9 @@
 package bybit
 
 // DerivativeContractServiceI :
-type DerivativeContractServiceI interface{}
+type DerivativeContractServiceI interface {
+	DerivativesOrderBook(DerivativesOrderBookParam) (*DerivativesOrderBookResponse, error)
+}
 
 // DerivativeContractService :
 type DerivativeContractService struct {

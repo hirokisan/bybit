@@ -28,6 +28,8 @@ type Client struct {
 	baseURL string
 	key     string
 	secret  string
+
+	checkResponseBody checkResponseBodyFunc
 }
 
 // NewClient :
@@ -35,7 +37,8 @@ func NewClient() *Client {
 	return &Client{
 		httpClient: &http.Client{},
 
-		baseURL: MainNetBaseURL,
+		baseURL:           MainNetBaseURL,
+		checkResponseBody: checkResponseBody,
 	}
 }
 
@@ -52,6 +55,12 @@ func (c *Client) WithAuth(key string, secret string) *Client {
 	c.secret = secret
 
 	return c
+}
+
+func (c Client) withCheckResponseBody(f checkResponseBodyFunc) *Client {
+	c.checkResponseBody = f
+
+	return &c
 }
 
 // Request :
@@ -72,6 +81,9 @@ func (c *Client) Request(req *http.Request, dst interface{}) error {
 			return err
 		}
 
+		if c.checkResponseBody == nil {
+			return errors.New("checkResponseBody func should be set")
+		}
 		if err := c.checkResponseBody(body); err != nil {
 			return err
 		}
@@ -83,29 +95,6 @@ func (c *Client) Request(req *http.Request, dst interface{}) error {
 		return ErrPathNotFound
 	default:
 		return errors.New("unexpected error")
-	}
-}
-
-func (c *Client) checkResponseBody(body []byte) error {
-	var commonResponse CommonResponse
-	if err := json.Unmarshal(body, &commonResponse); err != nil {
-		return err
-	}
-
-	switch {
-	case commonResponse.RetCode == 10006:
-		rateLimitError := &RateLimitError{}
-		if err := json.Unmarshal(body, rateLimitError); err != nil {
-			return err
-		}
-		return rateLimitError
-	case commonResponse.RetCode != 0:
-		return &ErrorResponse{
-			RetCode: commonResponse.RetCode,
-			RetMsg:  commonResponse.RetMsg,
-		}
-	default:
-		return nil
 	}
 }
 
