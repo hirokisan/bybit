@@ -1,10 +1,53 @@
 package bybit
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
 )
+
+type checkResponseBodyFunc func([]byte) error
+
+func checkResponseBody(body []byte) error {
+	var commonResponse CommonResponse
+	if err := json.Unmarshal(body, &commonResponse); err != nil {
+		return err
+	}
+
+	switch {
+	case commonResponse.RetCode == 10006:
+		rateLimitError := &RateLimitError{}
+		if err := json.Unmarshal(body, rateLimitError); err != nil {
+			return err
+		}
+		return rateLimitError
+	case commonResponse.RetCode != 0:
+		return &ErrorResponse{
+			RetCode: commonResponse.RetCode,
+			RetMsg:  commonResponse.RetMsg,
+		}
+	default:
+		return nil
+	}
+}
+
+func checkV3ResponseBody(body []byte) error {
+	var commonResponse CommonV3Response
+	if err := json.Unmarshal(body, &commonResponse); err != nil {
+		return err
+	}
+
+	switch {
+	case commonResponse.RetCode != 0:
+		return &ErrorResponse{
+			RetCode: commonResponse.RetCode,
+			RetMsg:  commonResponse.RetMsg,
+		}
+	default:
+		return nil
+	}
+}
 
 // CommonResponse :
 type CommonResponse struct {
@@ -16,6 +59,14 @@ type CommonResponse struct {
 	RateLimitStatus  int    `json:"rate_limit_status"`
 	RateLimitResetMs int    `json:"rate_limit_reset_ms"`
 	RateLimit        int    `json:"rate_limit"`
+}
+
+// CommonV3Response :
+type CommonV3Response struct {
+	RetCode    int         `json:"retCode"`
+	RetMsg     string      `json:"retMsg"`
+	RetExtInfo interface{} `json:"retExtInfo"`
+	Time       int         `json:"time"`
 }
 
 // ErrorResponse :

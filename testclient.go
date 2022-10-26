@@ -19,8 +19,9 @@ type TestClient struct {
 func NewTestClient() *TestClient {
 	return &TestClient{
 		Client: &Client{
-			httpClient: &http.Client{},
-			baseURL:    TestNetBaseURL,
+			httpClient:        &http.Client{},
+			baseURL:           TestNetBaseURL,
+			checkResponseBody: checkResponseBody,
 		},
 	}
 }

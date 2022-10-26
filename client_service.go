@@ -96,7 +96,7 @@ func (s *DerivativeService) Contract() DerivativeContractServiceI {
 
 // Derivative :
 func (c *Client) Derivative() DerivativeServiceI {
-	return &DerivativeService{c}
+	return &DerivativeService{c.withCheckResponseBody(checkV3ResponseBody)}
 }
 
 // AccountAsset :
