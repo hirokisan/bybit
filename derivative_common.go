@@ -2,6 +2,7 @@ package bybit
 
 import (
 	"encoding/json"
+	"errors"
 
 	"github.com/google/go-querystring/query"
 )
@@ -100,6 +101,78 @@ func (s *DerivativeCommonService) DerivativesOrderBook(param DerivativesOrderBoo
 	}
 
 	if err := s.client.getPublicly("/derivatives/v3/public/order-book/L2", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// DerivativesKlineResponse :
+type DerivativesKlineResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           DerivativesKlineResult `json:"result"`
+}
+
+// DerivativesKlineResult :
+type DerivativesKlineResult struct {
+	Category CategoryDerivative           `json:"category"`
+	Symbol   SymbolDerivative             `json:"symbol"`
+	Lists    []DerivativesKlineResultList `json:"list"`
+}
+
+// DerivativesKlineResultList :
+type DerivativesKlineResultList struct {
+	Start    string
+	Open     string
+	High     string
+	Low      string
+	Close    string
+	Volume   string
+	Turnover string
+}
+
+// UnmarshalJSON :
+func (r *DerivativesKlineResultList) UnmarshalJSON(data []byte) error {
+	parsedData := []interface{}{}
+	if err := json.Unmarshal(data, &parsedData); err != nil {
+		return err
+	}
+	if len(parsedData) != 7 {
+		return errors.New("so far len(items) must be 7, please check it on documents")
+	}
+	*r = DerivativesKlineResultList{
+		Start:    parsedData[0].(string),
+		Open:     parsedData[1].(string),
+		High:     parsedData[2].(string),
+		Low:      parsedData[3].(string),
+		Close:    parsedData[4].(string),
+		Volume:   parsedData[5].(string),
+		Turnover: parsedData[6].(string),
+	}
+	return nil
+}
+
+// DerivativesKlineParam :
+type DerivativesKlineParam struct {
+	Symbol   SymbolDerivative   `url:"symbol"`
+	Category CategoryDerivative `url:"category"`
+	Interval Interval           `url:"interval"`
+	Start    int                `url:"start"` // timestamp point for result, in milliseconds
+	End      int                `url:"end"`   // timestamp point for result, in milliseconds
+
+	Limit int `url:"limit,omitempty"`
+}
+
+// DerivativesKline :
+func (s *DerivativeCommonService) DerivativesKline(param DerivativesKlineParam) (*DerivativesKlineResponse, error) {
+	var res DerivativesKlineResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/derivatives/v3/public/kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
