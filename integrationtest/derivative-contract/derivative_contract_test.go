@@ -12,7 +12,7 @@ import (
 
 func TestDerivativesOrderBook(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Derivative().UnifiedMargin().DerivativesOrderBook(bybit.DerivativesOrderBookParam{
+	res, err := client.Derivative().Contract().DerivativesOrderBook(bybit.DerivativesOrderBookParam{
 		Symbol:   bybit.SymbolDerivativeBTCUSDT,
 		Category: bybit.CategoryDerivativeLinear,
 	})
