@@ -88,12 +88,14 @@ The following API endpoints have been implemented
 ##### Market Data Endpoints
 
 - `/derivatives/v3/public/order-book/L2` Get Order Book
+- `/derivatives/v3/public/kline` Get Kline
 
 #### [Derivatives Contract](https://bybit-exchange.github.io/docs/derivativesV3/contract)
 
 ##### Market Data Endpoints
 
 - `/derivatives/v3/public/order-book/L2` Get Order Book
+- `/derivatives/v3/public/kline` Get Kline
 
 #### [Inverse Perpetual](https://bybit-exchange.github.io/docs/futuresV2/inverse)
 
