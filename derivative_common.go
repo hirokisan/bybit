@@ -178,3 +178,127 @@ func (s *DerivativeCommonService) DerivativesKline(param DerivativesKlineParam) 
 
 	return &res, nil
 }
+
+// DerivativesTickersResponse :
+type DerivativesTickersResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           DerivativesTickersResult `json:"result"`
+}
+
+// DerivativesTickersResult :
+type DerivativesTickersResult struct {
+	Category CategoryDerivative             `json:"category"`
+	Lists    []DerivativesTickersResultList `json:"list"`
+}
+
+// DerivativesTickersResultList :
+type DerivativesTickersResultList struct {
+	Symbol                 SymbolDerivative `json:"symbol"`
+	BidPrice               string           `json:"bidPrice"`
+	AskPrice               string           `json:"askPrice"`
+	LastPrice              string           `json:"lastPrice"`
+	LastTickDirection      string           `json:"lastTickDirection"`
+	PrevPrice24h           string           `json:"prevPrice24h"`
+	Price24hPcnt           string           `json:"price24hPcnt"`
+	HighPrice24h           string           `json:"highPrice24h"`
+	LowPrice24h            string           `json:"lowPrice24h"`
+	PrevPrice1h            string           `json:"prevPrice1h"`
+	MarkPrice              string           `json:"markPrice"`
+	IndexPrice             string           `json:"indexPrice"`
+	OpenInterest           string           `json:"openInterest"`
+	Turnover24h            string           `json:"turnover24h"`
+	Volume24h              string           `json:"volume24h"`
+	FundingRate            string           `json:"fundingRate"`
+	NextFundingTime        string           `json:"nextFundingTime"`
+	PredictedDeliveryPrice string           `json:"predictedDeliveryPrice"` // Applicable to inverse future and option
+	BasisRate              string           `json:"basisRate"`
+	DeliveryFeeRate        string           `json:"deliveryFeeRate"`
+	DeliveryTime           string           `json:"deliveryTime"`
+}
+
+// DerivativesTickersParam :
+type DerivativesTickersParam struct {
+	Category CategoryDerivative `url:"category"`
+
+	Symbol *SymbolDerivative `url:"symbol,omitempty"`
+}
+
+// DerivativesTickers :
+func (s *DerivativeCommonService) DerivativesTickers(param DerivativesTickersParam) (*DerivativesTickersResponse, error) {
+	var res DerivativesTickersResponse
+
+	if param.Category == CategoryDerivativeOption {
+		return nil, errors.New("call DerivativesTickersForOption instead")
+	}
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/derivatives/v3/public/tickers", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// DerivativesTickersForOptionResponse :
+type DerivativesTickersForOptionResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           DerivativesTickersForOptionResult `json:"result"`
+}
+
+// DerivativesTickersForOptionResult :
+type DerivativesTickersForOptionResult struct {
+	Category               CategoryDerivative `json:"category"`
+	Symbol                 SymbolDerivative   `json:"symbol"`
+	BidPrice               string             `json:"bidPrice"`
+	BidSize                string             `json:"bidSize"`
+	BidIv                  string             `json:"bidIv"`
+	AskPrice               string             `json:"askPrice"`
+	AskSize                string             `json:"askSize"`
+	AskIv                  string             `json:"askIv"`
+	LastPrice              string             `json:"lastPrice"`
+	HighPrice24h           string             `json:"highPrice24h"`
+	LowPrice24h            string             `json:"lowPrice24h"`
+	MarkPrice              string             `json:"markPrice"`
+	IndexPrice             string             `json:"indexPrice"`
+	MarkPriceIv            string             `json:"markPriceIv"`
+	UnderlyingPrice        string             `json:"underlyingPrice"`
+	OpenInterest           string             `json:"openInterest"`
+	Turnover24h            string             `json:"turnover24h"`
+	Volume24h              string             `json:"volume24h"`
+	TotalVolume            string             `json:"totalVolume"`
+	TotalTurnover          string             `json:"totalTurnover"`
+	Delta                  string             `json:"delta"`
+	Gamma                  string             `json:"gamma"`
+	Vega                   string             `json:"vega"`
+	Theta                  string             `json:"theta"`
+	PredictedDeliveryPrice string             `json:"predictedDeliveryPrice"`
+	Change24h              string             `json:"change24h"`
+}
+
+// DerivativesTickersForOptionParam :
+type DerivativesTickersForOptionParam struct {
+	Symbol SymbolDerivative `url:"symbol"`
+}
+
+// DerivativesTickersForOption :
+func (s *DerivativeCommonService) DerivativesTickersForOption(param DerivativesTickersForOptionParam) (*DerivativesTickersForOptionResponse, error) {
+	var res DerivativesTickersForOptionResponse
+
+	queryString, err := query.Values(DerivativesTickersParam{
+		Category: CategoryDerivativeOption,
+		Symbol:   &param.Symbol,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/derivatives/v3/public/tickers", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}

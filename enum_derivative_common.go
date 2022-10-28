@@ -6,6 +6,8 @@ type SymbolDerivative string
 const (
 	// SymbolDerivativeBTCUSDT :
 	SymbolDerivativeBTCUSDT = SymbolDerivative("BTCUSDT")
+	// SymbolDerivativeBTC31MAR23_40000C :
+	SymbolDerivativeBTC31MAR23_40000C = SymbolDerivative("BTC-31MAR23-40000-C")
 )
 
 // CategoryDerivative :

@@ -89,6 +89,7 @@ The following API endpoints have been implemented
 
 - `/derivatives/v3/public/order-book/L2` Get Order Book
 - `/derivatives/v3/public/kline` Get Kline
+- `/derivatives/v3/public/tickers` Get Latest Information For Symbol
 
 #### [Derivatives Contract](https://bybit-exchange.github.io/docs/derivativesV3/contract)
 
@@ -96,6 +97,7 @@ The following API endpoints have been implemented
 
 - `/derivatives/v3/public/order-book/L2` Get Order Book
 - `/derivatives/v3/public/kline` Get Kline
+- `/derivatives/v3/public/tickers` Get Latest Information For Symbol
 
 #### [Inverse Perpetual](https://bybit-exchange.github.io/docs/futuresV2/inverse)
 
