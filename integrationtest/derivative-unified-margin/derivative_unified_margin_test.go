@@ -40,3 +40,29 @@ func TestDerivativesKline(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestDerivativesTickers(t *testing.T) {
+	client := bybit.NewTestClient()
+	res, err := client.Derivative().UnifiedMargin().DerivativesTickers(bybit.DerivativesTickersParam{
+		Category: bybit.CategoryDerivativeLinear,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/derivatives-public-tickers.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
+
+func TestDerivativesTickersForOption(t *testing.T) {
+	client := bybit.NewTestClient()
+	res, err := client.Derivative().UnifiedMargin().DerivativesTickersForOption(bybit.DerivativesTickersForOptionParam{
+		Symbol: bybit.SymbolDerivativeBTC31MAR23_40000C,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/derivatives-public-tickers-for-option.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
