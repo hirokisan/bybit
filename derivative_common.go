@@ -88,7 +88,7 @@ type DerivativesOrderBookParam struct {
 	Symbol   SymbolDerivative   `url:"symbol"`
 	Category CategoryDerivative `url:"category"`
 
-	Limit int `url:"limit,omitempty"`
+	Limit *int `url:"limit,omitempty"`
 }
 
 // DerivativesOrderBook :
@@ -160,7 +160,7 @@ type DerivativesKlineParam struct {
 	Start    int                `url:"start"` // timestamp point for result, in milliseconds
 	End      int                `url:"end"`   // timestamp point for result, in milliseconds
 
-	Limit int `url:"limit,omitempty"`
+	Limit *int `url:"limit,omitempty"`
 }
 
 // DerivativesKline :
