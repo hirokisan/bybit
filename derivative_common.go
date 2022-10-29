@@ -3,6 +3,7 @@ package bybit
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 
 	"github.com/google/go-querystring/query"
 )
@@ -166,6 +167,10 @@ type DerivativesKlineParam struct {
 // DerivativesKline :
 func (s *DerivativeCommonService) DerivativesKline(param DerivativesKlineParam) (*DerivativesKlineResponse, error) {
 	var res DerivativesKlineResponse
+
+	if param.Category != CategoryDerivativeInverse && param.Category != CategoryDerivativeLinear {
+		return nil, fmt.Errorf("only inverse and linear supported, but %s given for category", param.Category)
+	}
 
 	queryString, err := query.Values(param)
 	if err != nil {
