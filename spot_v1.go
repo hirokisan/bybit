@@ -3,7 +3,6 @@ package bybit
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/url"
 	"strings"
 
@@ -241,7 +240,6 @@ func (r *SpotQuoteKlineResult) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &parsedData); err != nil {
 		return err
 	}
-	fmt.Printf("%+v", parsedData[1].(string))
 	if len(parsedData) != 11 {
 		return errors.New("so far len(items) must be 11, please check it on documents")
 	}
