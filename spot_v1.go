@@ -3,6 +3,7 @@ package bybit
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/url"
 	"strings"
 
@@ -240,6 +241,7 @@ func (r *SpotQuoteKlineResult) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &parsedData); err != nil {
 		return err
 	}
+	fmt.Printf("%+v", parsedData[1].(string))
 	if len(parsedData) != 11 {
 		return errors.New("so far len(items) must be 11, please check it on documents")
 	}
@@ -253,8 +255,8 @@ func (r *SpotQuoteKlineResult) UnmarshalJSON(data []byte) error {
 		EndTime:          int(parsedData[6].(float64)),
 		QuoteAssetVolume: parsedData[7].(string),
 		Trades:           int(parsedData[8].(float64)),
-		TakerBaseVolume:  parsedData[9].(string),
-		TakerQuoteVolume: parsedData[10].(string),
+		TakerBaseVolume:  parsedData[9].(float64),
+		TakerQuoteVolume: parsedData[10].(float64),
 	}
 	return nil
 }
@@ -270,8 +272,8 @@ type SpotQuoteKline struct {
 	EndTime          int
 	QuoteAssetVolume string
 	Trades           int
-	TakerBaseVolume  string
-	TakerQuoteVolume string
+	TakerBaseVolume  float64
+	TakerQuoteVolume float64
 }
 
 // SpotQuoteKline :
