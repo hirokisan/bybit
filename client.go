@@ -118,6 +118,27 @@ func (c *Client) populateSignature(src url.Values) url.Values {
 	return src
 }
 
+func (c *Client) populateSignatureForBody(src []byte) []byte {
+	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
+	now := strconv.Itoa(intNow)
+
+	body := map[string]interface{}{}
+	if err := json.Unmarshal(src, &body); err != nil {
+		panic(err)
+	}
+
+	body["api_key"] = c.key
+	body["timestamp"] = now
+	body["sign"] = getSignatureForBody(body, c.secret)
+
+	result, err := json.Marshal(body)
+	if err != nil {
+		panic(err)
+	}
+
+	return result
+}
+
 func getSignature(src url.Values, key string) string {
 	keys := make([]string, len(src))
 	i := 0
@@ -129,6 +150,28 @@ func getSignature(src url.Values, key string) string {
 	sort.Strings(keys)
 	for _, k := range keys {
 		_val += k + "=" + src.Get(k) + "&"
+	}
+	_val = _val[0 : len(_val)-1]
+	h := hmac.New(sha256.New, []byte(key))
+	_, err := io.WriteString(h, _val)
+	if err != nil {
+		panic(err)
+	}
+
+	return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+func getSignatureForBody(src map[string]interface{}, key string) string {
+	keys := make([]string, len(src))
+	i := 0
+	_val := ""
+	for k := range src {
+		keys[i] = k
+		i++
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		_val += k + "=" + fmt.Sprintf("%v", src[k]) + "&"
 	}
 	_val = _val[0 : len(_val)-1]
 	h := hmac.New(sha256.New, []byte(key))
@@ -196,9 +239,7 @@ func (c *Client) postJSON(path string, body []byte, dst interface{}) error {
 	}
 	u.Path = path
 
-	query := url.Values{}
-	query = c.populateSignature(query)
-	u.RawQuery = query.Encode()
+	body = c.populateSignatureForBody(body)
 
 	req, err := http.NewRequest(http.MethodPost, u.String(), bytes.NewBuffer(body))
 	if err != nil {

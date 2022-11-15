@@ -143,8 +143,8 @@ type CreateLinearOrderParam struct {
 	Price       *float64         `json:"price,omitempty"`
 	TakeProfit  *float64         `json:"take_profit,omitempty"`
 	StopLoss    *float64         `json:"stop_loss,omitempty"`
-	TpTriggerBy *TriggerByFuture `json:"tp_trigger_by"`
-	SlTriggerBy *TriggerByFuture `json:"sl_trigger_by"`
+	TpTriggerBy *TriggerByFuture `json:"tp_trigger_by,omitempty"`
+	SlTriggerBy *TriggerByFuture `json:"sl_trigger_by,omitempty"`
 	OrderLinkID *string          `json:"order_link_id,omitempty"`
 }
 
