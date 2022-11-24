@@ -19,6 +19,8 @@ import (
 const (
 	// MainNetBaseURL :
 	MainNetBaseURL = "https://api.bybit.com"
+	// MainNetBaseURL2 :
+	MainNetBaseURL2 = "https://api.bytick.com"
 )
 
 // Client :
@@ -61,6 +63,13 @@ func (c Client) withCheckResponseBody(f checkResponseBodyFunc) *Client {
 	c.checkResponseBody = f
 
 	return &c
+}
+
+// WithBaseURL :
+func (c *Client) WithBaseURL(url string) *Client {
+	c.baseURL = url
+
+	return c
 }
 
 // Request :
