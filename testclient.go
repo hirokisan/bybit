@@ -41,10 +41,3 @@ func (c *TestClient) WithAuthFromEnv() *TestClient {
 
 	return c
 }
-
-// WithBaseURL :
-func (c *TestClient) WithBaseURL(url string) *TestClient {
-	c.baseURL = url
-
-	return c
-}
