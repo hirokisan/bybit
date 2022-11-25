@@ -4,7 +4,7 @@
 
 # bybit
 
-bybit is an bybit client for the Go programing language.
+bybit is an bybit client for the Go programming language.
 
 ## Usage
 
@@ -90,6 +90,7 @@ The following API endpoints have been implemented
 - `/derivatives/v3/public/order-book/L2` Get Order Book
 - `/derivatives/v3/public/kline` Get Kline
 - `/derivatives/v3/public/tickers` Get Latest Information For Symbol
+- `/derivatives/v3/public/instruments-info` Get Instrument Info
 
 #### [Derivatives Contract](https://bybit-exchange.github.io/docs/derivativesV3/contract)
 
@@ -98,6 +99,7 @@ The following API endpoints have been implemented
 - `/derivatives/v3/public/order-book/L2` Get Order Book
 - `/derivatives/v3/public/kline` Get Kline
 - `/derivatives/v3/public/tickers` Get Latest Information For Symbol
+- `/derivatives/v3/public/instruments-info` Get Instrument Info
 
 #### [Inverse Perpetual](https://bybit-exchange.github.io/docs/futuresV2/inverse)
 
