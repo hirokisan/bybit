@@ -21,13 +21,6 @@ func NewTestWebsocketClient() *TestWebSocketClient {
 	}
 }
 
-// WithBaseURL :
-func (c *TestWebSocketClient) WithBaseURL(url string) *TestWebSocketClient {
-	c.baseURL = url
-
-	return c
-}
-
 // WithAuthFromEnv :
 func (c *TestWebSocketClient) WithAuthFromEnv() *TestWebSocketClient {
 	key, ok := os.LookupEnv("BYBIT_TEST_KEY")

@@ -16,6 +16,8 @@ import (
 const (
 	// WebsocketBaseURL :
 	WebsocketBaseURL = "wss://stream.bybit.com"
+	// WebsocketBaseURL2 :
+	WebsocketBaseURL2 = "wss://stream.bytick.com"
 )
 
 // WebSocketClient :
@@ -36,6 +38,13 @@ func NewWebsocketClient() *WebSocketClient {
 func (c *WebSocketClient) WithAuth(key string, secret string) *WebSocketClient {
 	c.key = key
 	c.secret = secret
+
+	return c
+}
+
+// WithBaseURL :
+func (c *WebSocketClient) WithBaseURL(url string) *WebSocketClient {
+	c.baseURL = url
 
 	return c
 }
