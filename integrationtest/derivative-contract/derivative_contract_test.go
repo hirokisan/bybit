@@ -79,3 +79,14 @@ func TestDerivativesInstruments(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestDerivativesInstrumentsForOption(t *testing.T) {
+	client := bybit.NewTestClient()
+	res, err := client.Derivative().Contract().DerivativesInstrumentsForOption(bybit.DerivativesInstrumentsForOptionParam{})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/derivatives-public-instruments-info-for-option.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
