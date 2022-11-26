@@ -448,11 +448,11 @@ type DerivativesMarkPriceKlineResult struct {
 
 // DerivativesMarkPriceKlineResultListItem :
 type DerivativesMarkPriceKlineResultListItem struct {
-	Start string
-	Open  string
-	High  string
-	Low   string
-	Close string
+	Start string `json:"start"`
+	Open  string `json:"open"`
+	High  string `json:"high"`
+	Low   string `json:"low"`
+	Close string `json:"close"`
 }
 
 // UnmarshalJSON :
