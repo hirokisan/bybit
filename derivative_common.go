@@ -374,3 +374,61 @@ func (s *DerivativeCommonService) DerivativesInstruments(param DerivativesInstru
 
 	return &res, nil
 }
+
+// DerivativesInstrumentsForOptionResponse :
+type DerivativesInstrumentsForOptionResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           DerivativesInstrumentsForOptionResult `json:"result"`
+}
+
+// DerivativesInstrumentsForOptionResult :
+type DerivativesInstrumentsForOptionResult struct {
+	ResultTotalSize int    `json:"resultTotalSize"`
+	Cursor          string `json:"cursor"`
+	List            []struct {
+		Category        CategoryDerivative `json:"category"`
+		Symbol          SymbolDerivative   `json:"symbol"`
+		Status          StatusDerivative   `json:"status"`
+		BaseCoin        string             `json:"baseCoin"`
+		QuoteCoin       string             `json:"quoteCoin"`
+		SettleCoin      string             `json:"settleCoin"`
+		OptionsType     string             `json:"optionsType"`
+		LaunchTime      string             `json:"launchTime"`
+		DeliveryTime    string             `json:"deliveryTime"`
+		DeliveryFeeRate string             `json:"deliveryFeeRate"`
+		PriceFilter     struct {
+			MinPrice string `json:"minPrice"`
+			MaxPrice string `json:"maxPrice"`
+			TickSize string `json:"tickSize"`
+		} `json:"priceFilter"`
+		LotSizeFilter struct {
+			MaxOrderQty string `json:"maxOrderQty"`
+			MinOrderQty string `json:"minOrderQty"`
+			QtyStep     string `json:"qtyStep"`
+		} `json:"lotSizeFilter"`
+	} `json:"dataList"`
+}
+
+// DerivativesInstrumentsForOptionParam :
+type DerivativesInstrumentsForOptionParam struct {
+	Symbol *SymbolDerivative `url:"symbol,omitempty"`
+	Limit  *int              `url:"limit,omitempty"`
+	cursor *string           `url:"cursor,omitempty"`
+}
+
+// DerivativesInstrumentsForOption :
+func (s *DerivativeCommonService) DerivativesInstrumentsForOption(param DerivativesInstrumentsForOptionParam) (*DerivativesInstrumentsForOptionResponse, error) {
+	var res DerivativesInstrumentsForOptionResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+	queryString.Add("category", string(CategoryDerivativeOption))
+
+	if err := s.client.getPublicly("/derivatives/v3/public/instruments-info", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}

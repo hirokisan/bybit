@@ -8,6 +8,7 @@ type DerivativeUnifiedMarginServiceI interface {
 	DerivativesTickers(DerivativesTickersParam) (*DerivativesTickersResponse, error)
 	DerivativesTickersForOption(DerivativesTickersForOptionParam) (*DerivativesTickersForOptionResponse, error)
 	DerivativesInstruments(DerivativesInstrumentsParam) (*DerivativesInstrumentsResponse, error)
+	DerivativesInstrumentsForOption(DerivativesInstrumentsForOptionParam) (*DerivativesInstrumentsForOptionResponse, error)
 }
 
 // DerivativeUnifiedMarginService :
