@@ -21,3 +21,29 @@ const (
 	// CategoryDerivativeOption :
 	CategoryDerivativeOption = CategoryDerivative("option")
 )
+
+// ContractTypeDerivative :
+type ContractTypeDerivative string
+
+const (
+	// ContractTypeDerivativeInversePerpetual :
+	ContractTypeDerivativeInversePerpetual = ContractTypeDerivative("InversePerpetual")
+	// ContractTypeDerivativeLinearPerpetual :
+	ContractTypeDerivativeLinearPerpetual = ContractTypeDerivative("LinearPerpetual")
+	// ContractTypeDerivativeInverseFutures :
+	ContractTypeDerivativeInverseFutures = ContractTypeDerivative("InverseFutures")
+)
+
+// StatusDerivative :
+type StatusDerivative string
+
+const (
+	// StatusDerivativePending :
+	StatusDerivativePending = StatusDerivative("Pending")
+	// StatusDerivativeTrading :
+	StatusDerivativeTrading = StatusDerivative("Trading")
+	// StatusDerivativeSettling :
+	StatusDerivativeSettling = StatusDerivative("Settling")
+	// StatusDerivativeClosed :
+	StatusDerivativeClosed = StatusDerivative("Closed")
+)

@@ -7,6 +7,8 @@ type DerivativeContractServiceI interface {
 	DerivativesKline(DerivativesKlineParam) (*DerivativesKlineResponse, error)
 	DerivativesTickers(DerivativesTickersParam) (*DerivativesTickersResponse, error)
 	DerivativesTickersForOption(DerivativesTickersForOptionParam) (*DerivativesTickersForOptionResponse, error)
+	DerivativesInstruments(DerivativesInstrumentsParam) (*DerivativesInstrumentsResponse, error)
+	DerivativesInstrumentsForOption(DerivativesInstrumentsForOptionParam) (*DerivativesInstrumentsForOptionResponse, error)
 }
 
 // DerivativeContractService :
