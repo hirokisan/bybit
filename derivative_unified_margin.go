@@ -10,6 +10,7 @@ type DerivativeUnifiedMarginServiceI interface {
 	DerivativesInstruments(DerivativesInstrumentsParam) (*DerivativesInstrumentsResponse, error)
 	DerivativesInstrumentsForOption(DerivativesInstrumentsForOptionParam) (*DerivativesInstrumentsForOptionResponse, error)
 	DerivativesMarkPriceKline(DerivativesMarkPriceKlineParam) (*DerivativesMarkPriceKlineResponse, error)
+	DerivativesIndexPriceKline(DerivativesIndexPriceKlineParam) (*DerivativesIndexPriceKlineResponse, error)
 }
 
 // DerivativeUnifiedMarginService :
