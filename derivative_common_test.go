@@ -217,3 +217,62 @@ func TestDerivativesTickersForOption(t *testing.T) {
 	assert.Equal(t, respBody["result"].(map[string]string)["category"], string(resp.Result.Category))
 	assert.Equal(t, respBody["result"].(map[string]string)["symbol"], string(resp.Result.Symbol))
 }
+
+func TestDerivativesInstruments(t *testing.T) {
+	param := DerivativesInstrumentsParam{
+		Category: CategoryDerivativeLinear,
+	}
+
+	path := "/derivatives/v3/public/instruments-info"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"result": map[string]interface{}{
+			"category": "linear",
+			"list": []map[string]interface{}{
+				{
+					"symbol":       "10000NFTUSDT",
+					"contractType": "LinearPerpetual",
+					"status":       "Trading",
+					"baseCoin":     "10000NFT", "quoteCoin": "USDT",
+					"launchTime":      "1643007175000",
+					"deliveryTime":    "0",
+					"deliveryFeeRate": "",
+					"priceScale":      "6",
+					"leverageFilter": map[string]interface{}{
+						"minLeverage":  "1",
+						"maxLeverage":  "12",
+						"leverageStep": "0.01",
+					},
+					"priceFilter": map[string]interface{}{
+						"minPrice": "0.000005",
+						"maxPrice": "9.999990",
+						"tickSize": "0.000005",
+					},
+					"lotSizeFilter": map[string]interface{}{
+						"maxTradingQty": "370000",
+						"minTradingQty": "10",
+						"qtyStep":       "10",
+					},
+				},
+			},
+			"nextPageCursor": "",
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.Derivative().UnifiedMargin().DerivativesInstruments(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	testhelper.Compare(t, respBody["result"], resp.Result)
+}
