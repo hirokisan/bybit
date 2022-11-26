@@ -276,3 +276,57 @@ func TestDerivativesInstruments(t *testing.T) {
 	require.NotNil(t, resp)
 	testhelper.Compare(t, respBody["result"], resp.Result)
 }
+
+func TestDerivativesInstrumentsForOption(t *testing.T) {
+	param := DerivativesInstrumentsForOptionParam{}
+
+	path := "/derivatives/v3/public/instruments-info"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"result": map[string]interface{}{
+			"resultTotalSize": 9234,
+			"cursor":          "0%2C500",
+			"dataList": []map[string]interface{}{
+				{
+					"category":        "option",
+					"symbol":          "BTC-31MAR23-300000-C",
+					"status":          "ONLINE",
+					"baseCoin":        "BTC",
+					"quoteCoin":       "USD",
+					"settleCoin":      "USDC",
+					"optionsType":     "Call",
+					"launchTime":      "1665043200000",
+					"deliveryTime":    "1680249600000",
+					"deliveryFeeRate": "0.00015",
+					"priceFilter": map[string]interface{}{
+						"minPrice": "5",
+						"maxPrice": "10000000",
+						"tickSize": "5",
+					},
+					"lotSizeFilter": map[string]interface{}{
+						"maxOrderQty": "10000",
+						"minOrderQty": "0.01",
+						"qtyStep":     "0.01",
+					},
+				},
+			},
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.Derivative().UnifiedMargin().DerivativesInstrumentsForOption(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	testhelper.Compare(t, respBody["result"], resp.Result)
+}
