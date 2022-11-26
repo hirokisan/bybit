@@ -92,6 +92,7 @@ The following API endpoints have been implemented
 - `/derivatives/v3/public/tickers` Get Latest Information For Symbol
 - `/derivatives/v3/public/instruments-info` Get Instrument Info
 - `/derivatives/v3/public/mark-price-kline` Get Mark Price Kline
+- `/derivatives/v3/public/index-price-kline` Get Index Price Kline
 
 #### [Derivatives Contract](https://bybit-exchange.github.io/docs/derivativesV3/contract)
 
@@ -102,6 +103,7 @@ The following API endpoints have been implemented
 - `/derivatives/v3/public/tickers` Get Latest Information For Symbol
 - `/derivatives/v3/public/instruments-info` Get Instrument Info
 - `/derivatives/v3/public/mark-price-kline` Get Mark Price Kline
+- `/derivatives/v3/public/index-price-kline` Get Index Price Kline
 
 #### [Inverse Perpetual](https://bybit-exchange.github.io/docs/futuresV2/inverse)
 
