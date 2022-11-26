@@ -352,7 +352,7 @@ type DerivativesInstrumentsParam struct {
 
 	Symbol *SymbolDerivative `url:"symbol,omitempty"`
 	Limit  *int              `url:"limit,omitempty"`
-	cursor *string           `url:"cursor,omitempty"`
+	Cursor *string           `url:"cursor,omitempty"`
 }
 
 // DerivativesInstruments :
@@ -413,7 +413,7 @@ type DerivativesInstrumentsForOptionResult struct {
 type DerivativesInstrumentsForOptionParam struct {
 	Symbol *SymbolDerivative `url:"symbol,omitempty"`
 	Limit  *int              `url:"limit,omitempty"`
-	cursor *string           `url:"cursor,omitempty"`
+	Cursor *string           `url:"cursor,omitempty"`
 }
 
 // DerivativesInstrumentsForOption :
