@@ -93,7 +93,7 @@ func TestDerivativesInstrumentsForOption(t *testing.T) {
 
 func TestDerivativesMarkPriceKline(t *testing.T) {
 	client := bybit.NewTestClient()
-	res, err := client.Derivative().Contract().DerivativesMarkPriceKline(bybit.DerivativesMarkPriceKlineParam{
+	res, err := client.Derivative().UnifiedMargin().DerivativesMarkPriceKline(bybit.DerivativesMarkPriceKlineParam{
 		Symbol:   bybit.SymbolDerivativeBTCUSDT,
 		Category: bybit.CategoryDerivativeLinear,
 		Interval: bybit.IntervalD,
