@@ -328,3 +328,49 @@ func TestDerivativesInstrumentsForOption(t *testing.T) {
 	require.NotNil(t, resp)
 	testhelper.Compare(t, respBody["result"], resp.Result)
 }
+
+func TestDerivativesMarkPriceKline(t *testing.T) {
+	param := DerivativesMarkPriceKlineParam{
+		Symbol:   SymbolDerivativeBTCUSDT,
+		Category: CategoryDerivativeLinear,
+		Interval: IntervalD,
+		Start:    1652112000000,
+		End:      1652544000000,
+	}
+
+	path := "/derivatives/v3/public/mark-price-kline"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"result": map[string]interface{}{
+			"category": "linear",
+			"symbol":   "BTCUSDT",
+			"list": [][]string{
+				{
+					"1652486400000",
+					"29291.4",
+					"30327.13",
+					"28641.42",
+					"30088.12",
+				},
+			},
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.Derivative().UnifiedMargin().DerivativesMarkPriceKline(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	assert.Equal(t, respBody["result"].(map[string]interface{})["symbol"], string(resp.Result.Symbol))
+	assert.Equal(t, respBody["result"].(map[string]interface{})["list"].([][]string)[0][0], resp.Result.List[0].Start)
+}

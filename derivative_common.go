@@ -432,3 +432,71 @@ func (s *DerivativeCommonService) DerivativesInstrumentsForOption(param Derivati
 
 	return &res, nil
 }
+
+// DerivativesMarkPriceKlineResponse :
+type DerivativesMarkPriceKlineResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           DerivativesMarkPriceKlineResult `json:"result"`
+}
+
+// DerivativesMarkPriceKlineResult :
+type DerivativesMarkPriceKlineResult struct {
+	Category CategoryDerivative                        `json:"category"`
+	Symbol   SymbolDerivative                          `json:"symbol"`
+	List     []DerivativesMarkPriceKlineResultListItem `json:"list"`
+}
+
+// DerivativesMarkPriceKlineResultListItem :
+type DerivativesMarkPriceKlineResultListItem struct {
+	Start string `json:"start"`
+	Open  string `json:"open"`
+	High  string `json:"high"`
+	Low   string `json:"low"`
+	Close string `json:"close"`
+}
+
+// UnmarshalJSON :
+func (r *DerivativesMarkPriceKlineResultListItem) UnmarshalJSON(data []byte) error {
+	parsedData := []interface{}{}
+	if err := json.Unmarshal(data, &parsedData); err != nil {
+		return err
+	}
+	if len(parsedData) != 5 {
+		return errors.New("so far len(items) must be 5, please check it on documents")
+	}
+	*r = DerivativesMarkPriceKlineResultListItem{
+		Start: parsedData[0].(string),
+		Open:  parsedData[1].(string),
+		High:  parsedData[2].(string),
+		Low:   parsedData[3].(string),
+		Close: parsedData[4].(string),
+	}
+	return nil
+}
+
+// DerivativesMarkPriceKlineParam :
+type DerivativesMarkPriceKlineParam struct {
+	Category CategoryDerivative `url:"category"`
+	Symbol   SymbolDerivative   `url:"symbol"`
+	Interval Interval           `url:"interval"`
+	Start    int                `url:"start"` // timestamp point for result, in milliseconds
+	End      int                `url:"end"`   // timestamp point for result, in milliseconds
+
+	Limit *int `url:"limit,omitempty"`
+}
+
+// DerivativesMarkPriceKline :
+func (s *DerivativeCommonService) DerivativesMarkPriceKline(param DerivativesMarkPriceKlineParam) (*DerivativesMarkPriceKlineResponse, error) {
+	var res DerivativesMarkPriceKlineResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/derivatives/v3/public/mark-price-kline", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
