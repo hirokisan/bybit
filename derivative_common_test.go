@@ -157,8 +157,7 @@ func TestDerivativesTickers(t *testing.T) {
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
-	assert.Equal(t, respBody["result"].(map[string]interface{})["category"], string(resp.Result.Category))
-	assert.Equal(t, respBody["result"].(map[string]interface{})["list"].([]map[string]string)[0]["symbol"], string(resp.Result.Lists[0].Symbol))
+	testhelper.Compare(t, respBody["result"], resp.Result)
 }
 
 func TestDerivativesTickersForOption(t *testing.T) {
@@ -214,8 +213,7 @@ func TestDerivativesTickersForOption(t *testing.T) {
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
-	assert.Equal(t, respBody["result"].(map[string]string)["category"], string(resp.Result.Category))
-	assert.Equal(t, respBody["result"].(map[string]string)["symbol"], string(resp.Result.Symbol))
+	testhelper.Compare(t, respBody["result"], resp.Result)
 }
 
 func TestDerivativesInstruments(t *testing.T) {
