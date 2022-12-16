@@ -146,6 +146,7 @@ type CreateLinearOrderParam struct {
 	TpTriggerBy *TriggerByFuture `json:"tp_trigger_by,omitempty"`
 	SlTriggerBy *TriggerByFuture `json:"sl_trigger_by,omitempty"`
 	OrderLinkID *string          `json:"order_link_id,omitempty"`
+	PositionIdx *int             `json:"position_idx,omitempty"`
 }
 
 // CreateLinearOrder :
