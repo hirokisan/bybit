@@ -159,6 +159,7 @@ The following API endpoints have been implemented
 - `/private/linear/order/list` Get Active Order
 - `/private/linear/order/cancel` Cancel Active Order
 - `/private/linear/order/cancel-all` Cancel All Active Orders
+- `/private/linear/order/replace` Replace Active Order
 - `/private/linear/order/search` Query Active Order (real-time)
 - `/private/linear/stop-order/create` Place Conditional Order
 - `/private/linear/stop-order/list` Get Conditional Order
