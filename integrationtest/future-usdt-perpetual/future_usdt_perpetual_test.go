@@ -624,3 +624,52 @@ func TestLinearTradingStop(t *testing.T) {
 		require.NoError(t, err)
 	}
 }
+
+func TestReplaceLinearOrder(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		client := bybit.NewTestClient().WithAuthFromEnv()
+
+		symbol := bybit.SymbolFutureBTCUSDT
+		var orderID string
+		{
+			price := 10000.0
+			res, err := client.Future().USDTPerpetual().CreateLinearOrder(bybit.CreateLinearOrderParam{
+				Side:        bybit.SideBuy,
+				Symbol:      symbol,
+				OrderType:   bybit.OrderTypeLimit,
+				Qty:         0.001,
+				TimeInForce: bybit.TimeInForceGoodTillCancel,
+				Price:       &price,
+			})
+			require.NoError(t, err)
+			orderID = res.Result.OrderID
+		}
+		{
+			newPrice := 11000.0
+			res, err := client.Future().USDTPerpetual().ReplaceLinearOrder(bybit.ReplaceLinearOrderParam{
+				Symbol:   symbol,
+				OrderID:  &orderID,
+				NewPrice: &newPrice,
+			})
+			require.NoError(t, err)
+			goldenFilename := "./testdata/private-linear-order-replace.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+
+			orderID = res.Result.OrderID
+		}
+		{
+			_, err := client.Future().USDTPerpetual().CancelLinearOrder(bybit.CancelLinearOrderParam{
+				Symbol:  symbol,
+				OrderID: &orderID,
+			})
+			require.NoError(t, err)
+		}
+	})
+
+	t.Run("auth error", func(t *testing.T) {
+		client := bybit.NewTestClient()
+		_, err := client.Future().USDTPerpetual().ReplaceLinearOrder(bybit.ReplaceLinearOrderParam{})
+		require.Error(t, err)
+	})
+}
