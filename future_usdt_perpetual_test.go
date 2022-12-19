@@ -637,6 +637,75 @@ func TestCancelAllLinearStopOrder(t *testing.T) {
 	})
 }
 
+func TestReplaceLinearOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		orderID := "test"
+		newPrice := 10000.0
+		param := ReplaceLinearOrderParam{
+			Symbol:   SymbolFutureBTCUSDT,
+			OrderID:  &orderID,
+			NewPrice: &newPrice,
+		}
+
+		path := "/private/linear/order/replace"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := ReplaceLinearOrderResponse{
+			Result: ReplaceLinearOrderResult{
+				OrderID: "b777573b-026e-48ee-b9ac-28c81e829ae8",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().USDTPerpetual().ReplaceLinearOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		assert.Equal(t, respBody, *resp)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		orderID := "test"
+		newPrice := 10000.0
+		param := ReplaceLinearOrderParam{
+			Symbol:   SymbolFutureBTCUSDT,
+			OrderID:  &orderID,
+			NewPrice: &newPrice,
+		}
+
+		path := "/private/linear/order/replace"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := ReplaceLinearOrderResponse{
+			Result: ReplaceLinearOrderResult{
+				OrderID: "b777573b-026e-48ee-b9ac-28c81e829ae8",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().USDTPerpetual().ReplaceLinearOrder(param)
+		assert.Error(t, err)
+	})
+}
+
 func TestQueryLinearStopOrder(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := QueryLinearStopOrderParam{
