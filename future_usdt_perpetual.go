@@ -24,6 +24,7 @@ type FutureUSDTPerpetualServiceI interface {
 	ListLinearOrder(ListLinearOrderParam) (*ListLinearOrderResponse, error)
 	CancelLinearOrder(CancelLinearOrderParam) (*CancelLinearOrderResponse, error)
 	LinearCancelAllOrder(LinearCancelAllParam) (*LinearCancelAllResponse, error)
+	ReplaceLinearOrder(ReplaceLinearOrderParam) (*ReplaceLinearOrderResponse, error)
 	QueryLinearOrder(QueryLinearOrderParam) (*QueryLinearOrderResponse, error)
 	CreateLinearStopOrder(CreateLinearStopOrderParam) (*CreateLinearStopOrderResponse, error)
 	ListLinearStopOrder(ListLinearStopOrderParam) (*ListLinearStopOrderResponse, error)
@@ -490,6 +491,47 @@ func (s *FutureUSDTPerpetualService) LinearCancelAllOrder(param LinearCancelAllP
 
 	if err := s.client.postJSON("/private/linear/order/cancel-all", body, &res); err != nil {
 		return &res, err
+	}
+
+	return &res, nil
+}
+
+// ReplaceLinearOrderResponse :
+type ReplaceLinearOrderResponse struct {
+	CommonResponse `json:",inline"`
+	Result         ReplaceLinearOrderResult `json:"result"`
+}
+
+// ReplaceLinearOrderResult :
+type ReplaceLinearOrderResult struct {
+	OrderID string `json:"order_id"`
+}
+
+// ReplaceLinearOrderParam :
+type ReplaceLinearOrderParam struct {
+	Symbol SymbolFuture `json:"symbol"`
+
+	OrderID     *string          `json:"order_id,omitempty"`
+	OrderLinkID *string          `json:"order_link_id,omitempty"`
+	NewQuantity *float64         `json:"p_r_qty,omitempty"`
+	NewPrice    *float64         `json:"p_r_price,omitempty"`
+	TakeProfit  *float64         `json:"take_profit,omitempty"`
+	StopLoss    *float64         `json:"stop_loss,omitempty"`
+	TpTriggerBy *TriggerByFuture `json:"tp_trigger_by,omitempty"`
+	SlTriggerBy *TriggerByFuture `json:"sl_trigger_by,omitempty"`
+}
+
+// ReplaceLinearOrder :
+func (s *FutureUSDTPerpetualService) ReplaceLinearOrder(param ReplaceLinearOrderParam) (*ReplaceLinearOrderResponse, error) {
+	var res ReplaceLinearOrderResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal for ReplaceLinearOrderResult: %w", err)
+	}
+
+	if err := s.client.postJSON("/private/linear/order/replace", body, &res); err != nil {
+		return nil, err
 	}
 
 	return &res, nil
