@@ -38,6 +38,7 @@ type FutureInversePerpetualServiceI interface {
 	ListPositions() (*ListPositionsResponse, error)
 	TradingStop(TradingStopParam) (*TradingStopResponse, error)
 	SaveLeverage(SaveLeverageParam) (*SaveLeverageResponse, error)
+	APIKeyInfo() (*APIKeyInfoResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)
