@@ -811,6 +811,36 @@ func TestQueryLinearStopOrder(t *testing.T) {
 	})
 }
 
+func TestListLinearPositions(t *testing.T) {
+	t.Run("Permission denied", func(t *testing.T) {
+		path := "/private/linear/position/list"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"ret_code": 10005,
+			"ret_msg":  "Permission denied, please check your API key permissions",
+			"result":   struct{}{},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		_, err = client.Future().USDTPerpetual().ListLinearPositions()
+		require.Error(t, err)
+
+		var wantErr *ErrorResponse
+		assert.ErrorAs(t, err, &wantErr)
+	})
+}
+
 func TestLinearTradingStop(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		price := 20000.0

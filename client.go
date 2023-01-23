@@ -86,9 +86,6 @@ func (c *Client) Request(req *http.Request, dst interface{}) error {
 		if err != nil {
 			return err
 		}
-		if err := json.Unmarshal(body, &dst); err != nil {
-			return err
-		}
 
 		if c.checkResponseBody == nil {
 			return errors.New("checkResponseBody func should be set")
@@ -97,6 +94,9 @@ func (c *Client) Request(req *http.Request, dst interface{}) error {
 			return err
 		}
 
+		if err := json.Unmarshal(body, &dst); err != nil {
+			return err
+		}
 		return nil
 	case resp.StatusCode == http.StatusForbidden:
 		return ErrAccessDenied
