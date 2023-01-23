@@ -14,7 +14,7 @@ import (
 func TestAPIKeyInfo(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		client := bybit.NewTestClient().WithAuthFromEnv()
-		res, err := client.Future().InversePerpetual().APIKeyInfo()
+		res, err := client.Future().USDTPerpetual().APIKeyInfo()
 		require.NoError(t, err)
 		{
 			goldenFilename := "./testdata/v2-private-api-key-info.json"
@@ -25,7 +25,7 @@ func TestAPIKeyInfo(t *testing.T) {
 
 	t.Run("auth error", func(t *testing.T) {
 		client := bybit.NewTestClient()
-		_, err := client.Future().InversePerpetual().APIKeyInfo()
+		_, err := client.Future().USDTPerpetual().APIKeyInfo()
 		require.Error(t, err)
 	})
 }
