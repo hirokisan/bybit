@@ -36,6 +36,7 @@ type FutureInverseFutureServiceI interface {
 	ListFuturesPositions(SymbolFuture) (*ListFuturesPositionsResponse, error)
 	FuturesTradingStop(FuturesTradingStopParam) (*FuturesTradingStopResponse, error)
 	FuturesSaveLeverage(FuturesSaveLeverageParam) (*FuturesSaveLeverageResponse, error)
+	APIKeyInfo() (*APIKeyInfoResponse, error)
 
 	// Wallet Data Endpoints
 	Balance(Coin) (*BalanceResponse, error)

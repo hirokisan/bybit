@@ -136,6 +136,7 @@ The following API endpoints have been implemented
 - `/v2/private/position/list` My Position
 - `/v2/private/position/trading-stop` Set Trading-Stop
 - `/v2/private/position/leverage/save` Set Leverage
+- `/v2/private/account/api-key` API Key info
 
 ##### Wallet Data Endpoints
 
@@ -170,6 +171,7 @@ The following API endpoints have been implemented
 - `/private/linear/position/set-leverage` Set Leverage
 - `/private/linear/position/trading-stop` Set Trading-Stop
 - `/private/linear/trade/execution/list` User Trade Records
+- `/v2/private/account/api-key` API Key info
 
 ##### Wallet Data Endpoints
 
@@ -205,6 +207,7 @@ The following API endpoints have been implemented
 - `/futures/private/position/list` My Position
 - `/futures/private/position/trading-stop` Set Trading-Stop
 - `/futures/private/position/leverage/save` Set Leverage
+- `/v2/private/account/api-key` API Key info
 
 ##### Wallet Data Endpoints
 
