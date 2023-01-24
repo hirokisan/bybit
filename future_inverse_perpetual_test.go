@@ -1097,3 +1097,108 @@ func TestTradingStop(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestAPIKeyInfo(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		path := "/v2/private/account/api-key"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": []map[string]interface{}{
+				{
+					"api_key":    "TrswBXTLDVhxqkfDEI",
+					"type":       "personal",
+					"user_id":    146940,
+					"inviter_id": 0,
+					"ips": []string{
+						"*",
+					},
+					"note": "full3",
+					"permissions": []string{
+						"OptionsTrade",
+						"CopyTrading",
+						"ExchangeHistory",
+						"SpotTrade",
+						"AccountTransfer",
+						"SubMemberTransfer",
+						"Order",
+						"Position",
+						"DerivativesTrade",
+					},
+					"created_at":      "2022-06-20T13:26:50Z",
+					"expired_at":      "2023-04-23T05:52:24Z",
+					"read_only":       false,
+					"vip_level":       "No VIP",
+					"mkt_maker_level": "0",
+					"affiliate_id":    0,
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.Future().InversePerpetual().APIKeyInfo()
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		path := "/v2/private/account/api-key"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": []map[string]interface{}{
+				{
+					"api_key":    "TrswBXTLDVhxqkfDEI",
+					"type":       "personal",
+					"user_id":    146940,
+					"inviter_id": 0,
+					"ips": []string{
+						"*",
+					},
+					"note": "full3",
+					"permissions": []string{
+						"OptionsTrade",
+						"CopyTrading",
+						"ExchangeHistory",
+						"SpotTrade",
+						"AccountTransfer",
+						"SubMemberTransfer",
+						"Order",
+						"Position",
+						"DerivativesTrade",
+					},
+					"created_at":      "2022-06-20T13:26:50Z",
+					"expired_at":      "2023-04-23T05:52:24Z",
+					"read_only":       false,
+					"vip_level":       "No VIP",
+					"mkt_maker_level": "0",
+					"affiliate_id":    0,
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.Future().InversePerpetual().APIKeyInfo()
+		assert.Error(t, err)
+	})
+}
