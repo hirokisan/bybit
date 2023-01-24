@@ -43,7 +43,7 @@ func (s *FutureCommonService) APIKeyInfo() (*APIKeyInfoResponse, error) {
 		query url.Values
 	)
 
-	if err := s.client.getPrivately("v2/private/account/api-key", query, &res); err != nil {
+	if err := s.client.getPrivately("/v2/private/account/api-key", query, &res); err != nil {
 		return nil, err
 	}
 
