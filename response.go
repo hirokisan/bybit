@@ -49,6 +49,30 @@ func checkV3ResponseBody(body []byte) error {
 	}
 }
 
+func checkV5ResponseBody(body []byte) error {
+	var commonResponse CommonV5Response
+	if err := json.Unmarshal(body, &commonResponse); err != nil {
+		return err
+	}
+
+	switch {
+	case commonResponse.RetCode == 10006, commonResponse.RetCode == 10018:
+		rateLimitError := &RateLimitError{}
+		if err := json.Unmarshal(body, rateLimitError); err != nil {
+			return err
+		}
+		return rateLimitError
+
+	case commonResponse.RetCode != 0:
+		return &ErrorResponse{
+			RetCode: commonResponse.RetCode,
+			RetMsg:  commonResponse.RetMsg,
+		}
+	default:
+		return nil
+	}
+}
+
 // CommonResponse :
 type CommonResponse struct {
 	RetCode          int    `json:"ret_code"`
@@ -63,6 +87,14 @@ type CommonResponse struct {
 
 // CommonV3Response :
 type CommonV3Response struct {
+	RetCode    int         `json:"retCode"`
+	RetMsg     string      `json:"retMsg"`
+	RetExtInfo interface{} `json:"retExtInfo"`
+	Time       int         `json:"time"`
+}
+
+// CommonV5Response :
+type CommonV5Response struct {
 	RetCode    int         `json:"retCode"`
 	RetMsg     string      `json:"retMsg"`
 	RetExtInfo interface{} `json:"retExtInfo"`

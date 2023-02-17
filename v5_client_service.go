@@ -59,5 +59,5 @@ func (s *V5Service) Asset() V5AssetServiceI {
 
 // V5 :
 func (c *Client) V5() V5ServiceI {
-	return &V5Service{c}
+	return &V5Service{c.withCheckResponseBody(checkV5ResponseBody)}
 }
