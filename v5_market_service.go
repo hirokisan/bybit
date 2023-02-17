@@ -30,8 +30,8 @@ type V5GetKlineParam struct {
 
 // V5GetKlineResponse :
 type V5GetKlineResponse struct {
-	CommonResponse `json:",inline"`
-	Result         V5GetKlineResult `json:"result"`
+	CommonV5Response `json:",inline"`
+	Result           V5GetKlineResult `json:"result"`
 }
 
 // V5GetKlineResult :
