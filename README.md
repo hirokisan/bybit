@@ -81,6 +81,12 @@ wsClient.Start(context.Background(), executors)
 
 The following API endpoints have been implemented
 
+### REST API V5
+
+#### Market
+
+- `/v5/market/kline` Get Kline
+
 ### REST API
 
 #### [Derivatives Unified Margin](https://bybit-exchange.github.io/docs/derivativesV3/unified_margin)
