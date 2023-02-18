@@ -9,13 +9,6 @@ type V5AccountServiceI interface {
 	GetWalletBalance(AccountType, string) (*V5WalletBalanceResponse, error)
 }
 
-type AccountType string
-
-const (
-	UnifiedAccount AccountType = "UNIFIED"
-	NormalAccount  AccountType = "CONTRACT"
-)
-
 // V5AccountService :
 type V5AccountService struct {
 	client *Client

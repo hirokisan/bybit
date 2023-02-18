@@ -1,5 +1,13 @@
 package bybit
 
+// AccountType :
+type AccountType string
+
+const (
+	UnifiedAccount AccountType = "UNIFIED"
+	NormalAccount  AccountType = "CONTRACT"
+)
+
 // CategoryV5 :
 type CategoryV5 string
 
