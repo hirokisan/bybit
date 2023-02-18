@@ -57,7 +57,7 @@ type V5WalletBalanceList struct {
 	Coin                   []V5WalletBalanceCoin `json:"coin"`
 }
 
-// GetPositionInfo :
+// GetWalletBalance :
 //
 // at: UNIFIED or CONTRACT
 //
