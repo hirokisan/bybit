@@ -10,6 +10,8 @@ const (
 	CategoryV5Linear = CategoryV5("linear")
 	// CategoryV5Inverse :
 	CategoryV5Inverse = CategoryV5("inverse")
+	// CategoryV5Option :
+	CategoryV5Option = CategoryV5("option")
 )
 
 // SymbolV5 :
