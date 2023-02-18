@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/hmac"
 	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -148,6 +149,19 @@ func (c *Client) populateSignatureForBody(src []byte) []byte {
 	return result
 }
 
+func getV5Signature(
+	timestamp int,
+	key string,
+	queryString string,
+	secret string,
+) string {
+	val := strconv.Itoa(timestamp) + key
+	val = val + queryString
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(val))
+	return hex.EncodeToString(h.Sum(nil))
+}
+
 func getSignature(src url.Values, key string) string {
 	keys := make([]string, len(src))
 	i := 0
@@ -229,6 +243,36 @@ func (c *Client) getPrivately(path string, query url.Values, dst interface{}) er
 	if err != nil {
 		return err
 	}
+
+	if err := c.Request(req, &dst); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) getV5Privately(path string, query url.Values, dst interface{}) error {
+	if !c.hasAuth() {
+		return fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	u, err := url.Parse(c.baseURL)
+	if err != nil {
+		return err
+	}
+	u.Path = path
+	u.RawQuery = query.Encode()
+
+	timestamp := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
+	sign := getV5Signature(timestamp, c.key, query.Encode(), c.secret)
+
+	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("X-BAPI-API-KEY", c.key)
+	req.Header.Set("X-BAPI-TIMESTAMP", strconv.Itoa(timestamp))
+	req.Header.Set("X-BAPI-SIGN", sign)
 
 	if err := c.Request(req, &dst); err != nil {
 		return err
