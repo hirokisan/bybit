@@ -7,7 +7,8 @@ import (
 
 // V5UserServiceI :
 type V5UserServiceI interface {
-	GetAPIKey() (*V5APIKeyResponse, error) }
+	GetAPIKey() (*V5APIKeyResponse, error)
+}
 
 // V5UserService :
 type V5UserService struct {
@@ -53,7 +54,7 @@ type V5ApiKeyResult struct {
 }
 
 // GetAPIKey :
-func (s *V5AccountService) GetAPIKey() (*V5APIKeyResponse, error) {
+func (s *V5UserService) GetAPIKey() (*V5APIKeyResponse, error) {
 	var (
 		res V5APIKeyResponse
 	)
