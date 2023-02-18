@@ -40,3 +40,55 @@ const (
 	// Spot
 	SymbolV5ETHUSDC = SymbolV5("ETHUSDC")
 )
+
+// TriggerDirection :
+type TriggerDirection int
+
+const (
+	// TriggerDirectionRise : triggered when market price rises
+	TriggerDirectionRise = TriggerDirection(1)
+	// TriggerDirectionFall : triggered when market price falls
+	TriggerDirectionFall = TriggerDirection(2)
+)
+
+// IsLeverage : Valid for spot only
+type IsLeverage int
+
+const (
+	// IsLeverageFalse : false then spot trading
+	IsLeverageFalse = TriggerDirection(0)
+	// IsLeverageTrue : true then margin trading
+	IsLeverageTrue = IsLeverage(1)
+)
+
+// OrderFilter : Valid for spot only
+type OrderFilter string
+
+const (
+	// OrderFilterOrder :
+	OrderFilterOrder = OrderFilter("Order")
+	// OrderFilterTpSlOrder :
+	OrderFilterTpSlOrder = OrderFilter("tpslOrder")
+)
+
+// TriggerBy :
+type TriggerBy string
+
+const (
+	// TriggerByLastPrice :
+	TriggerByLastPrice = TriggerBy("LastPrice")
+	// TriggerByIndexPrice :
+	TriggerByIndexPrice = TriggerBy("IndexPrice")
+	// TriggerByMarkPrice :
+	TriggerByMarkPrice = TriggerBy("MarkPrice")
+)
+
+// PositionIdx :
+type PositionIdx int
+
+// PositionIdx :
+const (
+	PositionIdxOneWay    = PositionIdx(0)
+	PositionIdxHedgeBuy  = PositionIdx(1)
+	PositionIdxHedgeSell = PositionIdx(2)
+)
