@@ -87,6 +87,10 @@ The following API endpoints have been implemented
 
 - `/v5/market/kline` Get Kline
 
+#### Position
+
+- [`/v5/position/list` Get Position Info](https://bybit-exchange.github.io/docs/v5/position)
+
 ### REST API
 
 #### [Derivatives Unified Margin](https://bybit-exchange.github.io/docs/derivativesV3/unified_margin)
