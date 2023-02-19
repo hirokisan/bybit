@@ -2,11 +2,12 @@ package bybit
 
 import (
 	"net/url"
+	"strings"
 )
 
 // V5AccountServiceI :
 type V5AccountServiceI interface {
-	GetWalletBalance(AccountType, string) (*V5WalletBalanceResponse, error)
+	GetWalletBalance(AccountType, []Coin) (*V5WalletBalanceResponse, error)
 }
 
 // V5AccountService :
@@ -64,15 +65,19 @@ type V5WalletBalanceList struct {
 // coin:
 // If not passed, it returns non-zero asset info
 // You can pass multiple coins to query, separated by comma. "USDT,USDC".
-func (s *V5AccountService) GetWalletBalance(at AccountType, coin string) (*V5WalletBalanceResponse, error) {
+func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5WalletBalanceResponse, error) {
 	var (
 		res   V5WalletBalanceResponse
 		query = make(url.Values)
 	)
 
 	query.Add("accountType", string(at))
-	if coin != "" {
-		query.Add("coin", coin)
+	if len(coins) > 0 {
+		var coinsStr []string
+		for _, c := range coins {
+			coinsStr = append(coinsStr, string(c))
+		}
+		query.Add("coin", strings.Join(coinsStr, ","))
 	}
 
 	if err := s.client.getV5Privately("/v5/account/wallet-balance", query, &res); err != nil {

@@ -4,8 +4,8 @@ package bybit
 type AccountType string
 
 const (
-	UnifiedAccount AccountType = "UNIFIED"
-	NormalAccount  AccountType = "CONTRACT"
+	AccountTypeUnified AccountType = "UNIFIED"
+	AccountTypeNormal  AccountType = "CONTRACT"
 )
 
 // CategoryV5 :

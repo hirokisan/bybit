@@ -12,7 +12,7 @@ import (
 
 func TestGetWalletBalance(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
-	res, err := client.V5().Account().GetWalletBalance(bybit.UnifiedAccount, "")
+	res, err := client.V5().Account().GetWalletBalance(bybit.AccountTypeUnified, nil)
 	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v5-account-get-wallet-balance.json"
