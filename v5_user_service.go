@@ -29,15 +29,15 @@ type V5ApiKeyResult struct {
 	ReadOnly    int    `json:"readOnly"`
 	Secret      string `json:"secret"`
 	Permissions struct {
-		ContractTrade []interface{} `json:"ContractTrade"`
-		Spot          []interface{} `json:"Spot"`
-		Wallet        []string      `json:"Wallet"`
-		Options       []interface{} `json:"Options"`
-		Derivatives   []interface{} `json:"Derivatives"`
-		CopyTrading   []interface{} `json:"CopyTrading"`
-		BlockTrade    []interface{} `json:"BlockTrade"`
-		Exchange      []interface{} `json:"Exchange"`
-		Nft           []interface{} `json:"NFT"`
+		ContractTrade []string `json:"ContractTrade"`
+		Spot          []string `json:"Spot"`
+		Wallet        []string `json:"Wallet"`
+		Options       []string `json:"Options"`
+		Derivatives   []string `json:"Derivatives"`
+		CopyTrading   []string `json:"CopyTrading"`
+		BlockTrade    []string `json:"BlockTrade"`
+		Exchange      []string `json:"Exchange"`
+		Nft           []string `json:"NFT"`
 	} `json:"permissions"`
 	Ips           []string  `json:"ips"`
 	Type          int       `json:"type"`

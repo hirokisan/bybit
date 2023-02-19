@@ -1,0 +1,48 @@
+{
+  "id": "214087",
+  "note": "full3",
+  "apiKey": "TrswBXTLDVhxqkfDEI",
+  "readOnly": 0,
+  "secret": "",
+  "permissions": {
+    "ContractTrade": [
+      "Order",
+      "Position"
+    ],
+    "Spot": [
+      "SpotTrade"
+    ],
+    "Wallet": [
+      "AccountTransfer",
+      "SubMemberTransfer"
+    ],
+    "Options": [
+      "OptionsTrade"
+    ],
+    "Derivatives": [
+      "DerivativesTrade"
+    ],
+    "CopyTrading": [
+      "CopyTrading"
+    ],
+    "BlockTrade": [],
+    "Exchange": [
+      "ExchangeHistory"
+    ],
+    "NFT": []
+  },
+  "ips": [
+    "*"
+  ],
+  "type": 1,
+  "deadlineDay": 63,
+  "expiredAt": "2023-04-23T05:52:24Z",
+  "createdAt": "2022-06-20T13:26:50Z",
+  "unified": 0,
+  "uta": 1,
+  "userID": 146940,
+  "inviterID": 0,
+  "vipLevel": "No VIP",
+  "mktMakerLevel": "0",
+  "affiliateID": 0
+}
