@@ -12,11 +12,10 @@ import (
 
 func TestGetWalletBalance(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
-	symbol := bybit.SymbolV5BTCUSDT
 	res, err := client.V5().Account().GetWalletBalance(bybit.UnifiedAccount, "")
 	require.NoError(t, err)
 	{
-		goldenFilename := "./testdata/v5-account-get-wallet-balance.json" // TODO
+		goldenFilename := "./testdata/v5-account-get-wallet-balance.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}

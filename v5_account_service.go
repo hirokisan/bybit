@@ -25,7 +25,7 @@ type V5WalletBalanceResult struct {
 	List []V5WalletBalanceList `json:"list"`
 }
 
-// VV5WalletBalanceCoin :
+// V5WalletBalanceCoin :
 type V5WalletBalanceCoin struct {
 	AvailableToBorrow   string `json:"availableToBorrow"`
 	AccruedInterest     string `json:"accruedInterest"`
