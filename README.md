@@ -95,6 +95,15 @@ The following API endpoints have been implemented
 
 - [`/v5/order/create` Place Order](https://bybit-exchange.github.io/docs/v5/order/create-order)
 
+#### Account
+
+- [`/v5/account/wallet-balance` Get Wallet Balance](https://bybit-exchange.github.io/docs/v5/account/wallet-balance)
+
+#### User
+
+- [`/v5/user/query-api` Get API Key Information](https://bybit-exchange.github.io/docs/v5/user/apikey-info)
+
+
 ### REST API
 
 #### [Derivatives Unified Margin](https://bybit-exchange.github.io/docs/derivativesV3/unified_margin)
