@@ -85,8 +85,8 @@ The following API endpoints have been implemented
 
 #### Market
 
-- `/v5/market/kline` Get Kline
-- `/v5/market/mark-price-kline` Get Mark Price Kline
+- [`/v5/market/kline` Get Kline](https://bybit-exchange.github.io/docs/v5/market/kline)
+- [`/v5/market/mark-price-kline` Get Mark Price Kline](https://bybit-exchange.github.io/docs/v5/market/mark-kline)
 
 #### Position
 
