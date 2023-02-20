@@ -86,6 +86,7 @@ The following API endpoints have been implemented
 #### Market
 
 - `/v5/market/kline` Get Kline
+- `/v5/market/mark-price-kline` Get Mark Price Kline
 
 #### Position
 
