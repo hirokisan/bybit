@@ -139,7 +139,7 @@ func (l *V5GetMarkPriceKlineList) UnmarshalJSON(data []byte) error {
 	}
 	for _, d := range parsedData {
 		if len(d) != 5 {
-			return errors.New("so far len(items) must be 7, please check it on documents")
+			return errors.New("so far len(items) must be 5, please check it on documents")
 		}
 		*l = append(*l, V5GetMarkPriceKlineItem{
 			StartTime: d[0].(string),
