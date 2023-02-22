@@ -39,3 +39,18 @@ func TestGetMarkPriceKline(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetIndexPriceKline(t *testing.T) {
+	client := bybit.NewTestClient()
+	res, err := client.V5().Market().GetIndexPriceKline(bybit.V5GetIndexPriceKlineParam{
+		Category: bybit.CategoryV5Linear,
+		Symbol:   bybit.SymbolV5BTCUSDT,
+		Interval: bybit.IntervalD,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-market-get-index-price-kline.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
