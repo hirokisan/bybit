@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 
 	"github.com/google/go-querystring/query"
 )
@@ -13,6 +14,7 @@ type V5MarketServiceI interface {
 	GetKline(V5GetKlineParam) (*V5GetKlineResponse, error)
 	GetMarkPriceKline(V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error)
 	GetIndexPriceKline(V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error)
+	GetPremiumIndexPriceKline(V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error)
 }
 
 // V5MarketService :
@@ -243,6 +245,83 @@ func (s *V5MarketService) GetIndexPriceKline(param V5GetIndexPriceKlineParam) (*
 	}
 
 	if err := s.client.getPublicly("/v5/market/index-price-kline", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetPremiumIndexPriceKlineParam :
+type V5GetPremiumIndexPriceKlineParam struct {
+	Category CategoryV5 `url:"category"`
+	Symbol   SymbolV5   `url:"symbol"`
+	Interval Interval   `url:"interval"`
+	Start    *int       `url:"start,omitempty"` // timestamp point for result, in milliseconds
+	End      *int       `url:"end,omitempty"`   // timestamp point for result, in milliseconds
+	Limit    *int       `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
+}
+
+// V5GetPremiumIndexPriceKlineResponse :
+type V5GetPremiumIndexPriceKlineResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetPremiumIndexPriceKlineResult `json:"result"`
+}
+
+// V5GetPremiumIndexPriceKlineResult :
+type V5GetPremiumIndexPriceKlineResult struct {
+	Category CategoryV5                      `json:"category"`
+	Symbol   SymbolV5                        `json:"symbol"`
+	List     V5GetPremiumIndexPriceKlineList `json:"list"`
+}
+
+// V5GetPremiumIndexPriceKlineList :
+type V5GetPremiumIndexPriceKlineList []V5GetPremiumIndexPriceKlineItem
+
+// V5GetPremiumIndexPriceKlineItem :
+type V5GetPremiumIndexPriceKlineItem struct {
+	StartTime string
+	Open      string
+	High      string
+	Low       string
+	Close     string
+}
+
+// UnmarshalJSON :
+func (l *V5GetPremiumIndexPriceKlineList) UnmarshalJSON(data []byte) error {
+	parsedData := [][]interface{}{}
+	if err := json.Unmarshal(data, &parsedData); err != nil {
+		return err
+	}
+	for _, d := range parsedData {
+		if len(d) != 5 {
+			return errors.New("so far len(items) must be 5, please check it on documents")
+		}
+		log.Println(d)
+		*l = append(*l, V5GetPremiumIndexPriceKlineItem{
+			StartTime: d[0].(string),
+			Open:      d[1].(string),
+			High:      d[2].(string),
+			Low:       d[3].(string),
+			Close:     d[4].(string),
+		})
+	}
+	return nil
+}
+
+// GetPremiumIndexPriceKline :
+func (s *V5MarketService) GetPremiumIndexPriceKline(param V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error) {
+	var res V5GetPremiumIndexPriceKlineResponse
+
+	if param.Category != CategoryV5Linear {
+		return nil, fmt.Errorf("category should be linear")
+	}
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/premium-index-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
