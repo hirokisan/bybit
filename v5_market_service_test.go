@@ -151,3 +151,51 @@ func TestV5Market_GetIndexPriceKline(t *testing.T) {
 	assert.Equal(t, respBody["result"].(map[string]interface{})["list"].([][]string)[0][3], resp.Result.List[0].Low)
 	assert.Equal(t, respBody["result"].(map[string]interface{})["list"].([][]string)[0][4], resp.Result.List[0].Close)
 }
+
+func TestV5Market_GetPremiumIndexPriceKline(t *testing.T) {
+	param := V5GetPremiumIndexPriceKlineParam{
+		Category: CategoryV5Linear,
+		Symbol:   SymbolV5BTCUSDT,
+		Interval: IntervalD,
+	}
+
+	path := "/v5/market/premium-index-price-kline"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"result": map[string]interface{}{
+			"category": "linear",
+			"symbol":   "BTCUSDT",
+			"list": [][]string{
+				{
+					"1676246400000",
+					"0.000074",
+					"0.000508",
+					"0.000121",
+					"0.000508",
+				},
+			},
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.V5().Market().GetPremiumIndexPriceKline(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	assert.Equal(t, respBody["result"].(map[string]interface{})["symbol"], string(resp.Result.Symbol))
+	assert.Equal(t, respBody["result"].(map[string]interface{})["list"].([][]string)[0][0], resp.Result.List[0].StartTime)
+	assert.Equal(t, respBody["result"].(map[string]interface{})["list"].([][]string)[0][1], resp.Result.List[0].Open)
+	assert.Equal(t, respBody["result"].(map[string]interface{})["list"].([][]string)[0][2], resp.Result.List[0].High)
+	assert.Equal(t, respBody["result"].(map[string]interface{})["list"].([][]string)[0][3], resp.Result.List[0].Low)
+	assert.Equal(t, respBody["result"].(map[string]interface{})["list"].([][]string)[0][4], resp.Result.List[0].Close)
+}
