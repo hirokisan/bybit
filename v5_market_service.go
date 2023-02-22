@@ -12,6 +12,7 @@ import (
 type V5MarketServiceI interface {
 	GetKline(V5GetKlineParam) (*V5GetKlineResponse, error)
 	GetMarkPriceKline(V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error)
+	GetIndexPriceKline(V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error)
 }
 
 // V5MarketService :
@@ -166,6 +167,82 @@ func (s *V5MarketService) GetMarkPriceKline(param V5GetMarkPriceKlineParam) (*V5
 	}
 
 	if err := s.client.getPublicly("/v5/market/mark-price-kline", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetIndexPriceKlineParam :
+type V5GetIndexPriceKlineParam struct {
+	Category CategoryV5 `url:"category"`
+	Symbol   SymbolV5   `url:"symbol"`
+	Interval Interval   `url:"interval"`
+	Start    *int       `url:"start,omitempty"` // timestamp point for result, in milliseconds
+	End      *int       `url:"end,omitempty"`   // timestamp point for result, in milliseconds
+	Limit    *int       `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
+}
+
+// V5GetIndexPriceKlineResponse :
+type V5GetIndexPriceKlineResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetIndexPriceKlineResult `json:"result"`
+}
+
+// V5GetIndexPriceKlineResult :
+type V5GetIndexPriceKlineResult struct {
+	Category CategoryV5               `json:"category"`
+	Symbol   SymbolV5                 `json:"symbol"`
+	List     V5GetIndexPriceKlineList `json:"list"`
+}
+
+// V5GetIndexPriceKlineList :
+type V5GetIndexPriceKlineList []V5GetIndexPriceKlineItem
+
+// V5GetIndexPriceKlineItem :
+type V5GetIndexPriceKlineItem struct {
+	StartTime string
+	Open      string
+	High      string
+	Low       string
+	Close     string
+}
+
+// UnmarshalJSON :
+func (l *V5GetIndexPriceKlineList) UnmarshalJSON(data []byte) error {
+	parsedData := [][]interface{}{}
+	if err := json.Unmarshal(data, &parsedData); err != nil {
+		return err
+	}
+	for _, d := range parsedData {
+		if len(d) != 5 {
+			return errors.New("so far len(items) must be 5, please check it on documents")
+		}
+		*l = append(*l, V5GetIndexPriceKlineItem{
+			StartTime: d[0].(string),
+			Open:      d[1].(string),
+			High:      d[2].(string),
+			Low:       d[3].(string),
+			Close:     d[4].(string),
+		})
+	}
+	return nil
+}
+
+// GetIndexPriceKline :
+func (s *V5MarketService) GetIndexPriceKline(param V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error) {
+	var res V5GetIndexPriceKlineResponse
+
+	if param.Category != CategoryV5Linear && param.Category != CategoryV5Inverse {
+		return nil, fmt.Errorf("category should be linear or inverse")
+	}
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/index-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
