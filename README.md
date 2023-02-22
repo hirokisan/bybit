@@ -88,6 +88,7 @@ The following API endpoints have been implemented
 - [`/v5/market/kline` Get Kline](https://bybit-exchange.github.io/docs/v5/market/kline)
 - [`/v5/market/mark-price-kline` Get Mark Price Kline](https://bybit-exchange.github.io/docs/v5/market/mark-kline)
 - [`/v5/market/index-price-kline` Get Index Price Kline](https://bybit-exchange.github.io/docs/v5/market/index-kline)
+- [`/v5/market/premium-index-price-kline` Get Premium Index Price Kline](https://bybit-exchange.github.io/docs/v5/market/preimum-index-kline)
 
 #### Position
 
