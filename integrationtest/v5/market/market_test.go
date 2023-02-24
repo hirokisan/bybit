@@ -69,3 +69,40 @@ func TestGetPremiumIndexPriceKline(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetInstrumentsInfo(t *testing.T) {
+	client := bybit.NewTestClient()
+	{
+		res, err := client.V5().Market().GetInstrumentsInfo(bybit.V5GetInstrumentsInfoParam{
+			Category: bybit.CategoryV5Linear,
+		})
+		require.NoError(t, err)
+		{
+			goldenFilename := "./testdata/v5-market-get-instruments-info-inverse.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	}
+	{
+		res, err := client.V5().Market().GetInstrumentsInfo(bybit.V5GetInstrumentsInfoParam{
+			Category: bybit.CategoryV5Option,
+		})
+		require.NoError(t, err)
+		{
+			goldenFilename := "./testdata/v5-market-get-instruments-info-option.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	}
+	{
+		res, err := client.V5().Market().GetInstrumentsInfo(bybit.V5GetInstrumentsInfoParam{
+			Category: bybit.CategoryV5Spot,
+		})
+		require.NoError(t, err)
+		{
+			goldenFilename := "./testdata/v5-market-get-instruments-info-spot.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	}
+}
