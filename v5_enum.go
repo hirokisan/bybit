@@ -100,3 +100,52 @@ const (
 	PositionIdxHedgeBuy  = PositionIdx(1)
 	PositionIdxHedgeSell = PositionIdx(2)
 )
+
+// ContractType :
+type ContractType string
+
+// ContractType :
+const (
+	ContractTypeInversePerpetual = ContractType("InversePerpetual")
+	ContractTypeLinearPerpetual  = ContractType("LinearPerpetual")
+	ContractTypeInverseFutures   = ContractType("InverseFutures")
+)
+
+// InstrumentStatus :
+type InstrumentStatus string
+
+// InstrumentStatus :
+const (
+	// linear & inverse:
+	InstrumentStatusPending  = InstrumentStatus("Pending")
+	InstrumentStatusTrading  = InstrumentStatus("Trading")
+	InstrumentStatusSettling = InstrumentStatus("Settling")
+	InstrumentStatusClosed   = InstrumentStatus("Closed")
+
+	// option
+	InstrumentStatusWaitingOnline = InstrumentStatus("WAITING_ONLINE")
+	InstrumentStatusOnline        = InstrumentStatus("ONLINE")
+	InstrumentStatusDelivering    = InstrumentStatus("DELIVERING")
+	InstrumentStatusOffline       = InstrumentStatus("OFFLINE")
+
+	// spot
+	InstrumentStatusAvailable = InstrumentStatus("1")
+)
+
+// OptionsType :
+type OptionsType string
+
+// OptionsType :
+const (
+	OptionsTypeCall = OptionsType("Call")
+	OptionsTypePut  = OptionsType("Put")
+)
+
+// Innovation :
+type Innovation string
+
+// Innovation :
+const (
+	InnovationFalse = Innovation("0")
+	InnovationTrue  = Innovation("1")
+)

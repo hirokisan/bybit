@@ -15,6 +15,7 @@ type V5MarketServiceI interface {
 	GetMarkPriceKline(V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error)
 	GetIndexPriceKline(V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error)
 	GetPremiumIndexPriceKline(V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error)
+	GetInstrumentsInfo(V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error)
 }
 
 // V5MarketService :
@@ -322,6 +323,161 @@ func (s *V5MarketService) GetPremiumIndexPriceKline(param V5GetPremiumIndexPrice
 	}
 
 	if err := s.client.getPublicly("/v5/market/premium-index-price-kline", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetInstrumentsInfoParam :
+// Spot does not support pagination, so limit, cursor are invalid.
+// When query by baseCoin, regardless of category=linear or inverse, the result will have Linear contract and Inverse contract symbols.
+type V5GetInstrumentsInfoParam struct {
+	Category CategoryV5 `url:"category"`
+
+	Symbol   *SymbolV5 `url:"symbol,omitempty"`
+	BaseCoin *Coin     `url:"baseCoin,omitempty"` // Base coin. linear,inverse,option only
+	Limit    *int      `url:"limit,omitempty"`    // Limit for data size per page. [1, 1000]. Default: 500
+	Cursor   *string   `url:"cursor,omitempty"`
+}
+
+// V5GetInstrumentsInfoResponse :
+type V5GetInstrumentsInfoResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetInstrumentsInfoResult `json:"result"`
+}
+
+// V5GetInstrumentsInfoResult :
+// Responses are filled according to category.
+type V5GetInstrumentsInfoResult struct {
+	LinearInverse *V5GetInstrumentsInfoLinearInverseResult
+	Option        *V5GetInstrumentsInfoOptionResult
+	Spot          *V5GetInstrumentsInfoSpotResult
+}
+
+// UnmarshalJSON :
+func (r *V5GetInstrumentsInfoResult) UnmarshalJSON(data []byte) error {
+	var categoryJudge struct {
+		Category CategoryV5 `json:"category"`
+	}
+	if err := json.Unmarshal(data, &categoryJudge); err != nil {
+		return err
+	}
+	switch categoryJudge.Category {
+	case CategoryV5Linear, CategoryV5Inverse:
+		if err := json.Unmarshal(data, &r.LinearInverse); err != nil {
+			return err
+		}
+	case CategoryV5Option:
+		if err := json.Unmarshal(data, &r.Option); err != nil {
+			return err
+		}
+	case CategoryV5Spot:
+		if err := json.Unmarshal(data, &r.Spot); err != nil {
+			return err
+		}
+	default:
+		return fmt.Errorf("unexpected category %s given", categoryJudge.Category)
+	}
+	return nil
+}
+
+// V5GetInstrumentsInfoLinearInverseResult :
+type V5GetInstrumentsInfoLinearInverseResult struct {
+	Category       CategoryV5 `json:"category"`
+	NextPageCursor string     `json:"nextPageCursor"`
+	List           []struct {
+		Symbol          SymbolV5         `json:"symbol"`
+		ContractType    ContractType     `json:"contractType"`
+		Status          InstrumentStatus `json:"status"`
+		BaseCoin        Coin             `json:"baseCoin"`
+		QuoteCoin       Coin             `json:"quoteCoin"`
+		SettleCoin      Coin             `json:"settleCoin"`
+		LaunchTime      string           `json:"launchTime"`
+		DeliveryTime    string           `json:"deliveryTime"`
+		DeliveryFeeRate string           `json:"deliveryFeeRate"`
+		PriceScale      string           `json:"priceScale"`
+		LeverageFilter  struct {
+			MinLeverage  string `json:"minLeverage"`
+			MaxLeverage  string `json:"maxLeverage"`
+			LeverageStep string `json:"leverageStep"`
+		} `json:"leverageFilter"`
+		PriceFilter struct {
+			MinPrice string `json:"minPrice"`
+			MaxPrice string `json:"maxPrice"`
+			TickSize string `json:"tickSize"`
+		} `json:"priceFilter"`
+		LotSizeFilter struct {
+			MaxOrderQty         string `json:"maxOrderQty"`
+			MinOrderQty         string `json:"minOrderQty"`
+			QtyStep             string `json:"qtyStep"`
+			PostOnlyMaxOrderQty string `json:"postOnlyMaxOrderQty"`
+		} `json:"lotSizeFilter"`
+		UnifiedMarginTrade bool `json:"unifiedMarginTrade"`
+		FundingInterval    int  `json:"fundingInterval"`
+	} `json:"list"`
+}
+
+// V5GetInstrumentsInfoOptionResult :
+type V5GetInstrumentsInfoOptionResult struct {
+	Category       CategoryV5 `json:"category"`
+	NextPageCursor string     `json:"nextPageCursor"`
+	List           []struct {
+		Symbol          SymbolV5         `json:"symbol"`
+		OptionsType     OptionsType      `json:"optionsType"`
+		Status          InstrumentStatus `json:"status"`
+		BaseCoin        Coin             `json:"baseCoin"`
+		QuoteCoin       Coin             `json:"quoteCoin"`
+		SettleCoin      Coin             `json:"settleCoin"`
+		LaunchTime      string           `json:"launchTime"`
+		DeliveryTime    string           `json:"deliveryTime"`
+		DeliveryFeeRate string           `json:"deliveryFeeRate"`
+		PriceFilter     struct {
+			MinPrice string `json:"minPrice"`
+			MaxPrice string `json:"maxPrice"`
+			TickSize string `json:"tickSize"`
+		} `json:"priceFilter"`
+		LotSizeFilter struct {
+			MaxOrderQty string `json:"maxOrderQty"`
+			MinOrderQty string `json:"minOrderQty"`
+			QtyStep     string `json:"qtyStep"`
+		} `json:"lotSizeFilter"`
+	} `json:"list"`
+}
+
+// V5GetInstrumentsInfoSpotResult :
+type V5GetInstrumentsInfoSpotResult struct {
+	Category CategoryV5 `json:"category"`
+	List     []struct {
+		Symbol        SymbolV5         `json:"symbol"`
+		BaseCoin      Coin             `json:"baseCoin"`
+		QuoteCoin     Coin             `json:"quoteCoin"`
+		Innovation    Innovation       `json:"innovation"`
+		Status        InstrumentStatus `json:"status"`
+		LotSizeFilter struct {
+			BasePrecision  string `json:"basePrecision"`
+			QuotePrecision string `json:"quotePrecision"`
+			MaxOrderQty    string `json:"maxOrderQty"`
+			MinOrderQty    string `json:"minOrderQty"`
+			MinOrderAmt    string `json:"minOrderAmt"`
+			MaxOrderAmt    string `json:"maxOrderAmt"`
+		} `json:"lotSizeFilter"`
+		PriceFilter struct {
+			TickSize string `json:"tickSize"`
+		} `json:"priceFilter"`
+	} `json:"list"`
+}
+
+// GetInstrumentsInfo :
+func (s *V5MarketService) GetInstrumentsInfo(param V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error) {
+	var res V5GetInstrumentsInfoResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/instruments-info", queryString, &res); err != nil {
 		return nil, err
 	}
 

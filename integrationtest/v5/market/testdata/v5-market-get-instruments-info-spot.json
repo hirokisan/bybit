@@ -1,0 +1,3429 @@
+{
+  "LinearInverse": null,
+  "Option": null,
+  "Spot": {
+    "category": "spot",
+    "list": [
+      {
+        "symbol": "BTCUSDT",
+        "baseCoin": "BTC",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.000001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "63.01197227",
+          "minOrderQty": "0.00004",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "ETHUSDT",
+        "baseCoin": "ETH",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.0000001",
+          "maxOrderQty": "100000000",
+          "minOrderQty": "0.0005",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "100000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "EOSUSDT",
+        "baseCoin": "EOS",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "1818181818181.818182",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "NEOBTC",
+        "baseCoin": "NEO",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "100",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "XRPUSDT",
+        "baseCoin": "XRP",
+        "quoteCoin": "USDT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "142857.142857",
+          "minOrderQty": "1",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "UNIUSDT",
+        "baseCoin": "UNI",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "50000",
+          "minOrderQty": "0.33",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "UNIBTC",
+        "baseCoin": "UNI",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "SUSHIUSDT",
+        "baseCoin": "SUSHI",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.77",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "DOTUSDT",
+        "baseCoin": "DOT",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "1400",
+          "minOrderQty": "0.5",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "ETHBTC",
+        "baseCoin": "ETH",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "1"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "EOSETH",
+        "baseCoin": "EOS",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "100000",
+          "minOrderQty": "10",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "BTCETH",
+        "baseCoin": "BTC",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "10001",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "BTTUSDT",
+        "baseCoin": "BTT",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.000001",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.000001",
+          "minOrderAmt": "0.000001",
+          "maxOrderAmt": "10"
+        },
+        "priceFilter": {
+          "tickSize": "0.000001"
+        }
+      },
+      {
+        "symbol": "XLMUSDT",
+        "baseCoin": "XLM",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "123450",
+          "minOrderQty": "25",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "12345"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "LTCUSDT",
+        "baseCoin": "LTC",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.0000001",
+          "maxOrderQty": "3213",
+          "minOrderQty": "0.05",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "123"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "XRPBTC",
+        "baseCoin": "XRP",
+        "quoteCoin": "BTC",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00000001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "833333333333.33333333",
+          "minOrderQty": "0.00000001",
+          "minOrderAmt": "0.00000001",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00000001"
+        }
+      },
+      {
+        "symbol": "XRPEOS",
+        "baseCoin": "XRP",
+        "quoteCoin": "EOS",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "246800",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "1234"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "DOGEUSDT",
+        "baseCoin": "DOGE",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "18873266.018685",
+          "minOrderQty": "37",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "10000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "AAVEUSDT",
+        "baseCoin": "AAVE",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.032",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "BITUSDT",
+        "baseCoin": "BIT",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "2000000",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "20000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "LINKUSDT",
+        "baseCoin": "LINK",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.34",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "MATICUSDT",
+        "baseCoin": "MATIC",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "8.33",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "ADAUSDT",
+        "baseCoin": "ADA",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "4.17",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "CHZUSDT",
+        "baseCoin": "CHZ",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "1",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "62617.4076",
+          "minOrderQty": "31.25",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "MANAUSDT",
+        "baseCoin": "MANA",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "XTZUSDT",
+        "baseCoin": "XTZ",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "100000",
+          "minOrderQty": "1.32",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "MKRUSDT",
+        "baseCoin": "MKR",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.0036",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "1"
+        }
+      },
+      {
+        "symbol": "AXSUSDT",
+        "baseCoin": "AXS",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "12345",
+          "minOrderQty": "0.16",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "12345"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "DYDXUSDT",
+        "baseCoin": "DYDX",
+        "quoteCoin": "USDT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "1000",
+          "minOrderQty": "10",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "100"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "BCHUSDT",
+        "baseCoin": "BCH",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.017",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "PMTEST2USDT",
+        "baseCoin": "PMTEST2",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "1000",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "PERPUSDT",
+        "baseCoin": "PERP",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "31118.61",
+          "minOrderQty": "0.7",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "GRTUSDT",
+        "baseCoin": "GRT",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "1",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "41545",
+          "minOrderQty": "10",
+          "minOrderAmt": "100",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.000001"
+        }
+      },
+      {
+        "symbol": "USDCUSDT",
+        "baseCoin": "USDC",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "1",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "340136.0544",
+          "minOrderQty": "10.01",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "SOLUSDT",
+        "baseCoin": "SOL",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "50000",
+          "minOrderQty": "0.06",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "OMGUSDT",
+        "baseCoin": "OMG",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "300000000000",
+          "minOrderQty": "0.71",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "300000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "LUNCUSDT",
+        "baseCoin": "LUNC",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "111111",
+          "minOrderQty": "0.27",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "111111"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "PMTEST15USDT",
+        "baseCoin": "PMTEST15",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "ICPETH",
+        "baseCoin": "ICP",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.0000001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "PMTEST7ETH",
+        "baseCoin": "PMTEST7",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "BTCUSDC",
+        "baseCoin": "BTC",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.000001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "3089.43089431",
+          "minOrderQty": "0.000198",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "380000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "ETHUSDC",
+        "baseCoin": "ETH",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.0000001",
+          "maxOrderQty": "33000",
+          "minOrderQty": "0.00224",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "33000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "BITETH",
+        "baseCoin": "BIT",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "172.4138",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "10"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "PMTEST8PMTEST7",
+        "baseCoin": "PMTEST8",
+        "quoteCoin": "PMTEST7",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "PMTEST7USDC",
+        "baseCoin": "PMTEST7",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "100000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "USDTBIT",
+        "baseCoin": "USDT",
+        "quoteCoin": "BIT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "XRP3SUSDT",
+        "baseCoin": "XRP3S",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "10000000000",
+          "minOrderQty": "1",
+          "minOrderAmt": "5",
+          "maxOrderAmt": "1000000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "UNIBIT",
+        "baseCoin": "UNI",
+        "quoteCoin": "BIT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0000001",
+          "quotePrecision": "0.0000001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.0000001",
+          "minOrderAmt": "0.0000001",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0000001"
+        }
+      },
+      {
+        "symbol": "USDTTESTNETCS1",
+        "baseCoin": "USDT",
+        "quoteCoin": "TESTNETCS1",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "1",
+          "maxOrderQty": "0",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "DONNYTESTUSDT",
+        "baseCoin": "DONNYTEST",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "EOSBIT",
+        "baseCoin": "EOS",
+        "quoteCoin": "BIT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "100000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "XLMQQTEST001",
+        "baseCoin": "XLM",
+        "quoteCoin": "QQTEST001",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "LTCXLM",
+        "baseCoin": "LTC",
+        "quoteCoin": "XLM",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "XLMEOS",
+        "baseCoin": "XLM",
+        "quoteCoin": "EOS",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "XLMXRP",
+        "baseCoin": "XLM",
+        "quoteCoin": "XRP",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "XLMSHIBI",
+        "baseCoin": "XLM",
+        "quoteCoin": "SHIBI",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "XLMMFT",
+        "baseCoin": "XLM",
+        "quoteCoin": "MFT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "XLMQTHQ",
+        "baseCoin": "XLM",
+        "quoteCoin": "QTHQ",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "XLMNEO",
+        "baseCoin": "XLM",
+        "quoteCoin": "NEO",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "UNILTC",
+        "baseCoin": "UNI",
+        "quoteCoin": "LTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "UNINEO",
+        "baseCoin": "UNI",
+        "quoteCoin": "NEO",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "BTC3SUSDT",
+        "baseCoin": "BTC3S",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "50000",
+          "minOrderQty": "1",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "500000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "BTC3LUSDT",
+        "baseCoin": "BTC3L",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.000001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "12468827.93017456",
+          "minOrderQty": "1",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "500000"
+        },
+        "priceFilter": {
+          "tickSize": "0.000001"
+        }
+      },
+      {
+        "symbol": "QTHQQQTEST001",
+        "baseCoin": "QTHQ",
+        "quoteCoin": "QQTEST001",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "12"
+        }
+      },
+      {
+        "symbol": "ETH3LUSDT",
+        "baseCoin": "ETH3L",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "500",
+          "minOrderQty": "1",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "5000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "SPOTTEST3USDT",
+        "baseCoin": "SPOTTEST3",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00000000001",
+          "quotePrecision": "0.00000000001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.00000000001",
+          "minOrderAmt": "0.00000000001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.00000000001"
+        }
+      },
+      {
+        "symbol": "PMTEST12ETH",
+        "baseCoin": "PMTEST12",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "PMTEST12UST",
+        "baseCoin": "PMTEST12",
+        "quoteCoin": "UST",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00000000001",
+          "quotePrecision": "0.00000000001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.00000000001",
+          "minOrderAmt": "0.00000000001",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00000000001"
+        }
+      },
+      {
+        "symbol": "USDTUST",
+        "baseCoin": "USDT",
+        "quoteCoin": "UST",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00000000001",
+          "quotePrecision": "0.00000000001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.00000000001",
+          "minOrderAmt": "0.00000000001",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00000000001"
+        }
+      },
+      {
+        "symbol": "PMTEST12DAI",
+        "baseCoin": "PMTEST12",
+        "quoteCoin": "DAI",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00000000001",
+          "quotePrecision": "0.00000000001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.00000000001",
+          "minOrderAmt": "0.00000000001",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00000000001"
+        }
+      },
+      {
+        "symbol": "USDTDAI",
+        "baseCoin": "USDT",
+        "quoteCoin": "DAI",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0000000000001",
+          "quotePrecision": "0.00000000001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.00000000001",
+          "minOrderAmt": "0.00000000001",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0000000000001"
+        }
+      },
+      {
+        "symbol": "ZZZZZZYFI",
+        "baseCoin": "ZZZZZZ",
+        "quoteCoin": "YFI",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.0012"
+        }
+      },
+      {
+        "symbol": "USTCUSDT",
+        "baseCoin": "USTC",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0000001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "100000",
+          "minOrderQty": "0.00000001",
+          "minOrderAmt": "0.00000001",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.000001"
+        }
+      },
+      {
+        "symbol": "DONNYTEST02USDT",
+        "baseCoin": "DONNYTEST02",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "PMTEST1LUSDT",
+        "baseCoin": "PMTEST1L",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "PMTEST047USDT",
+        "baseCoin": "PMTEST047",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "PMTESTAUSDT",
+        "baseCoin": "PMTESTA",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "XRPBIT",
+        "baseCoin": "XRP",
+        "quoteCoin": "BIT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "1000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "PMTESTCUSDT",
+        "baseCoin": "PMTESTC",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "PMTESTZUSDT",
+        "baseCoin": "PMTESTZ",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "PMTESTBUSDT",
+        "baseCoin": "PMTESTB",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "PMTESTDUSDT",
+        "baseCoin": "PMTESTD",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "PMTESTABTC",
+        "baseCoin": "PMTESTA",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "DYDXETH",
+        "baseCoin": "DYDX",
+        "quoteCoin": "ETH",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "DYDXQQTEST001",
+        "baseCoin": "DYDX",
+        "quoteCoin": "QQTEST001",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "NEODYDX",
+        "baseCoin": "NEO",
+        "quoteCoin": "DYDX",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "1000",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "DYDXXRP",
+        "baseCoin": "DYDX",
+        "quoteCoin": "XRP",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "EOSDYDX",
+        "baseCoin": "EOS",
+        "quoteCoin": "DYDX",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "DYDXNEO",
+        "baseCoin": "DYDX",
+        "quoteCoin": "NEO",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "DYDXDOGE",
+        "baseCoin": "DYDX",
+        "quoteCoin": "DOGE",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "DOGEDYDX",
+        "baseCoin": "DOGE",
+        "quoteCoin": "DYDX",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "MFTDYDX",
+        "baseCoin": "MFT",
+        "quoteCoin": "DYDX",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "XRPDYDX",
+        "baseCoin": "XRP",
+        "quoteCoin": "DYDX",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "ETHDYDX",
+        "baseCoin": "ETH",
+        "quoteCoin": "DYDX",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "QQTEST001DYDX",
+        "baseCoin": "QQTEST001",
+        "quoteCoin": "DYDX",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "DYDXPIG",
+        "baseCoin": "DYDX",
+        "quoteCoin": "PIG",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "QQTEST001HT",
+        "baseCoin": "QQTEST001",
+        "quoteCoin": "HT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "EOSHT",
+        "baseCoin": "EOS",
+        "quoteCoin": "HT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "HTQQTEST001",
+        "baseCoin": "HT",
+        "quoteCoin": "QQTEST001",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "HTEOS",
+        "baseCoin": "HT",
+        "quoteCoin": "EOS",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "MVUSDT",
+        "baseCoin": "MV",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.0000001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.00001",
+          "minOrderAmt": "0.00001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "BTCBIT",
+        "baseCoin": "BTC",
+        "quoteCoin": "BIT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "PMTESTEUSDT",
+        "baseCoin": "PMTESTE",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "PMTEST2USDC",
+        "baseCoin": "PMTEST2",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "PMTEST6USDC",
+        "baseCoin": "PMTEST6",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "ADAUSDC",
+        "baseCoin": "ADA",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "10000000000",
+          "minOrderQty": "0.00001",
+          "minOrderAmt": "0.00001",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "USDTTEST",
+        "baseCoin": "USDT",
+        "quoteCoin": "TEST",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "BTCTEST",
+        "baseCoin": "BTC",
+        "quoteCoin": "TEST",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "PMTEST12USDT",
+        "baseCoin": "PMTEST12",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "769.23077",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "PMTEST12BTC",
+        "baseCoin": "PMTEST12",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "100000",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "PORTUGALUSDT",
+        "baseCoin": "PORTUGAL",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "EOS3SUSDT",
+        "baseCoin": "EOS3S",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "4264.39232409",
+          "minOrderQty": "1",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "5000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "EOS3LUSDT",
+        "baseCoin": "EOS3L",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "11363.63636364",
+          "minOrderQty": "1",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "5000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "GRPCUSDT",
+        "baseCoin": "GRPC",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "GRPCBTC",
+        "baseCoin": "GRPC",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "GRPCETH",
+        "baseCoin": "GRPC",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "PORTUGALEOS",
+        "baseCoin": "PORTUGAL",
+        "quoteCoin": "EOS",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "PMTEST03EOS",
+        "baseCoin": "PMTEST03",
+        "quoteCoin": "EOS",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "PMTEST03ETH",
+        "baseCoin": "PMTEST03",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "PMTEST03XRP",
+        "baseCoin": "PMTEST03",
+        "quoteCoin": "XRP",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "DFGUSDT",
+        "baseCoin": "DFG",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "LANG1ETH",
+        "baseCoin": "LANG1",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.00001",
+          "minOrderAmt": "0.00001",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "SOLOETH",
+        "baseCoin": "SOLO",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.00001",
+          "minOrderAmt": "0.00001",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "SOLOUSDT",
+        "baseCoin": "SOLO",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.000001",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "5000000000",
+          "minOrderQty": "0.000001",
+          "minOrderAmt": "0.000001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.000001"
+        }
+      },
+      {
+        "symbol": "WERUSDT",
+        "baseCoin": "WER",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "100000",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "TESTTUSDT",
+        "baseCoin": "TESTT",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "XLMBTC",
+        "baseCoin": "XLM",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "1234",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "1234"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "LTCBTC",
+        "baseCoin": "LTC",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "1234",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "1234"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "BTTBTC",
+        "baseCoin": "BTT",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "1234",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "1234"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "PMTEST16USDT",
+        "baseCoin": "PMTEST16",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00000000001",
+          "quotePrecision": "0.00000000001",
+          "maxOrderQty": "1000000000",
+          "minOrderQty": "0.00000000001",
+          "minOrderAmt": "0.00000000001",
+          "maxOrderAmt": "1000000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00000000001"
+        }
+      },
+      {
+        "symbol": "FFFFUSDT",
+        "baseCoin": "FFFF",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "1111",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "1111"
+        },
+        "priceFilter": {
+          "tickSize": "0.011"
+        }
+      },
+      {
+        "symbol": "PORTUGALETH",
+        "baseCoin": "PORTUGAL",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "ZENUSDT",
+        "baseCoin": "ZEN",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "SOS3LBTC",
+        "baseCoin": "SOS3L",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "1000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "SOS3SUSDT",
+        "baseCoin": "SOS3S",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "1000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "SOS3LUSDT",
+        "baseCoin": "SOS3L",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "1000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "ICXUSDT",
+        "baseCoin": "ICX",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "STXUSDT",
+        "baseCoin": "STX",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "0",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "0"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "ATOMUSDT",
+        "baseCoin": "ATOM",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "SOLBIT",
+        "baseCoin": "SOL",
+        "quoteCoin": "BIT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00000000001",
+          "quotePrecision": "0.00000000001",
+          "maxOrderQty": "100000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00000000001"
+        }
+      },
+      {
+        "symbol": "PMTEST001USDT",
+        "baseCoin": "PMTEST001",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.000001",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "100",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "SOLEOS",
+        "baseCoin": "SOL",
+        "quoteCoin": "EOS",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "100",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "TRIBLUSDT",
+        "baseCoin": "TRIBL",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "10000000",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "10000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "BTGETH",
+        "baseCoin": "BTG",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "AVAXUSDT",
+        "baseCoin": "AVAX",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.0000001",
+          "maxOrderQty": "8116.95",
+          "minOrderQty": "0.122",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "SANDUSDT",
+        "baseCoin": "SAND",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "102617.17",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "70000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "BTGUSDC",
+        "baseCoin": "BTG",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "BTGBIT",
+        "baseCoin": "BTG",
+        "quoteCoin": "BIT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "BTTETH",
+        "baseCoin": "BTT",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "BUSDUSDT",
+        "baseCoin": "BUSD",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "NEOEOS",
+        "baseCoin": "NEO",
+        "quoteCoin": "EOS",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "100",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "HNTUSDT",
+        "baseCoin": "HNT",
+        "quoteCoin": "USDT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "100000",
+          "minOrderQty": "1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "100000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "NEOETH",
+        "baseCoin": "NEO",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "100"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "UNIETH",
+        "baseCoin": "UNI",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "LUNCEOS",
+        "baseCoin": "LUNC",
+        "quoteCoin": "EOS",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "LUNCXRP",
+        "baseCoin": "LUNC",
+        "quoteCoin": "XRP",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "100",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "NEOBIT",
+        "baseCoin": "NEO",
+        "quoteCoin": "BIT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "10",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "PMTEST15EUR",
+        "baseCoin": "PMTEST15",
+        "quoteCoin": "EUR",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "BRLUSDT",
+        "baseCoin": "BRL",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "USDTEUR",
+        "baseCoin": "USDT",
+        "quoteCoin": "EUR",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "7500",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "7500"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "SOLUSDC",
+        "baseCoin": "SOL",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.0055",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "DOTUSDC",
+        "baseCoin": "DOT",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.044",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "XRPUSDC",
+        "baseCoin": "XRP",
+        "quoteCoin": "USDC",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "200000",
+          "minOrderQty": "1.2",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "BITUSDC",
+        "baseCoin": "BIT",
+        "quoteCoin": "USDC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "1996007.984032",
+          "minOrderQty": "5",
+          "minOrderAmt": "10",
+          "maxOrderAmt": "900000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "SOLETH",
+        "baseCoin": "SOL",
+        "quoteCoin": "ETH",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "1000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "DCRUSDT",
+        "baseCoin": "DCR",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "SHIBIDAI",
+        "baseCoin": "SHIBI",
+        "quoteCoin": "DAI",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "1000000",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "1000000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "PMTEST15EOS",
+        "baseCoin": "PMTEST15",
+        "quoteCoin": "EOS",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "1000",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "APEUSDT",
+        "baseCoin": "APE",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "24957.96",
+          "minOrderQty": "0.14",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "99639"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "CTCUSDT",
+        "baseCoin": "CTC",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.00000001",
+          "maxOrderQty": "1000",
+          "minOrderQty": "1.01",
+          "minOrderAmt": "1",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.000001"
+        }
+      },
+      {
+        "symbol": "BITBTG",
+        "baseCoin": "BIT",
+        "quoteCoin": "BTG",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "USDTBTG",
+        "baseCoin": "USDT",
+        "quoteCoin": "BTG",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "SOLBTC",
+        "baseCoin": "SOL",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.1",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "SOLDAI",
+        "baseCoin": "SOL",
+        "quoteCoin": "DAI",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "LTCBIT",
+        "baseCoin": "LTC",
+        "quoteCoin": "BIT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.1",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "100",
+          "minOrderQty": "0.1",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "1000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "HNTBTC",
+        "baseCoin": "HNT",
+        "quoteCoin": "BTC",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "100",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.1"
+        }
+      },
+      {
+        "symbol": "USDTRUB",
+        "baseCoin": "USDT",
+        "quoteCoin": "RUB",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.01",
+          "quotePrecision": "0.01",
+          "maxOrderQty": "10000",
+          "minOrderQty": "0.01",
+          "minOrderAmt": "0.01",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "USDTBTC",
+        "baseCoin": "USDT",
+        "quoteCoin": "BTC",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.000001",
+          "quotePrecision": "0.000001",
+          "maxOrderQty": "3538.570418",
+          "minOrderQty": "0.000001",
+          "minOrderAmt": "0.000001",
+          "maxOrderAmt": "10000"
+        },
+        "priceFilter": {
+          "tickSize": "0.000001"
+        }
+      },
+      {
+        "symbol": "TRXUSDT",
+        "baseCoin": "TRX",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "500000",
+          "minOrderQty": "0.00001",
+          "minOrderAmt": "0.00001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "ALGOUSDT",
+        "baseCoin": "ALGO",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "150000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "FTMUSDT",
+        "baseCoin": "FTM",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "100000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "NEARUSDT",
+        "baseCoin": "NEAR",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.001",
+          "minOrderAmt": "0.001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.001"
+        }
+      },
+      {
+        "symbol": "BNBUSDT",
+        "baseCoin": "BNB",
+        "quoteCoin": "USDT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "300000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "300000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "GMTUSDT",
+        "baseCoin": "GMT",
+        "quoteCoin": "USDT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "BTMUSDT",
+        "baseCoin": "BTM",
+        "quoteCoin": "USDT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "ETHWUSDT",
+        "baseCoin": "ETHW",
+        "quoteCoin": "USDT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.001",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.01"
+        }
+      },
+      {
+        "symbol": "LDOUSDT",
+        "baseCoin": "LDO",
+        "quoteCoin": "USDT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "APTUSDT",
+        "baseCoin": "APT",
+        "quoteCoin": "USDT",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.00001",
+          "quotePrecision": "0.00001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.00001",
+          "minOrderAmt": "0.00001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.00001"
+        }
+      },
+      {
+        "symbol": "LUNAUSDT",
+        "baseCoin": "LUNA",
+        "quoteCoin": "USDT",
+        "innovation": "0",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "30000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      },
+      {
+        "symbol": "APEXUSDC",
+        "baseCoin": "APEX",
+        "quoteCoin": "USDC",
+        "innovation": "1",
+        "status": "1",
+        "lotSizeFilter": {
+          "basePrecision": "0.0001",
+          "quotePrecision": "0.0001",
+          "maxOrderQty": "100000",
+          "minOrderQty": "0.0001",
+          "minOrderAmt": "0.0001",
+          "maxOrderAmt": "30000"
+        },
+        "priceFilter": {
+          "tickSize": "0.0001"
+        }
+      }
+    ]
+  }
+}
