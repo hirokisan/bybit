@@ -1,12 +1,14 @@
 package bybit
 
+import "github.com/gorilla/websocket"
+
 // V5WebsocketServiceI :
 type V5WebsocketServiceI interface {
 	Spot() V5WebsocketSpotServiceI
 	Linear() V5WebsocketLinearServiceI
 	Inverse() V5WebsocketInverseServiceI
 	Option() V5WebsocketOptionServiceI
-	Private() V5WebsocketPrivateServiceI
+	Private() (V5WebsocketPrivateService, error)
 }
 
 // V5WebsocketService :
@@ -35,11 +37,20 @@ func (s *V5WebsocketService) Option() V5WebsocketOptionServiceI {
 }
 
 // Private :
-func (s *V5WebsocketService) Private() V5WebsocketPrivateServiceI {
-	return &V5WebsocketPrivateService{s.client}
+func (s *V5WebsocketService) Private() (*V5WebsocketPrivateService, error) {
+	url := s.client.baseURL + V5WebsocketPrivatePath
+	c, _, err := websocket.DefaultDialer.Dial(url, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &V5WebsocketPrivateService{
+		client:          s.client,
+		connection:      c,
+		paramPrivateMap: map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponseContent) error{},
+	}, nil
 }
 
 // V5 :
-func (c *WebSocketClient) V5() V5WebsocketServiceI {
+func (c *WebSocketClient) V5() *V5WebsocketService {
 	return &V5WebsocketService{c}
 }
