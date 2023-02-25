@@ -105,7 +105,7 @@ errHandler := func(isWebsocketClosed bool, err error) {
 	// At this point, the connection is dead and you must handle the reconnection yourself
 }
 
-err = svc.Start(errHandler, context.Background())
+err = svc.Start(context.Background(), errHandler)
 if err != nil {
 	// handle reconnection (ping issue, etc.). Probably can be ignored as the errHandler would be notified too
 }

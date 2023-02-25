@@ -9,10 +9,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestPrivateWebsocketV5Position(t *testing.T) {
+func TestV5WebsocketPrivate_Position(t *testing.T) {
 	respBody := V5WebsocketPrivatePositionResponseContent{
 		Topic:        "position",
-		Id:           "75d86e42f18b23b9ad2c1f10eaffa8bb:18483ff242aca593:0:01",
+		ID:           "75d86e42f18b23b9ad2c1f10eaffa8bb:18483ff242aca593:0:01",
 		CreationTime: 1677226839837,
 		Data: []V5WebsocketPrivatePositionResponseData{
 			{
@@ -30,7 +30,7 @@ func TestPrivateWebsocketV5Position(t *testing.T) {
 				PositionIM:      "0.237801",
 				PositionStatus:  "Normal",
 				PositionValue:   "23.7801",
-				RiskId:          1,
+				RiskID:          1,
 				RiskLimitValue:  "2000000",
 				Side:            "Buy",
 				Size:            "0.001",

@@ -39,7 +39,7 @@ type V5WebsocketPrivateParamKey struct {
 }
 
 type V5WebsocketPrivatePositionResponseContent struct {
-	Id           string                                   `json:"id"`
+	ID           string                                   `json:"id"`
 	Topic        V5WebsocketPrivateTopic                  `json:"topic"`
 	CreationTime int64                                    `json:"creationTime"`
 	Data         []V5WebsocketPrivatePositionResponseData `json:"data"`
@@ -51,7 +51,7 @@ type V5WebsocketPrivatePositionResponseData struct {
 	PositionIdx     int        `json:"positionIdx"`
 	TpSlMode        TpSlMode   `json:"tpSlMode"`
 	TradeMode       int        `json:"tradeMode"`
-	RiskId          int        `json:"riskId"`
+	RiskID          int        `json:"riskId"`
 	RiskLimitValue  string     `json:"riskLimitValue"`
 	Symbol          SymbolV5   `json:"symbol"`
 	Side            Side       `json:"side"`
@@ -165,10 +165,11 @@ func (s *V5WebsocketPrivateService) RegisterFuncPosition(f func(V5WebsocketPriva
 	return nil
 }
 
-// Start :
+// ErrHandler :
 type ErrHandler func(isWebsocketClosed bool, err error)
 
-func (s *V5WebsocketPrivateService) Start(errHandler ErrHandler, ctx context.Context) error {
+// Start :
+func (s *V5WebsocketPrivateService) Start(ctx context.Context, errHandler ErrHandler) error {
 	done := make(chan struct{})
 
 	go func() {
