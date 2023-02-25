@@ -92,7 +92,7 @@ if err != nil {
 	// handle subscription error
 }
 
-err = svc.RegisterFuncPosition(func(position bybit.V5WebsocketPrivatePositionResponseContent) error {
+err = svc.SubscribePosition(func(position bybit.V5WebsocketPrivatePositionResponse) error {
 	// handle new position information
 })
 if err != nil {
