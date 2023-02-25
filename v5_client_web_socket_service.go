@@ -1,13 +1,12 @@
 package bybit
 
-import "github.com/gorilla/websocket"
+import (
+	"github.com/gorilla/websocket"
+)
 
 // V5WebsocketServiceI :
 type V5WebsocketServiceI interface {
-	Spot() V5WebsocketSpotServiceI
-	Linear() V5WebsocketLinearServiceI
-	Inverse() V5WebsocketInverseServiceI
-	Option() V5WebsocketOptionServiceI
+	Public(CategoryV5) (V5WebsocketPublicService, error)
 	Private() (V5WebsocketPrivateService, error)
 }
 
@@ -16,24 +15,18 @@ type V5WebsocketService struct {
 	client *WebSocketClient
 }
 
-// Spot :
-func (s *V5WebsocketService) Spot() V5WebsocketSpotServiceI {
-	return &V5WebsocketSpotService{s.client}
-}
-
-// Linear :
-func (s *V5WebsocketService) Linear() V5WebsocketLinearServiceI {
-	return &V5WebsocketLinearService{s.client}
-}
-
-// Inverse :
-func (s *V5WebsocketService) Inverse() V5WebsocketInverseServiceI {
-	return &V5WebsocketInverseService{s.client}
-}
-
-// Option :
-func (s *V5WebsocketService) Option() V5WebsocketOptionServiceI {
-	return &V5WebsocketOptionService{s.client}
+// Public :
+func (s *V5WebsocketService) Public(category CategoryV5) (V5WebsocketPublicServiceI, error) {
+	url := s.client.baseURL + V5WebsocketPublicPathFor(category)
+	c, _, err := websocket.DefaultDialer.Dial(url, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &V5WebsocketPublicService{
+		client:            s.client,
+		connection:        c,
+		paramOrderBookMap: map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error{},
+	}, nil
 }
 
 // Private :
