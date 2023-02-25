@@ -100,8 +100,8 @@ if err != nil {
 }
 
 errHandler := func(isWebsocketClosed bool, err error) {
-	// Connection issue (timeout, etc.). 
-	
+	// Connection issue (timeout, etc.).
+
 	// At this point, the connection is dead and you must handle the reconnection yourself
 }
 
@@ -306,11 +306,13 @@ The following API endpoints have been implemented
 
 ### WebSocket API
 
-#### [Private v5](https://bybit-exchange.github.io/docs/v5/websocket/private/position)
+#### Public Topics
 
-##### Private Topics
+- [Orderbook](https://bybit-exchange.github.io/docs/v5/websocket/public/orderbook)
 
-- Position
+#### Private Topics
+
+- [Position](https://bybit-exchange.github.io/docs/v5/websocket/private/position)
 
 #### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
 
