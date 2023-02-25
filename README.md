@@ -77,6 +77,40 @@ svcRoot := wsClient.Spot().V1()
 wsClient.Start(context.Background(), executors)
 ```
 
+V5 usage
+```golang
+import "github.com/hirokisan/bybit/v2"
+
+wsClient := bybit.NewWebsocketClient().WithBaseURL("wss://stream-testnet.bybit.com").WithAuth("key", "secret")
+svc, err := wsClient.V5().Private()
+if err != nil {
+	// handle dialing error
+}
+
+err = svc.Subscribe()
+if err != nil {
+	// handle subscription error
+}
+
+err = svc.RegisterFuncPosition(func(position bybit.V5WebsocketPrivatePositionResponseContent) error {
+	// handle new position information
+})
+if err != nil {
+	// handle registration error
+}
+
+errHandler := func(isWebsocketClosed bool, err error) {
+	// Connection issue (timeout, etc.). 
+	
+	// At this point, the connection is dead and you must handle the reconnection yourself
+}
+
+err = svc.Start(errHandler, context.Background())
+if err != nil {
+	// handle reconnection (ping issue, etc.). Probably can be ignored as the errHandler would be notified too
+}
+```
+
 ## Implemented
 
 The following API endpoints have been implemented
@@ -271,6 +305,12 @@ The following API endpoints have been implemented
 - `/spot/v1/account` Get Wallet Balance
 
 ### WebSocket API
+
+#### [Private v5](https://bybit-exchange.github.io/docs/v5/websocket/private/position)
+
+##### Private Topics
+
+- Position
 
 #### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
 
