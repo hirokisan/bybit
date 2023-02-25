@@ -30,16 +30,16 @@ func (s *V5WebsocketService) Public(category CategoryV5) (V5WebsocketPublicServi
 }
 
 // Private :
-func (s *V5WebsocketService) Private() (*V5WebsocketPrivateService, error) {
+func (s *V5WebsocketService) Private() (V5WebsocketPrivateServiceI, error) {
 	url := s.client.baseURL + V5WebsocketPrivatePath
 	c, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
 		return nil, err
 	}
 	return &V5WebsocketPrivateService{
-		client:          s.client,
-		connection:      c,
-		paramPrivateMap: map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponseContent) error{},
+		client:           s.client,
+		connection:       c,
+		paramPositionMap: map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error{},
 	}, nil
 }
 

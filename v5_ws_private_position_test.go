@@ -10,11 +10,11 @@ import (
 )
 
 func TestV5WebsocketPrivate_Position(t *testing.T) {
-	respBody := V5WebsocketPrivatePositionResponseContent{
+	respBody := V5WebsocketPrivatePositionResponse{
 		Topic:        "position",
 		ID:           "75d86e42f18b23b9ad2c1f10eaffa8bb:18483ff242aca593:0:01",
 		CreationTime: 1677226839837,
-		Data: []V5WebsocketPrivatePositionResponseData{
+		Data: []V5WebsocketPrivatePositionData{
 			{
 				BustPrice:       "0.10",
 				Category:        "linear",
@@ -63,10 +63,13 @@ func TestV5WebsocketPrivate_Position(t *testing.T) {
 
 	require.NoError(t, svc.Subscribe())
 
-	require.NoError(t, svc.RegisterFuncPosition(func(response V5WebsocketPrivatePositionResponseContent) error {
-		assert.Equal(t, respBody, response)
-		return nil
-	}))
+	{
+		_, err := svc.SubscribePosition(func(response V5WebsocketPrivatePositionResponse) error {
+			assert.Equal(t, respBody, response)
+			return nil
+		})
+		require.NoError(t, err)
+	}
 
 	assert.NoError(t, svc.Run())
 	assert.NoError(t, svc.Ping())
