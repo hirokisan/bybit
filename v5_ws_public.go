@@ -81,9 +81,9 @@ func (s *V5WebsocketPublicService) Start(ctx context.Context, errHandler ErrHand
 	go func() {
 		defer close(done)
 		defer s.connection.Close()
-		s.connection.SetReadDeadline(time.Now().Add(60 * time.Second))
+		_ = s.connection.SetReadDeadline(time.Now().Add(60 * time.Second))
 		s.connection.SetPongHandler(func(string) error {
-			s.connection.SetReadDeadline(time.Now().Add(60 * time.Second))
+			_ = s.connection.SetReadDeadline(time.Now().Add(60 * time.Second))
 			return nil
 		})
 
