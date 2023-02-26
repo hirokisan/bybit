@@ -20,6 +20,10 @@ type V5WebsocketPrivateServiceI interface {
 	Ping() error
 	Close() error
 
+	SubscribeOrder(
+		func(V5WebsocketPrivateOrderResponse) error,
+	) (func() error, error)
+
 	SubscribePosition(
 		func(V5WebsocketPrivatePositionResponse) error,
 	) (func() error, error)
@@ -30,6 +34,7 @@ type V5WebsocketPrivateService struct {
 	client     *WebSocketClient
 	connection *websocket.Conn
 
+	paramOrderMap    map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateOrderResponse) error
 	paramPositionMap map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error
 }
 
@@ -42,6 +47,9 @@ const (
 type V5WebsocketPrivateTopic string
 
 const (
+	// V5WebsocketPrivateTopicOrder :
+	V5WebsocketPrivateTopicOrder = "order"
+
 	// V5WebsocketPrivateTopicPosition :
 	V5WebsocketPrivateTopicPosition = "position"
 )
@@ -97,6 +105,12 @@ func (s *V5WebsocketPrivateService) Start(ctx context.Context, errHandler ErrHan
 
 	go func() {
 		defer close(done)
+		defer s.connection.Close()
+		s.connection.SetReadDeadline(time.Now().Add(60 * time.Second))
+		s.connection.SetPongHandler(func(string) error {
+			s.connection.SetReadDeadline(time.Now().Add(60 * time.Second))
+			return nil
+		})
 
 		for {
 			if err := s.Run(); err != nil {
@@ -147,6 +161,18 @@ func (s *V5WebsocketPrivateService) Run() error {
 		return err
 	}
 	switch topic {
+	case V5WebsocketPrivateTopicOrder:
+		var resp V5WebsocketPrivateOrderResponse
+		if err := s.parseResponse(message, &resp); err != nil {
+			return err
+		}
+		f, err := s.retrieveOrderFunc(resp.Key())
+		if err != nil {
+			return err
+		}
+		if err := f(resp); err != nil {
+			return err
+		}
 	case V5WebsocketPrivateTopicPosition:
 		var resp V5WebsocketPrivatePositionResponse
 		if err := s.parseResponse(message, &resp); err != nil {
@@ -160,6 +186,7 @@ func (s *V5WebsocketPrivateService) Run() error {
 			return err
 		}
 	}
+
 	return nil
 }
 

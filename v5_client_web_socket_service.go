@@ -39,6 +39,7 @@ func (s *V5WebsocketService) Private() (V5WebsocketPrivateServiceI, error) {
 	return &V5WebsocketPrivateService{
 		client:           s.client,
 		connection:       c,
+		paramOrderMap:    map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateOrderResponse) error{},
 		paramPositionMap: map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error{},
 	}, nil
 }
