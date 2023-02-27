@@ -27,6 +27,10 @@ type V5WebsocketPrivateServiceI interface {
 	SubscribePosition(
 		func(V5WebsocketPrivatePositionResponse) error,
 	) (func() error, error)
+
+	SubscribeWallet(
+		func(V5WebsocketPrivateWalletResponse) error,
+	) (func() error, error)
 }
 
 // V5WebsocketPrivateService :
@@ -36,6 +40,7 @@ type V5WebsocketPrivateService struct {
 
 	paramOrderMap    map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateOrderResponse) error
 	paramPositionMap map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error
+	paramWalletMap   map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateWalletResponse) error
 }
 
 const (
@@ -52,6 +57,9 @@ const (
 
 	// V5WebsocketPrivateTopicPosition :
 	V5WebsocketPrivateTopicPosition = "position"
+
+	// V5WebsocketPrivateTopicWallet :
+	V5WebsocketPrivateTopicWallet = "wallet"
 )
 
 // V5WebsocketPrivateParamKey :
@@ -179,6 +187,42 @@ func (s *V5WebsocketPrivateService) Run() error {
 			return err
 		}
 		f, err := s.retrievePositionFunc(resp.Key())
+		if err != nil {
+			return err
+		}
+		if err := f(resp); err != nil {
+			return err
+		}
+	case V5WebsocketPrivateTopicWallet:
+		var resp V5WebsocketPrivateWalletResponse
+		if err := s.parseResponse(message, &resp); err != nil {
+			return err
+		}
+
+		var respCoin V5WebsocketPrivateWalletCoinInterfaceResponse
+		if err := s.parseResponse(message, &respCoin); err != nil {
+			return err
+		}
+
+		if len(respCoin.Data) > 0 {
+			if _, isArray := respCoin.Data[0].Coin.([]interface{}); isArray {
+				var coins V5WebsocketPrivateWalletCoinsResponse
+				if err := s.parseResponse(message, &coins); err != nil {
+					return err
+				}
+
+				resp.Data[0].Coin = coins.Data[0].Coins
+			} else {
+				var coin V5WebsocketPrivateWalletCoinResponse
+				if err := s.parseResponse(message, &coin); err != nil {
+					return err
+				}
+
+				resp.Data[0].Coin = []V5WebsocketPrivateWalletCoin{coin.Data[0].Coin}
+			}
+		}
+
+		f, err := s.retrieveWalletFunc(resp.Key())
 		if err != nil {
 			return err
 		}
