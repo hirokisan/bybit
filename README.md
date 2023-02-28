@@ -306,13 +306,15 @@ The following API endpoints have been implemented
 
 ### WebSocket API
 
-#### Public Topics
+#### Public Topics V5
 
 - [Orderbook](https://bybit-exchange.github.io/docs/v5/websocket/public/orderbook)
 
-#### Private Topics
+#### Private Topics V5
 
 - [Position](https://bybit-exchange.github.io/docs/v5/websocket/private/position)
+- [Order](https://bybit-exchange.github.io/docs/v5/websocket/private/order)
+- [Wallet](https://bybit-exchange.github.io/docs/v5/websocket/private/wallet)
 
 #### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
 
