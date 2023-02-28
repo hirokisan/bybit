@@ -51,24 +51,6 @@ func (s *V5WebsocketPrivateService) SubscribeWallet(
 	}, nil
 }
 
-type V5WebsocketPrivateWalletCoinInterfaceResponse struct {
-	Data []struct {
-		Coin interface{} `json:"coin"`
-	} `json:"data"`
-}
-
-type V5WebsocketPrivateWalletCoinResponse struct {
-	Data []struct {
-		Coin V5WebsocketPrivateWalletCoin `json:"coin"`
-	} `json:"data"`
-}
-
-type V5WebsocketPrivateWalletCoinsResponse struct {
-	Data []struct {
-		Coins []V5WebsocketPrivateWalletCoin `json:"coin"`
-	} `json:"data"`
-}
-
 // V5WebsocketPrivateWalletResponse :
 type V5WebsocketPrivateWalletResponse struct {
 	ID           string                         `json:"id"`
@@ -79,17 +61,44 @@ type V5WebsocketPrivateWalletResponse struct {
 
 // V5WebsocketPrivateWalletData :
 type V5WebsocketPrivateWalletData struct {
-	AccountIMRate          string                         `json:"accountIMRate"`
-	AccountMMRate          string                         `json:"accountMMRate"`
-	TotalEquity            string                         `json:"totalEquity"`
-	TotalWalletBalance     string                         `json:"totalWalletBalance"`
-	TotalMarginBalance     string                         `json:"totalMarginBalance"`
-	TotalAvailableBalance  string                         `json:"totalAvailableBalance"`
-	TotalPerpUPL           string                         `json:"totalPerpUPL"`
-	TotalInitialMargin     string                         `json:"totalInitialMargin"`
-	TotalMaintenanceMargin string                         `json:"totalMaintenanceMargin"`
-	AccountType            AccountType                    `json:"accountType"`
-	Coin                   []V5WebsocketPrivateWalletCoin `json:"-"`
+	AccountIMRate          string                        `json:"accountIMRate"`
+	AccountMMRate          string                        `json:"accountMMRate"`
+	TotalEquity            string                        `json:"totalEquity"`
+	TotalWalletBalance     string                        `json:"totalWalletBalance"`
+	TotalMarginBalance     string                        `json:"totalMarginBalance"`
+	TotalAvailableBalance  string                        `json:"totalAvailableBalance"`
+	TotalPerpUPL           string                        `json:"totalPerpUPL"`
+	TotalInitialMargin     string                        `json:"totalInitialMargin"`
+	TotalMaintenanceMargin string                        `json:"totalMaintenanceMargin"`
+	AccountType            AccountType                   `json:"accountType"`
+	Coins                  V5WebsocketPrivateWalletCoins `json:"coin"`
+}
+
+// V5WebsocketPrivateWalletCoins :
+type V5WebsocketPrivateWalletCoins []V5WebsocketPrivateWalletCoin
+
+// UnmarshalJSON :
+// for Unified, an array will be given
+// for Contract, a single object will be given
+func (c *V5WebsocketPrivateWalletCoins) UnmarshalJSON(data []byte) error {
+	var parsedData interface{}
+	if err := json.Unmarshal(data, &parsedData); err != nil {
+		return err
+	}
+	if _, isArray := parsedData.([]interface{}); isArray {
+		var coins []V5WebsocketPrivateWalletCoin
+		if err := json.Unmarshal(data, &coins); err != nil {
+			return err
+		}
+		*c = coins
+	} else {
+		var coin V5WebsocketPrivateWalletCoin
+		if err := json.Unmarshal(data, &coin); err != nil {
+			return err
+		}
+		*c = V5WebsocketPrivateWalletCoins{coin}
+	}
+	return nil
 }
 
 // V5WebsocketPrivateWalletCoin :

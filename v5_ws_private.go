@@ -198,30 +198,6 @@ func (s *V5WebsocketPrivateService) Run() error {
 		if err := s.parseResponse(message, &resp); err != nil {
 			return err
 		}
-
-		var respCoin V5WebsocketPrivateWalletCoinInterfaceResponse
-		if err := s.parseResponse(message, &respCoin); err != nil {
-			return err
-		}
-
-		if len(respCoin.Data) > 0 {
-			if _, isArray := respCoin.Data[0].Coin.([]interface{}); isArray {
-				var coins V5WebsocketPrivateWalletCoinsResponse
-				if err := s.parseResponse(message, &coins); err != nil {
-					return err
-				}
-
-				resp.Data[0].Coin = coins.Data[0].Coins
-			} else {
-				var coin V5WebsocketPrivateWalletCoinResponse
-				if err := s.parseResponse(message, &coin); err != nil {
-					return err
-				}
-
-				resp.Data[0].Coin = []V5WebsocketPrivateWalletCoin{coin.Data[0].Coin}
-			}
-		}
-
 		f, err := s.retrieveWalletFunc(resp.Key())
 		if err != nil {
 			return err
