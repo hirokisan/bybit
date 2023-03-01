@@ -132,6 +132,7 @@ The following API endpoints have been implemented
 #### Order
 
 - [`/v5/order/create` Place Order](https://bybit-exchange.github.io/docs/v5/order/create-order)
+- [`/v5/order/cancel` Cancel Order](https://bybit-exchange.github.io/docs/v5/order/cancel-order)
 
 #### Account
 
