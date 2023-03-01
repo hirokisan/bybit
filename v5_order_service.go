@@ -97,6 +97,10 @@ type V5CancelOrderResult struct {
 func (s *V5OrderService) CancelOrder(param V5CancelOrderParam) (*V5CancelOrderResponse, error) {
 	var res V5CancelOrderResponse
 
+	if param.OrderID == nil && param.OrderLinkID == nil {
+		return nil, fmt.Errorf("either OrderID or OrderLinkID needed")
+	}
+
 	body, err := json.Marshal(param)
 	if err != nil {
 		return &res, fmt.Errorf("json marshal: %w", err)
