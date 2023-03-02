@@ -63,7 +63,6 @@ type V5WebsocketPrivatePositionResponse struct {
 type V5WebsocketPrivatePositionData struct {
 	AutoAddMargin   int        `json:"autoAddMargin"`
 	PositionIdx     int        `json:"positionIdx"`
-	TpSlMode        TpSlMode   `json:"tpSlMode"`
 	TradeMode       int        `json:"tradeMode"`
 	RiskID          int        `json:"riskId"`
 	RiskLimitValue  string     `json:"riskLimitValue"`
