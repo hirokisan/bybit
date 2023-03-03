@@ -37,7 +37,7 @@ func TestV5WebsocketPrivate_Position(t *testing.T) {
 				StopLoss:        "0.00",
 				Symbol:          "BTCUSDT",
 				TakeProfit:      "0.00",
-				TpSlMode:        "Full",
+				TpslMode:        "Full",
 				TradeMode:       0,
 				AutoAddMargin:   0,
 				TrailingStop:    "0.00",
