@@ -133,6 +133,7 @@ The following API endpoints have been implemented
 
 - [`/v5/order/create` Place Order](https://bybit-exchange.github.io/docs/v5/order/create-order)
 - [`/v5/order/cancel` Cancel Order](https://bybit-exchange.github.io/docs/v5/order/cancel-order)
+- [`/v5/order/realtime` Get Open Orders](https://bybit-exchange.github.io/docs/v5/order/open-order)
 
 #### Account
 

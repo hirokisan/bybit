@@ -153,3 +153,144 @@ func TestV5Order_CancelOrder(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestV5Order_GetOpenOrders(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5GetOpenOrdersParam{
+			Category: CategoryV5Linear,
+			Symbol:   SymbolV5BTCUSDT,
+		}
+
+		path := "/v5/order/realtime"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"category":       "linear",
+				"nextPageCursor": "",
+				"list": []map[string]interface{}{
+					{
+						"symbol":             "ETHUSDT",
+						"orderType":          "Limit",
+						"orderLinkId":        "1672217748277652",
+						"orderId":            "1321052653536515584",
+						"cancelType":         "UNKNOWN",
+						"avgPrice":           "",
+						"stopOrderType":      "tpslOrder",
+						"lastPriceOnCreated": "",
+						"orderStatus":        "Cancelled",
+						"takeProfit":         "",
+						"cumExecValue":       "0",
+						"triggerDirection":   0,
+						"isLeverage":         "0",
+						"rejectReason":       "",
+						"price":              "1000",
+						"orderIv":            "",
+						"createdTime":        "1672217748287",
+						"tpTriggerBy":        "",
+						"positionIdx":        0,
+						"timeInForce":        "GTC",
+						"leavesValue":        "500",
+						"updatedTime":        "1672217748287",
+						"side":               "Buy",
+						"triggerPrice":       "1500",
+						"cumExecFee":         "0",
+						"leavesQty":          "0",
+						"slTriggerBy":        "",
+						"closeOnTrigger":     false,
+						"cumExecQty":         "0",
+						"reduceOnly":         false,
+						"qty":                "0.5",
+						"stopLoss":           "",
+						"triggerBy":          "1192.5",
+					},
+				},
+			},
+		}
+
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Order().GetOpenOrders(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := V5GetOpenOrdersParam{
+			Category: CategoryV5Linear,
+			Symbol:   SymbolV5BTCUSDT,
+		}
+
+		path := "/v5/order/realtime"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"category":       "linear",
+				"nextPageCursor": "",
+				"list": []map[string]interface{}{
+					{
+						"symbol":             "ETHUSDT",
+						"orderType":          "Limit",
+						"orderLinkId":        "1672217748277652",
+						"orderId":            "1321052653536515584",
+						"cancelType":         "UNKNOWN",
+						"avgPrice":           "",
+						"stopOrderType":      "tpslOrder",
+						"lastPriceOnCreated": "",
+						"orderStatus":        "Cancelled",
+						"takeProfit":         "",
+						"cumExecValue":       "0",
+						"triggerDirection":   0,
+						"isLeverage":         "0",
+						"rejectReason":       "",
+						"price":              "1000",
+						"orderIv":            "",
+						"createdTime":        "1672217748287",
+						"tpTriggerBy":        "",
+						"positionIdx":        0,
+						"timeInForce":        "GTC",
+						"leavesValue":        "500",
+						"updatedTime":        "1672217748287",
+						"side":               "Buy",
+						"triggerPrice":       "1500",
+						"cumExecFee":         "0",
+						"leavesQty":          "0",
+						"slTriggerBy":        "",
+						"closeOnTrigger":     false,
+						"cumExecQty":         "0",
+						"reduceOnly":         false,
+						"qty":                "0.5",
+						"stopLoss":           "",
+						"triggerBy":          "1192.5",
+					},
+				},
+			},
+		}
+
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Order().GetOpenOrders(param)
+		assert.Error(t, err)
+	})
+}
