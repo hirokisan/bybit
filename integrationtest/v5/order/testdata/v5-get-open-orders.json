@@ -1,0 +1,41 @@
+{
+  "category": "spot",
+  "nextPageCursor": "1368933863545500672%3A1677925633316%2C1368933863545500672%3A1677925633316",
+  "list": [
+    {
+      "symbol": "BTCUSDT",
+      "orderType": "Limit",
+      "orderLinkId": "1677925633310702",
+      "orderId": "1368933863545500672",
+      "cancelType": "UNKNOWN",
+      "avgPrice": "0.00",
+      "stopOrderType": "",
+      "lastPriceOnCreated": "",
+      "orderStatus": "New",
+      "takeProfit": "",
+      "cumExecValue": "0.00000000",
+      "triggerDirection": 0,
+      "isLeverage": "0",
+      "rejectReason": "EC_NoError",
+      "price": "10000.00",
+      "orderIv": "",
+      "createdTime": "1677925633316",
+      "tpTriggerBy": "",
+      "positionIdx": 0,
+      "timeInForce": "GTC",
+      "leavesValue": "100.00000000",
+      "updatedTime": "1677925633323",
+      "side": "Buy",
+      "triggerPrice": "0.00",
+      "cumExecFee": "0",
+      "leavesQty": "0.010000",
+      "slTriggerBy": "",
+      "closeOnTrigger": false,
+      "cumExecQty": "0.000000",
+      "reduceOnly": false,
+      "qty": "0.010000",
+      "stopLoss": "",
+      "triggerBy": ""
+    }
+  ]
+}
