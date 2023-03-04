@@ -156,9 +156,10 @@ func TestV5Order_CancelOrder(t *testing.T) {
 
 func TestV5Order_GetOpenOrders(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
+		symbol := SymbolV5BTCUSDT
 		param := V5GetOpenOrdersParam{
 			Category: CategoryV5Linear,
-			Symbol:   SymbolV5BTCUSDT,
+			Symbol:   &symbol,
 		}
 
 		path := "/v5/order/realtime"
@@ -227,9 +228,10 @@ func TestV5Order_GetOpenOrders(t *testing.T) {
 		testhelper.Compare(t, respBody["result"], resp.Result)
 	})
 	t.Run("authentication required", func(t *testing.T) {
+		symbol := SymbolV5BTCUSDT
 		param := V5GetOpenOrdersParam{
 			Category: CategoryV5Linear,
-			Symbol:   SymbolV5BTCUSDT,
+			Symbol:   &symbol,
 		}
 
 		path := "/v5/order/realtime"
