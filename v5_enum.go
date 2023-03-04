@@ -75,8 +75,8 @@ type OrderFilter string
 const (
 	// OrderFilterOrder :
 	OrderFilterOrder = OrderFilter("Order")
-	// StopOrderFilterOrder :
-	StopOrderFilterOrder = OrderFilter("StopOrder")
+	// OrderFilterStopOrder :
+	OrderFilterStopOrder = OrderFilter("StopOrder")
 	// OrderFilterTpSlOrder :
 	OrderFilterTpSlOrder = OrderFilter("tpslOrder")
 )

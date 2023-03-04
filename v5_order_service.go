@@ -120,7 +120,7 @@ func (s *V5OrderService) CancelOrder(param V5CancelOrderParam) (*V5CancelOrderRe
 type V5GetOpenOrdersParam struct {
 	Category CategoryV5 `url:"category"`
 
-	Symbol      SymbolV5     `url:"symbol,omitempty"`
+	Symbol      *SymbolV5    `url:"symbol,omitempty"`
 	BaseCoin    *Coin        `url:"baseCoin,omitempty"`
 	SettleCoin  *Coin        `url:"settleCoin,omitempty"`
 	OrderID     *string      `url:"orderId,omitempty"`
