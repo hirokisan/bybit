@@ -85,14 +85,14 @@ type V5WebsocketPrivateOrderData struct {
 	ReduceOnly         bool        `json:"reduceOnly"`
 	RejectReason       string      `json:"rejectReason"`
 	Side               Side        `json:"side"`
-	SlTriggerBy        string      `json:"slTriggerBy"`
+	SlTriggerBy        TriggerBy   `json:"slTriggerBy"`
 	StopLoss           string      `json:"stopLoss"`
 	StopOrderType      string      `json:"stopOrderType"`
 	Symbol             SymbolV5    `json:"symbol"`
 	TakeProfit         string      `json:"takeProfit"`
 	TimeInForce        TimeInForce `json:"timeInForce"`
-	TpTriggerBy        string      `json:"tpTriggerBy"`
-	TriggerBy          string      `json:"triggerBy"`
+	TpTriggerBy        TriggerBy   `json:"tpTriggerBy"`
+	TriggerBy          TriggerBy   `json:"triggerBy"`
 	TriggerDirection   int         `json:"triggerDirection"`
 	TriggerPrice       string      `json:"triggerPrice"`
 	UpdatedTime        string      `json:"updatedTime"`
