@@ -76,7 +76,7 @@ type V5WebsocketPrivateOrderData struct {
 	OrderIv            string      `json:"orderIv"`
 	IsLeverage         string      `json:"isLeverage"`
 	LastPriceOnCreated string      `json:"lastPriceOnCreated"`
-	OrderStatus        string      `json:"orderStatus"`
+	OrderStatus        OrderStatus `json:"orderStatus"`
 	OrderLinkID        string      `json:"orderLinkId"`
 	OrderType          OrderType   `json:"orderType"`
 	PositionIdx        int         `json:"positionIdx"`
