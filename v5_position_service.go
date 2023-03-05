@@ -1,12 +1,16 @@
 package bybit
 
 import (
+	"encoding/json"
+	"fmt"
+
 	"github.com/google/go-querystring/query"
 )
 
 // V5PositionServiceI :
 type V5PositionServiceI interface {
 	GetPositionInfo(V5GetPositionInfoParam) (*V5GetPositionInfoResponse, error)
+	SetLeverage(V5SetLeverageParam) (*V5SetLeverageResponse, error)
 }
 
 // V5PositionService :
@@ -80,6 +84,40 @@ func (s *V5PositionService) GetPositionInfo(param V5GetPositionInfoParam) (*V5Ge
 
 	if err := s.client.getV5Privately("/v5/position/list", queryString, &res); err != nil {
 		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5SetLeverageParam :
+type V5SetLeverageParam struct {
+	Category     CategoryV5 `json:"category"`
+	Symbol       *SymbolV5  `json:"symbol"`
+	BuyLeverage  *string    `json:"buyLeverage"`
+	SellLeverage *string    `json:"sellLeverage"`
+}
+
+// V5SetLeverageResponse :
+type V5SetLeverageResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           interface{} `json:"retExtInfo"`
+}
+
+// SetLeverage :
+func (s *V5PositionService) SetLeverage(param V5SetLeverageParam) (*V5SetLeverageResponse, error) {
+	var res V5SetLeverageResponse
+
+	if param.Category == "" || param.Symbol == nil || param.BuyLeverage == nil || param.SellLeverage == nil {
+		return nil, fmt.Errorf("Category, Symbol, BuyLeverage and SellLeverage needed")
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/v5/position/set-leverage", body, &res); err != nil {
+		return &res, err
 	}
 
 	return &res, nil
