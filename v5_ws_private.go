@@ -52,6 +52,9 @@ const (
 type V5WebsocketPrivateTopic string
 
 const (
+	// V5Pong :
+	V5Pong = "pong"
+
 	// V5WebsocketPrivateTopicOrder :
 	V5WebsocketPrivateTopicOrder = "order"
 
@@ -72,6 +75,9 @@ func (s *V5WebsocketPrivateService) judgeTopic(respBody []byte) (V5WebsocketPriv
 	parsedData := map[string]interface{}{}
 	if err := json.Unmarshal(respBody, &parsedData); err != nil {
 		return "", err
+	}
+	if ret_msg, ok := parsedData["op"].(string); ok && ret_msg == "pong" {
+		return V5WebsocketPrivateTopic("pong"), nil
 	}
 	if topic, ok := parsedData["topic"].(string); ok {
 		return V5WebsocketPrivateTopic(topic), nil
@@ -169,6 +175,8 @@ func (s *V5WebsocketPrivateService) Run() error {
 		return err
 	}
 	switch topic {
+	case V5Pong:
+		s.connection.PongHandler()("pong")
 	case V5WebsocketPrivateTopicOrder:
 		var resp V5WebsocketPrivateOrderResponse
 		if err := s.parseResponse(message, &resp); err != nil {
@@ -212,7 +220,7 @@ func (s *V5WebsocketPrivateService) Run() error {
 
 // Ping :
 func (s *V5WebsocketPrivateService) Ping() error {
-	if err := s.connection.WriteMessage(websocket.PingMessage, nil); err != nil {
+	if err := s.connection.WriteMessage(websocket.TextMessage, []byte(`{"op":"ping"}`)); err != nil {
 		return err
 	}
 	return nil
