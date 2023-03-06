@@ -40,7 +40,7 @@ type V5WalletBalanceCoin struct {
 	TotalPositionIM     string `json:"totalPositionIM"`
 	WalletBalance       string `json:"walletBalance"`
 	CumRealisedPnl      string `json:"cumRealisedPnl"`
-	Coin                string `json:"coin"`
+	Coin                Coin   `json:"coin"`
 }
 
 // V5WalletBalanceList :
