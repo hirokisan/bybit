@@ -135,13 +135,11 @@ func TestV5Position_GetPositionInfo(t *testing.T) {
 
 func TestV5Position_SetLeverage(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
-		symbol := SymbolV5BTCUSDT
-		leverage := "0"
 		param := V5SetLeverageParam{
 			Category:     CategoryV5Linear,
-			Symbol:       &symbol,
-			BuyLeverage:  &leverage,
-			SellLeverage: &leverage,
+			Symbol:       SymbolV5BTCUSDT,
+			BuyLeverage:  "0",
+			SellLeverage: "0",
 		}
 
 		path := "/v5/position/set-leverage"
@@ -169,13 +167,11 @@ func TestV5Position_SetLeverage(t *testing.T) {
 		testhelper.Compare(t, respBody["result"], resp.Result)
 	})
 	t.Run("authentication required", func(t *testing.T) {
-		symbol := SymbolV5BTCUSDT
-		leverage := "0"
 		param := V5SetLeverageParam{
 			Category:     CategoryV5Linear,
-			Symbol:       &symbol,
-			BuyLeverage:  &leverage,
-			SellLeverage: &leverage,
+			Symbol:       SymbolV5BTCUSDT,
+			BuyLeverage:  "0",
+			SellLeverage: "0",
 		}
 
 		path := "/v5/position/set-leverage"
