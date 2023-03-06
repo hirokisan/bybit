@@ -128,6 +128,7 @@ The following API endpoints have been implemented
 #### Position
 
 - [`/v5/position/list` Get Position Info](https://bybit-exchange.github.io/docs/v5/position)
+- [`/v5/position/set-leverage` Set Position](https://bybit-exchange.github.io/docs/v5/position/leverage)
 
 #### Order
 
