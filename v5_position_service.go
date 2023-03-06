@@ -92,22 +92,22 @@ func (s *V5PositionService) GetPositionInfo(param V5GetPositionInfoParam) (*V5Ge
 // V5SetLeverageParam :
 type V5SetLeverageParam struct {
 	Category     CategoryV5 `json:"category"`
-	Symbol       *SymbolV5  `json:"symbol"`
-	BuyLeverage  *string    `json:"buyLeverage"`
-	SellLeverage *string    `json:"sellLeverage"`
+	Symbol       SymbolV5   `json:"symbol"`
+	BuyLeverage  string     `json:"buyLeverage"`
+	SellLeverage string     `json:"sellLeverage"`
 }
 
 // V5SetLeverageResponse :
 type V5SetLeverageResponse struct {
 	CommonV5Response `json:",inline"`
-	Result           interface{} `json:"retExtInfo"`
+	Result           interface{} `json:"result"`
 }
 
 // SetLeverage :
 func (s *V5PositionService) SetLeverage(param V5SetLeverageParam) (*V5SetLeverageResponse, error) {
 	var res V5SetLeverageResponse
 
-	if param.Category == "" || param.Symbol == nil || param.BuyLeverage == nil || param.SellLeverage == nil {
+	if param.Category == "" || param.Symbol == "" || param.BuyLeverage == "" || param.SellLeverage == "" {
 		return nil, fmt.Errorf("Category, Symbol, BuyLeverage and SellLeverage needed")
 	}
 
