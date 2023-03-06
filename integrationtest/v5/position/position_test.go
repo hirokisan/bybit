@@ -24,3 +24,19 @@ func TestGetPositionInfo(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSetLeverage(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	res, err := client.V5().Position().SetLeverage(bybit.V5SetLeverageParam{
+		Category:     bybit.CategoryV5Linear,
+		Symbol:       bybit.SymbolV5BTCUSDT,
+		BuyLeverage:  "1",
+		SellLeverage: "1",
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-position-set-leverage.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
