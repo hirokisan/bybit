@@ -5,15 +5,15 @@ type Coin string
 
 const (
 	// CoinBTC :
-	CoinBTC = "BTC"
+	CoinBTC = Coin("BTC")
 	// CoinETH :
-	CoinETH = "ETH"
+	CoinETH = Coin("ETH")
 	// CoinEOS :
-	CoinEOS = "EOS"
+	CoinEOS = Coin("EOS")
 	// CoinXRP :
-	CoinXRP = "XRP"
+	CoinXRP = Coin("XRP")
 	// CoinUSDT :
-	CoinUSDT = "USDT"
+	CoinUSDT = Coin("USDT")
 )
 
 // Side :
