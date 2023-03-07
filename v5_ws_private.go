@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -176,7 +177,9 @@ func (s *V5WebsocketPrivateService) Run() error {
 	}
 	switch topic {
 	case V5Pong:
-		s.connection.PongHandler()("pong")
+		if err := s.connection.PongHandler()("pong"); err != nil {
+			return fmt.Errorf("pong: %w", err)
+		}
 	case V5WebsocketPrivateTopicOrder:
 		var resp V5WebsocketPrivateOrderResponse
 		if err := s.parseResponse(message, &resp); err != nil {
