@@ -16,6 +16,7 @@ type V5MarketServiceI interface {
 	GetIndexPriceKline(V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error)
 	GetPremiumIndexPriceKline(V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error)
 	GetInstrumentsInfo(V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error)
+	GetTickers(V5GetTickersParam) (*V5GetTickersResponse, error)
 }
 
 // V5MarketService :
@@ -478,6 +479,154 @@ func (s *V5MarketService) GetInstrumentsInfo(param V5GetInstrumentsInfoParam) (*
 	}
 
 	if err := s.client.getPublicly("/v5/market/instruments-info", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetTickersParam :
+type V5GetTickersParam struct {
+	Category CategoryV5 `url:"category"`
+
+	Symbol   *SymbolV5 `url:"symbol,omitempty"`
+	BaseCoin *Coin     `url:"baseCoin,omitempty"` // Base coin. For option only
+	ExpDate  *string   `url:"expDate,omitempty"`  // Expiry date. e.g., 25DEC22. For option only
+}
+
+// V5GetTickersResponse :
+type V5GetTickersResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetTickersResult `json:"result"`
+}
+
+// V5GetTickersResult :
+// Responses are filled according to category.
+type V5GetTickersResult struct {
+	LinearInverse *V5GetTickersLinearInverseResult
+	Option        *V5GetTickersOptionResult
+	Spot          *V5GetTickersSpotResult
+}
+
+// UnmarshalJSON :
+func (r *V5GetTickersResult) UnmarshalJSON(data []byte) error {
+	var categoryJudge struct {
+		Category CategoryV5 `json:"category"`
+	}
+	if err := json.Unmarshal(data, &categoryJudge); err != nil {
+		return err
+	}
+	switch categoryJudge.Category {
+	case CategoryV5Linear, CategoryV5Inverse:
+		if err := json.Unmarshal(data, &r.LinearInverse); err != nil {
+			return err
+		}
+	case CategoryV5Option:
+		if err := json.Unmarshal(data, &r.Option); err != nil {
+			return err
+		}
+	case CategoryV5Spot:
+		if err := json.Unmarshal(data, &r.Spot); err != nil {
+			return err
+		}
+	default:
+		return fmt.Errorf("unexpected category %s given", categoryJudge.Category)
+	}
+	return nil
+}
+
+// V5GetTickersLinearInverseResult :
+type V5GetTickersLinearInverseResult struct {
+	Category CategoryV5 `json:"category"`
+	List     []struct {
+		Symbol                 SymbolV5 `json:"symbol"`
+		LastPrice              string   `json:"lastPrice"`
+		IndexPrice             string   `json:"indexPrice"`
+		MarkPrice              string   `json:"markPrice"`
+		PrevPrice24H           string   `json:"prevPrice24h"`
+		Price24HPcnt           string   `json:"price24hPcnt"`
+		HighPrice24H           string   `json:"highPrice24h"`
+		LowPrice24H            string   `json:"lowPrice24h"`
+		PrevPrice1H            string   `json:"prevPrice1h"`
+		OpenInterest           string   `json:"openInterest"`
+		OpenInterestValue      string   `json:"openInterestValue"`
+		Turnover24H            string   `json:"turnover24h"`
+		Volume24H              string   `json:"volume24h"`
+		FundingRate            string   `json:"fundingRate"`
+		NextFundingTime        string   `json:"nextFundingTime"`
+		PredictedDeliveryPrice string   `json:"predictedDeliveryPrice"`
+		BasisRate              string   `json:"basisRate"`
+		DeliveryFeeRate        string   `json:"deliveryFeeRate"`
+		DeliveryTime           string   `json:"deliveryTime"`
+		Ask1Size               string   `json:"ask1Size"`
+		Bid1Price              string   `json:"bid1Price"`
+		Ask1Price              string   `json:"ask1Price"`
+		Bid1Size               string   `json:"bid1Size"`
+	} `json:"list"`
+}
+
+// V5GetTickersOptionResult :
+type V5GetTickersOptionResult struct {
+	Category CategoryV5 `json:"category"`
+	List     []struct {
+		Symbol                 SymbolV5 `json:"symbol"`
+		Bid1Price              string   `json:"bid1Price"`
+		Bid1Size               string   `json:"bid1Size"`
+		Bid1Iv                 string   `json:"bid1Iv"`
+		Ask1Price              string   `json:"ask1Price"`
+		Ask1Size               string   `json:"ask1Size"`
+		Ask1Iv                 string   `json:"ask1Iv"`
+		LastPrice              string   `json:"lastPrice"`
+		HighPrice24H           string   `json:"highPrice24h"`
+		LowPrice24H            string   `json:"lowPrice24h"`
+		MarkPrice              string   `json:"markPrice"`
+		IndexPrice             string   `json:"indexPrice"`
+		MarkIv                 string   `json:"markIv"`
+		UnderlyingPrice        string   `json:"underlyingPrice"`
+		OpenInterest           string   `json:"openInterest"`
+		Turnover24H            string   `json:"turnover24h"`
+		Volume24H              string   `json:"volume24h"`
+		TotalVolume            string   `json:"totalVolume"`
+		TotalTurnover          string   `json:"totalTurnover"`
+		Delta                  string   `json:"delta"`
+		Gamma                  string   `json:"gamma"`
+		Vega                   string   `json:"vega"`
+		Theta                  string   `json:"theta"`
+		PredictedDeliveryPrice string   `json:"predictedDeliveryPrice"`
+		Change24H              string   `json:"change24h"`
+	} `json:"list"`
+}
+
+// V5GetTickersSpotResult :
+type V5GetTickersSpotResult struct {
+	Category CategoryV5 `json:"category"`
+	List     []struct {
+		Symbol        SymbolV5 `json:"symbol"`
+		Bid1Price     string   `json:"bid1Price"`
+		Bid1Size      string   `json:"bid1Size"`
+		Ask1Price     string   `json:"ask1Price"`
+		Ask1Size      string   `json:"ask1Size"`
+		LastPrice     string   `json:"lastPrice"`
+		PrevPrice24H  string   `json:"prevPrice24h"`
+		Price24HPcnt  string   `json:"price24hPcnt"`
+		HighPrice24H  string   `json:"highPrice24h"`
+		LowPrice24H   string   `json:"lowPrice24h"`
+		Turnover24H   string   `json:"turnover24h"`
+		Volume24H     string   `json:"volume24h"`
+		UsdIndexPrice string   `json:"usdIndexPrice"`
+	} `json:"list"`
+}
+
+// GetTickers :
+func (s *V5MarketService) GetTickers(param V5GetTickersParam) (*V5GetTickersResponse, error) {
+	var res V5GetTickersResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/tickers", queryString, &res); err != nil {
 		return nil, err
 	}
 

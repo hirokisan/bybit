@@ -369,3 +369,169 @@ func TestV5Market_GetInstrumentsInfo(t *testing.T) {
 		testhelper.Compare(t, respBody["result"], resp.Result.Spot)
 	})
 }
+
+func TestV5Market_GetTickers(t *testing.T) {
+	t.Run("linear", func(t *testing.T) {
+		param := V5GetTickersParam{
+			Category: CategoryV5Linear,
+		}
+
+		path := "/v5/market/tickers"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"category": "linear",
+				"list": []map[string]interface{}{
+					{
+						"symbol":                 "BTCUSD",
+						"lastPrice":              "16597.00",
+						"indexPrice":             "16598.54",
+						"markPrice":              "16596.00",
+						"prevPrice24h":           "16464.50",
+						"price24hPcnt":           "0.008047",
+						"highPrice24h":           "30912.50",
+						"lowPrice24h":            "15700.00",
+						"prevPrice1h":            "16595.50",
+						"openInterest":           "373504107",
+						"openInterestValue":      "22505.67",
+						"turnover24h":            "2352.94950046",
+						"volume24h":              "49337318",
+						"fundingRate":            "-0.001034",
+						"nextFundingTime":        "1672387200000",
+						"predictedDeliveryPrice": "",
+						"basisRate":              "",
+						"deliveryFeeRate":        "",
+						"deliveryTime":           "0",
+						"ask1Size":               "1",
+						"bid1Price":              "16596.00",
+						"ask1Price":              "16597.50",
+						"bid1Size":               "1",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		resp, err := client.V5().Market().GetTickers(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result.LinearInverse)
+	})
+	t.Run("option", func(t *testing.T) {
+		param := V5GetTickersParam{
+			Category: CategoryV5Option,
+		}
+
+		path := "/v5/market/tickers"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"category": "option",
+				"list": []map[string]interface{}{
+					{
+						"symbol":                 "BTC-30DEC22-18000-C",
+						"bid1Price":              "0",
+						"bid1Size":               "0",
+						"bid1Iv":                 "0",
+						"ask1Price":              "435",
+						"ask1Size":               "0.66",
+						"ask1Iv":                 "5",
+						"lastPrice":              "435",
+						"highPrice24h":           "435",
+						"lowPrice24h":            "165",
+						"markPrice":              "0.00000009",
+						"indexPrice":             "16600.55",
+						"markIv":                 "0.7567",
+						"underlyingPrice":        "16590.42",
+						"openInterest":           "6.3",
+						"turnover24h":            "2482.73",
+						"volume24h":              "0.15",
+						"totalVolume":            "99",
+						"totalTurnover":          "1967653",
+						"delta":                  "0.00000001",
+						"gamma":                  "0.00000001",
+						"vega":                   "0.00000004",
+						"theta":                  "-0.00000152",
+						"predictedDeliveryPrice": "0",
+						"change24h":              "86",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		resp, err := client.V5().Market().GetTickers(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result.Option)
+	})
+	t.Run("spot", func(t *testing.T) {
+		param := V5GetTickersParam{
+			Category: CategoryV5Spot,
+		}
+
+		path := "/v5/market/tickers"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"category": "spot",
+				"list": []map[string]interface{}{
+					{
+						"symbol":        "BTCUSDT",
+						"bid1Price":     "20517.96",
+						"bid1Size":      "2",
+						"ask1Price":     "20527.77",
+						"ask1Size":      "1.862172",
+						"lastPrice":     "20533.13",
+						"prevPrice24h":  "20393.48",
+						"price24hPcnt":  "0.0068",
+						"highPrice24h":  "21128.12",
+						"lowPrice24h":   "20318.89",
+						"turnover24h":   "243765620.65899866",
+						"volume24h":     "11801.27771",
+						"usdIndexPrice": "20784.12009279",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		resp, err := client.V5().Market().GetTickers(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result.Spot)
+	})
+}
