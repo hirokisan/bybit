@@ -106,3 +106,42 @@ func TestGetInstrumentsInfo(t *testing.T) {
 		}
 	}
 }
+
+func TestGetTickers(t *testing.T) {
+	client := bybit.NewTestClient()
+	{
+		res, err := client.V5().Market().GetTickers(bybit.V5GetTickersParam{
+			Category: bybit.CategoryV5Linear,
+		})
+		require.NoError(t, err)
+		{
+			goldenFilename := "./testdata/v5-market-get-tickers-inverse.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	}
+	{
+		coin := bybit.CoinBTC
+		res, err := client.V5().Market().GetTickers(bybit.V5GetTickersParam{
+			Category: bybit.CategoryV5Option,
+			BaseCoin: &coin,
+		})
+		require.NoError(t, err)
+		{
+			goldenFilename := "./testdata/v5-market-get-tickers-option.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	}
+	{
+		res, err := client.V5().Market().GetTickers(bybit.V5GetTickersParam{
+			Category: bybit.CategoryV5Spot,
+		})
+		require.NoError(t, err)
+		{
+			goldenFilename := "./testdata/v5-market-get-tickers-spot.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		}
+	}
+}
