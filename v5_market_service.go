@@ -494,6 +494,19 @@ type V5GetTickersParam struct {
 	ExpDate  *string   `url:"expDate,omitempty"`  // Expiry date. e.g., 25DEC22. For option only
 }
 
+func (p V5GetTickersParam) validate() error {
+	if p.Category == CategoryV5Option && (p.Symbol == nil && p.BaseCoin == nil) {
+		return fmt.Errorf("symbol or baseCoin must be passed for option")
+	}
+	if p.BaseCoin != nil && p.Category != CategoryV5Option {
+		return fmt.Errorf("baseCoin is for option only")
+	}
+	if p.ExpDate != nil && p.Category != CategoryV5Option {
+		return fmt.Errorf("expDate is for option only")
+	}
+	return nil
+}
+
 // V5GetTickersResponse :
 type V5GetTickersResponse struct {
 	CommonV5Response `json:",inline"`
@@ -620,6 +633,10 @@ type V5GetTickersSpotResult struct {
 // GetTickers :
 func (s *V5MarketService) GetTickers(param V5GetTickersParam) (*V5GetTickersResponse, error) {
 	var res V5GetTickersResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
 
 	queryString, err := query.Values(param)
 	if err != nil {

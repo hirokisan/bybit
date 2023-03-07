@@ -429,8 +429,10 @@ func TestV5Market_GetTickers(t *testing.T) {
 		testhelper.Compare(t, respBody["result"], resp.Result.LinearInverse)
 	})
 	t.Run("option", func(t *testing.T) {
+		symbol := SymbolV5("BTC-30DEC22-18000-C")
 		param := V5GetTickersParam{
 			Category: CategoryV5Option,
+			Symbol:   &symbol,
 		}
 
 		path := "/v5/market/tickers"
