@@ -136,7 +136,7 @@ func (s *FutureCommonService) OrderBook(symbol SymbolFuture) (*OrderBookResponse
 type ListKlineParam struct {
 	Symbol   SymbolFuture `url:"symbol"`
 	Interval Interval     `url:"interval"`
-	From     int          `url:"from"`
+	From     int64        `url:"from"`
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -335,7 +335,7 @@ type MarkPriceKlineResult struct {
 type MarkPriceKlineParam struct {
 	Symbol   SymbolFuture `url:"symbol"`
 	Interval Interval     `url:"interval"`
-	From     int          `url:"from"`
+	From     int64        `url:"from"`
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -377,7 +377,7 @@ type IndexPriceKlineResult struct {
 type IndexPriceKlineParam struct {
 	Symbol   SymbolFuture `url:"symbol"`
 	Interval Interval     `url:"interval"`
-	From     int          `url:"from"`
+	From     int64        `url:"from"`
 
 	Limit *int `url:"limit,omitempty"`
 }

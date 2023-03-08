@@ -53,7 +53,7 @@ type FutureUSDTPerpetualService struct {
 type ListLinearKlineParam struct {
 	Symbol   SymbolFuture `url:"symbol"`
 	Interval Interval     `url:"interval"`
-	From     int          `url:"from"`
+	From     int64        `url:"from"`
 
 	Limit *int `url:"limit,omitempty"`
 }
