@@ -114,31 +114,25 @@ func (c *Client) hasAuth() bool {
 }
 
 func (c *Client) populateSignature(src url.Values) url.Values {
-	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
-	now := strconv.Itoa(intNow)
-
 	if src == nil {
 		src = url.Values{}
 	}
 
 	src.Add("api_key", c.key)
-	src.Add("timestamp", now)
+	src.Add("timestamp", strconv.FormatInt(c.getTimestamp(), 10))
 	src.Add("sign", getSignature(src, c.secret))
 
 	return src
 }
 
 func (c *Client) populateSignatureForBody(src []byte) []byte {
-	intNow := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
-	now := strconv.Itoa(intNow)
-
 	body := map[string]interface{}{}
 	if err := json.Unmarshal(src, &body); err != nil {
 		panic(err)
 	}
 
 	body["api_key"] = c.key
-	body["timestamp"] = now
+	body["timestamp"] = strconv.FormatInt(c.getTimestamp(), 10)
 	body["sign"] = getSignatureForBody(body, c.secret)
 
 	result, err := json.Marshal(body)
@@ -150,12 +144,12 @@ func (c *Client) populateSignatureForBody(src []byte) []byte {
 }
 
 func getV5Signature(
-	timestamp int,
+	timestamp int64,
 	key string,
 	queryString string,
 	secret string,
 ) string {
-	val := strconv.Itoa(timestamp) + key
+	val := strconv.FormatInt(timestamp, 10) + key
 	val = val + queryString
 	h := hmac.New(sha256.New, []byte(secret))
 	h.Write([]byte(val))
@@ -163,12 +157,12 @@ func getV5Signature(
 }
 
 func getV5SignatureForBody(
-	timestamp int,
+	timestamp int64,
 	key string,
 	body []byte,
 	secret string,
 ) string {
-	val := strconv.Itoa(timestamp) + key
+	val := strconv.FormatInt(timestamp, 10) + key
 	val = val + string(body)
 	h := hmac.New(sha256.New, []byte(secret))
 	h.Write([]byte(val))
@@ -276,7 +270,7 @@ func (c *Client) getV5Privately(path string, query url.Values, dst interface{}) 
 	u.Path = path
 	u.RawQuery = query.Encode()
 
-	timestamp := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
+	timestamp := c.getTimestamp()
 	sign := getV5Signature(timestamp, c.key, query.Encode(), c.secret)
 
 	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
@@ -284,7 +278,7 @@ func (c *Client) getV5Privately(path string, query url.Values, dst interface{}) 
 		return err
 	}
 	req.Header.Set("X-BAPI-API-KEY", c.key)
-	req.Header.Set("X-BAPI-TIMESTAMP", strconv.Itoa(timestamp))
+	req.Header.Set("X-BAPI-TIMESTAMP", strconv.FormatInt(timestamp, 10))
 	req.Header.Set("X-BAPI-SIGN", sign)
 
 	if err := c.Request(req, &dst); err != nil {
@@ -331,7 +325,7 @@ func (c *Client) postV5JSON(path string, body []byte, dst interface{}) error {
 	}
 	u.Path = path
 
-	timestamp := int(time.Now().UTC().UnixNano() / int64(time.Millisecond))
+	timestamp := c.getTimestamp()
 	sign := getV5SignatureForBody(timestamp, c.key, body, c.secret)
 
 	req, err := http.NewRequest(http.MethodPost, u.String(), bytes.NewBuffer(body))
@@ -340,7 +334,7 @@ func (c *Client) postV5JSON(path string, body []byte, dst interface{}) error {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-BAPI-API-KEY", c.key)
-	req.Header.Set("X-BAPI-TIMESTAMP", strconv.Itoa(timestamp))
+	req.Header.Set("X-BAPI-TIMESTAMP", strconv.FormatInt(timestamp, 10))
 	req.Header.Set("X-BAPI-SIGN", sign)
 
 	if err := c.Request(req, &dst); err != nil {
@@ -402,4 +396,10 @@ func (c *Client) deletePrivately(path string, query url.Values, dst interface{})
 	}
 
 	return nil
+}
+
+func (c *Client) getTimestamp() int64 {
+	now := time.Now()
+	unixNano := now.UnixNano()
+	return unixNano / 1000000
 }

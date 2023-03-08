@@ -65,7 +65,7 @@ func TestListKline(t *testing.T) {
 	res, err := client.Future().InverseFuture().ListKline(bybit.ListKlineParam{
 		Symbol:   bybit.SymbolFutureBTCUSD,
 		Interval: bybit.Interval120,
-		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
+		From:     time.Now().AddDate(0, 0, -1).Unix(),
 	})
 	require.NoError(t, err)
 	{
@@ -117,7 +117,7 @@ func TestMarkPriceKline(t *testing.T) {
 	res, err := client.Future().InverseFuture().MarkPriceKline(bybit.MarkPriceKlineParam{
 		Symbol:   bybit.SymbolFutureBTCUSD,
 		Interval: bybit.IntervalD,
-		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
+		From:     time.Now().AddDate(0, 0, -1).Unix(),
 	})
 	require.NoError(t, err)
 	{
@@ -132,7 +132,7 @@ func TestIndexPriceKline(t *testing.T) {
 	res, err := client.Future().InverseFuture().IndexPriceKline(bybit.IndexPriceKlineParam{
 		Symbol:   bybit.SymbolFutureBTCUSD,
 		Interval: bybit.IntervalD,
-		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
+		From:     time.Now().AddDate(0, 0, -1).Unix(),
 	})
 	require.NoError(t, err)
 	{

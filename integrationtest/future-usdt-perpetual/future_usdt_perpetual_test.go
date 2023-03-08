@@ -65,7 +65,7 @@ func TestListLinearKline(t *testing.T) {
 	res, err := client.Future().USDTPerpetual().ListLinearKline(bybit.ListLinearKlineParam{
 		Symbol:   bybit.SymbolFutureBTCUSDT,
 		Interval: bybit.Interval120,
-		From:     int(time.Now().AddDate(0, 0, -1).Unix()),
+		From:     time.Now().AddDate(0, 0, -1).Unix(),
 	})
 	require.NoError(t, err)
 	{
