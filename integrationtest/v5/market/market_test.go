@@ -107,6 +107,20 @@ func TestGetInstrumentsInfo(t *testing.T) {
 	}
 }
 
+func TestGetOrderbook(t *testing.T) {
+	client := bybit.NewTestClient()
+	res, err := client.V5().Market().GetOrderbook(bybit.V5GetOrderbookParam{
+		Category: bybit.CategoryV5Spot,
+		Symbol:   bybit.SymbolV5BTCUSDT,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-market-get-orderbook.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
+
 func TestGetTickers(t *testing.T) {
 	client := bybit.NewTestClient()
 	{
