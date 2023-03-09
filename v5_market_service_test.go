@@ -370,6 +370,54 @@ func TestV5Market_GetInstrumentsInfo(t *testing.T) {
 	})
 }
 
+func TestV5Market_GetOrderbook(t *testing.T) {
+	param := V5GetOrderbookParam{
+		Category: CategoryV5Spot,
+		Symbol:   SymbolV5BTCUSDT,
+	}
+
+	path := "/v5/market/orderbook"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"result": map[string]interface{}{
+			"s": "BTCUSDT",
+			"a": [][]interface{}{
+				{
+					"16638.64",
+					"0.008479",
+				},
+			},
+			"b": [][]interface{}{
+				{
+					"16638.27",
+					"0.305749",
+				},
+			},
+			"ts": 1672765737733,
+			"u":  5277055,
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.V5().Market().GetOrderbook(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	assert.Equal(t, respBody["result"].(map[string]interface{})["s"], string(resp.Result.Symbol))
+	assert.Equal(t, respBody["result"].(map[string]interface{})["a"].([][]interface{})[0][0], string(resp.Result.Asks[0].Price))
+	assert.Equal(t, respBody["result"].(map[string]interface{})["b"].([][]interface{})[0][0], string(resp.Result.Bids[0].Price))
+}
+
 func TestV5Market_GetTickers(t *testing.T) {
 	t.Run("linear", func(t *testing.T) {
 		param := V5GetTickersParam{
