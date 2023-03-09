@@ -16,6 +16,7 @@ type V5MarketServiceI interface {
 	GetIndexPriceKline(V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error)
 	GetPremiumIndexPriceKline(V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error)
 	GetInstrumentsInfo(V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error)
+	GetOrderbook(V5GetOrderbookParam) (*V5GetOrderbookResponse, error)
 	GetTickers(V5GetTickersParam) (*V5GetTickersResponse, error)
 }
 
@@ -479,6 +480,78 @@ func (s *V5MarketService) GetInstrumentsInfo(param V5GetInstrumentsInfoParam) (*
 	}
 
 	if err := s.client.getPublicly("/v5/market/instruments-info", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetOrderbookParam :
+type V5GetOrderbookParam struct {
+	Category CategoryV5 `url:"category"`
+	Symbol   SymbolV5   `url:"symbol"`
+
+	// spot: [1, 50]. Default: 1.
+	// linear&inverse: [1, 200]. Default: 25.
+	// option: [1, 25]. Default: 1.
+	Limit *int `url:"limit,omitempty"`
+}
+
+// V5GetOrderbookResponse :
+type V5GetOrderbookResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetOrderbookResult `json:"result"`
+}
+
+// V5GetOrderbookResult :
+type V5GetOrderbookResult struct {
+	Symbol    SymbolV5              `json:"s"`
+	Bids      V5GetOrderbookBidAsks `json:"b"`
+	Asks      V5GetOrderbookBidAsks `json:"a"`
+	Timestamp int64                 `json:"ts"`
+	UpdateID  int                   `json:"u"`
+}
+
+// V5GetOrderbookBidAsks :
+type V5GetOrderbookBidAsks []V5GetOrderbookBidAsk
+
+// UnmarshalJSON :
+func (b *V5GetOrderbookBidAsks) UnmarshalJSON(data []byte) error {
+	parsedData := [][]string{}
+	if err := json.Unmarshal(data, &parsedData); err != nil {
+		return err
+	}
+	items := V5GetOrderbookBidAsks{}
+	for _, item := range parsedData {
+		item := item
+		if len(item) != 2 {
+			return errors.New("so far len(item) must be 2, please check it on documents")
+		}
+		items = append(items, V5GetOrderbookBidAsk{
+			Price:    item[0],
+			Quantity: item[1],
+		})
+	}
+	*b = items
+	return nil
+}
+
+// V5GetOrderbookBidAsk :
+type V5GetOrderbookBidAsk struct {
+	Price    string `json:"price"`
+	Quantity string `json:"quantity"`
+}
+
+// GetOrderbook :
+func (s *V5MarketService) GetOrderbook(param V5GetOrderbookParam) (*V5GetOrderbookResponse, error) {
+	var res V5GetOrderbookResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/orderbook", queryString, &res); err != nil {
 		return nil, err
 	}
 
