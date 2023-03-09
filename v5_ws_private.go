@@ -53,17 +53,17 @@ const (
 type V5WebsocketPrivateTopic string
 
 const (
-	// V5Pong :
-	V5Pong = "pong"
+	// V5WebsocketPrivateTopicPong :
+	V5WebsocketPrivateTopicPong V5WebsocketPrivateTopic = "pong"
 
 	// V5WebsocketPrivateTopicOrder :
-	V5WebsocketPrivateTopicOrder = "order"
+	V5WebsocketPrivateTopicOrder V5WebsocketPrivateTopic = "order"
 
 	// V5WebsocketPrivateTopicPosition :
-	V5WebsocketPrivateTopicPosition = "position"
+	V5WebsocketPrivateTopicPosition V5WebsocketPrivateTopic = "position"
 
 	// V5WebsocketPrivateTopicWallet :
-	V5WebsocketPrivateTopicWallet = "wallet"
+	V5WebsocketPrivateTopicWallet V5WebsocketPrivateTopic = "wallet"
 )
 
 // V5WebsocketPrivateParamKey :
@@ -77,8 +77,8 @@ func (s *V5WebsocketPrivateService) judgeTopic(respBody []byte) (V5WebsocketPriv
 	if err := json.Unmarshal(respBody, &parsedData); err != nil {
 		return "", err
 	}
-	if ret_msg, ok := parsedData["op"].(string); ok && ret_msg == "pong" {
-		return V5WebsocketPrivateTopic("pong"), nil
+	if retMsg, ok := parsedData["op"].(string); ok && retMsg == "pong" {
+		return V5WebsocketPrivateTopicPong, nil
 	}
 	if topic, ok := parsedData["topic"].(string); ok {
 		return V5WebsocketPrivateTopic(topic), nil
@@ -176,7 +176,7 @@ func (s *V5WebsocketPrivateService) Run() error {
 		return err
 	}
 	switch topic {
-	case V5Pong:
+	case V5WebsocketPrivateTopicPong:
 		if err := s.connection.PongHandler()("pong"); err != nil {
 			return fmt.Errorf("pong: %w", err)
 		}
