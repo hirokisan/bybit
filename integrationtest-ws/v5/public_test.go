@@ -31,3 +31,25 @@ func TestV5Public_OrderBook(t *testing.T) {
 
 	require.NoError(t, svc.Run())
 }
+
+func TestV5Public_Kline(t *testing.T) {
+	wsClient := bybit.NewTestWebsocketClient().WithAuthFromEnv()
+	svc, err := wsClient.V5().Public(bybit.CategoryV5Linear)
+	require.NoError(t, err)
+
+	_, err = svc.SubscribeKline(
+		bybit.V5WebsocketPublicKlineParamKey{
+			Interval: Interval5,
+			Symbol:   bybit.SymbolV5BTCUSDT,
+		},
+		func(response bybit.V5WebsocketPublicKlineResponse) error {
+			goldenFilename := "./testdata/public-v5-kline.json"
+			testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(response))
+			testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(response))
+			return nil
+		},
+	)
+	require.NoError(t, err)
+
+	require.NoError(t, svc.Run())
+}

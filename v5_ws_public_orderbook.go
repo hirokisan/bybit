@@ -60,7 +60,7 @@ type V5WebsocketPublicOrderBookParamKey struct {
 
 // Topic :
 func (k *V5WebsocketPublicOrderBookParamKey) Topic() string {
-	return fmt.Sprintf("orderbook.%d.%s", k.Depth, k.Symbol)
+	return fmt.Sprintf("%s.%d.%s", V5WebsocketPublicTopicOrderBook, k.Depth, k.Symbol)
 }
 
 // V5WebsocketPublicOrderBookResponse :
@@ -134,7 +134,7 @@ func (b *V5WebsocketPublicOrderBookAsks) UnmarshalJSON(data []byte) error {
 func (r *V5WebsocketPublicOrderBookResponse) Key() V5WebsocketPublicOrderBookParamKey {
 	topic := r.Topic
 	arr := strings.Split(topic, ".")
-	if arr[0] != "orderbook" || len(arr) != 3 {
+	if arr[0] != V5WebsocketPublicTopicOrderBook || len(arr) != 3 {
 		return V5WebsocketPublicOrderBookParamKey{}
 	}
 	depth, err := strconv.Atoi(arr[1])
@@ -149,11 +149,11 @@ func (r *V5WebsocketPublicOrderBookResponse) Key() V5WebsocketPublicOrderBookPar
 }
 
 // addParamOrderBookFunc :
-func (s *V5WebsocketPublicService) addParamOrderBookFunc(param V5WebsocketPublicOrderBookParamKey, f func(V5WebsocketPublicOrderBookResponse) error) error {
-	if _, exist := s.paramOrderBookMap[param]; exist {
+func (s *V5WebsocketPublicService) addParamOrderBookFunc(key V5WebsocketPublicOrderBookParamKey, f func(V5WebsocketPublicOrderBookResponse) error) error {
+	if _, exist := s.paramOrderBookMap[key]; exist {
 		return errors.New("already registered for this param")
 	}
-	s.paramOrderBookMap[param] = f
+	s.paramOrderBookMap[key] = f
 	return nil
 }
 

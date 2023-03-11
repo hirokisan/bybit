@@ -314,6 +314,7 @@ The following API endpoints have been implemented
 #### Public Topics V5
 
 - [Orderbook](https://bybit-exchange.github.io/docs/v5/websocket/public/orderbook)
+- [Kline](https://bybit-exchange.github.io/docs/v5/websocket/public/kline)
 
 #### Private Topics V5
 
