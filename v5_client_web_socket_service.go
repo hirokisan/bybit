@@ -25,7 +25,8 @@ func (s *V5WebsocketService) Public(category CategoryV5) (V5WebsocketPublicServi
 	return &V5WebsocketPublicService{
 		client:            s.client,
 		connection:        c,
-		paramOrderBookMap: map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error{},
+		paramOrderBookMap: make(map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error),
+		paramKlineMap:     make(map[V5WebsocketPublicKlineParamKey]func(V5WebsocketPublicKlineResponse) error),
 	}, nil
 }
 
@@ -39,9 +40,9 @@ func (s *V5WebsocketService) Private() (V5WebsocketPrivateServiceI, error) {
 	return &V5WebsocketPrivateService{
 		client:           s.client,
 		connection:       c,
-		paramOrderMap:    map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateOrderResponse) error{},
-		paramPositionMap: map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error{},
-		paramWalletMap:   map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateWalletResponse) error{},
+		paramOrderMap:    make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateOrderResponse) error),
+		paramPositionMap: make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error),
+		paramWalletMap:   make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateWalletResponse) error),
 	}, nil
 }
 

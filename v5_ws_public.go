@@ -23,6 +23,11 @@ type V5WebsocketPublicServiceI interface {
 		V5WebsocketPublicOrderBookParamKey,
 		func(V5WebsocketPublicOrderBookResponse) error,
 	) (func() error, error)
+
+	SubscribeKline(
+		V5WebsocketPublicKlineParamKey,
+		func(V5WebsocketPublicKlineResponse) error,
+	) (func() error, error)
 }
 
 // V5WebsocketPublicService :
@@ -31,6 +36,7 @@ type V5WebsocketPublicService struct {
 	connection *websocket.Conn
 
 	paramOrderBookMap map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error
+	paramKlineMap     map[V5WebsocketPublicKlineParamKey]func(V5WebsocketPublicKlineResponse) error
 }
 
 const (
@@ -49,6 +55,9 @@ type V5WebsocketPublicTopic string
 const (
 	// V5WebsocketPublicTopicOrderBook :
 	V5WebsocketPublicTopicOrderBook = "orderbook"
+
+	// V5WebsocketPublicTopicKline :
+	V5WebsocketPublicTopicKline = "kline"
 )
 
 // judgeTopic :
@@ -61,6 +70,8 @@ func (s *V5WebsocketPublicService) judgeTopic(respBody []byte) (V5WebsocketPubli
 		switch {
 		case strings.Contains(topic, "orderbook"):
 			return V5WebsocketPublicTopicOrderBook, nil
+		case strings.Contains(topic, "kline"):
+			return V5WebsocketPublicTopicKline, nil
 		}
 	}
 	return "", nil
@@ -145,6 +156,20 @@ func (s *V5WebsocketPublicService) Run() error {
 		if err != nil {
 			return err
 		}
+		if err := f(resp); err != nil {
+			return err
+		}
+	case V5WebsocketPublicTopicKline:
+		var resp V5WebsocketPublicKlineResponse
+		if err := s.parseResponse(message, &resp); err != nil {
+			return err
+		}
+
+		f, err := s.retrieveKlineFunc(resp.Key())
+		if err != nil {
+			return err
+		}
+
 		if err := f(resp); err != nil {
 			return err
 		}
