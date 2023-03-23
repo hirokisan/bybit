@@ -29,7 +29,7 @@ func (s *V5WebsocketPublicService) SubscribeOrderBook(
 	if err != nil {
 		return nil, err
 	}
-	if err := s.connection.WriteMessage(websocket.TextMessage, buf); err != nil {
+	if err := s.writeMessage(websocket.TextMessage, buf); err != nil {
 		return nil, err
 	}
 	return func() error {
@@ -44,7 +44,7 @@ func (s *V5WebsocketPublicService) SubscribeOrderBook(
 		if err != nil {
 			return err
 		}
-		if err := s.connection.WriteMessage(websocket.TextMessage, []byte(buf)); err != nil {
+		if err := s.writeMessage(websocket.TextMessage, []byte(buf)); err != nil {
 			return err
 		}
 		s.removeParamOrderBookFunc(key)
