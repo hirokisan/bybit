@@ -3,10 +3,12 @@ package bybit
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"log"
 	"os"
 	"os/signal"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -34,6 +36,8 @@ type V5WebsocketPublicServiceI interface {
 type V5WebsocketPublicService struct {
 	client     *WebSocketClient
 	connection *websocket.Conn
+
+	mu sync.Mutex
 
 	paramOrderBookMap map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error
 	paramKlineMap     map[V5WebsocketPublicKlineParamKey]func(V5WebsocketPublicKlineResponse) error
@@ -182,7 +186,7 @@ func (s *V5WebsocketPublicService) Run() error {
 
 // Ping :
 func (s *V5WebsocketPublicService) Ping() error {
-	if err := s.connection.WriteMessage(websocket.PingMessage, nil); err != nil {
+	if err := s.writeMessage(websocket.PingMessage, nil); err != nil {
 		return err
 	}
 	return nil
@@ -190,7 +194,17 @@ func (s *V5WebsocketPublicService) Ping() error {
 
 // Close :
 func (s *V5WebsocketPublicService) Close() error {
-	if err := s.connection.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, "")); err != nil {
+	if err := s.writeMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, "")); err != nil && !errors.Is(err, websocket.ErrCloseSent) {
+		return err
+	}
+	return nil
+}
+
+func (s *V5WebsocketPublicService) writeMessage(messageType int, body []byte) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if err := s.connection.WriteMessage(messageType, body); err != nil {
 		return err
 	}
 	return nil
