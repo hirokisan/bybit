@@ -129,6 +129,9 @@ func (s *V5WebsocketPrivateService) Start(ctx context.Context, errHandler ErrHan
 
 		for {
 			if err := s.Run(); err != nil {
+				if errHandler == nil {
+					return
+				}
 				errHandler(IsErrWebsocketClosed(err), err)
 				return
 			}

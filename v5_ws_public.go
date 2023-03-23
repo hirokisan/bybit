@@ -100,6 +100,9 @@ func (s *V5WebsocketPublicService) Start(ctx context.Context, errHandler ErrHand
 
 		for {
 			if err := s.Run(); err != nil {
+				if errHandler == nil {
+					return
+				}
 				errHandler(IsErrWebsocketClosed(err), err)
 				return
 			}
