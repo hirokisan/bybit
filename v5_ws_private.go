@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"sync"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -38,6 +39,8 @@ type V5WebsocketPrivateServiceI interface {
 type V5WebsocketPrivateService struct {
 	client     *WebSocketClient
 	connection *websocket.Conn
+
+	mu sync.Mutex
 
 	paramOrderMap    map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateOrderResponse) error
 	paramPositionMap map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error
@@ -105,7 +108,7 @@ func (s *V5WebsocketPrivateService) Subscribe() error {
 	if err != nil {
 		return err
 	}
-	if err := s.connection.WriteMessage(websocket.TextMessage, param); err != nil {
+	if err := s.writeMessage(websocket.TextMessage, param); err != nil {
 		return err
 	}
 	return nil
@@ -226,7 +229,7 @@ func (s *V5WebsocketPrivateService) Run() error {
 
 // Ping :
 func (s *V5WebsocketPrivateService) Ping() error {
-	if err := s.connection.WriteMessage(websocket.TextMessage, []byte(`{"op":"ping"}`)); err != nil {
+	if err := s.writeMessage(websocket.TextMessage, []byte(`{"op":"ping"}`)); err != nil {
 		return err
 	}
 	return nil
@@ -234,7 +237,17 @@ func (s *V5WebsocketPrivateService) Ping() error {
 
 // Close :
 func (s *V5WebsocketPrivateService) Close() error {
-	if err := s.connection.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, "")); err != nil {
+	if err := s.writeMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, "")); err != nil && !errors.Is(err, websocket.ErrCloseSent) {
+		return err
+	}
+	return nil
+}
+
+func (s *V5WebsocketPrivateService) writeMessage(messageType int, body []byte) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if err := s.connection.WriteMessage(messageType, body); err != nil {
 		return err
 	}
 	return nil
