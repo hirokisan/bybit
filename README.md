@@ -126,6 +126,7 @@ The following API endpoints have been implemented
 - [`/v5/market/instruments-info` Get Instruments Info](https://bybit-exchange.github.io/docs/v5/market/instrument)
 - [`/v5/market/orderbook` Get Orderbook](https://bybit-exchange.github.io/docs/v5/market/orderbook)
 - [`/v5/market/tickers` Get Tickers](https://bybit-exchange.github.io/docs/v5/market/tickers)
+- [`/v5/market/funding/history` Get Funding Rate History](https://bybit-exchange.github.io/docs/v5/market/history-fund-rate)
 
 #### Position
 
