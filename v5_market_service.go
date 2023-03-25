@@ -18,6 +18,7 @@ type V5MarketServiceI interface {
 	GetInstrumentsInfo(V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error)
 	GetOrderbook(V5GetOrderbookParam) (*V5GetOrderbookResponse, error)
 	GetTickers(V5GetTickersParam) (*V5GetTickersResponse, error)
+	GetFundingRateHistory(V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error)
 }
 
 // V5MarketService :
@@ -717,6 +718,59 @@ func (s *V5MarketService) GetTickers(param V5GetTickersParam) (*V5GetTickersResp
 	}
 
 	if err := s.client.getPublicly("/v5/market/tickers", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetFundingRateHistoryParam :
+type V5GetFundingRateHistoryParam struct {
+	Category CategoryV5 `url:"category"`
+	Symbol   SymbolV5   `url:"symbol"`
+
+	StartTime *int64 `url:"startTime,omitempty"` // The start timestamp (ms)
+	EndTime   *int64 `url:"endTime,omitempty"`   // The start timestamp (ms)
+	Limit     *int   `url:"limit,omitempty"`     // Limit for data size per page. [1, 200]. Default: 200
+}
+
+func (p V5GetFundingRateHistoryParam) validate() error {
+	if p.Category != CategoryV5Linear && p.Category != CategoryV5Inverse {
+		return fmt.Errorf("only linear and inverse are supported for category")
+	}
+	return nil
+}
+
+// V5GetFundingRateHistoryResponse :
+type V5GetFundingRateHistoryResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetFundingRateHistoryResult `json:"result"`
+}
+
+// V5GetFundingRateHistoryResult :
+type V5GetFundingRateHistoryResult struct {
+	Category CategoryV5 `json:"category"`
+	List     []struct {
+		Symbol               SymbolV5 `json:"symbol"`
+		FundingRate          string   `json:"fundingRate"`
+		FundingRateTimestamp string   `json:"fundingRateTimestamp"`
+	} `json:"list"`
+}
+
+// GetFundingRateHistory :
+func (s *V5MarketService) GetFundingRateHistory(param V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error) {
+	var res V5GetFundingRateHistoryResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/funding/history", queryString, &res); err != nil {
 		return nil, err
 	}
 
