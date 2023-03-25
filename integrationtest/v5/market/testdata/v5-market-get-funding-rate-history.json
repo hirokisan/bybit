@@ -1,0 +1,30 @@
+{
+  "category": "linear",
+  "list": [
+    {
+      "symbol": "BTCUSDT",
+      "fundingRate": "0.0001",
+      "fundingRateTimestamp": "1679702400000"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "fundingRate": "-0.00230379",
+      "fundingRateTimestamp": "1679673600000"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "fundingRate": "-0.00086576",
+      "fundingRateTimestamp": "1679644800000"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "fundingRate": "-0.0032142",
+      "fundingRateTimestamp": "1679616000000"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "fundingRate": "0.0001",
+      "fundingRateTimestamp": "1679587200000"
+    }
+  ]
+}
