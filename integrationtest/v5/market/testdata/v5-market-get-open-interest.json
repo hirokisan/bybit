@@ -1,0 +1,27 @@
+{
+  "category": "linear",
+  "symbol": "BTCUSDT",
+  "list": [
+    {
+      "openInterest": "60928.34400000",
+      "timestamp": "1679907600000"
+    },
+    {
+      "openInterest": "60938.09000000",
+      "timestamp": "1679904000000"
+    },
+    {
+      "openInterest": "60908.52000000",
+      "timestamp": "1679900400000"
+    },
+    {
+      "openInterest": "60923.71200000",
+      "timestamp": "1679896800000"
+    },
+    {
+      "openInterest": "60908.57200000",
+      "timestamp": "1679893200000"
+    }
+  ],
+  "nextPageCursor": "lastid%3D48598748"
+}
