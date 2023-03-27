@@ -624,3 +624,46 @@ func TestV5Market_GetFundingRateHistory(t *testing.T) {
 	require.NotNil(t, resp)
 	testhelper.Compare(t, respBody["result"], resp.Result)
 }
+
+func TestV5Market_GetPublicTradingHistory(t *testing.T) {
+	param := V5GetPublicTradingHistoryParam{
+		Category: CategoryV5Linear,
+		Symbol:   SymbolV5BTCUSDT,
+	}
+
+	path := "/v5/market/recent-trade"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"result": map[string]interface{}{
+			"category": "linear",
+			"list": []map[string]interface{}{
+				{
+					"execId":       "ab5c8ff6-79ae-508c-9f38-b6540b4ede73",
+					"symbol":       "BTCUSDT",
+					"price":        "27858.10",
+					"size":         "0.001",
+					"side":         "Buy",
+					"time":         "1679907414058",
+					"isBlockTrade": false,
+				},
+			},
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.V5().Market().GetPublicTradingHistory(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	testhelper.Compare(t, respBody["result"], resp.Result)
+}

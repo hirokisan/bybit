@@ -127,6 +127,7 @@ The following API endpoints have been implemented
 - [`/v5/market/orderbook` Get Orderbook](https://bybit-exchange.github.io/docs/v5/market/orderbook)
 - [`/v5/market/tickers` Get Tickers](https://bybit-exchange.github.io/docs/v5/market/tickers)
 - [`/v5/market/funding/history` Get Funding Rate History](https://bybit-exchange.github.io/docs/v5/market/history-fund-rate)
+- [`/v5/market/recent-trade` Get Public Trading History](https://bybit-exchange.github.io/docs/v5/market/recent-trade)
 
 #### Position
 
