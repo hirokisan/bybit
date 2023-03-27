@@ -19,6 +19,7 @@ type V5MarketServiceI interface {
 	GetOrderbook(V5GetOrderbookParam) (*V5GetOrderbookResponse, error)
 	GetTickers(V5GetTickersParam) (*V5GetTickersResponse, error)
 	GetFundingRateHistory(V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error)
+	GetPublicTradingHistory(V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error)
 }
 
 // V5MarketService :
@@ -771,6 +772,67 @@ func (s *V5MarketService) GetFundingRateHistory(param V5GetFundingRateHistoryPar
 	}
 
 	if err := s.client.getPublicly("/v5/market/funding/history", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetPublicTradingHistoryParam :
+type V5GetPublicTradingHistoryParam struct {
+	Category CategoryV5 `url:"category"`
+	Symbol   SymbolV5   `url:"symbol"`
+
+	BaseCoin   *Coin        `url:"baseCoin,omitempty"` // For option only. If not passed, return BTC data by default
+	OptionType *OptionsType `url:"optionType,omitempty"`
+
+	// Limit for data size per page.
+	// - spot: [1,60], default: 60
+	// - others: [1,1000], default: 500
+	Limit *int `url:"limit,omitempty"`
+}
+
+func (p V5GetPublicTradingHistoryParam) validate() error {
+	if p.BaseCoin != nil && p.Category != CategoryV5Option {
+		return fmt.Errorf("baseCoin is for option only")
+	}
+	return nil
+}
+
+// V5GetPublicTradingHistoryResponse :
+type V5GetPublicTradingHistoryResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetPublicTradingHistoryResult `json:"result"`
+}
+
+// V5GetPublicTradingHistoryResult :
+type V5GetPublicTradingHistoryResult struct {
+	Category CategoryV5 `json:"category"`
+	List     []struct {
+		ExecID       string   `json:"execId"`
+		Symbol       SymbolV5 `json:"symbol"`
+		Price        string   `json:"price"`
+		Size         string   `json:"size"`
+		Side         Side     `json:"side"`
+		Time         string   `json:"time"`
+		IsBlockTrade bool     `json:"isBlockTrade"`
+	} `json:"list"`
+}
+
+// GetPublicTradingHistory :
+func (s *V5MarketService) GetPublicTradingHistory(param V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error) {
+	var res V5GetPublicTradingHistoryResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/recent-trade", queryString, &res); err != nil {
 		return nil, err
 	}
 
