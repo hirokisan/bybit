@@ -175,3 +175,19 @@ func TestGetFundingRateHistory(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetPublicTradingHistory(t *testing.T) {
+	client := bybit.NewTestClient()
+	limit := 5
+	res, err := client.V5().Market().GetPublicTradingHistory(bybit.V5GetPublicTradingHistoryParam{
+		Category: bybit.CategoryV5Linear,
+		Symbol:   bybit.SymbolV5BTCUSDT,
+		Limit:    &limit,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-market-get-public-trading-history.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
