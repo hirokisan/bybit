@@ -20,6 +20,7 @@ type V5MarketServiceI interface {
 	GetTickers(V5GetTickersParam) (*V5GetTickersResponse, error)
 	GetFundingRateHistory(V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error)
 	GetPublicTradingHistory(V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error)
+	GetOpenInterest(V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error)
 }
 
 // V5MarketService :
@@ -833,6 +834,62 @@ func (s *V5MarketService) GetPublicTradingHistory(param V5GetPublicTradingHistor
 	}
 
 	if err := s.client.getPublicly("/v5/market/recent-trade", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetOpenInterestParam :
+type V5GetOpenInterestParam struct {
+	Category     CategoryV5 `url:"category"`
+	Symbol       SymbolV5   `url:"symbol"`
+	IntervalTime Period     `url:"intervalTime"`
+
+	StartTime *int64  `url:"startTime,omitempty"` // The start timestamp (ms)
+	EndTime   *int64  `url:"endTime,omitempty"`   // The start timestamp (ms)
+	Limit     *int    `url:"limit,omitempty"`     // Limit for data size per page. [1, 200]. Default: 50
+	Cursor    *string `url:"cursor,omitempty"`
+}
+
+func (p V5GetOpenInterestParam) validate() error {
+	if p.Category != CategoryV5Linear && p.Category != CategoryV5Inverse {
+		return fmt.Errorf("only linear and inverse are supported for category")
+	}
+	return nil
+}
+
+// V5GetOpenInterestResponse :
+type V5GetOpenInterestResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetOpenInterestResult `json:"result"`
+}
+
+// V5GetOpenInterestResult :
+type V5GetOpenInterestResult struct {
+	Category CategoryV5 `json:"category"`
+	Symbol   SymbolV5   `json:"symbol"`
+	List     []struct {
+		OpenInterest string `json:"openInterest"`
+		Timestamp    string `json:"timestamp"`
+	} `json:"list"`
+	NextPageCursor string `json:"nextPageCursor"`
+}
+
+// GetOpenInterest :
+func (s *V5MarketService) GetOpenInterest(param V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error) {
+	var res V5GetOpenInterestResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/open-interest", queryString, &res); err != nil {
 		return nil, err
 	}
 
