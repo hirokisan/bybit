@@ -667,3 +667,44 @@ func TestV5Market_GetPublicTradingHistory(t *testing.T) {
 	require.NotNil(t, resp)
 	testhelper.Compare(t, respBody["result"], resp.Result)
 }
+
+func TestV5Market_GetOpenInterest(t *testing.T) {
+	param := V5GetOpenInterestParam{
+		Category:     CategoryV5Linear,
+		Symbol:       SymbolV5BTCUSDT,
+		IntervalTime: Period1h,
+	}
+
+	path := "/v5/market/open-interest"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"result": map[string]interface{}{
+			"category": "linear",
+			"symbol":   "BTCUSDT",
+			"list": []map[string]interface{}{
+				{
+					"openInterest": "60928.34400000",
+					"timestamp":    "1679907600000",
+				},
+			},
+			"nextPageCursor": "lastid%3D48598748",
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.V5().Market().GetOpenInterest(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	testhelper.Compare(t, respBody["result"], resp.Result)
+}
