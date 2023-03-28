@@ -708,3 +708,40 @@ func TestV5Market_GetOpenInterest(t *testing.T) {
 	require.NotNil(t, resp)
 	testhelper.Compare(t, respBody["result"], resp.Result)
 }
+
+func TestV5Market_GetHistoricalVolatility(t *testing.T) {
+	param := V5GetHistoricalVolatilityParam{
+		Category: CategoryV5Option,
+	}
+
+	path := "/v5/market/historical-volatility"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"category": "option",
+		"result": []map[string]interface{}{
+			{
+				"period": 7,
+				"value":  "0.67736876",
+				"time":   "1679976000000",
+			},
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.V5().Market().GetHistoricalVolatility(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	assert.Equal(t, respBody["category"], string(resp.Result.Category))
+	assert.Equal(t, respBody["result"].([]map[string]interface{})[0]["period"], resp.Result.List[0].Period)
+}
