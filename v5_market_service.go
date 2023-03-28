@@ -21,6 +21,7 @@ type V5MarketServiceI interface {
 	GetFundingRateHistory(V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error)
 	GetPublicTradingHistory(V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error)
 	GetOpenInterest(V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error)
+	GetHistoricalVolatility(V5GetHistoricalVolatilityParam) (*V5GetHistoricalVolatilityResponse, error)
 }
 
 // V5MarketService :
@@ -890,6 +891,83 @@ func (s *V5MarketService) GetOpenInterest(param V5GetOpenInterestParam) (*V5GetO
 	}
 
 	if err := s.client.getPublicly("/v5/market/open-interest", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetHistoricalVolatilityParam :
+type V5GetHistoricalVolatilityParam struct {
+	Category CategoryV5 `url:"category"` // option only
+
+	BaseCoin  *Coin  `url:"baseCoin,omitempty"`
+	Period    *int   `url:"period,omitempty"`
+	StartTime *int64 `url:"startTime,omitempty"` // The start timestamp (ms)
+	EndTime   *int64 `url:"endTime,omitempty"`   // The start timestamp (ms)
+}
+
+func (p V5GetHistoricalVolatilityParam) validate() error {
+	if p.Category != CategoryV5Option {
+		return fmt.Errorf("only option is supported")
+	}
+	return nil
+}
+
+// V5GetHistoricalVolatilityResponse :
+type V5GetHistoricalVolatilityResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetHistoricalVolatilityResult `json:"result"`
+}
+
+// UnmarshalJSON : Because the response structure is different from others
+func (r *V5GetHistoricalVolatilityResponse) UnmarshalJSON(data []byte) error {
+	var tmp struct {
+		CommonV5Response `json:",inline"`
+		Category         CategoryV5                          `json:"category"`
+		List             []V5GetHistoricalVolatilityListItem `json:"result"`
+	}
+	if err := json.Unmarshal(data, &tmp); err != nil {
+		return err
+	}
+	*r = V5GetHistoricalVolatilityResponse{
+		CommonV5Response: tmp.CommonV5Response,
+		Result: V5GetHistoricalVolatilityResult{
+			Category: tmp.Category,
+			List:     tmp.List,
+		},
+	}
+
+	return nil
+}
+
+// V5GetHistoricalVolatilityResult :
+type V5GetHistoricalVolatilityResult struct {
+	Category CategoryV5                          `json:"category"`
+	List     []V5GetHistoricalVolatilityListItem `json:"list"`
+}
+
+// V5GetHistoricalVolatilityListItem :
+type V5GetHistoricalVolatilityListItem struct {
+	Period int    `json:"period"`
+	Value  string `json:"value"`
+	Time   string `json:"time"`
+}
+
+// GetHistoricalVolatility :
+func (s *V5MarketService) GetHistoricalVolatility(param V5GetHistoricalVolatilityParam) (*V5GetHistoricalVolatilityResponse, error) {
+	var res V5GetHistoricalVolatilityResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/historical-volatility", queryString, &res); err != nil {
 		return nil, err
 	}
 
