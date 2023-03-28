@@ -208,3 +208,16 @@ func TestGetOpenInterest(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetHistoricalVolatility(t *testing.T) {
+	client := bybit.NewTestClient()
+	res, err := client.V5().Market().GetHistoricalVolatility(bybit.V5GetHistoricalVolatilityParam{
+		Category: bybit.CategoryV5Option,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-market-get-historical-volatility.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
