@@ -129,6 +129,7 @@ The following API endpoints have been implemented
 - [`/v5/market/funding/history` Get Funding Rate History](https://bybit-exchange.github.io/docs/v5/market/history-fund-rate)
 - [`/v5/market/recent-trade` Get Public Trading History](https://bybit-exchange.github.io/docs/v5/market/recent-trade)
 - [`/v5/market/open-interest` Get Open Interest](https://bybit-exchange.github.io/docs/v5/market/open-interest)
+- [`/v5/market/historical-volatility` Get Historical Volatility](https://bybit-exchange.github.io/docs/v5/market/iv)
 
 #### Position
 
