@@ -10,6 +10,7 @@ import (
 // V5OrderServiceI :
 type V5OrderServiceI interface {
 	CreateOrder(V5CreateOrderParam) (*V5CreateOrderResponse, error)
+	AmendOrder(V5AmendOrderParam) (*V5AmendOrderResponse, error)
 	CancelOrder(V5CancelOrderParam) (*V5CancelOrderResponse, error)
 	GetOpenOrders(V5GetOpenOrdersParam) (*V5GetOpenOrdersResponse, error)
 }
@@ -68,6 +69,66 @@ func (s *V5OrderService) CreateOrder(param V5CreateOrderParam) (*V5CreateOrderRe
 	}
 
 	if err := s.client.postV5JSON("/v5/order/create", body, &res); err != nil {
+		return &res, err
+	}
+
+	return &res, nil
+}
+
+// V5AmendOrderParam :
+type V5AmendOrderParam struct {
+	Category CategoryV5 `json:"category"`
+	Symbol   SymbolV5   `json:"symbol"`
+
+	OrderID      *string    `json:"orderId,omitempty"`
+	OrderLinkID  *string    `json:"orderLinkId,omitempty"`
+	OrderIv      *string    `json:"orderIv,omitempty"`
+	TriggerPrice *string    `json:"triggerPrice,omitempty"`
+	Qty          *string    `json:"qty,omitempty"`
+	Price        *string    `json:"price,omitempty"`
+	TakeProfit   *string    `json:"takeProfit,omitempty"`
+	StopLoss     *string    `json:"stopLoss,omitempty"`
+	TpTriggerBy  *TriggerBy `json:"tpTriggerBy,omitempty"`
+	SlTriggerBy  *TriggerBy `json:"slTriggerBy,omitempty"`
+	TriggerBy    *TriggerBy `json:"triggerBy,omitempty"`
+}
+
+func (p V5AmendOrderParam) validate() error {
+	if p.OrderID == nil && p.OrderLinkID == nil {
+		return fmt.Errorf("orderId or orderLinkId must be passed")
+	}
+	if p.Category != CategoryV5Option && p.OrderIv != nil {
+		return fmt.Errorf("orderIv is for option only")
+	}
+	return nil
+}
+
+// V5AmendOrderResponse :
+type V5AmendOrderResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5AmendOrderResult `json:"result"`
+}
+
+// V5AmendOrderResult :
+type V5AmendOrderResult struct {
+	OrderID     string `json:"orderId"`
+	OrderLinkID string `json:"orderLinkId"`
+}
+
+// AmendOrder :
+func (s *V5OrderService) AmendOrder(param V5AmendOrderParam) (*V5AmendOrderResponse, error) {
+	var res V5AmendOrderResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/v5/order/amend", body, &res); err != nil {
 		return &res, err
 	}
 
