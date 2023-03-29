@@ -85,6 +85,79 @@ func TestV5Order_CreateOrder(t *testing.T) {
 	})
 }
 
+func TestV5Order_AmendOrder(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		orderID := "1358868270414852352"
+		price := "10000.0"
+		param := V5AmendOrderParam{
+			Category: CategoryV5Spot,
+			Symbol:   SymbolV5BTCUSDT,
+			OrderID:  &orderID,
+			Price:    &price,
+		}
+
+		path := "/v5/order/amend"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"orderId":     "28902376-ea8a-46d8-b440-5db48dfdf467",
+				"orderLinkId": "",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Order().AmendOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		orderID := "1358868270414852352"
+		price := "10000.0"
+		param := V5AmendOrderParam{
+			Category: CategoryV5Spot,
+			Symbol:   SymbolV5BTCUSDT,
+			OrderID:  &orderID,
+			Price:    &price,
+		}
+
+		path := "/v5/order/amend"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"orderId":     "28902376-ea8a-46d8-b440-5db48dfdf467",
+				"orderLinkId": "",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Order().AmendOrder(param)
+		assert.Error(t, err)
+	})
+}
+
 func TestV5Order_CancelOrder(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		orderId := "1358868270414852352"
