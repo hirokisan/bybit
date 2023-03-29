@@ -40,3 +40,43 @@ func TestSetLeverage(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSetTradingStop(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	category := bybit.CategoryV5Linear
+	symbol := bybit.SymbolV5BTCUSDT
+	qty := "0.01"
+	{
+		_, err := client.V5().Order().CreateOrder(bybit.V5CreateOrderParam{
+			Category:  category,
+			Symbol:    symbol,
+			Side:      bybit.SideBuy,
+			OrderType: bybit.OrderTypeMarket,
+			Qty:       qty,
+		})
+		require.NoError(t, err)
+	}
+	price := "40000"
+	res, err := client.V5().Position().SetTradingStop(bybit.V5SetTradingStopParam{
+		Category:    category,
+		Symbol:      symbol,
+		PositionIdx: bybit.PositionIdxOneWay,
+		TakeProfit:  &price,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-position-set-trading-stop.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+	{
+		_, err := client.V5().Order().CreateOrder(bybit.V5CreateOrderParam{
+			Category:  category,
+			Symbol:    symbol,
+			Side:      bybit.SideSell,
+			OrderType: bybit.OrderTypeMarket,
+			Qty:       qty,
+		})
+		require.NoError(t, err)
+	}
+}
