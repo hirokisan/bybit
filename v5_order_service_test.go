@@ -369,3 +369,106 @@ func TestV5Order_GetOpenOrders(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestV5Order_CancelAllOrders(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		t.Run("linear", func(t *testing.T) {
+			symbol := SymbolV5BTCUSDT
+			param := V5CancelAllOrdersParam{
+				Category: CategoryV5Linear,
+				Symbol:   &symbol,
+			}
+
+			path := "/v5/order/cancel-all"
+			method := http.MethodPost
+			status := http.StatusOK
+			respBody := map[string]interface{}{
+				"result": map[string]interface{}{
+					"list": []map[string]interface{}{
+						{
+							"orderId":     "f6a73e1f-39b5-4dee-af21-1460b2e3b27c",
+							"orderLinkId": "a001",
+						},
+					},
+				},
+			}
+			bytesBody, err := json.Marshal(respBody)
+			require.NoError(t, err)
+
+			server, teardown := testhelper.NewServer(
+				testhelper.WithHandlerOption(path, method, status, bytesBody),
+			)
+			defer teardown()
+
+			client := NewTestClient().
+				WithBaseURL(server.URL).
+				WithAuth("test", "test")
+
+			resp, err := client.V5().Order().CancelAllOrders(param)
+			require.NoError(t, err)
+
+			require.NotNil(t, resp)
+			testhelper.Compare(t, respBody["result"], resp.Result.LinearInverseOption)
+		})
+		t.Run("spot", func(t *testing.T) {
+			param := V5CancelAllOrdersParam{
+				Category: CategoryV5Spot,
+			}
+
+			path := "/v5/order/cancel-all"
+			method := http.MethodPost
+			status := http.StatusOK
+			respBody := map[string]interface{}{
+				"result": map[string]interface{}{
+					"success": "1",
+				},
+			}
+			bytesBody, err := json.Marshal(respBody)
+			require.NoError(t, err)
+
+			server, teardown := testhelper.NewServer(
+				testhelper.WithHandlerOption(path, method, status, bytesBody),
+			)
+			defer teardown()
+
+			client := NewTestClient().
+				WithBaseURL(server.URL).
+				WithAuth("test", "test")
+
+			resp, err := client.V5().Order().CancelAllOrders(param)
+			require.NoError(t, err)
+
+			require.NotNil(t, resp)
+			testhelper.Compare(t, respBody["result"], resp.Result.Spot)
+		})
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		symbol := SymbolV5BTCUSDT
+		param := V5CancelAllOrdersParam{
+			Category: CategoryV5Spot,
+			Symbol:   &symbol,
+		}
+
+		path := "/v5/order/cancel-all"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"success": "1",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Order().CancelAllOrders(param)
+		assert.Error(t, err)
+	})
+}

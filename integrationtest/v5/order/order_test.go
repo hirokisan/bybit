@@ -150,3 +150,31 @@ func TestGetOpenOrders(t *testing.T) {
 		require.NoError(t, err)
 	}
 }
+
+func TestCancelAllOrders(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	category := bybit.CategoryV5Spot
+	symbol := bybit.SymbolV5BTCUSDT
+	{
+		price := "10000.0"
+		_, err := client.V5().Order().CreateOrder(bybit.V5CreateOrderParam{
+			Category:  category,
+			Symbol:    symbol,
+			Side:      bybit.SideBuy,
+			OrderType: bybit.OrderTypeLimit,
+			Qty:       "0.01",
+			Price:     &price,
+		})
+		require.NoError(t, err)
+	}
+
+	res, err := client.V5().Order().CancelAllOrders(bybit.V5CancelAllOrdersParam{
+		Category: category,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-cancel-all-orders.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}

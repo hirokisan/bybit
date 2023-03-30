@@ -13,6 +13,7 @@ type V5OrderServiceI interface {
 	AmendOrder(V5AmendOrderParam) (*V5AmendOrderResponse, error)
 	CancelOrder(V5CancelOrderParam) (*V5CancelOrderResponse, error)
 	GetOpenOrders(V5GetOpenOrdersParam) (*V5GetOpenOrdersResponse, error)
+	CancelAllOrders(V5CancelAllOrdersParam) (*V5CancelAllOrdersResponse, error)
 }
 
 // V5OrderService :
@@ -256,6 +257,85 @@ func (s *V5OrderService) GetOpenOrders(param V5GetOpenOrdersParam) (*V5GetOpenOr
 
 	if err := s.client.getV5Privately("/v5/order/realtime", queryString, &res); err != nil {
 		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5CancelAllOrdersParam :
+// If you pass multiple of these params, the system will process one of param, which priority is symbol > baseCoin > settleCoin.
+type V5CancelAllOrdersParam struct {
+	Category CategoryV5 `json:"category"`
+
+	Symbol      *SymbolV5    `json:"symbol,omitempty"`
+	BaseCoin    *Coin        `json:"baseCoin,omitempty"`
+	SettleCoin  *Coin        `json:"settleCoin,omitempty"`
+	OrderFilter *OrderFilter `json:"orderFilter,omitempty"` // If not passed, Order by default
+}
+
+func (p V5CancelAllOrdersParam) validate() error {
+	if p.Category == CategoryV5Linear || p.Category == CategoryV5Inverse {
+		if p.Symbol == nil && p.BaseCoin == nil && p.SettleCoin == nil {
+			return fmt.Errorf("symbol or baseCoin or settleCoin is needed for linear and inverse")
+		}
+	}
+	if p.Category != CategoryV5Spot && p.OrderFilter != nil {
+		return fmt.Errorf("orderFilter is for spot only")
+	}
+	return nil
+}
+
+// V5CancelAllOrdersResponse :
+type V5CancelAllOrdersResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5CancelAllOrdersResult `json:"result"`
+}
+
+// V5CancelAllOrdersResult :
+type V5CancelAllOrdersResult struct {
+	LinearInverseOption *V5CancelAllOrdersLinearInverseOptionResult
+	Spot                *V5CancelAllOrdersSpotResult
+}
+
+// UnmarshalJSON :
+func (r *V5CancelAllOrdersResult) UnmarshalJSON(data []byte) error {
+	if err := json.Unmarshal(data, &r.LinearInverseOption); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(data, &r.Spot); err != nil {
+		return err
+	}
+	return nil
+}
+
+// V5CancelAllOrdersLinearInverseOptionResult :
+type V5CancelAllOrdersLinearInverseOptionResult struct {
+	List []struct {
+		OrderID     string `json:"orderId"`
+		OrderLinkID string `json:"orderLinkId"`
+	} `json:"list"`
+}
+
+// V5CancelAllOrdersSpotResult :
+type V5CancelAllOrdersSpotResult struct {
+	Success string `json:"success"` // 1: success, 0: fail
+}
+
+// CancelAllOrders :
+func (s *V5OrderService) CancelAllOrders(param V5CancelAllOrdersParam) (*V5CancelAllOrdersResponse, error) {
+	var res V5CancelAllOrdersResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/v5/order/cancel-all", body, &res); err != nil {
+		return &res, err
 	}
 
 	return &res, nil
