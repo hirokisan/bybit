@@ -151,3 +151,13 @@ const (
 	InnovationFalse = Innovation("0")
 	InnovationTrue  = Innovation("1")
 )
+
+// PositionMode :
+type PositionMode int
+
+const (
+	// PositionModeMergedSingle :
+	PositionModeMergedSingle = 0
+	// PositionModeBothSides :
+	PositionModeBothSides = 3
+)

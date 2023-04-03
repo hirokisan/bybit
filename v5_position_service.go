@@ -12,6 +12,7 @@ type V5PositionServiceI interface {
 	GetPositionInfo(V5GetPositionInfoParam) (*V5GetPositionInfoResponse, error)
 	SetLeverage(V5SetLeverageParam) (*V5SetLeverageResponse, error)
 	SetTradingStop(V5SetTradingStopParam) (*V5SetTradingStopResponse, error)
+	SwitchPositionMode(V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error)
 }
 
 // V5PositionService :
@@ -170,6 +171,48 @@ func (s *V5PositionService) SetTradingStop(param V5SetTradingStopParam) (*V5SetT
 	}
 
 	if err := s.client.postV5JSON("/v5/position/trading-stop", body, &res); err != nil {
+		return &res, err
+	}
+
+	return &res, nil
+}
+
+// V5SwitchPositionModeParam :
+type V5SwitchPositionModeParam struct {
+	Category CategoryV5   `json:"category"`
+	Mode     PositionMode `json:"mode"`
+
+	Symbol *SymbolV5 `json:"symbol,omitempty"`
+	Coin   *Coin     `json:"coin,omitempty"`
+}
+
+func (p V5SwitchPositionModeParam) validate() error {
+	if p.Symbol == nil && p.Coin == nil {
+		return fmt.Errorf("symbol or coin is required")
+	}
+	return nil
+}
+
+// V5SwitchPositionModeResponse :
+type V5SwitchPositionModeResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           interface{} `json:"result"` // no content
+}
+
+// SwitchPositionMode :
+func (s *V5PositionService) SwitchPositionMode(param V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error) {
+	var res V5SwitchPositionModeResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/v5/position/switch-mode", body, &res); err != nil {
 		return &res, err
 	}
 
