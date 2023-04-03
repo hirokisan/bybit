@@ -80,3 +80,20 @@ func TestSetTradingStop(t *testing.T) {
 		require.NoError(t, err)
 	}
 }
+
+func TestSwitchPositionMode(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+
+	coin := bybit.CoinBTC
+	res, err := client.V5().Position().SwitchPositionMode(bybit.V5SwitchPositionModeParam{
+		Category: bybit.CategoryV5Inverse,
+		Mode:     bybit.PositionModeBothSides,
+		Coin:     &coin,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-position-switch-position-mode.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
