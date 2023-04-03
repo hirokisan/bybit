@@ -41,6 +41,44 @@ func TestSetLeverage(t *testing.T) {
 	}
 }
 
+func TestSetTpSlMode(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	category := bybit.CategoryV5Linear
+	symbol := bybit.SymbolV5BTCUSDT
+	qty := "0.01"
+	{
+		_, err := client.V5().Order().CreateOrder(bybit.V5CreateOrderParam{
+			Category:  category,
+			Symbol:    symbol,
+			Side:      bybit.SideBuy,
+			OrderType: bybit.OrderTypeMarket,
+			Qty:       qty,
+		})
+		require.NoError(t, err)
+	}
+	res, err := client.V5().Position().SetTpSlMode(bybit.V5SetTpSlModeParam{
+		Category: category,
+		Symbol:   symbol,
+		TpSlMode: bybit.TpSlModeFull,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-position-set-tpsl-mode.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+	{
+		_, err := client.V5().Order().CreateOrder(bybit.V5CreateOrderParam{
+			Category:  category,
+			Symbol:    symbol,
+			Side:      bybit.SideSell,
+			OrderType: bybit.OrderTypeMarket,
+			Qty:       qty,
+		})
+		require.NoError(t, err)
+	}
+}
+
 func TestSetTradingStop(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
 	category := bybit.CategoryV5Linear
