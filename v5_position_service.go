@@ -12,6 +12,7 @@ type V5PositionServiceI interface {
 	GetPositionInfo(V5GetPositionInfoParam) (*V5GetPositionInfoResponse, error)
 	SetLeverage(V5SetLeverageParam) (*V5SetLeverageResponse, error)
 	SetTradingStop(V5SetTradingStopParam) (*V5SetTradingStopResponse, error)
+	SetTpSlMode(V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error)
 	SwitchPositionMode(V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error)
 }
 
@@ -171,6 +172,51 @@ func (s *V5PositionService) SetTradingStop(param V5SetTradingStopParam) (*V5SetT
 	}
 
 	if err := s.client.postV5JSON("/v5/position/trading-stop", body, &res); err != nil {
+		return &res, err
+	}
+
+	return &res, nil
+}
+
+// V5SetTpSlModeParam :
+type V5SetTpSlModeParam struct {
+	Category CategoryV5 `json:"category"`
+	Symbol   SymbolV5   `json:"symbol"`
+	TpSlMode TpSlMode   `json:"tpSlMode"`
+}
+
+func (p V5SetTpSlModeParam) validate() error {
+	if p.Category != CategoryV5Linear && p.Category != CategoryV5Inverse {
+		return fmt.Errorf("only linear and inverse are supported for category")
+	}
+	return nil
+}
+
+// V5SetTpSlModeResponse :
+type V5SetTpSlModeResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5SetTpSlModeResult `json:"result"`
+}
+
+// V5SetTpSlModeResult :
+type V5SetTpSlModeResult struct {
+	TpSlMode TpSlMode `json:"tpSlMode"`
+}
+
+// SetTpSlMode :
+func (s *V5PositionService) SetTpSlMode(param V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error) {
+	var res V5SetTpSlModeResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/v5/position/set-tpsl-mode", body, &res); err != nil {
 		return &res, err
 	}
 
