@@ -64,7 +64,7 @@ type IsLeverage int
 
 const (
 	// IsLeverageFalse : false then spot trading
-	IsLeverageFalse = TriggerDirection(0)
+	IsLeverageFalse = IsLeverage(0)
 	// IsLeverageTrue : true then margin trading
 	IsLeverageTrue = IsLeverage(1)
 )
