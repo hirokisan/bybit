@@ -157,9 +157,9 @@ type PositionMode int
 
 const (
 	// PositionModeMergedSingle :
-	PositionModeMergedSingle = 0
+	PositionModeMergedSingle = PositionMode(0)
 	// PositionModeBothSides :
-	PositionModeBothSides = 3
+	PositionModeBothSides = PositionMode(3)
 )
 
 // ExecTypeV5 :
