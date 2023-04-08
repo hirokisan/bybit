@@ -1,0 +1,25 @@
+{
+  "category": "linear",
+  "nextPageCursor": "bb9020dc-92e2-4216-becf-cf4be4dcc81a%3A1680525485073724079%2Cbb9020dc-92e2-4216-becf-cf4be4dcc81a%3A1680525485073724079",
+  "list": [
+    {
+      "symbol": "BTCUSDT",
+      "orderId": "bb9020dc-92e2-4216-becf-cf4be4dcc81a",
+      "side": "Sell",
+      "qty": "0.01",
+      "orderPrice": "26736.7",
+      "orderType": "Market",
+      "execType": "Trade",
+      "closedSize": "0.01",
+      "cumEntryValue": "281.447",
+      "avgEntryPrice": "28144.7",
+      "cumExitValue": "281.499",
+      "avgExitPrice": "28149.9",
+      "closedPnl": "-0.2857676",
+      "fillCount": "1",
+      "leverage": "1",
+      "createdTime": "1680525485073",
+      "updatedTime": "1680525485078"
+    }
+  ]
+}
