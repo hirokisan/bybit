@@ -388,3 +388,108 @@ func TestV5Position_SwitchPositionMode(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestV5Position_GetClosedPnL(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5GetClosedPnLParam{
+			Category: CategoryV5Linear,
+		}
+
+		path := "/v5/position/closed-pnl"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"category":       "linear",
+				"nextPageCursor": "bb9020dc-92e2-4216-becf-cf4be4dcc81a%3A1680525485073724079%2Cbb9020dc-92e2-4216-becf-cf4be4dcc81a%3A1680525485073724079",
+				"list": []map[string]interface{}{
+					{
+						"symbol":        "BTCUSDT",
+						"orderId":       "bb9020dc-92e2-4216-becf-cf4be4dcc81a",
+						"side":          "Sell",
+						"qty":           "0.01",
+						"orderPrice":    "26736.7",
+						"orderType":     "Market",
+						"execType":      "Trade",
+						"closedSize":    "0.01",
+						"cumEntryValue": "281.447",
+						"avgEntryPrice": "28144.7",
+						"cumExitValue":  "281.499",
+						"avgExitPrice":  "28149.9",
+						"closedPnl":     "-0.2857676",
+						"fillCount":     "1",
+						"leverage":      "1",
+						"createdTime":   "1680525485073",
+						"updatedTime":   "1680525485078",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Position().GetClosedPnL(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := V5GetClosedPnLParam{
+			Category: CategoryV5Linear,
+		}
+
+		path := "/v5/position/closed-pnl"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"category":       "linear",
+				"nextPageCursor": "bb9020dc-92e2-4216-becf-cf4be4dcc81a%3A1680525485073724079%2Cbb9020dc-92e2-4216-becf-cf4be4dcc81a%3A1680525485073724079",
+				"list": []map[string]interface{}{
+					{
+						"symbol":        "BTCUSDT",
+						"orderId":       "bb9020dc-92e2-4216-becf-cf4be4dcc81a",
+						"side":          "Sell",
+						"qty":           "0.01",
+						"orderPrice":    "26736.7",
+						"orderType":     "Market",
+						"execType":      "Trade",
+						"closedSize":    "0.01",
+						"cumEntryValue": "281.447",
+						"avgEntryPrice": "28144.7",
+						"cumExitValue":  "281.499",
+						"avgExitPrice":  "28149.9",
+						"closedPnl":     "-0.2857676",
+						"fillCount":     "1",
+						"leverage":      "1",
+						"createdTime":   "1680525485073",
+						"updatedTime":   "1680525485078",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Position().GetClosedPnL(param)
+		assert.Error(t, err)
+	})
+}
