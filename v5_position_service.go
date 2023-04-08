@@ -14,6 +14,7 @@ type V5PositionServiceI interface {
 	SetTradingStop(V5SetTradingStopParam) (*V5SetTradingStopResponse, error)
 	SetTpSlMode(V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error)
 	SwitchPositionMode(V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error)
+	GetClosedPnL(V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error)
 }
 
 // V5PositionService :
@@ -260,6 +261,70 @@ func (s *V5PositionService) SwitchPositionMode(param V5SwitchPositionModeParam) 
 
 	if err := s.client.postV5JSON("/v5/position/switch-mode", body, &res); err != nil {
 		return &res, err
+	}
+
+	return &res, nil
+}
+
+// V5GetClosedPnLParam :
+type V5GetClosedPnLParam struct {
+	Category CategoryV5 `url:"category"`
+
+	Symbol    *SymbolV5 `url:"symbol,omitempty"`
+	StartTime *int64    `url:"startTime,omitempty"` // The start timestamp (ms)
+	EndTime   *int64    `url:"endTime,omitempty"`   // The start timestamp (ms)
+	Limit     *int      `url:"limit,omitempty"`     // Limit for data size per page. [1, 100]. Default: 50
+	Cursor    *string   `url:"cursor,omitempty"`
+}
+
+// V5GetClosedPnLResponse :
+type V5GetClosedPnLResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetClosedPnLResult `json:"result"`
+}
+
+// V5GetClosedPnLResult :
+type V5GetClosedPnLResult struct {
+	Category       CategoryV5         `json:"category"`
+	NextPageCursor string             `json:"nextPageCursor"`
+	List           V5GetClosedPnLList `json:"list"`
+}
+
+// V5GetClosedPnLList :
+type V5GetClosedPnLList []V5GetClosedPnLItem
+
+// V5GetClosedPnLItem :
+type V5GetClosedPnLItem struct {
+	Symbol        SymbolV5   `json:"symbol"`
+	OrderID       string     `json:"orderId"`
+	Side          Side       `json:"side"`
+	Qty           string     `json:"qty"`
+	OrderPrice    string     `json:"orderPrice"`
+	OrderType     OrderType  `json:"orderType"`
+	ExecType      ExecTypeV5 `json:"execType"`
+	ClosedSize    string     `json:"closedSize"`
+	CumEntryValue string     `json:"cumEntryValue"`
+	AvgEntryPrice string     `json:"avgEntryPrice"`
+	CumExitValue  string     `json:"cumExitValue"`
+	AvgExitPrice  string     `json:"avgExitPrice"`
+	ClosedPnl     string     `json:"closedPnl"`
+	FillCount     string     `json:"fillCount"`
+	Leverage      string     `json:"leverage"`
+	CreatedTime   string     `json:"createdTime"`
+	UpdatedTime   string     `json:"updatedTime"`
+}
+
+// GetClosedPnL :
+func (s *V5PositionService) GetClosedPnL(param V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error) {
+	var res V5GetClosedPnLResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/position/closed-pnl", queryString, &res); err != nil {
+		return nil, err
 	}
 
 	return &res, nil

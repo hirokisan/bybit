@@ -135,3 +135,18 @@ func TestSwitchPositionMode(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetClosedPnL(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	limit := 1
+	res, err := client.V5().Position().GetClosedPnL(bybit.V5GetClosedPnLParam{
+		Category: bybit.CategoryV5Linear,
+		Limit:    &limit,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-position-get-closed-pnl.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}

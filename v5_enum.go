@@ -161,3 +161,17 @@ const (
 	// PositionModeBothSides :
 	PositionModeBothSides = 3
 )
+
+// ExecTypeV5 :
+type ExecTypeV5 string
+
+const (
+	// ExecTypeV5Trade :
+	ExecTypeV5Trade = ExecTypeV5("Trade")
+	// ExecTypeV5BustTrade :
+	ExecTypeV5BustTrade = ExecTypeV5("BustTrade")
+	// ExecTypeV5SessionSettlePnL :
+	ExecTypeV5SessionSettlePnL = ExecTypeV5("SessionSettlePnL")
+	// ExecTypeV5Settle :
+	ExecTypeV5Settle = ExecTypeV5("Settle")
+)
