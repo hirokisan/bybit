@@ -1,0 +1,14 @@
+{
+  "list": [
+    {
+      "transferId": "selfTransfer_5ce5b8d9-8477-4bc6-91a4-9a98dad6dc65",
+      "coin": "BTC",
+      "amount": "0.1",
+      "fromAccountType": "SPOT",
+      "toAccountType": "CONTRACT",
+      "timestamp": "1637939106000",
+      "status": "SUCCESS"
+    }
+  ],
+  "nextPageCursor": "eyJtaW5JRCI6MTYyMjgwLCJtYXhJRCI6MTYyMjgwfQ=="
+}

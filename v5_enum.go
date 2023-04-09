@@ -175,3 +175,33 @@ const (
 	// ExecTypeV5Settle :
 	ExecTypeV5Settle = ExecTypeV5("Settle")
 )
+
+// TransferStatusV5 :
+type TransferStatusV5 string
+
+const (
+	// TransferStatusV5SUCCESS :
+	TransferStatusV5SUCCESS = TransferStatusV5("SUCCESS")
+	// TransferStatusV5PENDING :
+	TransferStatusV5PENDING = TransferStatusV5("PENDING")
+	// TransferStatusV5FAILED :
+	TransferStatusV5FAILED = TransferStatusV5("FAILED")
+)
+
+// AccountTypeV5 :
+type AccountTypeV5 string
+
+const (
+	// AccountTypeV5CONTRACT :
+	AccountTypeV5CONTRACT = AccountTypeV5("CONTRACT")
+	// AccountTypeV5SPOT :
+	AccountTypeV5SPOT = AccountTypeV5("SPOT")
+	// AccountTypeV5INVESTMENT :
+	AccountTypeV5INVESTMENT = AccountTypeV5("INVESTMENT")
+	// AccountTypeV5OPTION :
+	AccountTypeV5OPTION = AccountTypeV5("OPTION")
+	// AccountTypeV5UNIFIED :
+	AccountTypeV5UNIFIED = AccountTypeV5("UNIFIED")
+	// AccountTypeV5FUND :
+	AccountTypeV5FUND = AccountTypeV5("FUND")
+)
