@@ -8,6 +8,14 @@ const (
 	AccountTypeNormal  AccountType = "CONTRACT"
 )
 
+// MarginMode:
+type MarginMode string
+
+const (
+	MarginModeRegular   = "REGULAR_MARGIN"
+	MarginModePortfolio = "PORTFOLIO_MARGIN"
+)
+
 // CategoryV5 :
 type CategoryV5 string
 

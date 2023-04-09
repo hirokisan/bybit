@@ -69,3 +69,36 @@ func TestV5Account_GetWalletBalance(t *testing.T) {
 		testhelper.Compare(t, respBody["result"], resp.Result)
 	})
 }
+
+func TestV5Account_GetAccountInfo(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		path := "/v5/account/info"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"marginMode":          "REGULAR_MARGIN",
+				"updatedTime":         "1672106576000",
+				"unifiedMarginStatus": 3,
+			},
+		}
+
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Account().GetAccountInfo(1, MarginModeRegular, "")
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+}
