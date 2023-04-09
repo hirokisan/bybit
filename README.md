@@ -152,6 +152,10 @@ The following API endpoints have been implemented
 
 - [`/v5/account/wallet-balance` Get Wallet Balance](https://bybit-exchange.github.io/docs/v5/account/wallet-balance)
 
+#### Asset
+
+- [`/v5/asset/transfer/query-inter-transfer-list` Get Internal Transfer Records](https://bybit-exchange.github.io/docs/v5/asset/inter-transfer-list)
+
 #### User
 
 - [`/v5/user/query-api` Get API Key Information](https://bybit-exchange.github.io/docs/v5/user/apikey-info)
