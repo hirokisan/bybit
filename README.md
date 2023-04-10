@@ -151,7 +151,7 @@ The following API endpoints have been implemented
 #### Account
 
 - [`/v5/account/wallet-balance` Get Wallet Balance](https://bybit-exchange.github.io/docs/v5/account/wallet-balance)
-- [`/v5/account/account-info` Get Wallet Balance](https://bybit-exchange.github.io/docs/v5/account/account-info)
+- [`/v5/account/account-info` Get Account Info](https://bybit-exchange.github.io/docs/v5/account/account-info)
 
 #### Asset
 
