@@ -30,6 +30,11 @@ type V5WebsocketPublicServiceI interface {
 		V5WebsocketPublicKlineParamKey,
 		func(V5WebsocketPublicKlineResponse) error,
 	) (func() error, error)
+
+	SubscribeTicker(
+		V5WebsocketPublicTickerParamKey,
+		func(V5WebsocketPublicTickerResponse) error,
+	) (func() error, error)
 }
 
 // V5WebsocketPublicService :
@@ -41,6 +46,7 @@ type V5WebsocketPublicService struct {
 
 	paramOrderBookMap map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error
 	paramKlineMap     map[V5WebsocketPublicKlineParamKey]func(V5WebsocketPublicKlineResponse) error
+	paramTickerMap    map[V5WebsocketPublicTickerParamKey]func(V5WebsocketPublicTickerResponse) error
 }
 
 const (
@@ -62,6 +68,9 @@ const (
 
 	// V5WebsocketPublicTopicKline :
 	V5WebsocketPublicTopicKline = "kline"
+
+	// V5WebsocketPublicTopicTicker :
+	V5WebsocketPublicTopicTicker = "tickers"
 )
 
 // judgeTopic :
@@ -76,9 +85,30 @@ func (s *V5WebsocketPublicService) judgeTopic(respBody []byte) (V5WebsocketPubli
 			return V5WebsocketPublicTopicOrderBook, nil
 		case strings.Contains(topic, "kline"):
 			return V5WebsocketPublicTopicKline, nil
+		case strings.Contains(topic, "tickers"):
+			return V5WebsocketPublicTopicTicker, nil
 		}
 	}
 	return "", nil
+}
+
+// UnmarshalJSON :
+func (r *V5WebsocketPublicTickerData) UnmarshalJSON(data []byte) error {
+	var res struct {
+		Bid1Price string `json:"Bid1Price"`
+		Gamma     string `json:"Gamma"`
+	}
+	if err := json.Unmarshal(data, &res); err != nil {
+		return err
+	}
+
+	if res.Bid1Price != "" {
+		return json.Unmarshal(data, &r.LinearInverse)
+	}
+	if res.Gamma != "" {
+		return json.Unmarshal(data, &r.Option)
+	}
+	return json.Unmarshal(data, &r.Spot)
 }
 
 // parseResponse :
@@ -173,6 +203,20 @@ func (s *V5WebsocketPublicService) Run() error {
 		}
 
 		f, err := s.retrieveKlineFunc(resp.Key())
+		if err != nil {
+			return err
+		}
+
+		if err := f(resp); err != nil {
+			return err
+		}
+	case V5WebsocketPublicTopicTicker:
+		var resp V5WebsocketPublicTickerResponse
+		if err := s.parseResponse(message, &resp); err != nil {
+			return err
+		}
+
+		f, err := s.retrieveTickerFunc(resp.Key())
 		if err != nil {
 			return err
 		}

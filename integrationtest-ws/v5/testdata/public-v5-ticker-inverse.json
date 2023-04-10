@@ -1,0 +1,32 @@
+{
+  "topic": "tickers.BTCUSDT",
+  "type": "snapshot",
+  "ts": 1681182377544,
+  "cs": 8051451969,
+  "data": {
+    "LinearInverse": {
+      "symbol": "BTCUSDT",
+      "tickDirection": "MinusTick",
+      "price24hPcnt": "0.062487",
+      "lastPrice": "30036.30",
+      "prevPrice24h": "28269.80",
+      "highPrice24h": "40000.00",
+      "lowPrice24h": "18001.00",
+      "prevPrice1h": "30368.40",
+      "markPrice": "30035.26",
+      "indexPrice": "30040.49",
+      "openInterest": "88129.201",
+      "openInterestValue": "2646983465.63",
+      "turnover24h": "10400623671.4873",
+      "volume24h": "365035.5490",
+      "nextFundingTime": "1681200000000",
+      "fundingRate": "0.0001",
+      "bid1Price": "30032.00",
+      "bid1Size": "16.889",
+      "ask1Price": "30036.60",
+      "ask1Size": "10.593"
+    },
+    "Option": null,
+    "Spot": null
+  }
+}
