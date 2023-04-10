@@ -95,7 +95,7 @@ func TestV5Account_GetAccountInfo(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Account().GetAccountInfo(1, MarginModeRegular, "")
+		resp, err := client.V5().Account().GetAccountInfo()
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)

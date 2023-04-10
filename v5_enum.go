@@ -8,12 +8,14 @@ const (
 	AccountTypeNormal  AccountType = "CONTRACT"
 )
 
-// MarginMode:
+// MarginMode :
 type MarginMode string
 
 const (
-	MarginModeRegular   = "REGULAR_MARGIN"
-	MarginModePortfolio = "PORTFOLIO_MARGIN"
+	// MarginModeRegular :
+	MarginModeRegular = MarginMode("REGULAR_MARGIN")
+	// MarginModePortfolio :
+	MarginModePortfolio = MarginMode("PORTFOLIO_MARGIN")
 )
 
 // CategoryV5 :
@@ -212,4 +214,16 @@ const (
 	AccountTypeV5UNIFIED = AccountTypeV5("UNIFIED")
 	// AccountTypeV5FUND :
 	AccountTypeV5FUND = AccountTypeV5("FUND")
+)
+
+// UnifiedMarginStatus :
+type UnifiedMarginStatus int
+
+const (
+	// UnifiedMarginStatusRegular : Regular account
+	UnifiedMarginStatusRegular = UnifiedMarginStatus(1)
+	// UnifiedMarginStatusUnifiedMargin : Unified margin account, it only trades linear perpetual and options.
+	UnifiedMarginStatusUnifiedMargin = UnifiedMarginStatus(2)
+	// UnifiedMarginStatusUnifiedTrade : Unified trade account, it can trade linear perpetual, options and spot
+	UnifiedMarginStatusUnifiedTrade = UnifiedMarginStatus(3)
 )

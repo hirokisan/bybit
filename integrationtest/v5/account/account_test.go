@@ -23,10 +23,10 @@ func TestGetWalletBalance(t *testing.T) {
 
 func TestGetAccountInfo(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
-	res, err := client.V5().Account().GetAccountInfo(1, MarginModeRegular, "")
+	res, err := client.V5().Account().GetAccountInfo()
 	require.NoError(t, err)
 	{
-		goldenFilename := "./testdata/v5-account-get-account-info.json" // TODO
+		goldenFilename := "./testdata/v5-account-get-account-info.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
