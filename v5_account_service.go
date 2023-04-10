@@ -2,17 +2,32 @@ package bybit
 
 import (
 	"net/url"
+	"strconv"
 	"strings"
 )
 
 // V5AccountServiceI :
 type V5AccountServiceI interface {
 	GetWalletBalance(AccountType, []Coin) (*V5WalletBalanceResponse, error)
+	GetAccountInfo(unifiedMarginStatus int, marginMode MarginMode, updatedTime string) (*V5AccountInfoResponse, error)
 }
 
 // V5AccountService :
 type V5AccountService struct {
 	client *Client
+}
+
+// V5AccountInfoResponse :
+type V5AccountInfoResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5AccountInfoResult `json:"result"`
+}
+
+// V5AccountInfoResult :
+type V5AccountInfoResult struct {
+	MarginMode          MarginMode `json:"marginMode"`
+	UpdatedTime         string     `json:"updatedTime"`
+	UnifiedMarginStatus int        `json:"unifiedMarginStatus"`
 }
 
 // V5WalletBalanceResponse :
@@ -81,6 +96,24 @@ func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5Wa
 	}
 
 	if err := s.client.getV5Privately("/v5/account/wallet-balance", query, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// GetAccountInfo :
+func (s *V5AccountService) GetAccountInfo(unifiedMarginStatus int, marginMode MarginMode, updatedTime string) (*V5AccountInfoResponse, error) {
+	var (
+		res   V5AccountInfoResponse
+		query = make(url.Values)
+	)
+
+	query.Add("unifiedMarginStatus", strconv.Itoa(unifiedMarginStatus))
+	query.Add("marginMode", string(marginMode))
+	query.Add("updatedTime", updatedTime)
+
+	if err := s.client.getV5Privately("/v5/account/info", query, &res); err != nil {
 		return nil, err
 	}
 
