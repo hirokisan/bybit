@@ -39,7 +39,7 @@ func TestV5Public_Kline(t *testing.T) {
 
 	_, err = svc.SubscribeKline(
 		bybit.V5WebsocketPublicKlineParamKey{
-			Interval: Interval5,
+			Interval: bybit.Interval5,
 			Symbol:   bybit.SymbolV5BTCUSDT,
 		},
 		func(response bybit.V5WebsocketPublicKlineResponse) error {
@@ -52,4 +52,62 @@ func TestV5Public_Kline(t *testing.T) {
 	require.NoError(t, err)
 
 	require.NoError(t, svc.Run())
+}
+
+func TestV5Public_Ticker(t *testing.T) {
+	wsClient := bybit.NewTestWebsocketClient().WithAuthFromEnv()
+	{
+		svc, err := wsClient.V5().Public(bybit.CategoryV5Linear)
+		require.NoError(t, err)
+
+		_, err = svc.SubscribeTicker(
+			bybit.V5WebsocketPublicTickerParamKey{
+				Symbol: bybit.SymbolV5BTCUSDT,
+			},
+			func(response bybit.V5WebsocketPublicTickerResponse) error {
+				goldenFilename := "./testdata/public-v5-ticker-inverse.json"
+				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(response))
+				testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(response))
+				return nil
+			},
+		)
+		require.NoError(t, err)
+		require.NoError(t, svc.Run())
+	}
+	{
+		svc, err := wsClient.V5().Public(bybit.CategoryV5Option)
+		require.NoError(t, err)
+
+		_, err = svc.SubscribeTicker(
+			bybit.V5WebsocketPublicTickerParamKey{
+				Symbol: bybit.SymbolV5BTCUSDT,
+			},
+			func(response bybit.V5WebsocketPublicTickerResponse) error {
+				goldenFilename := "./testdata/public-v5-ticker-option.json"
+				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(response))
+				testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(response))
+				return nil
+			},
+		)
+		require.NoError(t, err)
+		require.NoError(t, svc.Run())
+	}
+	{
+		svc, err := wsClient.V5().Public(bybit.CategoryV5Spot)
+		require.NoError(t, err)
+
+		_, err = svc.SubscribeTicker(
+			bybit.V5WebsocketPublicTickerParamKey{
+				Symbol: bybit.SymbolV5BTCUSDT,
+			},
+			func(response bybit.V5WebsocketPublicTickerResponse) error {
+				goldenFilename := "./testdata/public-v5-ticker-spot.json"
+				testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(response))
+				testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(response))
+				return nil
+			},
+		)
+		require.NoError(t, err)
+		require.NoError(t, svc.Run())
+	}
 }
