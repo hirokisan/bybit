@@ -67,7 +67,7 @@ type V5WebsocketPublicTickerResponse struct {
 	Type      string                      `json:"type"`
 	TimeStamp int64                       `json:"ts"`
 	CrossSeq  int64                       `json:"cs,omitempty"`
-	Id        string                      `json:"id,omitempty"`
+	ID        string                      `json:"id,omitempty"`
 	Data      V5WebsocketPublicTickerData `json:"data"`
 }
 
@@ -106,7 +106,7 @@ type V5WebsocketPublicTickerLinearInverseResult struct {
 	PredictedDeliveryPrice string        `json:"predictedDeliveryPrice,omitempty"`
 }
 
-// V5WebsocketPublicOptionResult :
+// V5WebsocketPublicTickerOptionResult :
 type V5WebsocketPublicTickerOptionResult struct {
 	Symbol                 SymbolV5 `json:"symbol"`
 	BidPrice               string   `json:"bidPrice"`

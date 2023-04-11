@@ -95,8 +95,8 @@ func (s *V5WebsocketPublicService) judgeTopic(respBody []byte) (V5WebsocketPubli
 // UnmarshalJSON :
 func (r *V5WebsocketPublicTickerData) UnmarshalJSON(data []byte) error {
 	var res struct {
-		Bid1Price string `json:"Bid1Price"`
-		Gamma     string `json:"Gamma"`
+		Bid1Price string `json:"bid1Price"`
+		Gamma     string `json:"gamma"`
 	}
 	if err := json.Unmarshal(data, &res); err != nil {
 		return err
