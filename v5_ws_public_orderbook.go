@@ -134,7 +134,7 @@ func (b *V5WebsocketPublicOrderBookAsks) UnmarshalJSON(data []byte) error {
 func (r *V5WebsocketPublicOrderBookResponse) Key() V5WebsocketPublicOrderBookParamKey {
 	topic := r.Topic
 	arr := strings.Split(topic, ".")
-	if arr[0] != V5WebsocketPublicTopicOrderBook || len(arr) != 3 {
+	if arr[0] != V5WebsocketPublicTopicOrderBook.String() || len(arr) != 3 {
 		return V5WebsocketPublicOrderBookParamKey{}
 	}
 	depth, err := strconv.Atoi(arr[1])

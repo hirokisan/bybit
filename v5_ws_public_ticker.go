@@ -152,7 +152,7 @@ type V5WebsocketPublicTickerSpotResult struct {
 func (r *V5WebsocketPublicTickerResponse) Key() V5WebsocketPublicTickerParamKey {
 	topic := r.Topic
 	arr := strings.Split(topic, ".")
-	if arr[0] != V5WebsocketPublicTopicTicker || len(arr) != 2 {
+	if arr[0] != V5WebsocketPublicTopicTicker.String() || len(arr) != 2 {
 		return V5WebsocketPublicTickerParamKey{}
 	}
 

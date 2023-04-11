@@ -64,14 +64,18 @@ type V5WebsocketPublicTopic string
 
 const (
 	// V5WebsocketPublicTopicOrderBook :
-	V5WebsocketPublicTopicOrderBook = "orderbook"
+	V5WebsocketPublicTopicOrderBook = V5WebsocketPublicTopic("orderbook")
 
 	// V5WebsocketPublicTopicKline :
-	V5WebsocketPublicTopicKline = "kline"
+	V5WebsocketPublicTopicKline = V5WebsocketPublicTopic("kline")
 
 	// V5WebsocketPublicTopicTicker :
-	V5WebsocketPublicTopicTicker = "tickers"
+	V5WebsocketPublicTopicTicker = V5WebsocketPublicTopic("tickers")
 )
+
+func (t V5WebsocketPublicTopic) String() string {
+	return string(t)
+}
 
 // judgeTopic :
 func (s *V5WebsocketPublicService) judgeTopic(respBody []byte) (V5WebsocketPublicTopic, error) {
@@ -81,11 +85,11 @@ func (s *V5WebsocketPublicService) judgeTopic(respBody []byte) (V5WebsocketPubli
 	}
 	if topic, ok := parsedData["topic"].(string); ok {
 		switch {
-		case strings.Contains(topic, "orderbook"):
+		case strings.Contains(topic, V5WebsocketPublicTopicOrderBook.String()):
 			return V5WebsocketPublicTopicOrderBook, nil
-		case strings.Contains(topic, "kline"):
+		case strings.Contains(topic, V5WebsocketPublicTopicKline.String()):
 			return V5WebsocketPublicTopicKline, nil
-		case strings.Contains(topic, "tickers"):
+		case strings.Contains(topic, V5WebsocketPublicTopicTicker.String()):
 			return V5WebsocketPublicTopicTicker, nil
 		}
 	}

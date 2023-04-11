@@ -89,7 +89,7 @@ type V5WebsocketPublicKlineData struct {
 func (r *V5WebsocketPublicKlineResponse) Key() V5WebsocketPublicKlineParamKey {
 	topic := r.Topic
 	arr := strings.Split(topic, ".")
-	if arr[0] != V5WebsocketPublicTopicKline || len(arr) != 3 {
+	if arr[0] != V5WebsocketPublicTopicKline.String() || len(arr) != 3 {
 		return V5WebsocketPublicKlineParamKey{}
 	}
 
