@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/hirokisan/bybit/v2/testhelper"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -100,5 +101,108 @@ func TestV5Account_GetAccountInfo(t *testing.T) {
 
 		require.NotNil(t, resp)
 		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+}
+
+func TestV5Account_GetTransactionLog(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5GetTransactionLogParam{}
+
+		path := "/v5/account/transaction-log"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"nextPageCursor": "133%3A1%2C133%3A1",
+				"list": []map[string]interface{}{
+					{
+						"symbol":          "BTCUSDT",
+						"category":        "linear",
+						"side":            "Sell",
+						"transactionTime": "1680525485078",
+						"type":            "TRADE",
+						"qty":             "0.01",
+						"size":            "0",
+						"currency":        "USDT",
+						"tradePrice":      "28149.9",
+						"funding":         "",
+						"fee":             "0.16889940",
+						"cashFlow":        "0.052",
+						"change":          "-0.1168994",
+						"cashBalance":     "1149.11399896",
+						"feeRate":         "0.0006",
+						"bonusChange":     "0",
+						"tradeId":         "259f8703-26ff-5e31-b9c6-edf3f2869f9a",
+						"orderId":         "bb9020dc-92e2-4216-becf-cf4be4dcc81a",
+						"orderLinkId":     "",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Account().GetTransactionLog(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := V5GetTransactionLogParam{}
+
+		path := "/v5/account/transaction-log"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"nextPageCursor": "133%3A1%2C133%3A1",
+				"list": []map[string]interface{}{
+					{
+						"symbol":          "BTCUSDT",
+						"category":        "linear",
+						"side":            "Sell",
+						"transactionTime": "1680525485078",
+						"type":            "TRADE",
+						"qty":             "0.01",
+						"size":            "0",
+						"currency":        "USDT",
+						"tradePrice":      "28149.9",
+						"funding":         "",
+						"fee":             "0.16889940",
+						"cashFlow":        "0.052",
+						"change":          "-0.1168994",
+						"cashBalance":     "1149.11399896",
+						"feeRate":         "0.0006",
+						"bonusChange":     "0",
+						"tradeId":         "259f8703-26ff-5e31-b9c6-edf3f2869f9a",
+						"orderId":         "bb9020dc-92e2-4216-becf-cf4be4dcc81a",
+						"orderLinkId":     "",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Account().GetTransactionLog(param)
+		assert.Error(t, err)
 	})
 }
