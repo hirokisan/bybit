@@ -7,8 +7,8 @@ import (
 
 // V5AccountServiceI :
 type V5AccountServiceI interface {
-	GetWalletBalance(AccountType, []Coin) (*V5WalletBalanceResponse, error)
-	GetAccountInfo() (*V5AccountInfoResponse, error)
+	GetWalletBalance(AccountType, []Coin) (*V5GetWalletBalanceResponse, error)
+	GetAccountInfo() (*V5GetAccountInfoResponse, error)
 }
 
 // V5AccountService :
@@ -16,8 +16,8 @@ type V5AccountService struct {
 	client *Client
 }
 
-// V5WalletBalanceResponse :
-type V5WalletBalanceResponse struct {
+// V5GetWalletBalanceResponse :
+type V5GetWalletBalanceResponse struct {
 	CommonV5Response `json:",inline"`
 	Result           V5WalletBalanceResult `json:"result"`
 }
@@ -66,9 +66,9 @@ type V5WalletBalanceList struct {
 // coin:
 // If not passed, it returns non-zero asset info
 // You can pass multiple coins to query, separated by comma. "USDT,USDC".
-func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5WalletBalanceResponse, error) {
+func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5GetWalletBalanceResponse, error) {
 	var (
-		res   V5WalletBalanceResponse
+		res   V5GetWalletBalanceResponse
 		query = make(url.Values)
 	)
 
@@ -88,8 +88,8 @@ func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5Wa
 	return &res, nil
 }
 
-// V5AccountInfoResponse :
-type V5AccountInfoResponse struct {
+// V5GetAccountInfoResponse :
+type V5GetAccountInfoResponse struct {
 	CommonV5Response `json:",inline"`
 	Result           V5AccountInfoResult `json:"result"`
 }
@@ -102,9 +102,9 @@ type V5AccountInfoResult struct {
 }
 
 // GetAccountInfo :
-func (s *V5AccountService) GetAccountInfo() (*V5AccountInfoResponse, error) {
+func (s *V5AccountService) GetAccountInfo() (*V5GetAccountInfoResponse, error) {
 	var (
-		res   V5AccountInfoResponse
+		res   V5GetAccountInfoResponse
 		query = make(url.Values)
 	)
 
