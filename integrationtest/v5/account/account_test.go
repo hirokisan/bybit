@@ -31,3 +31,17 @@ func TestGetAccountInfo(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetTransactionLog(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	limit := 1
+	res, err := client.V5().Account().GetTransactionLog(bybit.V5GetTransactionLogParam{
+		Limit: &limit,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-account-get-transaction-log.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
