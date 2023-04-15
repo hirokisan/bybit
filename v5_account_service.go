@@ -3,12 +3,15 @@ package bybit
 import (
 	"net/url"
 	"strings"
+
+	"github.com/google/go-querystring/query"
 )
 
 // V5AccountServiceI :
 type V5AccountServiceI interface {
 	GetWalletBalance(AccountType, []Coin) (*V5GetWalletBalanceResponse, error)
 	GetAccountInfo() (*V5GetAccountInfoResponse, error)
+	GetTransactionLog(V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error)
 }
 
 // V5AccountService :
@@ -109,6 +112,73 @@ func (s *V5AccountService) GetAccountInfo() (*V5GetAccountInfoResponse, error) {
 	)
 
 	if err := s.client.getV5Privately("/v5/account/info", query, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetTransactionLogParam :
+type V5GetTransactionLogParam struct {
+	AccountType *AccountTypeV5        `url:"accountType,omitempty"`
+	Category    *CategoryV5           `url:"category,omitempty"`
+	Currency    *string               `url:"currency,omitempty"`
+	BaseCoin    *Coin                 `url:"baseCoin,omitempty"`
+	Type        *TransactionLogTypeV5 `url:"type,omitempty"`
+	StartTime   *int64                `url:"startTime,omitempty"` // The start timestamp (ms)
+	EndTime     *int64                `url:"endTime,omitempty"`   // The start timestamp (ms)
+	Limit       *int                  `url:"limit,omitempty"`     // Limit for data size per page. [1, 50]. Default: 20
+	Cursor      *string               `url:"cursor,omitempty"`
+}
+
+// V5GetTransactionLogResponse :
+type V5GetTransactionLogResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetTransactionLogResult `json:"result"`
+}
+
+// V5GetTransactionLogResult :
+type V5GetTransactionLogResult struct {
+	NextPageCursor string                  `json:"nextPageCursor"`
+	List           V5GetTransactionLogList `json:"list"`
+}
+
+// V5GetTransactionLogList :
+type V5GetTransactionLogList []V5GetTransactionLogItem
+
+// V5GetTransactionLogItem :
+type V5GetTransactionLogItem struct {
+	Symbol          SymbolV5             `json:"symbol"`
+	Category        CategoryV5           `json:"category"`
+	Side            Side                 `json:"side"`
+	TransactionTime string               `json:"transactionTime"`
+	Type            TransactionLogTypeV5 `json:"type"`
+	Qty             string               `json:"qty"`
+	Size            string               `json:"size"`
+	Currency        string               `json:"currency"`
+	TradePrice      string               `json:"tradePrice"`
+	Funding         string               `json:"funding"`
+	Fee             string               `json:"fee"`
+	CashFlow        string               `json:"cashFlow"`
+	Change          string               `json:"change"`
+	CashBalance     string               `json:"cashBalance"`
+	FeeRate         string               `json:"feeRate"`
+	BonusChange     string               `json:"bonusChange"`
+	TradeID         string               `json:"tradeId"`
+	OrderID         string               `json:"orderId"`
+	OrderLinkID     string               `json:"orderLinkId"`
+}
+
+// GetTransactionLog :
+func (s *V5AccountService) GetTransactionLog(param V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error) {
+	var res V5GetTransactionLogResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/account/transaction-log", queryString, &res); err != nil {
 		return nil, err
 	}
 
