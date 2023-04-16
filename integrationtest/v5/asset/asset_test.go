@@ -23,3 +23,17 @@ func TestGetInternalTransferRecords(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetInternalDepositRecords(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	limit := 1
+	res, err := client.V5().Asset().GetInternalDepositRecords(bybit.V5GetInternalDepositRecordsParam{
+		Limit: &limit,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-asset-get-internal-deposit-records.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}

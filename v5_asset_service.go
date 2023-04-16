@@ -5,6 +5,7 @@ import "github.com/google/go-querystring/query"
 // V5AssetServiceI :
 type V5AssetServiceI interface {
 	GetInternalTransferRecords(V5GetInternalTransferRecordsParam) (*V5GetInternalTransferRecordsResponse, error)
+	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error)
 }
 
 // V5AssetService :
@@ -59,6 +60,57 @@ func (s *V5AssetService) GetInternalTransferRecords(param V5GetInternalTransferR
 	}
 
 	if err := s.client.getV5Privately("/v5/asset/transfer/query-inter-transfer-list", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetInternalDepositRecordsParam :
+type V5GetInternalDepositRecordsParam struct {
+	StartTime *int64  `url:"startTime,omitempty"` // Start time (ms). Default value: 30 days before the current time
+	EndTime   *int64  `url:"endTime,omitempty"`   // End time (ms). Default value: current time
+	Coin      *Coin   `url:"coin,omitempty"`
+	Cursor    *string `url:"cursor,omitempty"`
+	Limit     *int    `url:"limit,omitempty"` // Number of items per page, [1, 50]. Default value: 50
+}
+
+// V5GetInternalDepositRecordsResponse :
+type V5GetInternalDepositRecordsResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetInternalDepositRecordsResult `json:"result"`
+}
+
+// V5GetInternalDepositRecordsResult :
+type V5GetInternalDepositRecordsResult struct {
+	Rows           V5GetInternalTransferRecordsRows `json:"rows"`
+	NextPageCursor string                           `json:"nextPageCursor"`
+}
+
+// V5GetInternalTransferRecordsRows :
+type V5GetInternalTransferRecordsRows []V5GetInternalTransferRecordsRow
+
+// V5GetInternalTransferRecordsRow :
+type V5GetInternalTransferRecordsRow struct {
+	ID          string                  `json:"id"`
+	Type        string                  `json:"type"`
+	Coin        Coin                    `json:"coin"`
+	Amount      string                  `json:"amount"`
+	Status      InternalDepositStatusV5 `json:"status"`
+	Address     string                  `json:"address"` // Email address or phone number
+	CreatedTime string                  `json:"createdTime"`
+}
+
+// GetInternalDepositRecords :
+func (s *V5AssetService) GetInternalDepositRecords(param V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error) {
+	var res V5GetInternalDepositRecordsResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/asset/deposit/query-internal-record", queryString, &res); err != nil {
 		return nil, err
 	}
 
