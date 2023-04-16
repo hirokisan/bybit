@@ -244,3 +244,12 @@ const (
 	TransactionLogTypeV5CURRENCYBUY  = TransactionLogTypeV5("CURRENCY_BUY")
 	TransactionLogTypeV5CURRENCYSELL = TransactionLogTypeV5("CURRENCY_SELL")
 )
+
+// InternalDepositStatusV5 :
+type InternalDepositStatusV5 int
+
+const (
+	InternalDepositStatusV5Processing = InternalDepositStatusV5(1)
+	InternalDepositStatusV5Success    = InternalDepositStatusV5(2)
+	InternalDepositStatusV5Failed     = InternalDepositStatusV5(3)
+)
