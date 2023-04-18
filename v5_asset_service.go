@@ -5,6 +5,7 @@ import "github.com/google/go-querystring/query"
 // V5AssetServiceI :
 type V5AssetServiceI interface {
 	GetInternalTransferRecords(V5GetInternalTransferRecordsParam) (*V5GetInternalTransferRecordsResponse, error)
+	GetDepositRecords(V5GetDepositRecordsParam) (*V5GetDepositRecordsResponse, error)
 	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error)
 }
 
@@ -60,6 +61,62 @@ func (s *V5AssetService) GetInternalTransferRecords(param V5GetInternalTransferR
 	}
 
 	if err := s.client.getV5Privately("/v5/asset/transfer/query-inter-transfer-list", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetDepositRecordsParam :
+type V5GetDepositRecordsParam struct {
+	Coin      *Coin   `url:"coin,omitempty"`
+	StartTime *int64  `url:"startTime,omitempty"` // Start time (ms). Default value: 30 days before the current time
+	EndTime   *int64  `url:"endTime,omitempty"`   // End time (ms). Default value: current time
+	Limit     *int    `url:"limit,omitempty"`     // Number of items per page, [1, 50]. Default value: 50
+	Cursor    *string `url:"cursor,omitempty"`
+}
+
+// V5GetDepositRecordsResponse :
+type V5GetDepositRecordsResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetDepositRecordsResult `json:"result"`
+}
+
+// V5GetDepositRecordsResult :
+type V5GetDepositRecordsResult struct {
+	Rows           V5GetTransferRecordsRows `json:"rows"`
+	NextPageCursor string                   `json:"nextPageCursor"`
+}
+
+// V5GetTransferRecordsRows :
+type V5GetTransferRecordsRows []V5GetTransferRecordsRow
+
+// V5GetTransferRecordsRow :
+type V5GetTransferRecordsRow struct {
+	Coin          Coin            `json:"coin"`
+	Chain         string          `json:"chain"`
+	Amount        string          `json:"amount"`
+	TxID          string          `json:"txID"`
+	Status        DepositStatusV5 `json:"status"`
+	ToAddress     string          `json:"toAddress"`
+	Tag           string          `json:"tag"`
+	DepositFee    string          `json:"depositFee"`
+	SuccessAt     string          `json:"successAt"`
+	Confirmations string          `json:"confirmations"`
+	TxIndex       string          `json:"txIndex"`
+	BlockHash     string          `json:"blockHash"`
+}
+
+// GetDepositRecords :
+func (s *V5AssetService) GetDepositRecords(param V5GetDepositRecordsParam) (*V5GetDepositRecordsResponse, error) {
+	var res V5GetDepositRecordsResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/asset/deposit/query-record", queryString, &res); err != nil {
 		return nil, err
 	}
 

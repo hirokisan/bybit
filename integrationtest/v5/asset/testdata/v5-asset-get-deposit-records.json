@@ -1,0 +1,19 @@
+{
+  "rows": [
+    {
+      "coin": "USDT",
+      "chain": "ETH",
+      "amount": "10000",
+      "txID": "skip-notification-scene-test-amount-202304160106-146940-USDT",
+      "status": 3,
+      "toAddress": "test-amount-address",
+      "tag": "",
+      "depositFee": "",
+      "successAt": "1681607166000",
+      "confirmations": "10000",
+      "txIndex": "",
+      "blockHash": ""
+    }
+  ],
+  "nextPageCursor": "eyJtaW5JRCI6MTEzMzUzNSwibWF4SUQiOjExMzM1MzV9"
+}

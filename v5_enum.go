@@ -253,3 +253,14 @@ const (
 	InternalDepositStatusV5Success    = InternalDepositStatusV5(2)
 	InternalDepositStatusV5Failed     = InternalDepositStatusV5(3)
 )
+
+// DepositStatusV5 :
+type DepositStatusV5 int
+
+const (
+	DepositStatusV5Unknown       = DepositStatusV5(0)
+	DepositStatusV5ToBeConfirmed = DepositStatusV5(1)
+	DepositStatusV5Processing    = DepositStatusV5(2)
+	DepositStatusV5Success       = DepositStatusV5(3)
+	DepositStatusV5Failed        = DepositStatusV5(4)
+)
