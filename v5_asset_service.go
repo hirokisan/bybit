@@ -6,6 +6,7 @@ import "github.com/google/go-querystring/query"
 type V5AssetServiceI interface {
 	GetInternalTransferRecords(V5GetInternalTransferRecordsParam) (*V5GetInternalTransferRecordsResponse, error)
 	GetDepositRecords(V5GetDepositRecordsParam) (*V5GetDepositRecordsResponse, error)
+	GetSubDepositRecords(V5GetSubDepositRecordsParam) (*V5GetSubDepositRecordsResponse, error)
 	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error)
 }
 
@@ -117,6 +118,64 @@ func (s *V5AssetService) GetDepositRecords(param V5GetDepositRecordsParam) (*V5G
 	}
 
 	if err := s.client.getV5Privately("/v5/asset/deposit/query-record", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetSubDepositRecordsParam :
+type V5GetSubDepositRecordsParam struct {
+	SubMemberID string `url:"subMemberId"`
+
+	Coin      *Coin   `url:"coin,omitempty"`
+	StartTime *int64  `url:"startTime,omitempty"` // Start time (ms). Default value: 30 days before the current time
+	EndTime   *int64  `url:"endTime,omitempty"`   // The start timestamp (ms)
+	Limit     *int    `url:"limit,omitempty"`     // Limit for data size per page. [1, 50]. Default: 50
+	Cursor    *string `url:"cursor,omitempty"`
+}
+
+// V5GetSubDepositRecordsResponse :
+type V5GetSubDepositRecordsResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetSubDepositRecordsResult `json:"result"`
+}
+
+// V5GetSubDepositRecordsResult :
+type V5GetSubDepositRecordsResult struct {
+	Rows           V5GetSubDepositRecordsRows `json:"rows"`
+	NextPageCursor string                     `json:"nextPageCursor"`
+}
+
+// V5GetSubDepositRecordsRows :
+type V5GetSubDepositRecordsRows []V5GetSubDepositRecordsRow
+
+// V5GetSubDepositRecordsRow :
+type V5GetSubDepositRecordsRow struct {
+	Coin          Coin            `json:"coin"`
+	Chain         string          `json:"chain"`
+	Amount        string          `json:"amount"`
+	TxID          string          `json:"txID"`
+	Status        DepositStatusV5 `json:"status"`
+	ToAddress     string          `json:"toAddress"`
+	Tag           string          `json:"tag"`
+	DepositFee    string          `json:"depositFee"`
+	SuccessAt     string          `json:"successAt"`
+	Confirmations string          `json:"confirmations"`
+	TxIndex       string          `json:"txIndex"`
+	BlockHash     string          `json:"blockHash"`
+}
+
+// GetSubDepositRecords :
+func (s *V5AssetService) GetSubDepositRecords(param V5GetSubDepositRecordsParam) (*V5GetSubDepositRecordsResponse, error) {
+	var res V5GetSubDepositRecordsResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/asset/deposit/query-sub-member-record", queryString, &res); err != nil {
 		return nil, err
 	}
 
