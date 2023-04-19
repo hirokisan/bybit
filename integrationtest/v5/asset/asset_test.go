@@ -38,6 +38,21 @@ func TestGetDepositRecords(t *testing.T) {
 	}
 }
 
+func TestGetSubDepositRecords(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	limit := 1
+	res, err := client.V5().Asset().GetSubDepositRecords(bybit.V5GetSubDepositRecordsParam{
+		SubMemberID: "1462488",
+		Limit:       &limit,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-asset-get-sub-deposit-records.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
+
 func TestGetInternalDepositRecords(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
 	limit := 1
