@@ -84,15 +84,15 @@ type V5GetDepositRecordsResponse struct {
 
 // V5GetDepositRecordsResult :
 type V5GetDepositRecordsResult struct {
-	Rows           V5GetTransferRecordsRows `json:"rows"`
-	NextPageCursor string                   `json:"nextPageCursor"`
+	Rows           V5GetDepositRecordsRows `json:"rows"`
+	NextPageCursor string                  `json:"nextPageCursor"`
 }
 
-// V5GetTransferRecordsRows :
-type V5GetTransferRecordsRows []V5GetTransferRecordsRow
+// V5GetDepositRecordsRows :
+type V5GetDepositRecordsRows []V5GetDepositRecordsRow
 
-// V5GetTransferRecordsRow :
-type V5GetTransferRecordsRow struct {
+// V5GetDepositRecordsRow :
+type V5GetDepositRecordsRow struct {
 	Coin          Coin            `json:"coin"`
 	Chain         string          `json:"chain"`
 	Amount        string          `json:"amount"`
@@ -140,15 +140,15 @@ type V5GetInternalDepositRecordsResponse struct {
 
 // V5GetInternalDepositRecordsResult :
 type V5GetInternalDepositRecordsResult struct {
-	Rows           V5GetInternalTransferRecordsRows `json:"rows"`
-	NextPageCursor string                           `json:"nextPageCursor"`
+	Rows           V5GetInternalDepositRecordsRows `json:"rows"`
+	NextPageCursor string                          `json:"nextPageCursor"`
 }
 
-// V5GetInternalTransferRecordsRows :
-type V5GetInternalTransferRecordsRows []V5GetInternalTransferRecordsRow
+// V5GetInternalDepositRecordsRows :
+type V5GetInternalDepositRecordsRows []V5GetInternalDepositRecordsRow
 
-// V5GetInternalTransferRecordsRow :
-type V5GetInternalTransferRecordsRow struct {
+// V5GetInternalDepositRecordsRow :
+type V5GetInternalDepositRecordsRow struct {
 	ID          string                  `json:"id"`
 	Type        string                  `json:"type"`
 	Coin        Coin                    `json:"coin"`
