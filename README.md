@@ -160,6 +160,7 @@ The following API endpoints have been implemented
 - [`/v5/asset/deposit/query-record` Get Deposit Records](https://bybit-exchange.github.io/docs/v5/asset/deposit-record)
 - [`/v5/asset/deposit/query-sub-member-record` Get Sub Deposit Records](https://bybit-exchange.github.io/docs/v5/asset/sub-deposit-record)
 - [`/v5/asset/deposit/query-internal-record` Get Internal Deposit Records](https://bybit-exchange.github.io/docs/v5/asset/internal-deposit-record)
+- [`/v5/asset/withdraw/query-record` Get Withdrawal Records](https://bybit-exchange.github.io/docs/v5/asset/withdraw-record)
 
 #### User
 

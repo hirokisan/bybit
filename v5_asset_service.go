@@ -8,6 +8,7 @@ type V5AssetServiceI interface {
 	GetDepositRecords(V5GetDepositRecordsParam) (*V5GetDepositRecordsResponse, error)
 	GetSubDepositRecords(V5GetSubDepositRecordsParam) (*V5GetSubDepositRecordsResponse, error)
 	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error)
+	GetWithdrawalRecords(V5GetWithdrawalRecordsParam) (*V5GetWithdrawalRecordsResponse, error)
 }
 
 // V5AssetService :
@@ -227,6 +228,64 @@ func (s *V5AssetService) GetInternalDepositRecords(param V5GetInternalDepositRec
 	}
 
 	if err := s.client.getV5Privately("/v5/asset/deposit/query-internal-record", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetWithdrawalRecordsParam :
+type V5GetWithdrawalRecordsParam struct {
+	WithdrawID   *string         `url:"withdrawId,omitempty"`
+	Coin         *Coin           `url:"coin,omitempty"`
+	WithdrawType *WithdrawTypeV5 `url:"withdrawType,omitempty"`
+	StartTime    *int64          `url:"startTime,omitempty"` // The start timestamp (ms)
+	EndTime      *int64          `url:"endTime,omitempty"`   // The start timestamp (ms)
+	Limit        *int            `url:"limit,omitempty"`     // Limit for data size per page. [1, 50]. Default: 50
+	Cursor       *string         `url:"cursor,omitempty"`
+}
+
+// V5GetWithdrawalRecordsResponse :
+type V5GetWithdrawalRecordsResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetWithdrawalRecordsResult `json:"result"`
+}
+
+// V5GetWithdrawalRecordsResult :
+type V5GetWithdrawalRecordsResult struct {
+	Rows           V5GetWithdrawalRecordsRows `json:"rows"`
+	NextPageCursor string                     `json:"nextPageCursor"`
+}
+
+// V5GetWithdrawalRecordsRows :
+type V5GetWithdrawalRecordsRows []V5GetWithdrawalRecordsRow
+
+// V5GetWithdrawalRecordsRow :
+type V5GetWithdrawalRecordsRow struct {
+	WithdrawId   string           `json:"withdrawId"`
+	TxID         string           `json:"txId"`
+	WithdrawType WithdrawTypeV5   `json:"withdrawType"`
+	Coin         Coin             `json:"coin"`
+	Chain        string           `json:"chain"`
+	Amount       string           `json:"amount"`
+	WithdrawFee  string           `json:"withdrawFee"`
+	Status       WithdrawStatusV5 `json:"status"`
+	ToAddress    string           `json:"toAddress"`
+	Tag          string           `json:"tag"`
+	CreatedTime  string           `json:"createTime"`
+	UpdatedTime  string           `json:"updateTime"`
+}
+
+// GetWithdrawalRecords :
+func (s *V5AssetService) GetWithdrawalRecords(param V5GetWithdrawalRecordsParam) (*V5GetWithdrawalRecordsResponse, error) {
+	var res V5GetWithdrawalRecordsResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/asset/withdraw/query-record", queryString, &res); err != nil {
 		return nil, err
 	}
 
