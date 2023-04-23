@@ -66,3 +66,19 @@ func TestGetInternalDepositRecords(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetWithdrawalRecords(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	limit := 1
+	typ := bybit.WithdrawTypeAll
+	res, err := client.V5().Asset().GetWithdrawalRecords(bybit.V5GetWithdrawalRecordsParam{
+		Limit:        &limit,
+		WithdrawType: &typ,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-asset-get-withdrawal-records.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
