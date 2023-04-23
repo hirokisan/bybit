@@ -264,3 +264,23 @@ const (
 	DepositStatusV5Success       = DepositStatusV5(3)
 	DepositStatusV5Failed        = DepositStatusV5(4)
 )
+
+type WithdrawTypeV5 int
+
+const (
+	WithdrawTypeOnChain  = WithdrawTypeV5(0)
+	WithdrawTypeOffChain = WithdrawTypeV5(1)
+	WithdrawTypeAll      = WithdrawTypeV5(2)
+)
+
+type WithdrawStatusV5 string
+
+const (
+	WithdrawStatusV5SecurityCheck       = WithdrawStatusV5("SecurityCheck")
+	WithdrawStatusV5Pending             = WithdrawStatusV5("Pending")
+	WithdrawStatusV5Success             = WithdrawStatusV5("success")
+	WithdrawStatusV5CancelByUser        = WithdrawStatusV5("CancelByUser")
+	WithdrawStatusV5Reject              = WithdrawStatusV5("Reject")
+	WithdrawStatusV5Fail                = WithdrawStatusV5("Fail")
+	WithdrawStatusV5BlockchainConfirmed = WithdrawStatusV5("BlockchainConfirmed")
+)
