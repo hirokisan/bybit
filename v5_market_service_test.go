@@ -745,3 +745,94 @@ func TestV5Market_GetHistoricalVolatility(t *testing.T) {
 	assert.Equal(t, respBody["category"], string(resp.Result.Category))
 	assert.Equal(t, respBody["result"].([]map[string]interface{})[0]["period"], resp.Result.List[0].Period)
 }
+
+func TestV5Market_GetInsurance(t *testing.T) {
+	param := V5GetInsuranceParam{}
+
+	path := "/v5/market/insurance"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"result": map[string]interface{}{
+			"updatedTime": "1682467200000",
+			"list": []map[string]interface{}{
+				{
+					"coin":    "USDT",
+					"balance": "472565175.36148953",
+					"value":   "472629325.5808998",
+				},
+				{
+					"coin":    "USDC",
+					"balance": "996049.97239122",
+					"value":   "996044.9942383142",
+				},
+				{
+					"coin":    "EOS",
+					"balance": "767102.58626542",
+					"value":   "833072.7720000001",
+				},
+				{
+					"coin":    "BTC",
+					"balance": "47533.89021999",
+					"value":   "1418307241.21",
+				},
+				{
+					"coin":    "ADA",
+					"balance": "895412.56208743",
+					"value":   "372849.5568",
+				},
+				{
+					"coin":    "BIT",
+					"balance": "101256.65607912",
+					"value":   "51903.8256",
+				},
+				{
+					"coin":    "SOL",
+					"balance": "7760.59832427",
+					"value":   "101888.8",
+				},
+				{
+					"coin":    "LTC",
+					"balance": "909951.79684841",
+					"value":   "85062219.48",
+				},
+				{
+					"coin":    "DOT",
+					"balance": "1103850.50091492",
+					"value":   "6832831.5",
+				},
+				{
+					"coin":    "ETH",
+					"balance": "981392.36669191",
+					"value":   "1922772648.16",
+				},
+				{
+					"coin":    "XRP",
+					"balance": "212730.43859841",
+					"value":   "102642.22499999999",
+				},
+				{
+					"coin":    "MANA",
+					"balance": "4996881.117703",
+					"value":   "2875705.0155",
+				},
+			},
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.V5().Market().GetInsurance(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	testhelper.Compare(t, respBody["result"], resp.Result)
+}
