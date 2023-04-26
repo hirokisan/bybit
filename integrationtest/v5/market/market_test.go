@@ -221,3 +221,14 @@ func TestGetHistoricalVolatility(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetInsurance(t *testing.T) {
+	client := bybit.NewTestClient()
+	res, err := client.V5().Market().GetInsurance(bybit.V5GetInsuranceParam{})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-market-get-insurance.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
