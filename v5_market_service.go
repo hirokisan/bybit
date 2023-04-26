@@ -22,6 +22,7 @@ type V5MarketServiceI interface {
 	GetPublicTradingHistory(V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error)
 	GetOpenInterest(V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error)
 	GetHistoricalVolatility(V5GetHistoricalVolatilityParam) (*V5GetHistoricalVolatilityResponse, error)
+	GetInsurance(V5GetInsuranceParam) (*V5GetInsuranceResponse, error)
 }
 
 // V5MarketService :
@@ -968,6 +969,43 @@ func (s *V5MarketService) GetHistoricalVolatility(param V5GetHistoricalVolatilit
 	}
 
 	if err := s.client.getPublicly("/v5/market/historical-volatility", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetInsuranceParam :
+type V5GetInsuranceParam struct {
+	Coin *Coin `url:"coin"`
+}
+
+// V5GetInsuranceResponse :
+type V5GetInsuranceResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetInsuranceResult `json:"result"`
+}
+
+// V5GetInsuranceResult :
+type V5GetInsuranceResult struct {
+	UpdatedTime string `json:"updatedTime"`
+	List        []struct {
+		Coin    Coin   `json:"coin"`
+		Balance string `json:"balance"`
+		Value   string `json:"value"`
+	} `json:"list"`
+}
+
+// GetInsurance :
+func (s *V5MarketService) GetInsurance(param V5GetInsuranceParam) (*V5GetInsuranceResponse, error) {
+	var res V5GetInsuranceResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/insurance", queryString, &res); err != nil {
 		return nil, err
 	}
 
