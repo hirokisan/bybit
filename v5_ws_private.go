@@ -229,6 +229,9 @@ func (s *V5WebsocketPrivateService) Run() error {
 
 // Ping :
 func (s *V5WebsocketPrivateService) Ping() error {
+	if err := s.writeMessage(websocket.PingMessage, nil); err != nil {
+		return err
+	}
 	if err := s.writeMessage(websocket.TextMessage, []byte(`{"op":"ping"}`)); err != nil {
 		return err
 	}
