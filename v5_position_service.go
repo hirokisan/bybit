@@ -15,6 +15,7 @@ type V5PositionServiceI interface {
 	SetTpSlMode(V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error)
 	SwitchPositionMode(V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error)
 	GetClosedPnL(V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error)
+	SwitchPositionMarginMode(V5SwitchPositionMarginModeParam) (*V5SwitchPositionMarginModeResponse, error)
 }
 
 // V5PositionService :
@@ -325,6 +326,51 @@ func (s *V5PositionService) GetClosedPnL(param V5GetClosedPnLParam) (*V5GetClose
 
 	if err := s.client.getV5Privately("/v5/position/closed-pnl", queryString, &res); err != nil {
 		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5SwitchPositionMarginModeParam :
+type V5SwitchPositionMarginModeParam struct {
+	Category     CategoryV5         `json:"category"`
+	TradeMode    PositionMarginMode `json:"tradeMode"`
+	Symbol       SymbolV5           `json:"symbol"`
+	BuyLeverage  string             `json:"buyLeverage"`
+	SellLeverage string             `json:"sellLeverage"`
+}
+
+func (p V5SwitchPositionMarginModeParam) validate() error {
+	if p.Category != CategoryV5Linear && p.Category != CategoryV5Inverse {
+		return fmt.Errorf("only linear and inverse are supported for category")
+	}
+	if p.Symbol == "" || p.BuyLeverage == "" || p.SellLeverage == "" {
+		return fmt.Errorf("Symbol, BuyLeverage and SellLeverage needed")
+	}
+	return nil
+}
+
+// V5SwitchPositionMarginModeResponse :
+type V5SwitchPositionMarginModeResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           interface{} `json:"result"` // no content
+}
+
+// SwitchPositionMarginMode :
+func (s *V5PositionService) SwitchPositionMarginMode(param V5SwitchPositionMarginModeParam) (*V5SwitchPositionMarginModeResponse, error) {
+	var res V5SwitchPositionMarginModeResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/v5/position/switch-isolated", body, &res); err != nil {
+		return &res, err
 	}
 
 	return &res, nil
