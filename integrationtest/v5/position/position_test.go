@@ -150,3 +150,21 @@ func TestGetClosedPnL(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSwitchPositionMarginMode(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	symbol := bybit.SymbolV5BTCUSDT
+
+	res, err := client.V5().Position().SwitchPositionMarginMode(bybit.V5SwitchPositionMarginModeParam{
+		Category:     bybit.CategoryV5Inverse,
+		Symbol:       symbol,
+		BuyLeverage:  "1",
+		SellLeverage: "1",
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-position-switch-cross_isolated-margin_mode.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
