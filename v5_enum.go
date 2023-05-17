@@ -172,6 +172,16 @@ const (
 	PositionModeBothSides = PositionMode(3)
 )
 
+// PositionMarginMode :
+type PositionMarginMode int
+
+const (
+	// PositionMarginCross :
+	PositionMarginCross = PositionMarginMode(0)
+	// PositionMarginIsolated :
+	PositionMarginIsolated = PositionMarginMode(1)
+)
+
 // ExecTypeV5 :
 type ExecTypeV5 string
 

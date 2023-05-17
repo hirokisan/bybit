@@ -493,3 +493,68 @@ func TestV5Position_GetClosedPnL(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestV5Position_SwitchPositionMarginMode(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5SwitchPositionMarginModeParam{
+			Category:     CategoryV5Linear,
+			TradeMode:    PositionMarginMode(1),
+			Symbol:       SymbolV5BTCUSDT,
+			BuyLeverage:  "1",
+			SellLeverage: "1",
+		}
+
+		path := "/v5/position/switch-isolated"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": nil,
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Position().SwitchPositionMarginMode(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := V5SwitchPositionMarginModeParam{
+			Category:     CategoryV5Linear,
+			TradeMode:    PositionMarginMode(1),
+			Symbol:       SymbolV5BTCUSDT,
+			BuyLeverage:  "1",
+			SellLeverage: "1",
+		}
+
+		path := "/v5/position/switch-isolated"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": nil,
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Position().SwitchPositionMarginMode(param)
+		assert.Error(t, err)
+	})
+}
