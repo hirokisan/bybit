@@ -498,7 +498,7 @@ func TestV5Position_SwitchPositionMarginMode(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := V5SwitchPositionMarginModeParam{
 			Category:     CategoryV5Linear,
-			TradeMode:    PositionMarginMode(1),
+			TradeMode:    PositionMarginIsolated,
 			Symbol:       SymbolV5BTCUSDT,
 			BuyLeverage:  "1",
 			SellLeverage: "1",
@@ -531,7 +531,7 @@ func TestV5Position_SwitchPositionMarginMode(t *testing.T) {
 	t.Run("authentication required", func(t *testing.T) {
 		param := V5SwitchPositionMarginModeParam{
 			Category:     CategoryV5Linear,
-			TradeMode:    PositionMarginMode(1),
+			TradeMode:    PositionMarginIsolated,
 			Symbol:       SymbolV5BTCUSDT,
 			BuyLeverage:  "1",
 			SellLeverage: "1",
