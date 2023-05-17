@@ -136,6 +136,7 @@ The following API endpoints have been implemented
 
 - [`/v5/position/list` Get Position Info](https://bybit-exchange.github.io/docs/v5/position)
 - [`/v5/position/set-leverage` Set Leverage](https://bybit-exchange.github.io/docs/v5/position/leverage)
+- [`/v5/position/switch-isolated` Switch Cross/Isolated Margin](https://bybit-exchange.github.io/docs/v5/position/cross-isolate)
 - [`/v5/position/trading-stop` Set Trading Stop](https://bybit-exchange.github.io/docs/v5/position/trading-stop)
 - [`/v5/position/switch-mode` Switch Position Mode](https://bybit-exchange.github.io/docs/v5/position/position-mode)
 - [`/v5/position/set-tpsl-mode` Set TP/SL Mode](https://bybit-exchange.github.io/docs/v5/position/tpsl-mode)
