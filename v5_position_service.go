@@ -142,7 +142,7 @@ type V5SetTradingStopParam struct {
 	ActivePrice  *string    `json:"activePrice,omitempty"`
 	TpSize       *string    `json:"tpSize,omitempty"`
 	SlSize       *string    `json:"slSize,omitempty"`
-	TpslMode     TpSlMode   `json:"tpslMode,omitempty"`
+	TpslMode     *TpSlMode  `json:"tpslMode,omitempty"`
 	TpLimitPrice *string    `json:"tpLimitPrice,omitempty"`
 	SlLimitPrice *string    `json:"slLimitPrice,omitempty"`
 	TpOrderType  *OrderType `json:"tpOrderType,omitempty"`
