@@ -142,14 +142,19 @@ type V5SetTradingStopParam struct {
 	ActivePrice  *string    `json:"activePrice,omitempty"`
 	TpSize       *string    `json:"tpSize,omitempty"`
 	SlSize       *string    `json:"slSize,omitempty"`
+	TpslMode     TpSlMode   `json:"tpslMode,omitempty"`
+	TpLimitPrice *string    `json:"tpLimitPrice,omitempty"`
+	SlLimitPrice *string    `json:"slLimitPrice,omitempty"`
+	TpOrderType  *OrderType `json:"tpOrderType,omitempty"`
+	SlOrderType  *OrderType `json:"slOrderType,omitempty"`
 }
 
 func (p V5SetTradingStopParam) validate() error {
 	if p.Category != CategoryV5Linear && p.Category != CategoryV5Inverse {
 		return fmt.Errorf("only linear and inverse are supported for category")
 	}
-	if p.TakeProfit == nil && p.StopLoss == nil {
-		return fmt.Errorf("takeProfit or stopLoss needed")
+	if p.TakeProfit == nil && p.StopLoss == nil && p.TpLimitPrice == nil && p.SlLimitPrice == nil {
+		return fmt.Errorf("takeProfit or stopLoss or tpLimitPrice or slLimitPrice needed")
 	}
 	return nil
 }
