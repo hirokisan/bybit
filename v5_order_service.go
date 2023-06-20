@@ -12,8 +12,9 @@ type V5OrderServiceI interface {
 	CreateOrder(V5CreateOrderParam) (*V5CreateOrderResponse, error)
 	AmendOrder(V5AmendOrderParam) (*V5AmendOrderResponse, error)
 	CancelOrder(V5CancelOrderParam) (*V5CancelOrderResponse, error)
-	GetOpenOrders(V5GetOpenOrdersParam) (*V5GetOpenOrdersResponse, error)
+	GetOpenOrders(V5GetOpenOrdersParam) (*V5GetOrdersResponse, error)
 	CancelAllOrders(V5CancelAllOrdersParam) (*V5CancelAllOrdersResponse, error)
+	GetHistoryOrders(V5GetHistoryOrdersParam) (*V5GetOrdersResponse, error)
 }
 
 // V5OrderService :
@@ -193,20 +194,36 @@ type V5GetOpenOrdersParam struct {
 	Cursor      *string      `url:"cursor,omitempty"`
 }
 
-// V5GetOpenOrdersResponse :
-type V5GetOpenOrdersResponse struct {
+// V5GetGetHistoryOrderssParam :
+type V5GetHistoryOrdersParam struct {
+	Category CategoryV5 `url:"category"`
+
+	Symbol      *SymbolV5    `url:"symbol,omitempty"`
+	BaseCoin    *Coin        `url:"baseCoin,omitempty"`
+	OrderID     *string      `url:"orderId,omitempty"`
+	OrderLinkID *string      `url:"orderLinkId,omitempty"`
+	OrderFilter *OrderFilter `url:"orderFilter,omitempty"` // If not passed, Order by default
+	OrderStatus *OrderStatus `url:"orderStatus,omitempty"`
+	StartTime   *int         `url:"startTime,omitempty"`
+	EndTime     *int         `url:"endTime,omitempty"`
+	Limit       *int         `url:"limit,omitempty"`
+	Cursor      *string      `url:"cursor,omitempty"`
+}
+
+// V5GetOrdersResponse :
+type V5GetOrdersResponse struct {
 	CommonV5Response `json:",inline"`
-	Result           V5GetOpenOrdersResult `json:"result"`
+	Result           V5GetOrdersResult `json:"result"`
 }
 
-// V5GetOpenOrdersResult :
-type V5GetOpenOrdersResult struct {
-	Category       CategoryV5       `json:"category"`
-	NextPageCursor string           `json:"nextPageCursor"`
-	List           []V5GetOpenOrder `json:"list"`
+// V5GetOrdersResult :
+type V5GetOrdersResult struct {
+	Category       CategoryV5   `json:"category"`
+	NextPageCursor string       `json:"nextPageCursor"`
+	List           []V5GetOrder `json:"list"`
 }
 
-type V5GetOpenOrder struct {
+type V5GetOrder struct {
 	Symbol             SymbolV5    `json:"symbol"`
 	OrderType          OrderType   `json:"orderType"`
 	OrderLinkID        string      `json:"orderLinkId"`
@@ -243,8 +260,8 @@ type V5GetOpenOrder struct {
 }
 
 // GetOpenOrders :
-func (s *V5OrderService) GetOpenOrders(param V5GetOpenOrdersParam) (*V5GetOpenOrdersResponse, error) {
-	var res V5GetOpenOrdersResponse
+func (s *V5OrderService) GetOpenOrders(param V5GetOpenOrdersParam) (*V5GetOrdersResponse, error) {
+	var res V5GetOrdersResponse
 
 	if param.Category == "" {
 		return nil, fmt.Errorf("Category needed")
@@ -256,6 +273,26 @@ func (s *V5OrderService) GetOpenOrders(param V5GetOpenOrdersParam) (*V5GetOpenOr
 	}
 
 	if err := s.client.getV5Privately("/v5/order/realtime", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// GetHistoryOrders :
+func (s *V5OrderService) GetHistoryOrders(param V5GetHistoryOrdersParam) (*V5GetOrdersResponse, error) {
+	var res V5GetOrdersResponse
+
+	if param.Category == "" {
+		return nil, fmt.Errorf("Category needed")
+	}
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/order/history", queryString, &res); err != nil {
 		return nil, err
 	}
 

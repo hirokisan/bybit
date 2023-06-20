@@ -151,6 +151,46 @@ func TestGetOpenOrders(t *testing.T) {
 	}
 }
 
+func TestGetHistoryOrders(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	var orderID string
+	category := bybit.CategoryV5Spot
+	symbol := bybit.SymbolV5BTCUSDT
+	{
+		price := "10000.0"
+		res, err := client.V5().Order().CreateOrder(bybit.V5CreateOrderParam{
+			Category:  category,
+			Symbol:    symbol,
+			Side:      bybit.SideBuy,
+			OrderType: bybit.OrderTypeLimit,
+			Qty:       "0.01",
+			Price:     &price,
+		})
+		require.NoError(t, err)
+		orderID = res.Result.OrderID
+	}
+
+	res, err := client.V5().Order().GetHistoryOrders(bybit.V5GetHistoryOrdersParam{
+		Category: category,
+		Symbol:   &symbol,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-get-history-orders.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+
+	{
+		_, err := client.V5().Order().CancelOrder(bybit.V5CancelOrderParam{
+			Category: category,
+			Symbol:   symbol,
+			OrderID:  &orderID,
+		})
+		require.NoError(t, err)
+	}
+}
+
 func TestCancelAllOrders(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
 	category := bybit.CategoryV5Spot
