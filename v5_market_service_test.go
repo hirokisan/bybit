@@ -836,3 +836,54 @@ func TestV5Market_GetInsurance(t *testing.T) {
 	require.NotNil(t, resp)
 	testhelper.Compare(t, respBody["result"], resp.Result)
 }
+
+func TestV5Market_GetRiskLimit(t *testing.T) {
+	param := V5GetRiskLimitParam{
+		Category: CategoryV5Linear,
+	}
+
+	path := "/v5/market/risk-limit"
+	method := http.MethodGet
+	status := http.StatusOK
+	respBody := map[string]interface{}{
+		"result": map[string]interface{}{
+			"category": "linear",
+			"list": []map[string]interface{}{
+				{
+					"id":                1,
+					"symbol":            "BTCUSDT",
+					"riskLimitValue":    "2000000",
+					"maintenanceMargin": "0.005",
+					"initialMargin":     "0.01",
+					"isLowestRisk":      1,
+					"maxLeverage":       "100.00",
+				},
+				{
+					"id":                2,
+					"symbol":            "BTCUSDT",
+					"riskLimitValue":    "4000000",
+					"maintenanceMargin": "0.01",
+					"initialMargin":     "0.0175",
+					"isLowestRisk":      0,
+					"maxLeverage":       "57.14",
+				},
+			},
+		},
+	}
+	bytesBody, err := json.Marshal(respBody)
+	require.NoError(t, err)
+
+	server, teardown := testhelper.NewServer(
+		testhelper.WithHandlerOption(path, method, status, bytesBody),
+	)
+	defer teardown()
+
+	client := NewTestClient().
+		WithBaseURL(server.URL)
+
+	resp, err := client.V5().Market().GetRiskLimit(param)
+	require.NoError(t, err)
+
+	require.NotNil(t, resp)
+	testhelper.Compare(t, respBody["result"], resp.Result)
+}
