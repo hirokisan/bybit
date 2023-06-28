@@ -131,6 +131,7 @@ The following API endpoints have been implemented
 - [`/v5/market/open-interest` Get Open Interest](https://bybit-exchange.github.io/docs/v5/market/open-interest)
 - [`/v5/market/historical-volatility` Get Historical Volatility](https://bybit-exchange.github.io/docs/v5/market/iv)
 - [`/v5/market/insurance` Get Insurance](https://bybit-exchange.github.io/docs/v5/market/insurance)
+- [`/v5/market/risk-limit` Get Risk Limit](https://bybit-exchange.github.io/docs/v5/market/risk-limit)
 
 #### Position
 
