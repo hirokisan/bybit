@@ -23,6 +23,7 @@ type V5MarketServiceI interface {
 	GetOpenInterest(V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error)
 	GetHistoricalVolatility(V5GetHistoricalVolatilityParam) (*V5GetHistoricalVolatilityResponse, error)
 	GetInsurance(V5GetInsuranceParam) (*V5GetInsuranceResponse, error)
+	GetRiskLimit(V5GetRiskLimitParam) (*V5GetRiskLimitResponse, error)
 }
 
 // V5MarketService :
@@ -1006,6 +1007,60 @@ func (s *V5MarketService) GetInsurance(param V5GetInsuranceParam) (*V5GetInsuran
 	}
 
 	if err := s.client.getPublicly("/v5/market/insurance", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetRiskLimitParam :
+type V5GetRiskLimitParam struct {
+	Category CategoryV5 `url:"category"`
+
+	Symbol *SymbolV5 `url:"symbol,omitempty"`
+}
+
+func (p V5GetRiskLimitParam) validate() error {
+	if p.Category != CategoryV5Linear && p.Category != CategoryV5Inverse {
+		return fmt.Errorf("only linear and inverse are supported for category")
+	}
+	return nil
+}
+
+// V5GetRiskLimitResponse :
+type V5GetRiskLimitResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetRiskLimitResult `json:"result"`
+}
+
+// V5GetRiskLimitResult :
+type V5GetRiskLimitResult struct {
+	Category CategoryV5 `json:"category"`
+	List     []struct {
+		ID                int64        `json:"id"`
+		Symbol            SymbolV5     `json:"symbol"`
+		RiskLimitValue    string       `json:"riskLimitValue"`
+		MaintenanceMargin string       `json:"maintenanceMargin"`
+		InitialMargin     string       `json:"initialMargin"`
+		IsLowestRisk      IsLowestRisk `json:"isLowestRisk"`
+		MaxLeverage       string       `json:"maxLeverage"`
+	} `json:"list"`
+}
+
+// GetRiskLimit :
+func (s *V5MarketService) GetRiskLimit(param V5GetRiskLimitParam) (*V5GetRiskLimitResponse, error) {
+	var res V5GetRiskLimitResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPublicly("/v5/market/risk-limit", queryString, &res); err != nil {
 		return nil, err
 	}
 

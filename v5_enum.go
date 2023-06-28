@@ -294,3 +294,10 @@ const (
 	WithdrawStatusV5Fail                = WithdrawStatusV5("Fail")
 	WithdrawStatusV5BlockchainConfirmed = WithdrawStatusV5("BlockchainConfirmed")
 )
+
+type IsLowestRisk int
+
+const (
+	IsLowestRiskFalse = IsLowestRisk(0)
+	IsLowestRiskTrue  = IsLowestRisk(1)
+)
