@@ -232,3 +232,18 @@ func TestGetInsurance(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetRiskLimit(t *testing.T) {
+	client := bybit.NewTestClient()
+	symbol := bybit.SymbolV5BTCUSDT
+	res, err := client.V5().Market().GetRiskLimit(bybit.V5GetRiskLimitParam{
+		Category: bybit.CategoryV5Linear,
+		Symbol:   &symbol,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-market-get-risk-limit.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
