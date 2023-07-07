@@ -113,7 +113,7 @@ func (s *V5PositionService) SetLeverage(param V5SetLeverageParam) (*V5SetLeverag
 	var res V5SetLeverageResponse
 
 	if param.Category == "" || param.Symbol == "" || param.BuyLeverage == "" || param.SellLeverage == "" {
-		return nil, fmt.Errorf("Category, Symbol, BuyLeverage and SellLeverage needed")
+		return nil, fmt.Errorf("category, Symbol, BuyLeverage and SellLeverage needed")
 	}
 
 	body, err := json.Marshal(param)
@@ -350,7 +350,7 @@ func (p V5SwitchPositionMarginModeParam) validate() error {
 		return fmt.Errorf("only linear and inverse are supported for category")
 	}
 	if p.Symbol == "" || p.BuyLeverage == "" || p.SellLeverage == "" {
-		return fmt.Errorf("Symbol, BuyLeverage and SellLeverage needed")
+		return fmt.Errorf("symbol, BuyLeverage and SellLeverage needed")
 	}
 	return nil
 }

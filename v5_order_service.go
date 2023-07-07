@@ -264,7 +264,7 @@ func (s *V5OrderService) GetOpenOrders(param V5GetOpenOrdersParam) (*V5GetOrders
 	var res V5GetOrdersResponse
 
 	if param.Category == "" {
-		return nil, fmt.Errorf("Category needed")
+		return nil, fmt.Errorf("category needed")
 	}
 
 	queryString, err := query.Values(param)
@@ -284,7 +284,7 @@ func (s *V5OrderService) GetHistoryOrders(param V5GetHistoryOrdersParam) (*V5Get
 	var res V5GetOrdersResponse
 
 	if param.Category == "" {
-		return nil, fmt.Errorf("Category needed")
+		return nil, fmt.Errorf("category needed")
 	}
 
 	queryString, err := query.Values(param)
