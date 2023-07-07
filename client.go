@@ -32,7 +32,8 @@ type Client struct {
 	key     string
 	secret  string
 
-	checkResponseBody checkResponseBodyFunc
+	checkResponseBody        checkResponseBodyFunc
+	syncTimeDeltaNanoSeconds int64
 }
 
 // NewClient :
@@ -399,7 +400,31 @@ func (c *Client) deletePrivately(path string, query url.Values, dst interface{})
 }
 
 func (c *Client) getTimestamp() int64 {
-	now := time.Now()
-	unixNano := now.UnixNano()
-	return unixNano / 1000000
+	return (time.Now().UnixNano() - c.syncTimeDeltaNanoSeconds) / 1000000
+}
+
+func (c *Client) updateSyncTimeDelta(
+	remoteServerTimeRaw string,
+	localTimestampNanoseconds int64,
+) error {
+	remoteServerTimeNS, err := strconv.ParseInt(remoteServerTimeRaw, 10, 64)
+	if err != nil {
+		return fmt.Errorf("parse server time: %w", err)
+	}
+
+	c.syncTimeDeltaNanoSeconds = localTimestampNanoseconds - remoteServerTimeNS
+	return nil
+}
+
+func (c *Client) SyncServerTime() error {
+	r, err := c.NewTimeService().GetServerTime()
+	if err != nil {
+		return fmt.Errorf("get server time: %w", err)
+	}
+
+	if r.RetMsg != "OK" {
+		return fmt.Errorf("get server time: %s", r.RetMsg)
+	}
+
+	return c.updateSyncTimeDelta(r.Result.TimeNano, time.Now().UnixNano())
 }
