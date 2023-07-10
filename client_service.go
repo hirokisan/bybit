@@ -26,6 +26,11 @@ func (c *Client) Spot() SpotServiceI {
 	return &SpotService{c}
 }
 
+// NewTimeService :
+func (c *Client) NewTimeService() TimeServiceI {
+	return &TimeService{c}
+}
+
 // FutureServiceI :
 type FutureServiceI interface {
 	InversePerpetual() FutureInversePerpetualServiceI
