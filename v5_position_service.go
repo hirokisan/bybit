@@ -16,6 +16,7 @@ type V5PositionServiceI interface {
 	SwitchPositionMode(V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error)
 	GetClosedPnL(V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error)
 	SwitchPositionMarginMode(V5SwitchPositionMarginModeParam) (*V5SwitchPositionMarginModeResponse, error)
+	SetRiskLimit(V5SetRiskLimitParam) (*V5SetRiskLimitResponse, error)
 }
 
 // V5PositionService :
@@ -375,6 +376,44 @@ func (s *V5PositionService) SwitchPositionMarginMode(param V5SwitchPositionMargi
 	}
 
 	if err := s.client.postV5JSON("/v5/position/switch-isolated", body, &res); err != nil {
+		return &res, err
+	}
+
+	return &res, nil
+}
+
+// V5SetRiskLimitParam :
+type V5SetRiskLimitParam struct {
+	Category CategoryV5 `json:"category"`
+	Symbol   SymbolV5   `json:"symbol"`
+	RiskID   int64      `json:"riskId"`
+
+	PositionIdx *PositionIdx `json:"positionIdx,omitempty"`
+}
+
+// V5SetRiskLimitResponse :
+type V5SetRiskLimitResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5SetRiskLimitResult `json:"result"`
+}
+
+// V5SetRiskLimitResult :
+type V5SetRiskLimitResult struct {
+	Category       CategoryV5 `json:"category"`
+	RiskID         int64      `json:"riskId"`
+	RiskLimitValue string     `json:"riskLimitValue"`
+}
+
+// SetRiskLimit :
+func (s *V5PositionService) SetRiskLimit(param V5SetRiskLimitParam) (*V5SetRiskLimitResponse, error) {
+	var res V5SetRiskLimitResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/v5/position/set-risk-limit", body, &res); err != nil {
 		return &res, err
 	}
 
