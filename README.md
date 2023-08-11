@@ -142,6 +142,7 @@ The following API endpoints have been implemented
 - [`/v5/position/switch-mode` Switch Position Mode](https://bybit-exchange.github.io/docs/v5/position/position-mode)
 - [`/v5/position/set-tpsl-mode` Set TP/SL Mode](https://bybit-exchange.github.io/docs/v5/position/tpsl-mode)
 - [`/v5/position/closed-pnl` Get Closed PnL](https://bybit-exchange.github.io/docs/v5/position/close-pnl)
+- [`/v5/position/set-risk-limit` Set Risk Limit](https://bybit-exchange.github.io/docs/v5/position/set-risk-limit)
 
 #### Order
 

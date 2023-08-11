@@ -558,3 +558,72 @@ func TestV5Position_SwitchPositionMarginMode(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestV5Position_SetRiskLimit(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5SetRiskLimitParam{
+			Category: CategoryV5Linear,
+			Symbol:   SymbolV5BTCUSDT,
+			RiskID:   3,
+		}
+
+		path := "/v5/position/set-risk-limit"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"category":       "linear",
+				"riskId":         3,
+				"riskLimitValue": "6000000",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Position().SetRiskLimit(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := V5SetRiskLimitParam{
+			Category: CategoryV5Linear,
+			Symbol:   SymbolV5BTCUSDT,
+			RiskID:   3,
+		}
+
+		path := "/v5/position/set-risk-limit"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"category":       "linear",
+				"riskId":         3,
+				"riskLimitValue": "6000000",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Position().SetRiskLimit(param)
+		assert.Error(t, err)
+	})
+}
