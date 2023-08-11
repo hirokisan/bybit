@@ -168,3 +168,19 @@ func TestSwitchPositionMarginMode(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSetRiskLimit(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+
+	res, err := client.V5().Position().SetRiskLimit(bybit.V5SetRiskLimitParam{
+		Category: bybit.CategoryV5Linear,
+		Symbol:   bybit.SymbolV5BTCUSDT,
+		RiskID:   3,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-position-set-risk-limit.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
