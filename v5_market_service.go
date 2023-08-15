@@ -455,25 +455,31 @@ type V5GetInstrumentsInfoOptionResult struct {
 
 // V5GetInstrumentsInfoSpotResult :
 type V5GetInstrumentsInfoSpotResult struct {
-	Category CategoryV5 `json:"category"`
-	List     []struct {
-		Symbol        SymbolV5         `json:"symbol"`
-		BaseCoin      Coin             `json:"baseCoin"`
-		QuoteCoin     Coin             `json:"quoteCoin"`
-		Innovation    Innovation       `json:"innovation"`
-		Status        InstrumentStatus `json:"status"`
-		LotSizeFilter struct {
-			BasePrecision  string `json:"basePrecision"`
-			QuotePrecision string `json:"quotePrecision"`
-			MaxOrderQty    string `json:"maxOrderQty"`
-			MinOrderQty    string `json:"minOrderQty"`
-			MinOrderAmt    string `json:"minOrderAmt"`
-			MaxOrderAmt    string `json:"maxOrderAmt"`
-		} `json:"lotSizeFilter"`
-		PriceFilter struct {
-			TickSize string `json:"tickSize"`
-		} `json:"priceFilter"`
-	} `json:"list"`
+	Category CategoryV5     `json:"category"`
+	List     []SymbolDataV5 `json:"list"`
+}
+
+type SymbolDataV5 struct {
+	Symbol        SymbolV5         `json:"symbol"`
+	BaseCoin      Coin             `json:"baseCoin"`
+	QuoteCoin     Coin             `json:"quoteCoin"`
+	Innovation    Innovation       `json:"innovation"`
+	Status        InstrumentStatus `json:"status"`
+	LotSizeFilter LotSizeFilterV5  `json:"lotSizeFilter"`
+	PriceFilter   PriceFilterV5    `json:"priceFilter"`
+}
+
+type LotSizeFilterV5 struct {
+	BasePrecision  string `json:"basePrecision"`
+	QuotePrecision string `json:"quotePrecision"`
+	MaxOrderQty    string `json:"maxOrderQty"`
+	MinOrderQty    string `json:"minOrderQty"`
+	MinOrderAmt    string `json:"minOrderAmt"`
+	MaxOrderAmt    string `json:"maxOrderAmt"`
+}
+
+type PriceFilterV5 struct {
+	TickSize string `json:"tickSize"`
 }
 
 // GetInstrumentsInfo :
