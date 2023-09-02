@@ -1,0 +1,33 @@
+{
+  "nextPageCursor": "140%3A2%2C140%3A2",
+  "category": "linear",
+  "list": [
+    {
+      "symbol": "BTCUSDT",
+      "orderId": "7babd487-21bb-4148-9cb2-3921134cb52b",
+      "orderLinkId": "",
+      "side": "Sell",
+      "orderPrice": "25476.1",
+      "orderQty": "0.01",
+      "leavesQty": "0",
+      "orderType": "Market",
+      "stopOrderType": "UNKNOWN",
+      "execFee": "0.1609008",
+      "execId": "63efa380-bdb4-5b1c-83d3-937ca3938000",
+      "execPrice": "26816.8",
+      "execQty": "0.01",
+      "execType": "Trade",
+      "execValue": "268.168",
+      "execTime": "1684314652233",
+      "isMaker": false,
+      "feeRate": "0.0006",
+      "tradeIv": "",
+      "markIv": "",
+      "markPrice": "27430.6",
+      "indexPrice": "",
+      "underlyingPrice": "",
+      "blockTradeId": "",
+      "closedSize": "0.01"
+    }
+  ]
+}
