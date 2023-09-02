@@ -422,8 +422,8 @@ func (c *Client) SyncServerTime() error {
 		return fmt.Errorf("get server time: %w", err)
 	}
 
-	if r.RetMsg != "OK" {
-		return fmt.Errorf("get server time: %s", r.RetMsg)
+	if r.Result.TimeNano == "" {
+		return errors.New("server time is empty")
 	}
 
 	return c.updateSyncTimeDelta(r.Result.TimeNano, time.Now().UnixNano())
