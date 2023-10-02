@@ -81,7 +81,7 @@ const (
 	V5WebsocketPublicTopicTicker = V5WebsocketPublicTopic("tickers")
 
 	// V5WebsocketPublicTopicTrade :
-	V5WebsocketPublicTopicTrade = V5WebsocketPublicTopic("trade")
+	V5WebsocketPublicTopicTrade = V5WebsocketPublicTopic("publicTrade")
 )
 
 func (t V5WebsocketPublicTopic) String() string {
@@ -235,6 +235,20 @@ func (s *V5WebsocketPublicService) Run() error {
 		}
 
 		f, err := s.retrieveTickerFunc(resp.Key())
+		if err != nil {
+			return err
+		}
+
+		if err := f(resp); err != nil {
+			return err
+		}
+	case V5WebsocketPublicTopicTrade:
+		var resp V5WebsocketPublicTradeResponse
+		if err := s.parseResponse(message, &resp); err != nil {
+			return err
+		}
+
+		f, err := s.retrieveTradeFunc(resp.Key())
 		if err != nil {
 			return err
 		}
