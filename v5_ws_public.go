@@ -35,6 +35,11 @@ type V5WebsocketPublicServiceI interface {
 		V5WebsocketPublicTickerParamKey,
 		func(V5WebsocketPublicTickerResponse) error,
 	) (func() error, error)
+
+	SubscribeTrade(
+		V5WebsocketPublicTradeParamKey,
+		func(V5WebsocketPublicTradeResponse) error,
+	) (func() error, error)
 }
 
 // V5WebsocketPublicService :
@@ -47,6 +52,7 @@ type V5WebsocketPublicService struct {
 	paramOrderBookMap map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error
 	paramKlineMap     map[V5WebsocketPublicKlineParamKey]func(V5WebsocketPublicKlineResponse) error
 	paramTickerMap    map[V5WebsocketPublicTickerParamKey]func(V5WebsocketPublicTickerResponse) error
+	paramTradeMap     map[V5WebsocketPublicTradeParamKey]func(V5WebsocketPublicTradeResponse) error
 }
 
 const (
@@ -62,6 +68,8 @@ func V5WebsocketPublicPathFor(category CategoryV5) string {
 // V5WebsocketPublicTopic :
 type V5WebsocketPublicTopic string
 
+type V5WebsocketPublicTrade string
+
 const (
 	// V5WebsocketPublicTopicOrderBook :
 	V5WebsocketPublicTopicOrderBook = V5WebsocketPublicTopic("orderbook")
@@ -71,6 +79,9 @@ const (
 
 	// V5WebsocketPublicTopicTicker :
 	V5WebsocketPublicTopicTicker = V5WebsocketPublicTopic("tickers")
+
+	// V5WebsocketPublicTopicTrade :
+	V5WebsocketPublicTopicTrade = V5WebsocketPublicTopic("trade")
 )
 
 func (t V5WebsocketPublicTopic) String() string {
@@ -91,6 +102,8 @@ func (s *V5WebsocketPublicService) judgeTopic(respBody []byte) (V5WebsocketPubli
 			return V5WebsocketPublicTopicKline, nil
 		case strings.Contains(topic, V5WebsocketPublicTopicTicker.String()):
 			return V5WebsocketPublicTopicTicker, nil
+		case strings.Contains(topic, V5WebsocketPublicTopicTrade.String()):
+			return V5WebsocketPublicTopicTrade, nil
 		}
 	}
 	return "", nil
