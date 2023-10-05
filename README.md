@@ -342,6 +342,7 @@ The following API endpoints have been implemented
 - [Orderbook](https://bybit-exchange.github.io/docs/v5/websocket/public/orderbook)
 - [Kline](https://bybit-exchange.github.io/docs/v5/websocket/public/kline)
 - [Ticker](https://bybit-exchange.github.io/docs/v5/websocket/public/ticker)
+- [Trade](https://bybit-exchange.github.io/docs/v5/websocket/public/trade)
 
 #### Private Topics V5
 
