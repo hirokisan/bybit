@@ -68,8 +68,6 @@ func V5WebsocketPublicPathFor(category CategoryV5) string {
 // V5WebsocketPublicTopic :
 type V5WebsocketPublicTopic string
 
-type V5WebsocketPublicTrade string
-
 const (
 	// V5WebsocketPublicTopicOrderBook :
 	V5WebsocketPublicTopicOrderBook = V5WebsocketPublicTopic("orderbook")
