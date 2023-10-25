@@ -40,6 +40,11 @@ type V5WebsocketPublicServiceI interface {
 		V5WebsocketPublicTradeParamKey,
 		func(V5WebsocketPublicTradeResponse) error,
 	) (func() error, error)
+
+	SubscribeLiquidation(
+		V5WebsocketPublicLiquidationParamKey,
+		func(V5WebsocketPublicLiquidationResponse) error,
+	) (func() error, error)
 }
 
 // V5WebsocketPublicService :
@@ -49,10 +54,11 @@ type V5WebsocketPublicService struct {
 
 	mu sync.Mutex
 
-	paramOrderBookMap map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error
-	paramKlineMap     map[V5WebsocketPublicKlineParamKey]func(V5WebsocketPublicKlineResponse) error
-	paramTickerMap    map[V5WebsocketPublicTickerParamKey]func(V5WebsocketPublicTickerResponse) error
-	paramTradeMap     map[V5WebsocketPublicTradeParamKey]func(V5WebsocketPublicTradeResponse) error
+	paramOrderBookMap   map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error
+	paramKlineMap       map[V5WebsocketPublicKlineParamKey]func(V5WebsocketPublicKlineResponse) error
+	paramTickerMap      map[V5WebsocketPublicTickerParamKey]func(V5WebsocketPublicTickerResponse) error
+	paramTradeMap       map[V5WebsocketPublicTradeParamKey]func(V5WebsocketPublicTradeResponse) error
+	paramLiquidationMap map[V5WebsocketPublicLiquidationParamKey]func(V5WebsocketPublicLiquidationResponse) error
 }
 
 const (
@@ -80,6 +86,9 @@ const (
 
 	// V5WebsocketPublicTopicTrade :
 	V5WebsocketPublicTopicTrade = V5WebsocketPublicTopic("publicTrade")
+
+	// V5WebsocketPublicTopicLiquidation :
+	V5WebsocketPublicTopicLiquidation = V5WebsocketPublicTopic("liquidation")
 )
 
 func (t V5WebsocketPublicTopic) String() string {
@@ -102,6 +111,8 @@ func (s *V5WebsocketPublicService) judgeTopic(respBody []byte) (V5WebsocketPubli
 			return V5WebsocketPublicTopicTicker, nil
 		case strings.Contains(topic, V5WebsocketPublicTopicTrade.String()):
 			return V5WebsocketPublicTopicTrade, nil
+		case strings.Contains(topic, V5WebsocketPublicTopicLiquidation.String()):
+			return V5WebsocketPublicTopicLiquidation, nil
 		}
 	}
 	return "", nil
@@ -247,6 +258,20 @@ func (s *V5WebsocketPublicService) Run() error {
 		}
 
 		f, err := s.retrieveTradeFunc(resp.Key())
+		if err != nil {
+			return err
+		}
+
+		if err := f(resp); err != nil {
+			return err
+		}
+	case V5WebsocketPublicTopicLiquidation:
+		var resp V5WebsocketPublicLiquidationResponse
+		if err := s.parseResponse(message, &resp); err != nil {
+			return err
+		}
+
+		f, err := s.retrieveLiquidationFunc(resp.Key())
 		if err != nil {
 			return err
 		}
