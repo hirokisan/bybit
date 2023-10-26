@@ -72,8 +72,8 @@ type V5WebsocketPublicKlineResponse struct {
 
 // V5WebsocketPublicKlineData :
 type V5WebsocketPublicKlineData struct {
-	Start     int      `json:"start"`
-	End       int      `json:"end"`
+	Start     int64    `json:"start"`
+	End       int64    `json:"end"`
 	Interval  Interval `json:"interval"`
 	Open      string   `json:"open"`
 	Close     string   `json:"close"`
