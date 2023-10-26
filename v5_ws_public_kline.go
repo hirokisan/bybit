@@ -82,7 +82,7 @@ type V5WebsocketPublicKlineData struct {
 	Volume    string   `json:"volume"`
 	Turnover  string   `json:"turnover"`
 	Confirm   bool     `json:"confirm"`
-	Timestamp int      `json:"timestamp"`
+	Timestamp int64    `json:"timestamp"`
 }
 
 // Key :
