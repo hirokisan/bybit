@@ -36,8 +36,8 @@ type V5GetKlineParam struct {
 	Category CategoryV5 `url:"category"`
 	Symbol   SymbolV5   `url:"symbol"`
 	Interval Interval   `url:"interval"`
-	Start    *int       `url:"start,omitempty"` // timestamp point for result, in milliseconds
-	End      *int       `url:"end,omitempty"`   // timestamp point for result, in milliseconds
+	Start    *int64     `url:"start,omitempty"` // timestamp point for result, in milliseconds
+	End      *int64     `url:"end,omitempty"`   // timestamp point for result, in milliseconds
 
 	Limit *int `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
 }
@@ -113,8 +113,8 @@ type V5GetMarkPriceKlineParam struct {
 	Category CategoryV5 `url:"category"`
 	Symbol   SymbolV5   `url:"symbol"`
 	Interval Interval   `url:"interval"`
-	Start    *int       `url:"start,omitempty"` // timestamp point for result, in milliseconds
-	End      *int       `url:"end,omitempty"`   // timestamp point for result, in milliseconds
+	Start    *int64     `url:"start,omitempty"` // timestamp point for result, in milliseconds
+	End      *int64     `url:"end,omitempty"`   // timestamp point for result, in milliseconds
 	Limit    *int       `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
 }
 
@@ -189,8 +189,8 @@ type V5GetIndexPriceKlineParam struct {
 	Category CategoryV5 `url:"category"`
 	Symbol   SymbolV5   `url:"symbol"`
 	Interval Interval   `url:"interval"`
-	Start    *int       `url:"start,omitempty"` // timestamp point for result, in milliseconds
-	End      *int       `url:"end,omitempty"`   // timestamp point for result, in milliseconds
+	Start    *int64     `url:"start,omitempty"` // timestamp point for result, in milliseconds
+	End      *int64     `url:"end,omitempty"`   // timestamp point for result, in milliseconds
 	Limit    *int       `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
 }
 
@@ -265,8 +265,8 @@ type V5GetPremiumIndexPriceKlineParam struct {
 	Category CategoryV5 `url:"category"`
 	Symbol   SymbolV5   `url:"symbol"`
 	Interval Interval   `url:"interval"`
-	Start    *int       `url:"start,omitempty"` // timestamp point for result, in milliseconds
-	End      *int       `url:"end,omitempty"`   // timestamp point for result, in milliseconds
+	Start    *int64     `url:"start,omitempty"` // timestamp point for result, in milliseconds
+	End      *int64     `url:"end,omitempty"`   // timestamp point for result, in milliseconds
 	Limit    *int       `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
 }
 
