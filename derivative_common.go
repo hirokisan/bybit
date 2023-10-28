@@ -158,8 +158,8 @@ type DerivativesKlineParam struct {
 	Symbol   SymbolDerivative   `url:"symbol"`
 	Category CategoryDerivative `url:"category"`
 	Interval Interval           `url:"interval"`
-	Start    int                `url:"start"` // timestamp point for result, in milliseconds
-	End      int                `url:"end"`   // timestamp point for result, in milliseconds
+	Start    int64              `url:"start"` // timestamp point for result, in milliseconds
+	End      int64              `url:"end"`   // timestamp point for result, in milliseconds
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -479,8 +479,8 @@ type DerivativesMarkPriceKlineParam struct {
 	Category CategoryDerivative `url:"category"`
 	Symbol   SymbolDerivative   `url:"symbol"`
 	Interval Interval           `url:"interval"`
-	Start    int                `url:"start"` // timestamp point for result, in milliseconds
-	End      int                `url:"end"`   // timestamp point for result, in milliseconds
+	Start    int64              `url:"start"` // timestamp point for result, in milliseconds
+	End      int64              `url:"end"`   // timestamp point for result, in milliseconds
 
 	Limit *int `url:"limit,omitempty"`
 }
@@ -547,8 +547,8 @@ type DerivativesIndexPriceKlineParam struct {
 	Category CategoryDerivative `url:"category"`
 	Symbol   SymbolDerivative   `url:"symbol"`
 	Interval Interval           `url:"interval"`
-	Start    int                `url:"start"` // timestamp point for result, in milliseconds
-	End      int                `url:"end"`   // timestamp point for result, in milliseconds
+	Start    int64              `url:"start"` // timestamp point for result, in milliseconds
+	End      int64              `url:"end"`   // timestamp point for result, in milliseconds
 
 	Limit *int `url:"limit,omitempty"`
 }

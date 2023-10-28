@@ -94,6 +94,22 @@ const (
 // Interval :
 type Interval string
 
+var Intervals = []Interval{
+	Interval1,
+	Interval3,
+	Interval5,
+	Interval15,
+	Interval30,
+	Interval60,
+	Interval120,
+	Interval240,
+	Interval360,
+	Interval720,
+	IntervalD,
+	IntervalW,
+	IntervalM,
+}
+
 const (
 	// Interval1 :
 	Interval1 = Interval("1")

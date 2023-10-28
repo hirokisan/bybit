@@ -57,7 +57,7 @@ func checkV5ResponseBody(body []byte) error {
 
 	switch {
 	case commonResponse.RetCode == 10006, commonResponse.RetCode == 10018:
-		rateLimitError := &RateLimitError{}
+		rateLimitError := &RateLimitV5Error{}
 		if err := json.Unmarshal(body, rateLimitError); err != nil {
 			return err
 		}
@@ -119,6 +119,14 @@ type RateLimitError struct {
 
 func (r *RateLimitError) Error() string {
 	return fmt.Sprintf("%s, %s", r.RetMsg, time.Until(time.Unix(int64(r.RateLimitResetMs/1000), 0)))
+}
+
+type RateLimitV5Error struct {
+	*CommonV5Response `json:",inline"`
+}
+
+func (r *RateLimitV5Error) Error() string {
+	return fmt.Sprintf(r.RetMsg)
 }
 
 var (
