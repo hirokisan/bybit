@@ -364,8 +364,27 @@ func TestGetCoinInfo(t *testing.T) {
 		status := http.StatusOK
 		respBody := map[string]interface{}{
 			"result": map[string]interface{}{
-				"rows":           []map[string]interface{}{},
-				"nextPageCursor": "",
+				"rows": []map[string]interface{}{
+					{
+						"name":         "BTC",
+						"coin":         "BTC",
+						"remainAmount": "1500",
+						"chains": []map[string]interface{}{
+							{
+								"chain":                 "BTC",
+								"chainType":             "BTC",
+								"confirmation":          "1",
+								"withdrawFee":           "0.0005",
+								"depositMin":            "0.0005",
+								"withdrawMin":           "0.001",
+								"minAccuracy":           "8",
+								"chainDeposit":          "1",
+								"chainWithdraw":         "1",
+								"withdrawPercentageFee": "0",
+							},
+						},
+					},
+				},
 			},
 		}
 		bytesBody, err := json.Marshal(respBody)
@@ -394,8 +413,27 @@ func TestGetCoinInfo(t *testing.T) {
 		status := http.StatusOK
 		respBody := map[string]interface{}{
 			"result": map[string]interface{}{
-				"rows":           []map[string]interface{}{},
-				"nextPageCursor": "",
+				"rows": []map[string]interface{}{
+					{
+						"name":         "BTC",
+						"coin":         "BTC",
+						"remainAmount": "1500",
+						"chains": []map[string]interface{}{
+							{
+								"chain":                 "BTC",
+								"chainType":             "BTC",
+								"confirmation":          "1",
+								"withdrawFee":           "0.0005",
+								"depositMin":            "0.0005",
+								"withdrawMin":           "0.001",
+								"minAccuracy":           "8",
+								"chainDeposit":          "1",
+								"chainWithdraw":         "1",
+								"withdrawPercentageFee": "0",
+							},
+						},
+					},
+				},
 			},
 		}
 		bytesBody, err := json.Marshal(respBody)

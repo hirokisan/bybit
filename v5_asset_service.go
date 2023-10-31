@@ -306,8 +306,7 @@ type V5GetCoinInfoResponse struct {
 
 // V5GetCoinInfoResult :
 type V5GetCoinInfoResult struct {
-	Rows           V5GetCoinInfoRows `json:"rows"`
-	NextPageCursor string            `json:"nextPageCursor"`
+	Rows V5GetCoinInfoRows `json:"rows"`
 }
 
 // V5GetCoinInfoRows :
