@@ -9,6 +9,7 @@ type V5AssetServiceI interface {
 	GetSubDepositRecords(V5GetSubDepositRecordsParam) (*V5GetSubDepositRecordsResponse, error)
 	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error)
 	GetWithdrawalRecords(V5GetWithdrawalRecordsParam) (*V5GetWithdrawalRecordsResponse, error)
+	GetCoinInfo(V5GetCoinInfoParam) (*V5GetCoinInfoResponse, error)
 }
 
 // V5AssetService :
@@ -286,6 +287,67 @@ func (s *V5AssetService) GetWithdrawalRecords(param V5GetWithdrawalRecordsParam)
 	}
 
 	if err := s.client.getV5Privately("/v5/asset/withdraw/query-record", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetCoinInfoParam :
+type V5GetCoinInfoParam struct {
+	Coin *Coin `url:"coin,omitempty"`
+}
+
+// V5GetCoinInfoResponse :
+type V5GetCoinInfoResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetCoinInfoResult `json:"result"`
+}
+
+// V5GetCoinInfoResult :
+type V5GetCoinInfoResult struct {
+	Rows           V5GetCoinInfoRows `json:"rows"`
+	NextPageCursor string            `json:"nextPageCursor"`
+}
+
+// V5GetCoinInfoRows :
+type V5GetCoinInfoRows []V5GetCoinInfoRow
+
+// V5GetCoinInfoRow :
+type V5GetCoinInfoRow struct {
+	Name         string              `json:"name"`
+	Coin         Coin                `json:"coin"`
+	RemainAmount string              `json:"remainAmount"`
+	Chains       V5GetCoinInfoChains `json:"chains"`
+}
+
+// V5GetCoinInfoChains :
+type V5GetCoinInfoChains []V5GetCoinInfoChain
+
+// V5GetCoinInfoChain :
+type V5GetCoinInfoChain struct {
+	Chain                 string `json:"chain"`
+	ChainType             string `json:"chainType"`
+	Confirmation          string `json:"confirmation"`
+	WithdrawFee           string `json:"withdrawFee"`
+	DepositMin            string `json:"depositMin"`
+	WithdrawMin           string `json:"withdrawMin"`
+	MinAccuracy           string `json:"minAccuracy"`
+	ChainDeposit          string `json:"chainDeposit"`
+	ChainWithdraw         string `json:"chainWithdraw"`
+	WithdrawPercentageFee string `json:"withdrawPercentageFee"`
+}
+
+// GetCoinInfo :
+func (s *V5AssetService) GetCoinInfo(param V5GetCoinInfoParam) (*V5GetCoinInfoResponse, error) {
+	var res V5GetCoinInfoResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/asset/coin/query-info", queryString, &res); err != nil {
 		return nil, err
 	}
 

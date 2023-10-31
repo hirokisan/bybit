@@ -354,3 +354,62 @@ func TestGetWithdrawalRecords(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestGetCoinInfo(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5GetCoinInfoParam{}
+
+		path := "/v5/asset/coin/query-info"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"rows":           []map[string]interface{}{},
+				"nextPageCursor": "",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Asset().GetCoinInfo(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := V5GetCoinInfoParam{}
+
+		path := "/v5/asset/coin/query-info"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"rows":           []map[string]interface{}{},
+				"nextPageCursor": "",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Asset().GetCoinInfo(param)
+		assert.Error(t, err)
+	})
+}
