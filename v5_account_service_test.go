@@ -73,6 +73,38 @@ func TestV5Account_GetWalletBalance(t *testing.T) {
 	})
 }
 
+func TestV5Account_SetCollateralCoin(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		coins := make([]Coin, 1)
+		coins[0] = CoinBTC
+
+		path := "/v5/account/set-collateral-switch"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{},
+		}
+
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Account().SetCollateralCoin(coins, CollateralSwitchV5On)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+}
+
 func TestV5Account_GetCollateralInfo(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		currency := "BTC"

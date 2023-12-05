@@ -160,7 +160,7 @@ The following API endpoints have been implemented
 - [`/v5/account/account-info` Get Account Info](https://bybit-exchange.github.io/docs/v5/account/account-info)
 - [`/v5/account/transaction-log` Get Transaction Log](https://bybit-exchange.github.io/docs/v5/account/transaction-log)
 - [`/v5/account/collateral-info` Get Collateral Info](https://bybit-exchange.github.io/docs/v5/account/collateral-info)
-- [`/v5/account/collateral-info` Get Collateral Info](https://bybit-exchange.github.io/docs/v5/account/collateral-info)
+- [`/v5/account/set-collateral-switch` Set Collateral Coin](https://bybit-exchange.github.io/docs/v5/account/set-collateral)
 
 #### Asset
 
