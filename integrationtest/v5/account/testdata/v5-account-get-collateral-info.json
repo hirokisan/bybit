@@ -1,0 +1,19 @@
+{
+  "list": [
+    {
+      "currency": "BTC",
+      "hourlyBorrowRate": "0.00000077",
+      "maxBorrowingAmount": "3",
+      "freeBorrowingLimit": "0",
+      "freeBorrowAmount": "0",
+      "borrowAmount": "0",
+      "freeBorrowingAmount": "",
+      "availableToBorrow": "3",
+      "borrowable": true,
+      "borrowUsageRate": "0",
+      "marginCollateral": true,
+      "collateralSwitch": true,
+      "collateralRatio": "0.95"
+    }
+  ]
+}
