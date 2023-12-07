@@ -301,3 +301,10 @@ const (
 	IsLowestRiskFalse = IsLowestRisk(0)
 	IsLowestRiskTrue  = IsLowestRisk(1)
 )
+
+type CollateralSwitchV5 string
+
+const (
+	CollateralSwitchV5On  = CollateralSwitchV5("ON")
+	CollateralSwitchV5Off = CollateralSwitchV5("OFF")
+)

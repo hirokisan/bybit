@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"encoding/json"
 	"net/url"
 	"strings"
 
@@ -10,6 +11,8 @@ import (
 // V5AccountServiceI :
 type V5AccountServiceI interface {
 	GetWalletBalance(AccountType, []Coin) (*V5GetWalletBalanceResponse, error)
+	SetCollateralCoin([]Coin, CollateralSwitchV5) (*V5SetCollateralCoinResponse, error)
+	GetCollateralInfo(V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error)
 	GetAccountInfo() (*V5GetAccountInfoResponse, error)
 	GetTransactionLog(V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error)
 }
@@ -87,6 +90,98 @@ func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5Ge
 	}
 
 	if err := s.client.getV5Privately("/v5/account/wallet-balance", query, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5SetCollateralCoinParam :
+type V5SetCollateralCoinParam struct {
+	Coin             Coin               `json:"coin"`
+	CollateralSwitch CollateralSwitchV5 `json:"collateralSwitch"`
+}
+
+// V5SetCollateralCoinResponse :
+type V5SetCollateralCoinResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           interface{} `json:"result"`
+}
+
+// SetCollateralCoin :
+//
+// coins: USDT,USDC cannot be switched off
+// cs: CollateralSwitchV5On or CollateralSwitchV5Off
+func (s *V5AccountService) SetCollateralCoin(coins []Coin, cs CollateralSwitchV5) (*V5SetCollateralCoinResponse, error) {
+	var res V5SetCollateralCoinResponse
+
+	param := V5SetCollateralCoinParam{
+		CollateralSwitch: cs,
+	}
+
+	if len(coins) > 0 {
+		var coinsStr []string
+		for _, c := range coins {
+			coinsStr = append(coinsStr, string(c))
+		}
+		param.Coin = Coin(strings.Join(coinsStr, ","))
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.postJSON("/v5/account/set-collateral-switch", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetCollateralInfoParam :
+type V5GetCollateralInfoParam struct {
+	Currency *string `url:"currency,omitempty"`
+}
+
+// V5GetCollateralInfoResponse :
+type V5GetCollateralInfoResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetCollateralInfoResult
+}
+
+// V5GetCollateralInfoResult :
+type V5GetCollateralInfoResult struct {
+	List []V5GetCollateralInfoList `json:"list"`
+}
+
+// V5GetCollateralInfoList :
+type V5GetCollateralInfoList struct {
+	Currency            string `json:"currency"`
+	HourlyBorrowRate    string `json:"hourlyBorrowRate"`
+	MaxBorrowingAmount  string `json:"maxBorrowingAmount"`
+	FreeBorrowingLimit  string `json:"freeBorrowingLimit"`
+	FreeBorrowAmount    string `json:"freeBorrowAmount"`
+	BorrowAmount        string `json:"borrowAmount"`
+	FreeBorrowingAmount string `json:"freeBorrowingAmount"`
+	AvailableToBorrow   string `json:"availableToBorrow"`
+	Borrowable          bool   `json:"borrowable"`
+	BorrowUsageRate     string `json:"borrowUsageRate"`
+	MarginCollateral    bool   `json:"marginCollateral"`
+	CollateralSwitch    bool   `json:"collateralSwitch"`
+	CollateralRatio     string `json:"collateralRatio"`
+}
+
+// GetCollateralInfo :
+func (s *V5AccountService) GetCollateralInfo(param V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error) {
+	var res V5GetCollateralInfoResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = s.client.getV5Privately("/v5/account/collateral-info", queryString, &res); err != nil {
 		return nil, err
 	}
 
