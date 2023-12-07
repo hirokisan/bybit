@@ -141,7 +141,7 @@ func (s *V5AccountService) SetCollateralCoin(coins []Coin, cs CollateralSwitchV5
 
 // V5GetCollateralInfoParam :
 type V5GetCollateralInfoParam struct {
-	Currency *string `json:",inline"`
+	Currency *string `url:"currency,omitempty"`
 }
 
 // V5GetCollateralInfoResponse :
