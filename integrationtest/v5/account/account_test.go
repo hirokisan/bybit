@@ -59,3 +59,15 @@ func TestGetCollateralInfo(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestSetCollateralCoin(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	coins := []bybit.Coin{bybit.CoinBTC}
+	res, err := client.V5().Account().SetCollateralCoin(coins, bybit.CollateralSwitchV5On)
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-account-set-collateral-coin.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
