@@ -165,6 +165,7 @@ The following API endpoints have been implemented
 #### Asset
 
 - [`/v5/asset/transfer/query-inter-transfer-list` Get Internal Transfer Records](https://bybit-exchange.github.io/docs/v5/asset/inter-transfer-list)
+- [`/v5/asset/transfer/query-account-coins-balance` Get All Coins Balance](https://bybit-exchange.github.io/docs/v5/asset/all-balance)
 - [`/v5/asset/deposit/query-record` Get Deposit Records](https://bybit-exchange.github.io/docs/v5/asset/deposit-record)
 - [`/v5/asset/deposit/query-sub-member-record` Get Sub Deposit Records](https://bybit-exchange.github.io/docs/v5/asset/sub-deposit-record)
 - [`/v5/asset/deposit/query-internal-record` Get Internal Deposit Records](https://bybit-exchange.github.io/docs/v5/asset/internal-deposit-record)
