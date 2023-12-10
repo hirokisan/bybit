@@ -1,6 +1,9 @@
 package bybit
 
-import "github.com/google/go-querystring/query"
+import (
+	"github.com/google/go-querystring/query"
+	"strings"
+)
 
 // V5AssetServiceI :
 type V5AssetServiceI interface {
@@ -10,6 +13,7 @@ type V5AssetServiceI interface {
 	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error)
 	GetWithdrawalRecords(V5GetWithdrawalRecordsParam) (*V5GetWithdrawalRecordsResponse, error)
 	GetCoinInfo(V5GetCoinInfoParam) (*V5GetCoinInfoResponse, error)
+	GetAllCoinsBalance(V5GetAllCoinsBalanceParam) (*V5GetAllCoinsBalanceResponse, error)
 }
 
 // V5AssetService :
@@ -347,6 +351,60 @@ func (s *V5AssetService) GetCoinInfo(param V5GetCoinInfoParam) (*V5GetCoinInfoRe
 	}
 
 	if err := s.client.getV5Privately("/v5/asset/coin/query-info", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetAllCoinsBalanceParam :
+type V5GetAllCoinsBalanceParam struct {
+	AccountType AccountType `url:"accountType"`
+	MemberId    string      `url:"memberId,omitempty"`
+	WithBonus   string      `url:"withBonus,omitempty"`
+	Coins       []Coin
+}
+
+// V5GetAllCoinsBalanceResponse :
+type V5GetAllCoinsBalanceResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetAllCoinsBalanceResult `json:"result"`
+}
+
+// V5GetAllCoinsBalanceResult :
+type V5GetAllCoinsBalanceResult struct {
+	MemberId    string                         `json:"memberId"`
+	AccountType string                         `json:"accountType"`
+	Balance     []*V5GetAllCoinsBalanceBalance `json:"balance"`
+}
+
+// V5GetAllCoinsBalanceBalance :
+type V5GetAllCoinsBalanceBalance struct {
+	Coin            Coin   `json:"coin"`
+	TransferBalance string `json:"transferBalance"`
+	WalletBalance   string `json:"walletBalance"`
+	Bonus           string `json:"bonus"`
+}
+
+// GetAllCoinsBalance :
+// https://bybit-exchange.github.io/docs/v5/asset/all-balance
+func (s *V5AssetService) GetAllCoinsBalance(param V5GetAllCoinsBalanceParam) (*V5GetAllCoinsBalanceResponse, error) {
+	var res V5GetAllCoinsBalanceResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(param.Coins) > 0 {
+		var coinsToQuery []string
+		for _, coin := range param.Coins {
+			coinsToQuery = append(coinsToQuery, string(coin))
+		}
+		queryString.Set("coin", strings.Join(coinsToQuery, ","))
+	}
+
+	if err := s.client.getV5Privately("/v5/asset/transfer/query-account-coins-balance", queryString, &res); err != nil {
 		return nil, err
 	}
 

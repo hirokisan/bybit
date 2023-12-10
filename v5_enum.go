@@ -6,6 +6,7 @@ type AccountType string
 const (
 	AccountTypeUnified AccountType = "UNIFIED"
 	AccountTypeNormal  AccountType = "CONTRACT"
+	AccountTypeFunding AccountType = "FUND"
 )
 
 // MarginMode :

@@ -96,3 +96,16 @@ func TestGetCoinInfo(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetAllCoinsBalance(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	res, err := client.V5().Asset().GetAllCoinsBalance(bybit.V5GetAllCoinsBalanceParam{
+		Coins: []bybit.Coin{bybit.CoinBTC},
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-asset-get-all-coins-balance.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
