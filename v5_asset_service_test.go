@@ -451,3 +451,78 @@ func TestGetCoinInfo(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestGetAllCoinsBalance(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5GetAllCoinsBalanceParam{}
+
+		path := "/v5/asset/transfer/query-account-coins-balance"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"memberId":    "XXXX",
+				"accountType": "FUND",
+				"balance": []map[string]interface{}{
+					{
+						"coin":            "USDC",
+						"transferBalance": "0",
+						"walletBalance":   "0",
+						"bonus":           "",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Asset().GetAllCoinsBalance(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := V5GetAllCoinsBalanceParam{}
+
+		path := "/v5/asset/transfer/query-account-coins-balance"
+		method := http.MethodGet
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"memberId":    "XXXX",
+				"accountType": "FUND",
+				"balance": []map[string]interface{}{
+					{
+						"coin":            "USDC",
+						"transferBalance": "0",
+						"walletBalance":   "0",
+						"bonus":           "",
+					},
+				},
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Asset().GetAllCoinsBalance(param)
+		assert.Error(t, err)
+	})
+}
