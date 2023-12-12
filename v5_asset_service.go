@@ -1,8 +1,9 @@
 package bybit
 
 import (
-	"github.com/google/go-querystring/query"
 	"strings"
+
+	"github.com/google/go-querystring/query"
 )
 
 // V5AssetServiceI :
@@ -374,7 +375,7 @@ type V5GetAllCoinsBalanceResponse struct {
 // V5GetAllCoinsBalanceResult :
 type V5GetAllCoinsBalanceResult struct {
 	MemberId    string                         `json:"memberId"`
-	AccountType string                         `json:"accountType"`
+	AccountType AccountType                    `json:"accountType"`
 	Balance     []*V5GetAllCoinsBalanceBalance `json:"balance"`
 }
 
