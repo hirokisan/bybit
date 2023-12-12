@@ -1,0 +1,12 @@
+{
+  "memberId": "146940",
+  "accountType": "UNIFIED",
+  "balance": [
+    {
+      "coin": "BTC",
+      "transferBalance": "1.16327264",
+      "walletBalance": "1.16327264",
+      "bonus": ""
+    }
+  ]
+}

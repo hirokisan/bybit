@@ -100,7 +100,8 @@ func TestGetCoinInfo(t *testing.T) {
 func TestGetAllCoinsBalance(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
 	res, err := client.V5().Asset().GetAllCoinsBalance(bybit.V5GetAllCoinsBalanceParam{
-		Coins: []bybit.Coin{bybit.CoinBTC},
+		AccountType: bybit.AccountTypeUnified,
+		Coins:       []bybit.Coin{bybit.CoinBTC},
 	})
 	require.NoError(t, err)
 	{
