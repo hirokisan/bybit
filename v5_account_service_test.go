@@ -75,8 +75,10 @@ func TestV5Account_GetWalletBalance(t *testing.T) {
 
 func TestV5Account_SetCollateralCoin(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
-		coins := make([]Coin, 1)
-		coins[0] = CoinBTC
+		param := V5SetCollateralCoinParam{
+			Coin:             CoinBTC,
+			CollateralSwitch: CollateralSwitchV5On,
+		}
 
 		path := "/v5/account/set-collateral-switch"
 		method := http.MethodPost
@@ -97,7 +99,7 @@ func TestV5Account_SetCollateralCoin(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Account().SetCollateralCoin(coins, CollateralSwitchV5On)
+		resp, err := client.V5().Account().SetCollateralCoin(param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
