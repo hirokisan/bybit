@@ -63,7 +63,10 @@ func TestGetCollateralInfo(t *testing.T) {
 func TestSetCollateralCoin(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
 	coins := []bybit.Coin{bybit.CoinBTC}
-	res, err := client.V5().Account().SetCollateralCoin(coins, bybit.CollateralSwitchV5On)
+	res, err := client.V5().Account().SetCollateralCoin(bybit.V5SetCollateralCoinParam{
+		Coin:             bybit.CoinBTC,
+		CollateralSwitch: bybit.CollateralSwitchV5On,
+	})
 	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v5-account-set-collateral-coin.json"

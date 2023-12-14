@@ -11,7 +11,7 @@ import (
 // V5AccountServiceI :
 type V5AccountServiceI interface {
 	GetWalletBalance(AccountType, []Coin) (*V5GetWalletBalanceResponse, error)
-	SetCollateralCoin([]Coin, CollateralSwitchV5) (*V5SetCollateralCoinResponse, error)
+	SetCollateralCoin(V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error)
 	GetCollateralInfo(V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error)
 	GetAccountInfo() (*V5GetAccountInfoResponse, error)
 	GetTransactionLog(V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error)
@@ -98,7 +98,12 @@ func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5Ge
 
 // V5SetCollateralCoinParam :
 type V5SetCollateralCoinParam struct {
-	Coin             Coin               `json:"coin"`
+	// Coin:
+	// You cannot pass multiple coins to query
+	// USDT,USDC cannot be switched off
+	Coin Coin `json:"coin"`
+
+	// CollateralSwitch: CollateralSwitchV5On or CollateralSwitchV5Off
 	CollateralSwitch CollateralSwitchV5 `json:"collateralSwitch"`
 }
 
@@ -109,23 +114,8 @@ type V5SetCollateralCoinResponse struct {
 }
 
 // SetCollateralCoin :
-//
-// coins: USDT,USDC cannot be switched off
-// cs: CollateralSwitchV5On or CollateralSwitchV5Off
-func (s *V5AccountService) SetCollateralCoin(coins []Coin, cs CollateralSwitchV5) (*V5SetCollateralCoinResponse, error) {
+func (s *V5AccountService) SetCollateralCoin(param V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error) {
 	var res V5SetCollateralCoinResponse
-
-	param := V5SetCollateralCoinParam{
-		CollateralSwitch: cs,
-	}
-
-	if len(coins) > 0 {
-		var coinsStr []string
-		for _, c := range coins {
-			coinsStr = append(coinsStr, string(c))
-		}
-		param.Coin = Coin(strings.Join(coinsStr, ","))
-	}
 
 	body, err := json.Marshal(param)
 	if err != nil {
