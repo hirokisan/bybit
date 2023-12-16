@@ -1,6 +1,6 @@
 module github.com/hirokisan/bybit/v2
 
-go 1.18
+go 1.21
 
 require (
 	github.com/google/go-querystring v1.1.0
