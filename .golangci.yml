@@ -1,6 +1,12 @@
 run:
   skip-dirs:
     - sandbox
+linters-settings:
+  revive:
+    rules:
+      - name: if-return
+        severity: warning
+        disabled: true
 linters:
   enable:
     - errcheck
