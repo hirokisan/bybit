@@ -17,4 +17,3 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           version: v1.46
-          args: --disable-all --enable=errcheck,staticcheck,govet,unused,structcheck,gosimple
