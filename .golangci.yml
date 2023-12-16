@@ -8,3 +8,4 @@ linters:
     - govet
     - unused
     - gosimple
+    - revive
