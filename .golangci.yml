@@ -1,0 +1,10 @@
+run:
+  skip-dirs:
+    - sandbox
+linters:
+  enable:
+    - errcheck
+    - staticcheck
+    - govet
+    - unused
+    - gosimple
