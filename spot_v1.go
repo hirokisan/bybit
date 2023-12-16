@@ -466,12 +466,12 @@ type SpotGetOrderResponse struct {
 
 // SpotGetOrderResult :
 type SpotGetOrderResult struct {
-	AccountId           string `json:"accountId"`
-	ExchangeId          string `json:"exchangeId"`
+	AccountID           string `json:"accountId"`
+	ExchangeID          string `json:"exchangeId"`
 	Symbol              string `json:"symbol"`
 	SymbolName          string `json:"symbolName"`
-	OrderLinkId         string `json:"orderLinkId"`
-	OrderId             string `json:"orderId"`
+	OrderLinkID         string `json:"orderLinkId"`
+	OrderID             string `json:"orderId"`
 	Price               string `json:"price"`
 	OrigQty             string `json:"origQty"`
 	ExecutedQty         string `json:"executedQty"`
@@ -518,11 +518,11 @@ type SpotDeleteOrderResponse struct {
 
 // SpotDeleteOrderResult :
 type SpotDeleteOrderResult struct {
-	OrderId      string `json:"orderId"`
-	OrderLinkId  string `json:"orderLinkId"`
+	OrderID      string `json:"orderId"`
+	OrderLinkID  string `json:"orderLinkId"`
 	Symbol       string `json:"symbol"`
 	Status       string `json:"status"`
-	AccountId    string `json:"accountId"`
+	AccountID    string `json:"accountId"`
 	TransactTime string `json:"transactTime"`
 	Price        string `json:"price"`
 	OrigQty      string `json:"origQty"`
