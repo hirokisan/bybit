@@ -17,8 +17,8 @@ type V5GetExecutionParam struct {
 	Category CategoryV5 `url:"category"`
 
 	Symbol      *SymbolV5   `url:"symbol,omitempty"`
-	OrderId     *string     `url:"orderId,omitempty"`
-	OrderLinkId *string     `url:"orderLinkId,omitempty"`
+	OrderID     *string     `url:"orderId,omitempty"`
+	OrderLinkID *string     `url:"orderLinkId,omitempty"`
 	BaseCoin    *Coin       `url:"baseCoin,omitempty"`
 	StartTime   *int        `url:"startTime,omitempty"`
 	EndTime     *int        `url:"endTime,omitempty"`
@@ -44,7 +44,7 @@ type V5GetExecutionListResult struct {
 type V5GetExecutionListItem struct {
 	Symbol          SymbolV5   `json:"symbol"`
 	OrderID         string     `json:"orderId"`
-	OrderLinkId     string     `json:"orderLinkId"`
+	OrderLinkID     string     `json:"orderLinkId"`
 	Side            Side       `json:"side"`
 	OrderPrice      string     `json:"orderPrice"`
 	OrderQty        string     `json:"orderQty"`
@@ -65,7 +65,7 @@ type V5GetExecutionListItem struct {
 	MarkPrice       string     `json:"markPrice"`
 	IndexPrice      string     `json:"indexPrice"`
 	UnderlyingPrice string     `json:"underlyingPrice"`
-	BlockTradeId    string     `json:"blockTradeId"`
+	BlockTradeID    string     `json:"blockTradeId"`
 	ClosedSize      string     `json:"closedSize"`
 }
 

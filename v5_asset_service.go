@@ -268,7 +268,7 @@ type V5GetWithdrawalRecordsRows []V5GetWithdrawalRecordsRow
 
 // V5GetWithdrawalRecordsRow :
 type V5GetWithdrawalRecordsRow struct {
-	WithdrawId   string           `json:"withdrawId"`
+	WithdrawID   string           `json:"withdrawId"`
 	TxID         string           `json:"txId"`
 	WithdrawType WithdrawTypeV5   `json:"withdrawType"`
 	Coin         Coin             `json:"coin"`
@@ -361,7 +361,7 @@ func (s *V5AssetService) GetCoinInfo(param V5GetCoinInfoParam) (*V5GetCoinInfoRe
 // V5GetAllCoinsBalanceParam :
 type V5GetAllCoinsBalanceParam struct {
 	AccountType AccountType `url:"accountType"`
-	MemberId    string      `url:"memberId,omitempty"`
+	MemberID    string      `url:"memberId,omitempty"`
 	WithBonus   string      `url:"withBonus,omitempty"`
 	Coins       []Coin
 }
@@ -374,7 +374,7 @@ type V5GetAllCoinsBalanceResponse struct {
 
 // V5GetAllCoinsBalanceResult :
 type V5GetAllCoinsBalanceResult struct {
-	MemberId    string                         `json:"memberId"`
+	MemberID    string                         `json:"memberId"`
 	AccountType AccountType                    `json:"accountType"`
 	Balance     []*V5GetAllCoinsBalanceBalance `json:"balance"`
 }

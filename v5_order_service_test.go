@@ -160,11 +160,11 @@ func TestV5Order_AmendOrder(t *testing.T) {
 
 func TestV5Order_CancelOrder(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
-		orderId := "1358868270414852352"
+		orderID := "1358868270414852352"
 		param := V5CancelOrderParam{
 			Category: CategoryV5Spot,
 			Symbol:   SymbolV5BTCUSDT,
-			OrderID:  &orderId,
+			OrderID:  &orderID,
 		}
 
 		path := "/v5/order/cancel"
@@ -172,7 +172,7 @@ func TestV5Order_CancelOrder(t *testing.T) {
 		status := http.StatusOK
 		respBody := map[string]interface{}{
 			"result": map[string]interface{}{
-				"orderId":     orderId,
+				"orderId":     orderID,
 				"orderLinkId": "1676725721103693",
 			},
 		}
@@ -195,11 +195,11 @@ func TestV5Order_CancelOrder(t *testing.T) {
 		testhelper.Compare(t, respBody["result"], resp.Result)
 	})
 	t.Run("authentication required", func(t *testing.T) {
-		orderId := "1358868270414852352"
+		orderID := "1358868270414852352"
 		param := V5CancelOrderParam{
 			Category: CategoryV5Spot,
 			Symbol:   SymbolV5BTCUSDT,
-			OrderID:  &orderId,
+			OrderID:  &orderID,
 		}
 
 		path := "/v5/order/cancel"
@@ -207,7 +207,7 @@ func TestV5Order_CancelOrder(t *testing.T) {
 		status := http.StatusOK
 		respBody := map[string]interface{}{
 			"result": map[string]interface{}{
-				"orderId":     orderId,
+				"orderId":     orderID,
 				"orderLinkId": "1676725721103693",
 			},
 		}
