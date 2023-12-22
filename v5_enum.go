@@ -309,3 +309,15 @@ const (
 	CollateralSwitchV5On  = CollateralSwitchV5("ON")
 	CollateralSwitchV5Off = CollateralSwitchV5("OFF")
 )
+
+// AdlRankIndicator : Auto-deleverage rank indicator
+type AdlRankIndicator int
+
+const (
+	AdlRankIndicator0 = AdlRankIndicator(0) // default value of empty position
+	AdlRankIndicator1 = AdlRankIndicator(1)
+	AdlRankIndicator2 = AdlRankIndicator(2)
+	AdlRankIndicator3 = AdlRankIndicator(3)
+	AdlRankIndicator4 = AdlRankIndicator(4)
+	AdlRankIndicator5 = AdlRankIndicator(5)
+)
