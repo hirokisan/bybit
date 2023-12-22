@@ -53,30 +53,37 @@ type V5GetPositionInfoList []V5GetPositionInfoItem
 
 // V5GetPositionInfoItem :
 type V5GetPositionInfoItem struct {
-	Symbol         SymbolV5 `json:"symbol"`
-	Leverage       string   `json:"leverage"`
-	AvgPrice       string   `json:"avgPrice"`
-	LiqPrice       string   `json:"liqPrice"`
-	RiskLimitValue string   `json:"riskLimitValue"`
-	TakeProfit     string   `json:"takeProfit"`
-	PositionValue  string   `json:"positionValue"`
-	TpSlMode       TpSlMode `json:"tpslMode"`
-	RiskID         int      `json:"riskId"`
-	TrailingStop   string   `json:"trailingStop"`
-	UnrealisedPnl  string   `json:"unrealisedPnl"`
-	MarkPrice      string   `json:"markPrice"`
-	CumRealisedPnl string   `json:"cumRealisedPnl"`
-	PositionMM     string   `json:"positionMM"`
-	CreatedTime    string   `json:"createdTime"`
-	PositionIdx    int      `json:"positionIdx"`
-	PositionIM     string   `json:"positionIM"`
-	UpdatedTime    string   `json:"updatedTime"`
-	Side           Side     `json:"side"`
-	BustPrice      string   `json:"bustPrice"`
-	Size           string   `json:"size"`
-	PositionStatus string   `json:"positionStatus"`
-	StopLoss       string   `json:"stopLoss"`
-	TradeMode      int      `json:"tradeMode"`
+	Symbol                 SymbolV5         `json:"symbol"`
+	Leverage               string           `json:"leverage"`
+	AvgPrice               string           `json:"avgPrice"`
+	LiqPrice               string           `json:"liqPrice"`
+	RiskLimitValue         string           `json:"riskLimitValue"`
+	TakeProfit             string           `json:"takeProfit"`
+	PositionValue          string           `json:"positionValue"`
+	TpSlMode               TpSlMode         `json:"tpslMode"`
+	RiskID                 int              `json:"riskId"`
+	TrailingStop           string           `json:"trailingStop"`
+	UnrealisedPnl          string           `json:"unrealisedPnl"`
+	MarkPrice              string           `json:"markPrice"`
+	CumRealisedPnl         string           `json:"cumRealisedPnl"`
+	AdlRankIndicator       AdlRankIndicator `json:"adlRankIndicator"`
+	IsReduceOnly           bool             `json:"isReduceOnly"`
+	MmrSysUpdatedTime      string           `json:"mmrSysUpdatedTime"`
+	LeverageSysUpdatedTime string           `json:"leverageSysUpdatedTime"`
+	PositionMM             string           `json:"positionMM"`
+	PositionBalance        string           `json:"positionBalance"`
+	CreatedTime            string           `json:"createdTime"`
+	UpdatedTime            string           `json:"updatedTime"`
+	Seq                    int64            `json:"seq"`
+	PositionIdx            int              `json:"positionIdx"`
+	PositionIM             string           `json:"positionIM"`
+	Side                   Side             `json:"side"`
+	BustPrice              string           `json:"bustPrice"`
+	Size                   string           `json:"size"`
+	PositionStatus         string           `json:"positionStatus"`
+	StopLoss               string           `json:"stopLoss"`
+	TradeMode              int              `json:"tradeMode"`
+	AutoAddMargin          int              `json:"autoAddMargin"`
 }
 
 // GetPositionInfo :
