@@ -100,12 +100,14 @@ func (c *Client) Request(req *http.Request, dst interface{}) error {
 			return err
 		}
 		return nil
+	case resp.StatusCode == http.StatusUnauthorized:
+		return fmt.Errorf("%w: invalid key/secret", ErrAccessDenied)
 	case resp.StatusCode == http.StatusForbidden:
-		return ErrAccessDenied
+		return fmt.Errorf("%w: not permitted", ErrAccessDenied)
 	case resp.StatusCode == http.StatusNotFound:
 		return ErrPathNotFound
 	default:
-		return errors.New("unexpected error")
+		return fmt.Errorf("unexpected status code %d", resp.StatusCode)
 	}
 }
 
