@@ -7,7 +7,6 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 	"os/signal"
 	"time"
@@ -100,7 +99,7 @@ func (c *WebSocketClient) Start(ctx context.Context, executors []WebsocketExecut
 					if IsErrWebsocketClosed(err) {
 						return
 					}
-					log.Println(err)
+					logger.Println(err)
 					return
 				}
 			}
@@ -124,7 +123,7 @@ func (c *WebSocketClient) Start(ctx context.Context, executors []WebsocketExecut
 				}
 			}
 		case <-ctx.Done():
-			log.Println("interrupt")
+			logger.Println("interrupt")
 
 			for _, executor := range executors {
 				if err := executor.Close(); err != nil {
