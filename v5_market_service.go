@@ -392,84 +392,98 @@ func (r *V5GetInstrumentsInfoResult) UnmarshalJSON(data []byte) error {
 
 // V5GetInstrumentsInfoLinearInverseResult :
 type V5GetInstrumentsInfoLinearInverseResult struct {
-	Category       CategoryV5 `json:"category"`
-	NextPageCursor string     `json:"nextPageCursor"`
-	List           []struct {
-		Symbol          SymbolV5         `json:"symbol"`
-		ContractType    ContractType     `json:"contractType"`
-		Status          InstrumentStatus `json:"status"`
-		BaseCoin        Coin             `json:"baseCoin"`
-		QuoteCoin       Coin             `json:"quoteCoin"`
-		SettleCoin      Coin             `json:"settleCoin"`
-		LaunchTime      string           `json:"launchTime"`
-		DeliveryTime    string           `json:"deliveryTime"`
-		DeliveryFeeRate string           `json:"deliveryFeeRate"`
-		PriceScale      string           `json:"priceScale"`
-		LeverageFilter  struct {
-			MinLeverage  string `json:"minLeverage"`
-			MaxLeverage  string `json:"maxLeverage"`
-			LeverageStep string `json:"leverageStep"`
-		} `json:"leverageFilter"`
-		PriceFilter struct {
-			MinPrice string `json:"minPrice"`
-			MaxPrice string `json:"maxPrice"`
-			TickSize string `json:"tickSize"`
-		} `json:"priceFilter"`
-		LotSizeFilter struct {
-			MaxOrderQty         string `json:"maxOrderQty"`
-			MinOrderQty         string `json:"minOrderQty"`
-			QtyStep             string `json:"qtyStep"`
-			PostOnlyMaxOrderQty string `json:"postOnlyMaxOrderQty"`
-		} `json:"lotSizeFilter"`
-		UnifiedMarginTrade bool `json:"unifiedMarginTrade"`
-		FundingInterval    int  `json:"fundingInterval"`
-	} `json:"list"`
+	Category       CategoryV5                              `json:"category"`
+	NextPageCursor string                                  `json:"nextPageCursor"`
+	List           []V5GetInstrumentsInfoLinearInverseItem `json:"list"`
+}
+
+type LinearInverseLeverageFilterV5 struct {
+	MinLeverage  string `json:"minLeverage"`
+	MaxLeverage  string `json:"maxLeverage"`
+	LeverageStep string `json:"leverageStep"`
+}
+
+type V5GetInstrumentsInfoLinearInverseItem struct {
+	Symbol             SymbolV5                      `json:"symbol"`
+	ContractType       ContractType                  `json:"contractType"`
+	Status             InstrumentStatus              `json:"status"`
+	BaseCoin           Coin                          `json:"baseCoin"`
+	QuoteCoin          Coin                          `json:"quoteCoin"`
+	SettleCoin         Coin                          `json:"settleCoin"`
+	LaunchTime         string                        `json:"launchTime"`
+	DeliveryTime       string                        `json:"deliveryTime"`
+	DeliveryFeeRate    string                        `json:"deliveryFeeRate"`
+	PriceScale         string                        `json:"priceScale"`
+	LeverageFilter     LinearInverseLeverageFilterV5 `json:"leverageFilter"`
+	PriceFilter        LinearInversePriceFilterV5    `json:"priceFilter"`
+	LotSizeFilter      LinearInverseLotSizeFilterV5  `json:"lotSizeFilter"`
+	UnifiedMarginTrade bool                          `json:"unifiedMarginTrade"`
+	FundingInterval    int                           `json:"fundingInterval"`
+}
+
+type LinearInversePriceFilterV5 struct {
+	MinPrice string `json:"minPrice"`
+	MaxPrice string `json:"maxPrice"`
+	TickSize string `json:"tickSize"`
+}
+
+type LinearInverseLotSizeFilterV5 struct {
+	MaxOrderQty         string `json:"maxOrderQty"`
+	MinOrderQty         string `json:"minOrderQty"`
+	QtyStep             string `json:"qtyStep"`
+	PostOnlyMaxOrderQty string `json:"postOnlyMaxOrderQty"`
 }
 
 // V5GetInstrumentsInfoOptionResult :
 type V5GetInstrumentsInfoOptionResult struct {
-	Category       CategoryV5 `json:"category"`
-	NextPageCursor string     `json:"nextPageCursor"`
-	List           []struct {
-		Symbol          SymbolV5         `json:"symbol"`
-		OptionsType     OptionsType      `json:"optionsType"`
-		Status          InstrumentStatus `json:"status"`
-		BaseCoin        Coin             `json:"baseCoin"`
-		QuoteCoin       Coin             `json:"quoteCoin"`
-		SettleCoin      Coin             `json:"settleCoin"`
-		LaunchTime      string           `json:"launchTime"`
-		DeliveryTime    string           `json:"deliveryTime"`
-		DeliveryFeeRate string           `json:"deliveryFeeRate"`
-		PriceFilter     struct {
-			MinPrice string `json:"minPrice"`
-			MaxPrice string `json:"maxPrice"`
-			TickSize string `json:"tickSize"`
-		} `json:"priceFilter"`
-		LotSizeFilter struct {
-			MaxOrderQty string `json:"maxOrderQty"`
-			MinOrderQty string `json:"minOrderQty"`
-			QtyStep     string `json:"qtyStep"`
-		} `json:"lotSizeFilter"`
-	} `json:"list"`
+	Category       CategoryV5                       `json:"category"`
+	NextPageCursor string                           `json:"nextPageCursor"`
+	List           []V5GetInstrumentsInfoOptionItem `json:"list"`
+}
+
+type V5GetInstrumentsInfoOptionItem struct {
+	Symbol          SymbolV5              `json:"symbol"`
+	OptionsType     OptionsType           `json:"optionsType"`
+	Status          InstrumentStatus      `json:"status"`
+	BaseCoin        Coin                  `json:"baseCoin"`
+	QuoteCoin       Coin                  `json:"quoteCoin"`
+	SettleCoin      Coin                  `json:"settleCoin"`
+	LaunchTime      string                `json:"launchTime"`
+	DeliveryTime    string                `json:"deliveryTime"`
+	DeliveryFeeRate string                `json:"deliveryFeeRate"`
+	PriceFilter     OptionPriceFilterV5   `json:"priceFilter"`
+	LotSizeFilter   OptionLotSizeFilterV5 `json:"lotSizeFilter"`
+}
+
+type OptionPriceFilterV5 struct {
+	MinPrice string `json:"minPrice"`
+	MaxPrice string `json:"maxPrice"`
+	TickSize string `json:"tickSize"`
+}
+
+type OptionLotSizeFilterV5 struct {
+	MaxOrderQty string `json:"maxOrderQty"`
+	MinOrderQty string `json:"minOrderQty"`
+	QtyStep     string `json:"qtyStep"`
 }
 
 // V5GetInstrumentsInfoSpotResult :
 type V5GetInstrumentsInfoSpotResult struct {
-	Category CategoryV5     `json:"category"`
-	List     []SymbolDataV5 `json:"list"`
+	Category CategoryV5                     `json:"category"`
+	List     []V5GetInstrumentsInfoSpotItem `json:"list"`
 }
 
-type SymbolDataV5 struct {
-	Symbol        SymbolV5         `json:"symbol"`
-	BaseCoin      Coin             `json:"baseCoin"`
-	QuoteCoin     Coin             `json:"quoteCoin"`
-	Innovation    Innovation       `json:"innovation"`
-	Status        InstrumentStatus `json:"status"`
-	LotSizeFilter LotSizeFilterV5  `json:"lotSizeFilter"`
-	PriceFilter   PriceFilterV5    `json:"priceFilter"`
+type V5GetInstrumentsInfoSpotItem struct {
+	Symbol        SymbolV5            `json:"symbol"`
+	BaseCoin      Coin                `json:"baseCoin"`
+	QuoteCoin     Coin                `json:"quoteCoin"`
+	Innovation    Innovation          `json:"innovation"`
+	Status        InstrumentStatus    `json:"status"`
+	LotSizeFilter SpotLotSizeFilterV5 `json:"lotSizeFilter"`
+	PriceFilter   SpotPriceFilterV5   `json:"priceFilter"`
 }
 
-type LotSizeFilterV5 struct {
+type SpotLotSizeFilterV5 struct {
 	BasePrecision  string `json:"basePrecision"`
 	QuotePrecision string `json:"quotePrecision"`
 	MaxOrderQty    string `json:"maxOrderQty"`
@@ -478,7 +492,7 @@ type LotSizeFilterV5 struct {
 	MaxOrderAmt    string `json:"maxOrderAmt"`
 }
 
-type PriceFilterV5 struct {
+type SpotPriceFilterV5 struct {
 	TickSize string `json:"tickSize"`
 }
 
@@ -635,84 +649,90 @@ func (r *V5GetTickersResult) UnmarshalJSON(data []byte) error {
 
 // V5GetTickersLinearInverseResult :
 type V5GetTickersLinearInverseResult struct {
-	Category CategoryV5 `json:"category"`
-	List     []struct {
-		Symbol                 SymbolV5 `json:"symbol"`
-		LastPrice              string   `json:"lastPrice"`
-		IndexPrice             string   `json:"indexPrice"`
-		MarkPrice              string   `json:"markPrice"`
-		PrevPrice24H           string   `json:"prevPrice24h"`
-		Price24HPcnt           string   `json:"price24hPcnt"`
-		HighPrice24H           string   `json:"highPrice24h"`
-		LowPrice24H            string   `json:"lowPrice24h"`
-		PrevPrice1H            string   `json:"prevPrice1h"`
-		OpenInterest           string   `json:"openInterest"`
-		OpenInterestValue      string   `json:"openInterestValue"`
-		Turnover24H            string   `json:"turnover24h"`
-		Volume24H              string   `json:"volume24h"`
-		FundingRate            string   `json:"fundingRate"`
-		NextFundingTime        string   `json:"nextFundingTime"`
-		PredictedDeliveryPrice string   `json:"predictedDeliveryPrice"`
-		BasisRate              string   `json:"basisRate"`
-		DeliveryFeeRate        string   `json:"deliveryFeeRate"`
-		DeliveryTime           string   `json:"deliveryTime"`
-		Ask1Size               string   `json:"ask1Size"`
-		Bid1Price              string   `json:"bid1Price"`
-		Ask1Price              string   `json:"ask1Price"`
-		Bid1Size               string   `json:"bid1Size"`
-	} `json:"list"`
+	Category CategoryV5                      `json:"category"`
+	List     []V5GetTickersLinearInverseItem `json:"list"`
+}
+
+type V5GetTickersLinearInverseItem struct {
+	Symbol                 SymbolV5 `json:"symbol"`
+	LastPrice              string   `json:"lastPrice"`
+	IndexPrice             string   `json:"indexPrice"`
+	MarkPrice              string   `json:"markPrice"`
+	PrevPrice24H           string   `json:"prevPrice24h"`
+	Price24HPcnt           string   `json:"price24hPcnt"`
+	HighPrice24H           string   `json:"highPrice24h"`
+	LowPrice24H            string   `json:"lowPrice24h"`
+	PrevPrice1H            string   `json:"prevPrice1h"`
+	OpenInterest           string   `json:"openInterest"`
+	OpenInterestValue      string   `json:"openInterestValue"`
+	Turnover24H            string   `json:"turnover24h"`
+	Volume24H              string   `json:"volume24h"`
+	FundingRate            string   `json:"fundingRate"`
+	NextFundingTime        string   `json:"nextFundingTime"`
+	PredictedDeliveryPrice string   `json:"predictedDeliveryPrice"`
+	BasisRate              string   `json:"basisRate"`
+	DeliveryFeeRate        string   `json:"deliveryFeeRate"`
+	DeliveryTime           string   `json:"deliveryTime"`
+	Ask1Size               string   `json:"ask1Size"`
+	Bid1Price              string   `json:"bid1Price"`
+	Ask1Price              string   `json:"ask1Price"`
+	Bid1Size               string   `json:"bid1Size"`
 }
 
 // V5GetTickersOptionResult :
 type V5GetTickersOptionResult struct {
-	Category CategoryV5 `json:"category"`
-	List     []struct {
-		Symbol                 SymbolV5 `json:"symbol"`
-		Bid1Price              string   `json:"bid1Price"`
-		Bid1Size               string   `json:"bid1Size"`
-		Bid1Iv                 string   `json:"bid1Iv"`
-		Ask1Price              string   `json:"ask1Price"`
-		Ask1Size               string   `json:"ask1Size"`
-		Ask1Iv                 string   `json:"ask1Iv"`
-		LastPrice              string   `json:"lastPrice"`
-		HighPrice24H           string   `json:"highPrice24h"`
-		LowPrice24H            string   `json:"lowPrice24h"`
-		MarkPrice              string   `json:"markPrice"`
-		IndexPrice             string   `json:"indexPrice"`
-		MarkIv                 string   `json:"markIv"`
-		UnderlyingPrice        string   `json:"underlyingPrice"`
-		OpenInterest           string   `json:"openInterest"`
-		Turnover24H            string   `json:"turnover24h"`
-		Volume24H              string   `json:"volume24h"`
-		TotalVolume            string   `json:"totalVolume"`
-		TotalTurnover          string   `json:"totalTurnover"`
-		Delta                  string   `json:"delta"`
-		Gamma                  string   `json:"gamma"`
-		Vega                   string   `json:"vega"`
-		Theta                  string   `json:"theta"`
-		PredictedDeliveryPrice string   `json:"predictedDeliveryPrice"`
-		Change24H              string   `json:"change24h"`
-	} `json:"list"`
+	Category CategoryV5               `json:"category"`
+	List     []V5GetTickersOptionItem `json:"list"`
+}
+
+type V5GetTickersOptionItem struct {
+	Symbol                 SymbolV5 `json:"symbol"`
+	Bid1Price              string   `json:"bid1Price"`
+	Bid1Size               string   `json:"bid1Size"`
+	Bid1Iv                 string   `json:"bid1Iv"`
+	Ask1Price              string   `json:"ask1Price"`
+	Ask1Size               string   `json:"ask1Size"`
+	Ask1Iv                 string   `json:"ask1Iv"`
+	LastPrice              string   `json:"lastPrice"`
+	HighPrice24H           string   `json:"highPrice24h"`
+	LowPrice24H            string   `json:"lowPrice24h"`
+	MarkPrice              string   `json:"markPrice"`
+	IndexPrice             string   `json:"indexPrice"`
+	MarkIv                 string   `json:"markIv"`
+	UnderlyingPrice        string   `json:"underlyingPrice"`
+	OpenInterest           string   `json:"openInterest"`
+	Turnover24H            string   `json:"turnover24h"`
+	Volume24H              string   `json:"volume24h"`
+	TotalVolume            string   `json:"totalVolume"`
+	TotalTurnover          string   `json:"totalTurnover"`
+	Delta                  string   `json:"delta"`
+	Gamma                  string   `json:"gamma"`
+	Vega                   string   `json:"vega"`
+	Theta                  string   `json:"theta"`
+	PredictedDeliveryPrice string   `json:"predictedDeliveryPrice"`
+	Change24H              string   `json:"change24h"`
 }
 
 // V5GetTickersSpotResult :
 type V5GetTickersSpotResult struct {
-	Category CategoryV5 `json:"category"`
-	List     []struct {
-		Symbol        SymbolV5 `json:"symbol"`
-		Bid1Price     string   `json:"bid1Price"`
-		Bid1Size      string   `json:"bid1Size"`
-		Ask1Price     string   `json:"ask1Price"`
-		Ask1Size      string   `json:"ask1Size"`
-		LastPrice     string   `json:"lastPrice"`
-		PrevPrice24H  string   `json:"prevPrice24h"`
-		Price24HPcnt  string   `json:"price24hPcnt"`
-		HighPrice24H  string   `json:"highPrice24h"`
-		LowPrice24H   string   `json:"lowPrice24h"`
-		Turnover24H   string   `json:"turnover24h"`
-		Volume24H     string   `json:"volume24h"`
-		UsdIndexPrice string   `json:"usdIndexPrice"`
-	} `json:"list"`
+	Category CategoryV5             `json:"category"`
+	List     []V5GetTickersSpotItem `json:"list"`
+}
+
+type V5GetTickersSpotItem struct {
+	Symbol        SymbolV5 `json:"symbol"`
+	Bid1Price     string   `json:"bid1Price"`
+	Bid1Size      string   `json:"bid1Size"`
+	Ask1Price     string   `json:"ask1Price"`
+	Ask1Size      string   `json:"ask1Size"`
+	LastPrice     string   `json:"lastPrice"`
+	PrevPrice24H  string   `json:"prevPrice24h"`
+	Price24HPcnt  string   `json:"price24hPcnt"`
+	HighPrice24H  string   `json:"highPrice24h"`
+	LowPrice24H   string   `json:"lowPrice24h"`
+	Turnover24H   string   `json:"turnover24h"`
+	Volume24H     string   `json:"volume24h"`
+	UsdIndexPrice string   `json:"usdIndexPrice"`
 }
 
 // GetTickers :
@@ -760,12 +780,14 @@ type V5GetFundingRateHistoryResponse struct {
 
 // V5GetFundingRateHistoryResult :
 type V5GetFundingRateHistoryResult struct {
-	Category CategoryV5 `json:"category"`
-	List     []struct {
-		Symbol               SymbolV5 `json:"symbol"`
-		FundingRate          string   `json:"fundingRate"`
-		FundingRateTimestamp string   `json:"fundingRateTimestamp"`
-	} `json:"list"`
+	Category CategoryV5                    `json:"category"`
+	List     []V5GetFundingRateHistoryItem `json:"list"`
+}
+
+type V5GetFundingRateHistoryItem struct {
+	Symbol               SymbolV5 `json:"symbol"`
+	FundingRate          string   `json:"fundingRate"`
+	FundingRateTimestamp string   `json:"fundingRateTimestamp"`
 }
 
 // GetFundingRateHistory :
@@ -817,16 +839,18 @@ type V5GetPublicTradingHistoryResponse struct {
 
 // V5GetPublicTradingHistoryResult :
 type V5GetPublicTradingHistoryResult struct {
-	Category CategoryV5 `json:"category"`
-	List     []struct {
-		ExecID       string   `json:"execId"`
-		Symbol       SymbolV5 `json:"symbol"`
-		Price        string   `json:"price"`
-		Size         string   `json:"size"`
-		Side         Side     `json:"side"`
-		Time         string   `json:"time"`
-		IsBlockTrade bool     `json:"isBlockTrade"`
-	} `json:"list"`
+	Category CategoryV5                      `json:"category"`
+	List     []V5GetPublicTradingHistoryItem `json:"list"`
+}
+
+type V5GetPublicTradingHistoryItem struct {
+	ExecID       string   `json:"execId"`
+	Symbol       SymbolV5 `json:"symbol"`
+	Price        string   `json:"price"`
+	Size         string   `json:"size"`
+	Side         Side     `json:"side"`
+	Time         string   `json:"time"`
+	IsBlockTrade bool     `json:"isBlockTrade"`
 }
 
 // GetPublicTradingHistory :
@@ -876,13 +900,15 @@ type V5GetOpenInterestResponse struct {
 
 // V5GetOpenInterestResult :
 type V5GetOpenInterestResult struct {
-	Category CategoryV5 `json:"category"`
-	Symbol   SymbolV5   `json:"symbol"`
-	List     []struct {
-		OpenInterest string `json:"openInterest"`
-		Timestamp    string `json:"timestamp"`
-	} `json:"list"`
-	NextPageCursor string `json:"nextPageCursor"`
+	Category       CategoryV5              `json:"category"`
+	Symbol         SymbolV5                `json:"symbol"`
+	List           []V5GetOpenInterestItem `json:"list"`
+	NextPageCursor string                  `json:"nextPageCursor"`
+}
+
+type V5GetOpenInterestItem struct {
+	OpenInterest string `json:"openInterest"`
+	Timestamp    string `json:"timestamp"`
 }
 
 // GetOpenInterest :
@@ -995,12 +1021,14 @@ type V5GetInsuranceResponse struct {
 
 // V5GetInsuranceResult :
 type V5GetInsuranceResult struct {
-	UpdatedTime string `json:"updatedTime"`
-	List        []struct {
-		Coin    Coin   `json:"coin"`
-		Balance string `json:"balance"`
-		Value   string `json:"value"`
-	} `json:"list"`
+	UpdatedTime string               `json:"updatedTime"`
+	List        []V5GetInsuranceItem `json:"list"`
+}
+
+type V5GetInsuranceItem struct {
+	Coin    Coin   `json:"coin"`
+	Balance string `json:"balance"`
+	Value   string `json:"value"`
 }
 
 // GetInsurance :
@@ -1041,16 +1069,18 @@ type V5GetRiskLimitResponse struct {
 
 // V5GetRiskLimitResult :
 type V5GetRiskLimitResult struct {
-	Category CategoryV5 `json:"category"`
-	List     []struct {
-		ID                int64        `json:"id"`
-		Symbol            SymbolV5     `json:"symbol"`
-		RiskLimitValue    string       `json:"riskLimitValue"`
-		MaintenanceMargin string       `json:"maintenanceMargin"`
-		InitialMargin     string       `json:"initialMargin"`
-		IsLowestRisk      IsLowestRisk `json:"isLowestRisk"`
-		MaxLeverage       string       `json:"maxLeverage"`
-	} `json:"list"`
+	Category CategoryV5           `json:"category"`
+	List     []V5GetRiskLimitItem `json:"list"`
+}
+
+type V5GetRiskLimitItem struct {
+	ID                int64        `json:"id"`
+	Symbol            SymbolV5     `json:"symbol"`
+	RiskLimitValue    string       `json:"riskLimitValue"`
+	MaintenanceMargin string       `json:"maintenanceMargin"`
+	InitialMargin     string       `json:"initialMargin"`
+	IsLowestRisk      IsLowestRisk `json:"isLowestRisk"`
+	MaxLeverage       string       `json:"maxLeverage"`
 }
 
 // GetRiskLimit :
