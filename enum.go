@@ -38,6 +38,16 @@ const (
 	OrderTypeMarket = OrderType("Market")
 )
 
+// The unit for qty when create Spot market orders for UTA account.
+type MarketUnit string
+
+const (
+	// Buy BTCUSDT, then "qty" unit is BTC.
+	MarketUnitBaseCoin = MarketUnit("baseCoin")
+	// Sell BTCUSDT, then "qty" unit is USDT.
+	MarketUnitQuoteCoin = MarketUnit("quoteCoin")
+)
+
 // OrderStatus :
 type OrderStatus string
 

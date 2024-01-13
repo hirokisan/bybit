@@ -53,6 +53,7 @@ type V5CreateOrderParam struct {
 	SlLimitPrice          *string           `json:"slLimitPrice,omitempty"`
 	TpOrderType           *OrderType        `json:"tpOrderType,omitempty"`
 	SlOrderType           *OrderType        `json:"slOrderType,omitempty"`
+	MarketUnit            *MarketUnit       `json:"marketUnit,omitempty"` // The unit for qty when create Spot market orders for UTA account.
 }
 
 // V5CreateOrderResponse :
