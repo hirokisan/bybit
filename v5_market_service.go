@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 
 	"github.com/google/go-querystring/query"
 )
@@ -305,7 +304,7 @@ func (l *V5GetPremiumIndexPriceKlineList) UnmarshalJSON(data []byte) error {
 		if len(d) != 5 {
 			return errors.New("so far len(items) must be 5, please check it on documents")
 		}
-		log.Println(d)
+		logger.Println(d)
 		*l = append(*l, V5GetPremiumIndexPriceKlineItem{
 			StartTime: d[0].(string),
 			Open:      d[1].(string),

@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"os/signal"
 	"sync"
@@ -156,7 +155,7 @@ func (s *V5WebsocketPrivateService) Start(ctx context.Context, errHandler ErrHan
 				return err
 			}
 		case <-ctx.Done():
-			log.Println("interrupt")
+			logger.Println("interrupt")
 
 			if err := s.Close(); err != nil {
 				return err
