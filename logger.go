@@ -5,13 +5,9 @@ import (
 	"log"
 )
 
-type Logger interface {
-	Println(values ...any)
-}
+var logger *log.Logger = newNoopLogger()
 
-var logger Logger = newNoopLogger()
-
-func SetLogger(l Logger) {
+func SetLogger(l *log.Logger) {
 	if l != nil {
 		// Use provided logger.
 		logger = l
@@ -21,6 +17,6 @@ func SetLogger(l Logger) {
 	}
 }
 
-func newNoopLogger() Logger {
+func newNoopLogger() *log.Logger {
 	return log.New(io.Discard, "", log.LstdFlags)
 }
