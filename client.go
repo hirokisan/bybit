@@ -66,8 +66,8 @@ func (c *Client) WithHTTPClient(httpClient *http.Client) *Client {
 }
 
 // WithDebug :
-func (c *Client) WithDebug() *Client {
-	c.debug = true
+func (c *Client) WithDebug(debug bool) *Client {
+	c.debug = debug
 
 	return c
 }

@@ -46,8 +46,8 @@ func NewWebsocketClient() *WebSocketClient {
 }
 
 // WithDebug :
-func (c *WebSocketClient) WithDebug() *WebSocketClient {
-	c.debug = true
+func (c *WebSocketClient) WithDebug(debug bool) *WebSocketClient {
+	c.debug = debug
 
 	return c
 }
