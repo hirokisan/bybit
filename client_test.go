@@ -173,7 +173,7 @@ func TestClient(t *testing.T) {
 		var got interface{}
 
 		gotErr := client.Request(req, &got)
-		assert.ErrorIs(t, gotErr, bybit.ErrAccessDenied)
+		assert.ErrorIs(t, gotErr, bybit.ErrForbiddenRequest)
 	})
 	t.Run("404, path not found", func(t *testing.T) {
 		path := "/test"
