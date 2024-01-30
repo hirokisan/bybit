@@ -75,12 +75,17 @@ func (c *Client) WithBaseURL(url string) *Client {
 }
 
 // Request :
-func (c *Client) Request(req *http.Request, dst interface{}) error {
+func (c *Client) Request(req *http.Request, dst interface{}) (err error) {
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		cerr := resp.Body.Close()
+		if err == nil && cerr != nil {
+			err = cerr
+		}
+	}()
 
 	switch {
 	case 200 <= resp.StatusCode && resp.StatusCode <= 299:
