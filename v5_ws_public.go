@@ -184,7 +184,7 @@ func (s *V5WebsocketPublicService) Start(ctx context.Context, errHandler ErrHand
 				return err
 			}
 		case <-ctx.Done():
-			logger.Println("interrupt")
+			s.client.debugf("caught websocket public service interrupt signal")
 
 			if err := s.Close(); err != nil {
 				return err

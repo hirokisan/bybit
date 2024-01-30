@@ -189,7 +189,7 @@ func (s *SpotWebsocketV1PrivateService) Start(ctx context.Context) {
 				if IsErrWebsocketClosed(err) {
 					return
 				}
-				logger.Println(err)
+				s.client.debugf("spot websocket v1 private service run error: %s", err)
 				return
 			}
 		}
@@ -210,7 +210,7 @@ func (s *SpotWebsocketV1PrivateService) Start(ctx context.Context) {
 				return
 			}
 		case <-ctx.Done():
-			logger.Println("interrupt")
+			s.client.debugf("caught spot websocket v1 private service interrupt signal")
 
 			if err := s.Close(); err != nil {
 				return

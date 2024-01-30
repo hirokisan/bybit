@@ -3,6 +3,7 @@ package bybit
 import (
 	"io"
 	"log"
+	"os"
 )
 
 var logger *log.Logger = newNoopLogger()
@@ -15,6 +16,10 @@ func SetLogger(l *log.Logger) {
 		// Disable logging.
 		logger = newNoopLogger()
 	}
+}
+
+func newDefaultLogger() *log.Logger {
+	return log.New(os.Stderr, "Bybit-golang", log.LstdFlags)
 }
 
 func newNoopLogger() *log.Logger {

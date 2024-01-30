@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"time"
@@ -21,16 +22,42 @@ const (
 
 // WebSocketClient :
 type WebSocketClient struct {
+	debug  bool
+	logger *log.Logger
+
 	baseURL string
 	key     string
 	secret  string
 }
 
+func (c *WebSocketClient) debugf(format string, v ...interface{}) {
+	if c.debug {
+		c.logger.Printf(format, v...)
+	}
+}
+
 // NewWebsocketClient :
 func NewWebsocketClient() *WebSocketClient {
 	return &WebSocketClient{
+		logger: newDefaultLogger(),
+
 		baseURL: WebsocketBaseURL,
 	}
+}
+
+// WithDebug :
+func (c *WebSocketClient) WithDebug() *WebSocketClient {
+	c.debug = true
+
+	return c
+}
+
+// WithLogger :
+func (c *WebSocketClient) WithLogger(logger *log.Logger) *WebSocketClient {
+	c.debug = true
+	c.logger = logger
+
+	return c
 }
 
 // WithAuth :
@@ -99,7 +126,7 @@ func (c *WebSocketClient) Start(ctx context.Context, executors []WebsocketExecut
 					if IsErrWebsocketClosed(err) {
 						return
 					}
-					logger.Println(err)
+					c.debugf("websocket executor error: %s", err)
 					return
 				}
 			}
@@ -123,7 +150,7 @@ func (c *WebSocketClient) Start(ctx context.Context, executors []WebsocketExecut
 				}
 			}
 		case <-ctx.Done():
-			logger.Println("interrupt")
+			c.debugf("caught websocket interrupt signal")
 
 			for _, executor := range executors {
 				if err := executor.Close(); err != nil {

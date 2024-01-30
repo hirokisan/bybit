@@ -12,7 +12,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -52,7 +51,7 @@ func NewClient() *Client {
 	return &Client{
 		httpClient: &http.Client{},
 
-		logger: log.New(os.Stderr, "Bybit-golang", log.LstdFlags),
+		logger: newDefaultLogger(),
 
 		baseURL:           MainNetBaseURL,
 		checkResponseBody: checkResponseBody,
