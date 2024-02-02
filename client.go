@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"sort"
@@ -28,6 +29,9 @@ const (
 type Client struct {
 	httpClient *http.Client
 
+	debug  bool
+	logger *log.Logger
+
 	baseURL string
 	key     string
 	secret  string
@@ -36,10 +40,18 @@ type Client struct {
 	syncTimeDeltaNanoSeconds int64
 }
 
+func (c *Client) debugf(format string, v ...interface{}) {
+	if c.debug {
+		c.logger.Printf(format, v...)
+	}
+}
+
 // NewClient :
 func NewClient() *Client {
 	return &Client{
 		httpClient: &http.Client{},
+
+		logger: newDefaultLogger(),
 
 		baseURL:           MainNetBaseURL,
 		checkResponseBody: checkResponseBody,
@@ -49,6 +61,21 @@ func NewClient() *Client {
 // WithHTTPClient :
 func (c *Client) WithHTTPClient(httpClient *http.Client) *Client {
 	c.httpClient = httpClient
+
+	return c
+}
+
+// WithDebug :
+func (c *Client) WithDebug(debug bool) *Client {
+	c.debug = debug
+
+	return c
+}
+
+// WithLogger :
+func (c *Client) WithLogger(logger *log.Logger) *Client {
+	c.debug = true
+	c.logger = logger
 
 	return c
 }
@@ -76,7 +103,10 @@ func (c *Client) WithBaseURL(url string) *Client {
 
 // Request :
 func (c *Client) Request(req *http.Request, dst interface{}) (err error) {
+	c.debugf("request: %v", req)
 	resp, err := c.httpClient.Do(req)
+	c.debugf("response: %v", resp)
+	c.debugf("response status code: %v", resp.StatusCode)
 	if err != nil {
 		return err
 	}
@@ -104,6 +134,8 @@ func (c *Client) Request(req *http.Request, dst interface{}) (err error) {
 		if err := json.Unmarshal(body, &dst); err != nil {
 			return err
 		}
+
+		c.debugf("response body: %v", string(body))
 		return nil
 	case resp.StatusCode == http.StatusBadRequest:
 		return fmt.Errorf("%v: Need to send the request with GET / POST (must be capitalized)", ErrBadRequest)
