@@ -102,7 +102,7 @@ func (c *Client) WithBaseURL(url string) *Client {
 }
 
 // Request :
-func (c *Client) Request(req *http.Request, dst interface{}) error {
+func (c *Client) Request(req *http.Request, dst interface{}) (err error) {
 	c.debugf("request: %v", req)
 	resp, err := c.httpClient.Do(req)
 	c.debugf("response: %v", resp)
@@ -110,7 +110,12 @@ func (c *Client) Request(req *http.Request, dst interface{}) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		cerr := resp.Body.Close()
+		if err == nil && cerr != nil {
+			err = cerr
+		}
+	}()
 
 	switch {
 	case 200 <= resp.StatusCode && resp.StatusCode <= 299:
@@ -132,12 +137,14 @@ func (c *Client) Request(req *http.Request, dst interface{}) error {
 
 		c.debugf("response body: %v", string(body))
 		return nil
+	case resp.StatusCode == http.StatusBadRequest:
+		return fmt.Errorf("%v: Need to send the request with GET / POST (must be capitalized)", ErrBadRequest)
 	case resp.StatusCode == http.StatusUnauthorized:
-		return fmt.Errorf("%w: invalid key/secret", ErrAccessDenied)
+		return fmt.Errorf("%w: invalid key/secret", ErrInvalidRequest)
 	case resp.StatusCode == http.StatusForbidden:
-		return fmt.Errorf("%w: not permitted", ErrAccessDenied)
+		return fmt.Errorf("%w: not permitted", ErrForbiddenRequest)
 	case resp.StatusCode == http.StatusNotFound:
-		return ErrPathNotFound
+		return fmt.Errorf("%w: wrong path", ErrPathNotFound)
 	default:
 		return fmt.Errorf("unexpected status code %d", resp.StatusCode)
 	}
