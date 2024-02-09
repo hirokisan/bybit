@@ -36,6 +36,8 @@ type Client struct {
 	key     string
 	secret  string
 
+	referer string
+
 	checkResponseBody        checkResponseBodyFunc
 	syncTimeDeltaNanoSeconds int64
 }
@@ -101,6 +103,12 @@ func (c *Client) WithBaseURL(url string) *Client {
 	return c
 }
 
+func (c *Client) WithReferer(referer string) *Client {
+	c.referer = referer
+
+	return c
+}
+
 // Request :
 func (c *Client) Request(req *http.Request, dst interface{}) (err error) {
 	c.debugf("request: %v", req)
@@ -162,6 +170,9 @@ func (c *Client) populateSignature(src url.Values) url.Values {
 
 	src.Add("api_key", c.key)
 	src.Add("timestamp", strconv.FormatInt(c.getTimestamp(), 10))
+	if c.referer != "" {
+		src.Add("referer", c.referer)
+	}
 	src.Add("sign", getSignature(src, c.secret))
 
 	return src
@@ -175,6 +186,9 @@ func (c *Client) populateSignatureForBody(src []byte) []byte {
 
 	body["api_key"] = c.key
 	body["timestamp"] = strconv.FormatInt(c.getTimestamp(), 10)
+	if c.referer != "" {
+		body["referer"] = c.referer
+	}
 	body["sign"] = getSignatureForBody(body, c.secret)
 
 	result, err := json.Marshal(body)
@@ -378,6 +392,9 @@ func (c *Client) postV5JSON(path string, body []byte, dst interface{}) error {
 	req.Header.Set("X-BAPI-API-KEY", c.key)
 	req.Header.Set("X-BAPI-TIMESTAMP", strconv.FormatInt(timestamp, 10))
 	req.Header.Set("X-BAPI-SIGN", sign)
+	if c.referer != "" {
+		req.Header.Set("X-Referer", c.referer)
+	}
 
 	if err := c.Request(req, &dst); err != nil {
 		return err

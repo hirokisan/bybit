@@ -122,7 +122,7 @@ func (s *V5AccountService) SetCollateralCoin(param V5SetCollateralCoinParam) (*V
 		return nil, err
 	}
 
-	if err := s.client.postJSON("/v5/account/set-collateral-switch", body, &res); err != nil {
+	if err := s.client.postV5JSON("/v5/account/set-collateral-switch", body, &res); err != nil {
 		return nil, err
 	}
 
