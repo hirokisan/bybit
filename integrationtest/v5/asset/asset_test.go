@@ -10,6 +10,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestCreateInternalTransfer(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	res, err := client.V5().Asset().GetInternalTransferRecords(bybit.V5CreateInternalTransferParam{
+		TransferID:      "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
+		Coin:            CoinBTC,
+		Amount:          "0.05",
+		FromAccountType: AccountTypeV5UNIFIED,
+		ToAccountType:   AccountTypeV5CONTRACT,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-asset-create-internal-transfer.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
+
 func TestGetInternalTransferRecords(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
 	limit := 1

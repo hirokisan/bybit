@@ -2,6 +2,7 @@ package bybit
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"testing"
 
@@ -9,6 +10,76 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+func TestV5Asset_CreateInternalTransfer(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5CreateInternalTransferParam{
+			TransferID:      "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
+			Coin:            CoinBTC,
+			Amount:          "0.05",
+			FromAccountType: AccountTypeV5UNIFIED,
+			ToAccountType:   AccountTypeV5CONTRACT,
+		}
+
+		path := "/v5/asset/transfer/inter-transfer"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"transferId": "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Asset().CreateInternalTransfer(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		fmt.Println(resp.Result, respBody["result"])
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := V5CreateInternalTransferParam{
+			TransferID:      "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
+			Coin:            CoinBTC,
+			Amount:          "0.05",
+			FromAccountType: AccountTypeV5UNIFIED,
+			ToAccountType:   AccountTypeV5CONTRACT,
+		}
+
+		path := "/v5/asset/transfer/inter-transfer"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"transferId": "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Asset().CreateInternalTransfer(param)
+		assert.Error(t, err)
+	})
+}
 
 func TestV5Asset_GetInternalTransferRecords(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
