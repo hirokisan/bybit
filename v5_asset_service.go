@@ -1,13 +1,18 @@
 package bybit
 
 import (
+	"encoding/json"
+	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/google/go-querystring/query"
+	"github.com/google/uuid"
 )
 
 // V5AssetServiceI :
 type V5AssetServiceI interface {
+	CreateInternalTransfer(param V5CreateInternalTransferParam) (*V5CreateInternalTransferResponse, error)
 	GetInternalTransferRecords(V5GetInternalTransferRecordsParam) (*V5GetInternalTransferRecordsResponse, error)
 	GetDepositRecords(V5GetDepositRecordsParam) (*V5GetDepositRecordsResponse, error)
 	GetSubDepositRecords(V5GetSubDepositRecordsParam) (*V5GetSubDepositRecordsResponse, error)
@@ -20,6 +25,66 @@ type V5AssetServiceI interface {
 // V5AssetService :
 type V5AssetService struct {
 	client *Client
+}
+
+// V5CreateInternalTransferParam :
+type V5CreateInternalTransferParam struct {
+	TransferID      string        `json:"transferId"`
+	Coin            Coin          `json:"coin"`
+	Amount          string        `json:"amount"`
+	FromAccountType AccountTypeV5 `json:"fromAccountType"`
+	ToAccountType   AccountTypeV5 `json:"toAccountType"`
+}
+
+func (p V5CreateInternalTransferParam) validate() error {
+	if _, err := uuid.Parse(p.TransferID); err != nil {
+		return fmt.Errorf("%w: transferId must be a valid UUID", err)
+	}
+	amount, err := strconv.ParseFloat(p.Amount, 64)
+	if err != nil {
+		return fmt.Errorf("%w: parse amount", err)
+	}
+	if amount <= 0 {
+		return fmt.Errorf("amount must be positive")
+	}
+	if p.Coin == "" || p.FromAccountType == "" || p.ToAccountType == "" {
+		return fmt.Errorf("coin, fromAccountType and toAccountType needed")
+	}
+	if p.FromAccountType == p.ToAccountType {
+		return fmt.Errorf("toAccountType and fromAccountType must differ")
+	}
+	return nil
+}
+
+// V5CreateInternalTransferResponse :
+type V5CreateInternalTransferResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5CreateInternalTransferResult `json:"result"`
+}
+
+// V5CreateInternalTransferResult :
+type V5CreateInternalTransferResult struct {
+	TransferID string `json:"transferId"`
+}
+
+// CreateInternalTransfer :
+func (s *V5AssetService) CreateInternalTransfer(param V5CreateInternalTransferParam) (*V5CreateInternalTransferResponse, error) {
+	var res V5CreateInternalTransferResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/v5/asset/transfer/inter-transfer", body, &res); err != nil {
+		return &res, err
+	}
+
+	return &res, nil
 }
 
 // V5GetInternalTransferRecordsParam :
