@@ -20,6 +20,7 @@ type V5AssetServiceI interface {
 	GetWithdrawalRecords(V5GetWithdrawalRecordsParam) (*V5GetWithdrawalRecordsResponse, error)
 	GetCoinInfo(V5GetCoinInfoParam) (*V5GetCoinInfoResponse, error)
 	GetAllCoinsBalance(V5GetAllCoinsBalanceParam) (*V5GetAllCoinsBalanceResponse, error)
+	Withdraw(param V5WithdrawParam) (*V5WithdrawResponse, error)
 }
 
 // V5AssetService :
@@ -472,6 +473,43 @@ func (s *V5AssetService) GetAllCoinsBalance(param V5GetAllCoinsBalanceParam) (*V
 
 	if err := s.client.getV5Privately("/v5/asset/transfer/query-account-coins-balance", queryString, &res); err != nil {
 		return nil, err
+	}
+
+	return &res, nil
+}
+
+type V5WithdrawResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5WithdrawResult `json:"result"`
+}
+
+type V5WithdrawResult struct {
+	ID string `json:"id"`
+}
+
+type V5WithdrawParam struct {
+	Coin        Coin        `json:"coin"`
+	Chain       string      `json:"chain"`
+	Address     string      `json:"address"`
+	Tag         *string     `json:"tag,omitempty"`
+	Amount      string      `json:"amount"`
+	Timestamp   int64       `json:"timestamp"`
+	ForceChain  bool        `json:"forceChain"`
+	AccountType AccountType `json:"accountType"`
+	FeeType     int         `json:"feeType"`
+	RequestID   *string     `json:"requestId,omitempty"`
+}
+
+func (s *V5AssetService) Withdraw(param V5WithdrawParam) (*V5WithdrawResponse, error) {
+	var res V5WithdrawResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/asset/v3/private/withdraw/create", body, &res); err != nil {
+		return &res, err
 	}
 
 	return &res, nil
