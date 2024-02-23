@@ -17,6 +17,7 @@ type V5AssetServiceI interface {
 	GetDepositRecords(V5GetDepositRecordsParam) (*V5GetDepositRecordsResponse, error)
 	GetSubDepositRecords(V5GetSubDepositRecordsParam) (*V5GetSubDepositRecordsResponse, error)
 	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error)
+	GetMasterDepositAddress(V5GetMasterDepositAddressParam) (*V5GetMasterDepositAddressResponse, error)
 	GetWithdrawalRecords(V5GetWithdrawalRecordsParam) (*V5GetWithdrawalRecordsResponse, error)
 	GetCoinInfo(V5GetCoinInfoParam) (*V5GetCoinInfoResponse, error)
 	GetAllCoinsBalance(V5GetAllCoinsBalanceParam) (*V5GetAllCoinsBalanceResponse, error)
@@ -300,6 +301,55 @@ func (s *V5AssetService) GetInternalDepositRecords(param V5GetInternalDepositRec
 	}
 
 	if err := s.client.getV5Privately("/v5/asset/deposit/query-internal-record", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type V5GetMasterDepositAddressParam struct {
+	Coin  Coin    `json:"coin"`
+	Chain *string `json:"chain,omitempty"`
+}
+
+// "coin": "USDT",
+//        "chains": [
+//            {
+//                "chainType": "ERC20",
+//                "addressDeposit": "0xd9e1cd77afa0e50b452a62fbb68a3340602286c3",
+//                "tagDeposit": "",
+//                "chain": "ETH",
+//                "batchReleaseLimit": "-1"
+//            }
+//        ]
+
+type V5GetMasterDepositAddressChain struct {
+	ChainType         string `json:"chainType"`
+	AddressDeposit    string `json:"addressDeposit"`
+	TagDeposit        string `json:"tagDeposit"`
+	Chain             string `json:"chain"`
+	BatchReleaseLimit string `json:"batchReleaseLimit"`
+}
+
+type V5GetMasterDepositAddressResult struct {
+	Coin   Coin                             `json:"coin"`
+	Chains []V5GetMasterDepositAddressChain `json:"chains"`
+}
+
+type V5GetMasterDepositAddressResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetMasterDepositAddressResult `json:"result"`
+}
+
+func (s *V5AssetService) GetMasterDepositAddress(param V5GetMasterDepositAddressParam) (*V5GetMasterDepositAddressResponse, error) {
+	var res V5GetMasterDepositAddressResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/asset/deposit/query-address", queryString, &res); err != nil {
 		return nil, err
 	}
 
