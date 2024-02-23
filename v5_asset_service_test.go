@@ -612,7 +612,7 @@ func TestV5Asset_Withdraw(t *testing.T) {
 			FeeType:     0,
 		}
 
-		path := "/asset/v3/private/withdraw/create"
+		path := "/v5/asset/withdraw/create"
 		method := http.MethodPost
 		status := http.StatusOK
 		respBody := map[string]interface{}{
@@ -652,7 +652,7 @@ func TestV5Asset_Withdraw(t *testing.T) {
 			FeeType:     0,
 		}
 
-		path := "/asset/v3/private/withdraw/create"
+		path := "/v5/asset/withdraw/create"
 		method := http.MethodPost
 		status := http.StatusOK
 		respBody := map[string]interface{}{
