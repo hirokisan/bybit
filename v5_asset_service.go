@@ -488,16 +488,17 @@ type V5WithdrawResult struct {
 }
 
 type V5WithdrawParam struct {
-	Coin        Coin        `json:"coin"`
-	Chain       string      `json:"chain"`
-	Address     string      `json:"address"`
-	Tag         *string     `json:"tag,omitempty"`
-	Amount      string      `json:"amount"`
-	Timestamp   int64       `json:"timestamp"`
-	ForceChain  bool        `json:"forceChain"`
-	AccountType AccountType `json:"accountType"`
-	FeeType     int         `json:"feeType"`
-	RequestID   *string     `json:"requestId,omitempty"`
+	Coin      Coin   `json:"coin"`
+	Address   string `json:"address"`
+	Amount    string `json:"amount"`
+	Timestamp int64  `json:"timestamp"`
+
+	Chain       *string      `json:"chain,omitempty"`
+	Tag         *string      `json:"tag,omitempty"`
+	ForceChain  *bool        `json:"forceChain,omitempty"`
+	AccountType *AccountType `json:"accountType,omitempty"`
+	FeeType     *int         `json:"feeType,omitempty"`
+	RequestID   *string      `json:"requestId,omitempty"`
 }
 
 func (s *V5AssetService) Withdraw(param V5WithdrawParam) (*V5WithdrawResponse, error) {
@@ -508,7 +509,7 @@ func (s *V5AssetService) Withdraw(param V5WithdrawParam) (*V5WithdrawResponse, e
 		return &res, fmt.Errorf("json marshal: %w", err)
 	}
 
-	if err := s.client.postV5JSON("/asset/v3/private/withdraw/create", body, &res); err != nil {
+	if err := s.client.postV5JSON("/v5/asset/withdraw/create", body, &res); err != nil {
 		return &res, err
 	}
 

@@ -20,3 +20,7 @@ func convertToJSON(src interface{}) []byte {
 	res, _ := json.MarshalIndent(src, "", "  ")
 	return res
 }
+
+func Ptr[T any](v T) *T {
+	return &v
+}
