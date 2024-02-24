@@ -660,7 +660,7 @@ func TestV5Asset_Withdraw(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := V5WithdrawParam{
 			Coin:        CoinETH,
-			Chain:       "ETH",
+			Chain:       testhelper.Ptr("ETH"),
 			Address:     "0x99ced129603abc771c0dabe935c326ff6c86645d",
 			Tag:         nil,
 			Amount:      "24",
@@ -671,6 +671,12 @@ func TestV5Asset_Withdraw(t *testing.T) {
 		}
 
 		path := "/asset/v3/private/withdraw/create"
+			ForceChain:  testhelper.Ptr(true),
+			AccountType: testhelper.Ptr(AccountTypeFunding),
+			FeeType:     testhelper.Ptr(0),
+		}
+
+		path := "/v5/asset/withdraw/create"
 		method := http.MethodPost
 		status := http.StatusOK
 		respBody := map[string]interface{}{
@@ -701,6 +707,7 @@ func TestV5Asset_Withdraw(t *testing.T) {
 		param := V5WithdrawParam{
 			Coin:        CoinETH,
 			Chain:       "ETH",
+			Chain:       testhelper.Ptr("ETH"),
 			Address:     "0x99ced129603abc771c0dabe935c326ff6c86645d",
 			Tag:         nil,
 			Amount:      "24",
@@ -711,6 +718,12 @@ func TestV5Asset_Withdraw(t *testing.T) {
 		}
 
 		path := "/asset/v3/private/withdraw/create"
+			ForceChain:  testhelper.Ptr(true),
+			AccountType: testhelper.Ptr(AccountTypeFunding),
+			FeeType:     testhelper.Ptr(0),
+		}
+
+		path := "/v5/asset/withdraw/create"
 		method := http.MethodPost
 		status := http.StatusOK
 		respBody := map[string]interface{}{

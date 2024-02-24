@@ -12,12 +12,12 @@ import (
 
 func TestCreateInternalTransfer(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
-	res, err := client.V5().Asset().GetInternalTransferRecords(bybit.V5CreateInternalTransferParam{
+	res, err := client.V5().Asset().CreateInternalTransfer(bybit.V5CreateInternalTransferParam{
 		TransferID:      "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
-		Coin:            CoinBTC,
+		Coin:            bybit.CoinBTC,
 		Amount:          "0.05",
-		FromAccountType: AccountTypeV5UNIFIED,
-		ToAccountType:   AccountTypeV5CONTRACT,
+		FromAccountType: bybit.AccountTypeV5UNIFIED,
+		ToAccountType:   bybit.AccountTypeV5CONTRACT,
 	})
 	require.NoError(t, err)
 	{
