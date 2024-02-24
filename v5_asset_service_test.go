@@ -597,3 +597,81 @@ func TestGetAllCoinsBalance(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestV5Asset_Withdraw(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5WithdrawParam{
+			Coin:        CoinETH,
+			Chain:       "ETH",
+			Address:     "0x99ced129603abc771c0dabe935c326ff6c86645d",
+			Tag:         nil,
+			Amount:      "24",
+			Timestamp:   1672196561407,
+			ForceChain:  true,
+			AccountType: AccountTypeFunding,
+			FeeType:     0,
+		}
+
+		path := "/v5/asset/withdraw/create"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"id": "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Asset().Withdraw(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		fmt.Println(resp.Result, respBody["result"])
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+	t.Run("authentication required", func(t *testing.T) {
+		param := V5WithdrawParam{
+			Coin:        CoinETH,
+			Chain:       "ETH",
+			Address:     "0x99ced129603abc771c0dabe935c326ff6c86645d",
+			Tag:         nil,
+			Amount:      "24",
+			Timestamp:   1672196561407,
+			ForceChain:  true,
+			AccountType: AccountTypeFunding,
+			FeeType:     0,
+		}
+
+		path := "/v5/asset/withdraw/create"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"transferId": "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL)
+
+		_, err = client.V5().Asset().Withdraw(param)
+		assert.Error(t, err)
+	})
+}
