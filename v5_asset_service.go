@@ -488,12 +488,13 @@ type V5WithdrawResult struct {
 }
 
 type V5WithdrawParam struct {
-	Coin        Coin         `json:"coin"`
+	Coin      Coin   `json:"coin"`
+	Address   string `json:"address"`
+	Amount    string `json:"amount"`
+	Timestamp int64  `json:"timestamp"`
+
 	Chain       *string      `json:"chain,omitempty"`
-	Address     string       `json:"address"`
 	Tag         *string      `json:"tag,omitempty"`
-	Amount      string       `json:"amount"`
-	Timestamp   int64        `json:"timestamp"`
 	ForceChain  *bool        `json:"forceChain,omitempty"`
 	AccountType *AccountType `json:"accountType,omitempty"`
 	FeeType     *int         `json:"feeType,omitempty"`
