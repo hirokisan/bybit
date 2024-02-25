@@ -665,12 +665,6 @@ func TestV5Asset_Withdraw(t *testing.T) {
 			Tag:         nil,
 			Amount:      "24",
 			Timestamp:   1672196561407,
-			ForceChain:  true,
-			AccountType: AccountTypeFunding,
-			FeeType:     0,
-		}
-
-		path := "/asset/v3/private/withdraw/create"
 			ForceChain:  testhelper.Ptr(true),
 			AccountType: testhelper.Ptr(AccountTypeFunding),
 			FeeType:     testhelper.Ptr(0),
@@ -706,18 +700,11 @@ func TestV5Asset_Withdraw(t *testing.T) {
 	t.Run("authentication required", func(t *testing.T) {
 		param := V5WithdrawParam{
 			Coin:        CoinETH,
-			Chain:       "ETH",
 			Chain:       testhelper.Ptr("ETH"),
 			Address:     "0x99ced129603abc771c0dabe935c326ff6c86645d",
 			Tag:         nil,
 			Amount:      "24",
 			Timestamp:   1672196561407,
-			ForceChain:  true,
-			AccountType: AccountTypeFunding,
-			FeeType:     0,
-		}
-
-		path := "/asset/v3/private/withdraw/create"
 			ForceChain:  testhelper.Ptr(true),
 			AccountType: testhelper.Ptr(AccountTypeFunding),
 			FeeType:     testhelper.Ptr(0),
