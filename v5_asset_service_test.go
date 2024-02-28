@@ -376,8 +376,16 @@ func TestGetMasterDepositAddress(t *testing.T) {
 		status := http.StatusOK
 		respBody := map[string]interface{}{
 			"result": map[string]interface{}{
-				"coin":   "eth",
-				"chains": []interface{}{},
+				"coin": "eth",
+				"chains": []interface{}{
+					map[string]interface{}{
+						"chainType":         "ERC20",
+						"addressDeposit":    "0xd9e1cd77afa0e50b452a62fbb68a3340602286c3",
+						"tagDeposit":        "",
+						"chain":             "ETH",
+						"batchReleaseLimit": "-1",
+					},
+				},
 			},
 		}
 		bytesBody, err := json.Marshal(respBody)
