@@ -127,3 +127,18 @@ func TestGetAllCoinsBalance(t *testing.T) {
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}
 }
+
+func TestGetMasterDepositAddress(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	chainType := "ETH"
+	res, err := client.V5().Asset().GetMasterDepositAddress(bybit.V5GetMasterDepositAddressParam{
+		Coin:      bybit.CoinUSDT,
+		ChainType: &chainType,
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-asset-get-master-deposit-address.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
