@@ -308,8 +308,8 @@ func (s *V5AssetService) GetInternalDepositRecords(param V5GetInternalDepositRec
 }
 
 type V5GetMasterDepositAddressParam struct {
-	Coin  Coin    `json:"coin"`
-	ChainType *string `json:"chainType,omitempty"`
+	Coin  Coin    `url:"coin"`
+	ChainType *string `url:"chainType,omitempty"`
 }
 
 // "coin": "USDT",
