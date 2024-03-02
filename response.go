@@ -93,6 +93,14 @@ type CommonV3Response struct {
 	Time       int         `json:"time"`
 }
 
+type V5Response[T any] struct {
+	RetCode    int         `json:"retCode"`
+	RetMsg     string      `json:"retMsg"`
+	RetExtInfo interface{} `json:"retExtInfo"`
+	Time       int         `json:"time"`
+	Result     T           `json:"result"`
+}
+
 // CommonV5Response :
 type CommonV5Response struct {
 	RetCode    int         `json:"retCode"`

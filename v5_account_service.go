@@ -10,22 +10,16 @@ import (
 
 // V5AccountServiceI :
 type V5AccountServiceI interface {
-	GetWalletBalance(AccountType, []Coin) (*V5GetWalletBalanceResponse, error)
+	GetWalletBalance(AccountType, []Coin) (*V5Response[V5WalletBalanceResult], error)
 	SetCollateralCoin(V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error)
-	GetCollateralInfo(V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error)
-	GetAccountInfo() (*V5GetAccountInfoResponse, error)
-	GetTransactionLog(V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error)
+	GetCollateralInfo(V5GetCollateralInfoParam) (*V5Response[V5GetCollateralInfoResult], error)
+	GetAccountInfo() (*V5Response[V5AccountInfoResult], error)
+	GetTransactionLog(V5GetTransactionLogParam) (*V5Response[V5GetTransactionLogResponse], error)
 }
 
 // V5AccountService :
 type V5AccountService struct {
 	client *Client
-}
-
-// V5GetWalletBalanceResponse :
-type V5GetWalletBalanceResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5WalletBalanceResult `json:"result"`
 }
 
 // V5WalletBalanceResult :
@@ -74,9 +68,9 @@ type V5WalletBalanceList struct {
 // coin:
 // If not passed, it returns non-zero asset info
 // You can pass multiple coins to query, separated by comma. "USDT,USDC".
-func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5GetWalletBalanceResponse, error) {
+func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5Response[V5WalletBalanceResult], error) {
 	var (
-		res   V5GetWalletBalanceResponse
+		res   V5Response[V5WalletBalanceResult]
 		query = make(url.Values)
 	)
 
@@ -134,12 +128,6 @@ type V5GetCollateralInfoParam struct {
 	Currency *string `url:"currency,omitempty"`
 }
 
-// V5GetCollateralInfoResponse :
-type V5GetCollateralInfoResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetCollateralInfoResult
-}
-
 // V5GetCollateralInfoResult :
 type V5GetCollateralInfoResult struct {
 	List []V5GetCollateralInfoList `json:"list"`
@@ -163,8 +151,8 @@ type V5GetCollateralInfoList struct {
 }
 
 // GetCollateralInfo :
-func (s *V5AccountService) GetCollateralInfo(param V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error) {
-	var res V5GetCollateralInfoResponse
+func (s *V5AccountService) GetCollateralInfo(param V5GetCollateralInfoParam) (*V5Response[V5GetCollateralInfoResult], error) {
+	var res V5Response[V5GetCollateralInfoResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -178,12 +166,6 @@ func (s *V5AccountService) GetCollateralInfo(param V5GetCollateralInfoParam) (*V
 	return &res, nil
 }
 
-// V5GetAccountInfoResponse :
-type V5GetAccountInfoResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5AccountInfoResult `json:"result"`
-}
-
 // V5AccountInfoResult :
 type V5AccountInfoResult struct {
 	MarginMode          MarginMode          `json:"marginMode"`
@@ -192,9 +174,9 @@ type V5AccountInfoResult struct {
 }
 
 // GetAccountInfo :
-func (s *V5AccountService) GetAccountInfo() (*V5GetAccountInfoResponse, error) {
+func (s *V5AccountService) GetAccountInfo() (*V5Response[V5GetCollateralInfoResult], error) {
 	var (
-		res   V5GetAccountInfoResponse
+		res   V5Response[V5GetCollateralInfoResult]
 		query = make(url.Values)
 	)
 
@@ -216,12 +198,6 @@ type V5GetTransactionLogParam struct {
 	EndTime     *int64                `url:"endTime,omitempty"`   // The start timestamp (ms)
 	Limit       *int                  `url:"limit,omitempty"`     // Limit for data size per page. [1, 50]. Default: 20
 	Cursor      *string               `url:"cursor,omitempty"`
-}
-
-// V5GetTransactionLogResponse :
-type V5GetTransactionLogResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetTransactionLogResult `json:"result"`
 }
 
 // V5GetTransactionLogResult :
@@ -257,8 +233,8 @@ type V5GetTransactionLogItem struct {
 }
 
 // GetTransactionLog :
-func (s *V5AccountService) GetTransactionLog(param V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error) {
-	var res V5GetTransactionLogResponse
+func (s *V5AccountService) GetTransactionLog(param V5GetTransactionLogParam) (*V5Response[V5GetTransactionLogResponse], error) {
+	var res V5Response[V5GetTransactionLogResponse]
 
 	queryString, err := query.Values(param)
 	if err != nil {
