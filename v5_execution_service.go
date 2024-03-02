@@ -4,7 +4,7 @@ import "github.com/google/go-querystring/query"
 
 // V5ExecutionServiceI :
 type V5ExecutionServiceI interface {
-	GetExecutionList(V5GetExecutionParam) (*V5GetExecutionListResponse, error)
+	GetExecutionList(V5GetExecutionParam) (*V5Response[V5GetExecutionListResult], error)
 }
 
 // V5ExecutionService :
@@ -25,12 +25,6 @@ type V5GetExecutionParam struct {
 	ExecType    *ExecTypeV5 `url:"execType,omitempty"`
 	Limit       *int        `url:"limit,omitempty"`
 	Cursor      *string     `url:"cursor,omitempty"`
-}
-
-// V5GetExecutionListResponse :
-type V5GetExecutionListResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetExecutionListResult `json:"result"`
 }
 
 // V5GetExecutionListResult :
@@ -69,8 +63,8 @@ type V5GetExecutionListItem struct {
 	ClosedSize      string     `json:"closedSize"`
 }
 
-func (s *V5ExecutionService) GetExecutionList(param V5GetExecutionParam) (*V5GetExecutionListResponse, error) {
-	var res V5GetExecutionListResponse
+func (s *V5ExecutionService) GetExecutionList(param V5GetExecutionParam) (*V5Response[V5GetExecutionListResult], error) {
+	var res V5Response[V5GetExecutionListResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {

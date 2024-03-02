@@ -7,18 +7,12 @@ import (
 
 // V5UserServiceI :
 type V5UserServiceI interface {
-	GetAPIKey() (*V5APIKeyResponse, error)
+	GetAPIKey() (*V5Response[V5ApiKeyResult], error)
 }
 
 // V5UserService :
 type V5UserService struct {
 	client *Client
-}
-
-// V5APIKeyResponse :
-type V5APIKeyResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5ApiKeyResult `json:"result"`
 }
 
 // V5ApiKeyResult :
@@ -54,9 +48,9 @@ type V5ApiKeyResult struct {
 }
 
 // GetAPIKey :
-func (s *V5UserService) GetAPIKey() (*V5APIKeyResponse, error) {
+func (s *V5UserService) GetAPIKey() (*V5Response[V5ApiKeyResult], error) {
 	var (
-		res V5APIKeyResponse
+		res V5Response[V5ApiKeyResult]
 	)
 
 	if err := s.client.getV5Privately("/v5/user/query-api", url.Values{}, &res); err != nil {

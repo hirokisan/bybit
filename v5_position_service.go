@@ -9,14 +9,14 @@ import (
 
 // V5PositionServiceI :
 type V5PositionServiceI interface {
-	GetPositionInfo(V5GetPositionInfoParam) (*V5GetPositionInfoResponse, error)
+	GetPositionInfo(V5GetPositionInfoParam) (*V5Response[V5GetPositionInfoResult], error)
 	SetLeverage(V5SetLeverageParam) (*V5SetLeverageResponse, error)
 	SetTradingStop(V5SetTradingStopParam) (*V5SetTradingStopResponse, error)
-	SetTpSlMode(V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error)
+	SetTpSlMode(V5SetTpSlModeParam) (*V5Response[V5SetTpSlModeResult], error)
 	SwitchPositionMode(V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error)
-	GetClosedPnL(V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error)
+	GetClosedPnL(V5GetClosedPnLParam) (*V5Response[V5GetClosedPnLResult], error)
 	SwitchPositionMarginMode(V5SwitchPositionMarginModeParam) (*V5SwitchPositionMarginModeResponse, error)
-	SetRiskLimit(V5SetRiskLimitParam) (*V5SetRiskLimitResponse, error)
+	SetRiskLimit(V5SetRiskLimitParam) (*V5Response[V5SetRiskLimitResult], error)
 }
 
 // V5PositionService :
@@ -33,12 +33,6 @@ type V5GetPositionInfoParam struct {
 	SettleCoin *Coin     `url:"settleCoin,omitempty"` // Settle coin. For linear & inverse, either symbol or settleCon is required. symbol has a higher priority
 	Limit      *int      `url:"limit,omitempty"`      // Limit for data size per page. [1, 200]. Default: 200
 	Cursor     *string   `url:"cursor,omitempty"`     // Cursor. Used for pagination
-}
-
-// V5GetPositionInfoResponse :
-type V5GetPositionInfoResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetPositionInfoResult `json:"result"`
 }
 
 // V5GetPositionInfoResult :
@@ -87,8 +81,8 @@ type V5GetPositionInfoItem struct {
 }
 
 // GetPositionInfo :
-func (s *V5PositionService) GetPositionInfo(param V5GetPositionInfoParam) (*V5GetPositionInfoResponse, error) {
-	var res V5GetPositionInfoResponse
+func (s *V5PositionService) GetPositionInfo(param V5GetPositionInfoParam) (*V5Response[V5GetPositionInfoResult], error) {
+	var res V5Response[V5GetPositionInfoResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -207,20 +201,14 @@ func (p V5SetTpSlModeParam) validate() error {
 	return nil
 }
 
-// V5SetTpSlModeResponse :
-type V5SetTpSlModeResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5SetTpSlModeResult `json:"result"`
-}
-
 // V5SetTpSlModeResult :
 type V5SetTpSlModeResult struct {
 	TpSlMode TpSlMode `json:"tpSlMode"`
 }
 
 // SetTpSlMode :
-func (s *V5PositionService) SetTpSlMode(param V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error) {
-	var res V5SetTpSlModeResponse
+func (s *V5PositionService) SetTpSlMode(param V5SetTpSlModeParam) (*V5Response[V5SetTpSlModeResult], error) {
+	var res V5Response[V5SetTpSlModeResult]
 
 	if err := param.validate(); err != nil {
 		return nil, fmt.Errorf("validate param: %w", err)
@@ -291,12 +279,6 @@ type V5GetClosedPnLParam struct {
 	Cursor    *string   `url:"cursor,omitempty"`
 }
 
-// V5GetClosedPnLResponse :
-type V5GetClosedPnLResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetClosedPnLResult `json:"result"`
-}
-
 // V5GetClosedPnLResult :
 type V5GetClosedPnLResult struct {
 	Category       CategoryV5         `json:"category"`
@@ -329,8 +311,8 @@ type V5GetClosedPnLItem struct {
 }
 
 // GetClosedPnL :
-func (s *V5PositionService) GetClosedPnL(param V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error) {
-	var res V5GetClosedPnLResponse
+func (s *V5PositionService) GetClosedPnL(param V5GetClosedPnLParam) (*V5Response[V5GetClosedPnLResult], error) {
+	var res V5Response[V5GetClosedPnLResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -398,12 +380,6 @@ type V5SetRiskLimitParam struct {
 	PositionIdx *PositionIdx `json:"positionIdx,omitempty"`
 }
 
-// V5SetRiskLimitResponse :
-type V5SetRiskLimitResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5SetRiskLimitResult `json:"result"`
-}
-
 // V5SetRiskLimitResult :
 type V5SetRiskLimitResult struct {
 	Category       CategoryV5 `json:"category"`
@@ -412,8 +388,8 @@ type V5SetRiskLimitResult struct {
 }
 
 // SetRiskLimit :
-func (s *V5PositionService) SetRiskLimit(param V5SetRiskLimitParam) (*V5SetRiskLimitResponse, error) {
-	var res V5SetRiskLimitResponse
+func (s *V5PositionService) SetRiskLimit(param V5SetRiskLimitParam) (*V5Response[V5SetRiskLimitResult], error) {
+	var res V5Response[V5SetRiskLimitResult]
 
 	body, err := json.Marshal(param)
 	if err != nil {

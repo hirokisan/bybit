@@ -9,12 +9,12 @@ import (
 
 // V5OrderServiceI :
 type V5OrderServiceI interface {
-	CreateOrder(V5CreateOrderParam) (*V5CreateOrderResponse, error)
-	AmendOrder(V5AmendOrderParam) (*V5AmendOrderResponse, error)
-	CancelOrder(V5CancelOrderParam) (*V5CancelOrderResponse, error)
-	GetOpenOrders(V5GetOpenOrdersParam) (*V5GetOrdersResponse, error)
-	CancelAllOrders(V5CancelAllOrdersParam) (*V5CancelAllOrdersResponse, error)
-	GetHistoryOrders(V5GetHistoryOrdersParam) (*V5GetOrdersResponse, error)
+	CreateOrder(V5CreateOrderParam) (*V5Response[V5CreateOrderResult], error)
+	AmendOrder(V5AmendOrderParam) (*V5Response[V5AmendOrderResult], error)
+	CancelOrder(V5CancelOrderParam) (*V5Response[V5CancelOrderResult], error)
+	GetOpenOrders(V5GetOpenOrdersParam) (*V5Response[V5GetOrdersResult], error)
+	CancelAllOrders(V5CancelAllOrdersParam) (*V5Response[V5CancelAllOrdersResult], error)
+	GetHistoryOrders(V5GetHistoryOrdersParam) (*V5Response[V5GetOrdersResult], error)
 }
 
 // V5OrderService :
@@ -56,12 +56,6 @@ type V5CreateOrderParam struct {
 	MarketUnit            *MarketUnit       `json:"marketUnit,omitempty"` // The unit for qty when create Spot market orders for UTA account.
 }
 
-// V5CreateOrderResponse :
-type V5CreateOrderResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5CreateOrderResult `json:"result"`
-}
-
 // V5CreateOrderResult :
 type V5CreateOrderResult struct {
 	OrderID     string `json:"orderId"`
@@ -69,8 +63,8 @@ type V5CreateOrderResult struct {
 }
 
 // CreateOrder :
-func (s *V5OrderService) CreateOrder(param V5CreateOrderParam) (*V5CreateOrderResponse, error) {
-	var res V5CreateOrderResponse
+func (s *V5OrderService) CreateOrder(param V5CreateOrderParam) (*V5Response[V5CreateOrderResult], error) {
+	var res V5Response[V5CreateOrderResult]
 
 	body, err := json.Marshal(param)
 	if err != nil {
@@ -112,12 +106,6 @@ func (p V5AmendOrderParam) validate() error {
 	return nil
 }
 
-// V5AmendOrderResponse :
-type V5AmendOrderResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5AmendOrderResult `json:"result"`
-}
-
 // V5AmendOrderResult :
 type V5AmendOrderResult struct {
 	OrderID     string `json:"orderId"`
@@ -125,8 +113,8 @@ type V5AmendOrderResult struct {
 }
 
 // AmendOrder :
-func (s *V5OrderService) AmendOrder(param V5AmendOrderParam) (*V5AmendOrderResponse, error) {
-	var res V5AmendOrderResponse
+func (s *V5OrderService) AmendOrder(param V5AmendOrderParam) (*V5Response[V5AmendOrderResult], error) {
+	var res V5Response[V5AmendOrderResult]
 
 	if err := param.validate(); err != nil {
 		return nil, fmt.Errorf("validate param: %w", err)
@@ -154,12 +142,6 @@ type V5CancelOrderParam struct {
 	OrderFilter *OrderFilter `json:"orderFilter,omitempty"` // If not passed, Order by default
 }
 
-// V5CancelOrderResponse :
-type V5CancelOrderResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5CancelOrderResult `json:"result"`
-}
-
 // V5CancelOrderResult :
 type V5CancelOrderResult struct {
 	OrderID     string `json:"orderId"`
@@ -167,8 +149,8 @@ type V5CancelOrderResult struct {
 }
 
 // CancelOrder :
-func (s *V5OrderService) CancelOrder(param V5CancelOrderParam) (*V5CancelOrderResponse, error) {
-	var res V5CancelOrderResponse
+func (s *V5OrderService) CancelOrder(param V5CancelOrderParam) (*V5Response[V5CancelOrderResult], error) {
+	var res V5Response[V5CancelOrderResult]
 
 	if param.OrderID == nil && param.OrderLinkID == nil {
 		return nil, fmt.Errorf("either OrderID or OrderLinkID needed")
@@ -217,12 +199,6 @@ type V5GetHistoryOrdersParam struct {
 	Cursor      *string      `url:"cursor,omitempty"`
 }
 
-// V5GetOrdersResponse :
-type V5GetOrdersResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetOrdersResult `json:"result"`
-}
-
 // V5GetOrdersResult :
 type V5GetOrdersResult struct {
 	Category       CategoryV5   `json:"category"`
@@ -267,8 +243,8 @@ type V5GetOrder struct {
 }
 
 // GetOpenOrders :
-func (s *V5OrderService) GetOpenOrders(param V5GetOpenOrdersParam) (*V5GetOrdersResponse, error) {
-	var res V5GetOrdersResponse
+func (s *V5OrderService) GetOpenOrders(param V5GetOpenOrdersParam) (*V5Response[V5GetOrdersResult], error) {
+	var res V5Response[V5GetOrdersResult]
 
 	if param.Category == "" {
 		return nil, fmt.Errorf("category needed")
@@ -287,8 +263,8 @@ func (s *V5OrderService) GetOpenOrders(param V5GetOpenOrdersParam) (*V5GetOrders
 }
 
 // GetHistoryOrders :
-func (s *V5OrderService) GetHistoryOrders(param V5GetHistoryOrdersParam) (*V5GetOrdersResponse, error) {
-	var res V5GetOrdersResponse
+func (s *V5OrderService) GetHistoryOrders(param V5GetHistoryOrdersParam) (*V5Response[V5GetOrdersResult], error) {
+	var res V5Response[V5GetOrdersResult]
 
 	if param.Category == "" {
 		return nil, fmt.Errorf("category needed")
@@ -329,12 +305,6 @@ func (p V5CancelAllOrdersParam) validate() error {
 	return nil
 }
 
-// V5CancelAllOrdersResponse :
-type V5CancelAllOrdersResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5CancelAllOrdersResult `json:"result"`
-}
-
 // V5CancelAllOrdersResult :
 type V5CancelAllOrdersResult struct {
 	LinearInverseOption *V5CancelAllOrdersLinearInverseOptionResult
@@ -366,8 +336,8 @@ type V5CancelAllOrdersSpotResult struct {
 }
 
 // CancelAllOrders :
-func (s *V5OrderService) CancelAllOrders(param V5CancelAllOrdersParam) (*V5CancelAllOrdersResponse, error) {
-	var res V5CancelAllOrdersResponse
+func (s *V5OrderService) CancelAllOrders(param V5CancelAllOrdersParam) (*V5Response[V5CancelAllOrdersResult], error) {
+	var res V5Response[V5CancelAllOrdersResult]
 
 	if err := param.validate(); err != nil {
 		return nil, fmt.Errorf("validate param: %w", err)

@@ -10,19 +10,19 @@ import (
 
 // V5MarketServiceI :
 type V5MarketServiceI interface {
-	GetKline(V5GetKlineParam) (*V5GetKlineResponse, error)
-	GetMarkPriceKline(V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error)
-	GetIndexPriceKline(V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error)
-	GetPremiumIndexPriceKline(V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error)
-	GetInstrumentsInfo(V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error)
-	GetOrderbook(V5GetOrderbookParam) (*V5GetOrderbookResponse, error)
-	GetTickers(V5GetTickersParam) (*V5GetTickersResponse, error)
-	GetFundingRateHistory(V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error)
-	GetPublicTradingHistory(V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error)
-	GetOpenInterest(V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error)
+	GetKline(V5GetKlineParam) (*V5Response[V5GetKlineResult], error)
+	GetMarkPriceKline(V5GetMarkPriceKlineParam) (*V5Response[V5GetMarkPriceKlineResult], error)
+	GetIndexPriceKline(V5GetIndexPriceKlineParam) (*V5Response[V5GetIndexPriceKlineResult], error)
+	GetPremiumIndexPriceKline(V5GetPremiumIndexPriceKlineParam) (*V5Response[V5GetPremiumIndexPriceKlineResult], error)
+	GetInstrumentsInfo(V5GetInstrumentsInfoParam) (*V5Response[V5GetInstrumentsInfoResult], error)
+	GetOrderbook(V5GetOrderbookParam) (*V5Response[V5GetOrderbookResult], error)
+	GetTickers(V5GetTickersParam) (*V5Response[V5GetTickersResult], error)
+	GetFundingRateHistory(V5GetFundingRateHistoryParam) (*V5Response[V5GetFundingRateHistoryResult], error)
+	GetPublicTradingHistory(V5GetPublicTradingHistoryParam) (*V5Response[V5GetPublicTradingHistoryResult], error)
+	GetOpenInterest(V5GetOpenInterestParam) (*V5Response[V5GetOpenInterestResult], error)
 	GetHistoricalVolatility(V5GetHistoricalVolatilityParam) (*V5GetHistoricalVolatilityResponse, error)
-	GetInsurance(V5GetInsuranceParam) (*V5GetInsuranceResponse, error)
-	GetRiskLimit(V5GetRiskLimitParam) (*V5GetRiskLimitResponse, error)
+	GetInsurance(V5GetInsuranceParam) (*V5Response[V5GetInsuranceResult], error)
+	GetRiskLimit(V5GetRiskLimitParam) (*V5Response[V5GetRiskLimitResult], error)
 }
 
 // V5MarketService :
@@ -39,12 +39,6 @@ type V5GetKlineParam struct {
 	End      *int64     `url:"end,omitempty"`   // timestamp point for result, in milliseconds
 
 	Limit *int `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
-}
-
-// V5GetKlineResponse :
-type V5GetKlineResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetKlineResult `json:"result"`
 }
 
 // V5GetKlineResult :
@@ -92,8 +86,8 @@ func (l *V5GetKlineList) UnmarshalJSON(data []byte) error {
 }
 
 // GetKline :
-func (s *V5MarketService) GetKline(param V5GetKlineParam) (*V5GetKlineResponse, error) {
-	var res V5GetKlineResponse
+func (s *V5MarketService) GetKline(param V5GetKlineParam) (*V5Response[V5GetKlineResult], error) {
+	var res V5Response[V5GetKlineResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -115,12 +109,6 @@ type V5GetMarkPriceKlineParam struct {
 	Start    *int64     `url:"start,omitempty"` // timestamp point for result, in milliseconds
 	End      *int64     `url:"end,omitempty"`   // timestamp point for result, in milliseconds
 	Limit    *int       `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
-}
-
-// V5GetMarkPriceKlineResponse :
-type V5GetMarkPriceKlineResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetMarkPriceKlineResult `json:"result"`
 }
 
 // V5GetMarkPriceKlineResult :
@@ -164,8 +152,8 @@ func (l *V5GetMarkPriceKlineList) UnmarshalJSON(data []byte) error {
 }
 
 // GetMarkPriceKline :
-func (s *V5MarketService) GetMarkPriceKline(param V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error) {
-	var res V5GetMarkPriceKlineResponse
+func (s *V5MarketService) GetMarkPriceKline(param V5GetMarkPriceKlineParam) (*V5Response[V5GetMarkPriceKlineResult], error) {
+	var res V5Response[V5GetMarkPriceKlineResult]
 
 	if param.Category != CategoryV5Linear && param.Category != CategoryV5Inverse {
 		return nil, fmt.Errorf("category should be linear or inverse")
@@ -191,12 +179,6 @@ type V5GetIndexPriceKlineParam struct {
 	Start    *int64     `url:"start,omitempty"` // timestamp point for result, in milliseconds
 	End      *int64     `url:"end,omitempty"`   // timestamp point for result, in milliseconds
 	Limit    *int       `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
-}
-
-// V5GetIndexPriceKlineResponse :
-type V5GetIndexPriceKlineResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetIndexPriceKlineResult `json:"result"`
 }
 
 // V5GetIndexPriceKlineResult :
@@ -240,8 +222,8 @@ func (l *V5GetIndexPriceKlineList) UnmarshalJSON(data []byte) error {
 }
 
 // GetIndexPriceKline :
-func (s *V5MarketService) GetIndexPriceKline(param V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error) {
-	var res V5GetIndexPriceKlineResponse
+func (s *V5MarketService) GetIndexPriceKline(param V5GetIndexPriceKlineParam) (*V5Response[V5GetIndexPriceKlineResult], error) {
+	var res V5Response[V5GetIndexPriceKlineResult]
 
 	if param.Category != CategoryV5Linear && param.Category != CategoryV5Inverse {
 		return nil, fmt.Errorf("category should be linear or inverse")
@@ -267,12 +249,6 @@ type V5GetPremiumIndexPriceKlineParam struct {
 	Start    *int64     `url:"start,omitempty"` // timestamp point for result, in milliseconds
 	End      *int64     `url:"end,omitempty"`   // timestamp point for result, in milliseconds
 	Limit    *int       `url:"limit,omitempty"` // Limit for data size per page. [1, 200]. Default: 200
-}
-
-// V5GetPremiumIndexPriceKlineResponse :
-type V5GetPremiumIndexPriceKlineResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetPremiumIndexPriceKlineResult `json:"result"`
 }
 
 // V5GetPremiumIndexPriceKlineResult :
@@ -317,8 +293,8 @@ func (l *V5GetPremiumIndexPriceKlineList) UnmarshalJSON(data []byte) error {
 }
 
 // GetPremiumIndexPriceKline :
-func (s *V5MarketService) GetPremiumIndexPriceKline(param V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error) {
-	var res V5GetPremiumIndexPriceKlineResponse
+func (s *V5MarketService) GetPremiumIndexPriceKline(param V5GetPremiumIndexPriceKlineParam) (*V5Response[V5GetPremiumIndexPriceKlineResult], error) {
+	var res V5Response[V5GetPremiumIndexPriceKlineResult]
 
 	if param.Category != CategoryV5Linear {
 		return nil, fmt.Errorf("category should be linear")
@@ -496,8 +472,8 @@ type SpotPriceFilterV5 struct {
 }
 
 // GetInstrumentsInfo :
-func (s *V5MarketService) GetInstrumentsInfo(param V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error) {
-	var res V5GetInstrumentsInfoResponse
+func (s *V5MarketService) GetInstrumentsInfo(param V5GetInstrumentsInfoParam) (*V5Response[V5GetInstrumentsInfoResult], error) {
+	var res V5Response[V5GetInstrumentsInfoResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -520,12 +496,6 @@ type V5GetOrderbookParam struct {
 	// linear&inverse: [1, 200]. Default: 25.
 	// option: [1, 25]. Default: 1.
 	Limit *int `url:"limit,omitempty"`
-}
-
-// V5GetOrderbookResponse :
-type V5GetOrderbookResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetOrderbookResult `json:"result"`
 }
 
 // V5GetOrderbookResult :
@@ -568,8 +538,8 @@ type V5GetOrderbookBidAsk struct {
 }
 
 // GetOrderbook :
-func (s *V5MarketService) GetOrderbook(param V5GetOrderbookParam) (*V5GetOrderbookResponse, error) {
-	var res V5GetOrderbookResponse
+func (s *V5MarketService) GetOrderbook(param V5GetOrderbookParam) (*V5Response[V5GetOrderbookResult], error) {
+	var res V5Response[V5GetOrderbookResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -603,12 +573,6 @@ func (p V5GetTickersParam) validate() error {
 		return fmt.Errorf("expDate is for option only")
 	}
 	return nil
-}
-
-// V5GetTickersResponse :
-type V5GetTickersResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetTickersResult `json:"result"`
 }
 
 // V5GetTickersResult :
@@ -735,8 +699,8 @@ type V5GetTickersSpotItem struct {
 }
 
 // GetTickers :
-func (s *V5MarketService) GetTickers(param V5GetTickersParam) (*V5GetTickersResponse, error) {
-	var res V5GetTickersResponse
+func (s *V5MarketService) GetTickers(param V5GetTickersParam) (*V5Response[V5GetTickersResult], error) {
+	var res V5Response[V5GetTickersResult]
 
 	if err := param.validate(); err != nil {
 		return nil, fmt.Errorf("validate param: %w", err)
@@ -771,12 +735,6 @@ func (p V5GetFundingRateHistoryParam) validate() error {
 	return nil
 }
 
-// V5GetFundingRateHistoryResponse :
-type V5GetFundingRateHistoryResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetFundingRateHistoryResult `json:"result"`
-}
-
 // V5GetFundingRateHistoryResult :
 type V5GetFundingRateHistoryResult struct {
 	Category CategoryV5                    `json:"category"`
@@ -790,8 +748,8 @@ type V5GetFundingRateHistoryItem struct {
 }
 
 // GetFundingRateHistory :
-func (s *V5MarketService) GetFundingRateHistory(param V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error) {
-	var res V5GetFundingRateHistoryResponse
+func (s *V5MarketService) GetFundingRateHistory(param V5GetFundingRateHistoryParam) (*V5Response[V5GetFundingRateHistoryResult], error) {
+	var res V5Response[V5GetFundingRateHistoryResult]
 
 	if err := param.validate(); err != nil {
 		return nil, fmt.Errorf("validate param: %w", err)
@@ -830,12 +788,6 @@ func (p V5GetPublicTradingHistoryParam) validate() error {
 	return nil
 }
 
-// V5GetPublicTradingHistoryResponse :
-type V5GetPublicTradingHistoryResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetPublicTradingHistoryResult `json:"result"`
-}
-
 // V5GetPublicTradingHistoryResult :
 type V5GetPublicTradingHistoryResult struct {
 	Category CategoryV5                      `json:"category"`
@@ -853,8 +805,8 @@ type V5GetPublicTradingHistoryItem struct {
 }
 
 // GetPublicTradingHistory :
-func (s *V5MarketService) GetPublicTradingHistory(param V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error) {
-	var res V5GetPublicTradingHistoryResponse
+func (s *V5MarketService) GetPublicTradingHistory(param V5GetPublicTradingHistoryParam) (*V5Response[V5GetPublicTradingHistoryResult], error) {
+	var res V5Response[V5GetPublicTradingHistoryResult]
 
 	if err := param.validate(); err != nil {
 		return nil, fmt.Errorf("validate param: %w", err)
@@ -891,12 +843,6 @@ func (p V5GetOpenInterestParam) validate() error {
 	return nil
 }
 
-// V5GetOpenInterestResponse :
-type V5GetOpenInterestResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetOpenInterestResult `json:"result"`
-}
-
 // V5GetOpenInterestResult :
 type V5GetOpenInterestResult struct {
 	Category       CategoryV5              `json:"category"`
@@ -911,8 +857,8 @@ type V5GetOpenInterestItem struct {
 }
 
 // GetOpenInterest :
-func (s *V5MarketService) GetOpenInterest(param V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error) {
-	var res V5GetOpenInterestResponse
+func (s *V5MarketService) GetOpenInterest(param V5GetOpenInterestParam) (*V5Response[V5GetOpenInterestResult], error) {
+	var res V5Response[V5GetOpenInterestResult]
 
 	if err := param.validate(); err != nil {
 		return nil, fmt.Errorf("validate param: %w", err)
@@ -1012,12 +958,6 @@ type V5GetInsuranceParam struct {
 	Coin *Coin `url:"coin"`
 }
 
-// V5GetInsuranceResponse :
-type V5GetInsuranceResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetInsuranceResult `json:"result"`
-}
-
 // V5GetInsuranceResult :
 type V5GetInsuranceResult struct {
 	UpdatedTime string               `json:"updatedTime"`
@@ -1031,8 +971,8 @@ type V5GetInsuranceItem struct {
 }
 
 // GetInsurance :
-func (s *V5MarketService) GetInsurance(param V5GetInsuranceParam) (*V5GetInsuranceResponse, error) {
-	var res V5GetInsuranceResponse
+func (s *V5MarketService) GetInsurance(param V5GetInsuranceParam) (*V5Response[V5GetInsuranceResult], error) {
+	var res V5Response[V5GetInsuranceResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -1060,12 +1000,6 @@ func (p V5GetRiskLimitParam) validate() error {
 	return nil
 }
 
-// V5GetRiskLimitResponse :
-type V5GetRiskLimitResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetRiskLimitResult `json:"result"`
-}
-
 // V5GetRiskLimitResult :
 type V5GetRiskLimitResult struct {
 	Category CategoryV5           `json:"category"`
@@ -1083,8 +1017,8 @@ type V5GetRiskLimitItem struct {
 }
 
 // GetRiskLimit :
-func (s *V5MarketService) GetRiskLimit(param V5GetRiskLimitParam) (*V5GetRiskLimitResponse, error) {
-	var res V5GetRiskLimitResponse
+func (s *V5MarketService) GetRiskLimit(param V5GetRiskLimitParam) (*V5Response[V5GetRiskLimitResult], error) {
+	var res V5Response[V5GetRiskLimitResult]
 
 	if err := param.validate(); err != nil {
 		return nil, fmt.Errorf("validate param: %w", err)
