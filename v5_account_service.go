@@ -14,7 +14,7 @@ type V5AccountServiceI interface {
 	SetCollateralCoin(V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error)
 	GetCollateralInfo(V5GetCollateralInfoParam) (*V5Response[V5GetCollateralInfoResult], error)
 	GetAccountInfo() (*V5Response[V5AccountInfoResult], error)
-	GetTransactionLog(V5GetTransactionLogParam) (*V5Response[V5GetTransactionLogResponse], error)
+	GetTransactionLog(V5GetTransactionLogParam) (*V5Response[V5GetTransactionLogResult], error)
 }
 
 // V5AccountService :
@@ -233,8 +233,8 @@ type V5GetTransactionLogItem struct {
 }
 
 // GetTransactionLog :
-func (s *V5AccountService) GetTransactionLog(param V5GetTransactionLogParam) (*V5Response[V5GetTransactionLogResponse], error) {
-	var res V5Response[V5GetTransactionLogResponse]
+func (s *V5AccountService) GetTransactionLog(param V5GetTransactionLogParam) (*V5Response[V5GetTransactionLogResult], error) {
+	var res V5Response[V5GetTransactionLogResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
