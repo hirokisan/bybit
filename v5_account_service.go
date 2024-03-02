@@ -174,9 +174,9 @@ type V5AccountInfoResult struct {
 }
 
 // GetAccountInfo :
-func (s *V5AccountService) GetAccountInfo() (*V5Response[V5GetCollateralInfoResult], error) {
+func (s *V5AccountService) GetAccountInfo() (*V5Response[V5AccountInfoResult], error) {
 	var (
-		res   V5Response[V5GetCollateralInfoResult]
+		res   V5Response[V5AccountInfoResult]
 		query = make(url.Values)
 	)
 

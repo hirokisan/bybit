@@ -12,16 +12,16 @@ import (
 
 // V5AssetServiceI :
 type V5AssetServiceI interface {
-	CreateInternalTransfer(param V5CreateInternalTransferParam) (*V5CreateInternalTransferResponse, error)
-	GetInternalTransferRecords(V5GetInternalTransferRecordsParam) (*V5GetInternalTransferRecordsResponse, error)
-	GetDepositRecords(V5GetDepositRecordsParam) (*V5GetDepositRecordsResponse, error)
-	GetSubDepositRecords(V5GetSubDepositRecordsParam) (*V5GetSubDepositRecordsResponse, error)
-	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error)
-	GetMasterDepositAddress(V5GetMasterDepositAddressParam) (*V5GetMasterDepositAddressResponse, error)
-	GetWithdrawalRecords(V5GetWithdrawalRecordsParam) (*V5GetWithdrawalRecordsResponse, error)
-	GetCoinInfo(V5GetCoinInfoParam) (*V5GetCoinInfoResponse, error)
-	GetAllCoinsBalance(V5GetAllCoinsBalanceParam) (*V5GetAllCoinsBalanceResponse, error)
-	Withdraw(param V5WithdrawParam) (*V5WithdrawResponse, error)
+	CreateInternalTransfer(param V5CreateInternalTransferParam) (*V5Response[V5CreateInternalTransferResult], error)
+	GetInternalTransferRecords(V5GetInternalTransferRecordsParam) (*V5Response[V5GetInternalTransferRecordsResult], error)
+	GetDepositRecords(V5GetDepositRecordsParam) (*V5Response[V5GetDepositRecordsResult], error)
+	GetSubDepositRecords(V5GetSubDepositRecordsParam) (*V5Response[V5GetSubDepositRecordsResult], error)
+	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5Response[V5GetInternalDepositRecordsResult], error)
+	GetMasterDepositAddress(V5GetMasterDepositAddressParam) (*V5Response[V5GetMasterDepositAddressResult], error)
+	GetWithdrawalRecords(V5GetWithdrawalRecordsParam) (*V5Response[V5GetWithdrawalRecordsResult], error)
+	GetCoinInfo(V5GetCoinInfoParam) (*V5Response[V5GetCoinInfoResult], error)
+	GetAllCoinsBalance(V5GetAllCoinsBalanceParam) (*V5Response[V5GetAllCoinsBalanceResult], error)
+	Withdraw(param V5WithdrawParam) (*V5Response[V5WithdrawResult], error)
 }
 
 // V5AssetService :
@@ -58,20 +58,14 @@ func (p V5CreateInternalTransferParam) validate() error {
 	return nil
 }
 
-// V5CreateInternalTransferResponse :
-type V5CreateInternalTransferResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5CreateInternalTransferResult `json:"result"`
-}
-
 // V5CreateInternalTransferResult :
 type V5CreateInternalTransferResult struct {
 	TransferID string `json:"transferId"`
 }
 
 // CreateInternalTransfer :
-func (s *V5AssetService) CreateInternalTransfer(param V5CreateInternalTransferParam) (*V5CreateInternalTransferResponse, error) {
-	var res V5CreateInternalTransferResponse
+func (s *V5AssetService) CreateInternalTransfer(param V5CreateInternalTransferParam) (*V5Response[V5CreateInternalTransferResult], error) {
+	var res V5Response[V5CreateInternalTransferResult]
 
 	if err := param.validate(); err != nil {
 		return nil, fmt.Errorf("validate param: %w", err)
@@ -100,12 +94,6 @@ type V5GetInternalTransferRecordsParam struct {
 	Cursor     *string           `url:"cursor,omitempty"`
 }
 
-// V5GetInternalTransferRecordsResponse :
-type V5GetInternalTransferRecordsResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetInternalTransferRecordsResult `json:"result"`
-}
-
 // V5GetInternalTransferRecordsResult :
 type V5GetInternalTransferRecordsResult struct {
 	List           V5GetInternalTransferRecordsList `json:"list"`
@@ -127,8 +115,8 @@ type V5GetInternalTransferRecordsItem struct {
 }
 
 // GetInternalTransferRecords :
-func (s *V5AssetService) GetInternalTransferRecords(param V5GetInternalTransferRecordsParam) (*V5GetInternalTransferRecordsResponse, error) {
-	var res V5GetInternalTransferRecordsResponse
+func (s *V5AssetService) GetInternalTransferRecords(param V5GetInternalTransferRecordsParam) (*V5Response[V5GetInternalTransferRecordsResult], error) {
+	var res V5Response[V5GetInternalTransferRecordsResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -149,12 +137,6 @@ type V5GetDepositRecordsParam struct {
 	EndTime   *int64  `url:"endTime,omitempty"`   // End time (ms). Default value: current time
 	Limit     *int    `url:"limit,omitempty"`     // Number of items per page, [1, 50]. Default value: 50
 	Cursor    *string `url:"cursor,omitempty"`
-}
-
-// V5GetDepositRecordsResponse :
-type V5GetDepositRecordsResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetDepositRecordsResult `json:"result"`
 }
 
 // V5GetDepositRecordsResult :
@@ -183,8 +165,8 @@ type V5GetDepositRecordsRow struct {
 }
 
 // GetDepositRecords :
-func (s *V5AssetService) GetDepositRecords(param V5GetDepositRecordsParam) (*V5GetDepositRecordsResponse, error) {
-	var res V5GetDepositRecordsResponse
+func (s *V5AssetService) GetDepositRecords(param V5GetDepositRecordsParam) (*V5Response[V5GetDepositRecordsResult], error) {
+	var res V5Response[V5GetDepositRecordsResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -207,12 +189,6 @@ type V5GetSubDepositRecordsParam struct {
 	EndTime   *int64  `url:"endTime,omitempty"`   // The start timestamp (ms)
 	Limit     *int    `url:"limit,omitempty"`     // Limit for data size per page. [1, 50]. Default: 50
 	Cursor    *string `url:"cursor,omitempty"`
-}
-
-// V5GetSubDepositRecordsResponse :
-type V5GetSubDepositRecordsResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetSubDepositRecordsResult `json:"result"`
 }
 
 // V5GetSubDepositRecordsResult :
@@ -241,8 +217,8 @@ type V5GetSubDepositRecordsRow struct {
 }
 
 // GetSubDepositRecords :
-func (s *V5AssetService) GetSubDepositRecords(param V5GetSubDepositRecordsParam) (*V5GetSubDepositRecordsResponse, error) {
-	var res V5GetSubDepositRecordsResponse
+func (s *V5AssetService) GetSubDepositRecords(param V5GetSubDepositRecordsParam) (*V5Response[V5GetSubDepositRecordsResult], error) {
+	var res V5Response[V5GetSubDepositRecordsResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -263,12 +239,6 @@ type V5GetInternalDepositRecordsParam struct {
 	Coin      *Coin   `url:"coin,omitempty"`
 	Cursor    *string `url:"cursor,omitempty"`
 	Limit     *int    `url:"limit,omitempty"` // Number of items per page, [1, 50]. Default value: 50
-}
-
-// V5GetInternalDepositRecordsResponse :
-type V5GetInternalDepositRecordsResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetInternalDepositRecordsResult `json:"result"`
 }
 
 // V5GetInternalDepositRecordsResult :
@@ -292,8 +262,8 @@ type V5GetInternalDepositRecordsRow struct {
 }
 
 // GetInternalDepositRecords :
-func (s *V5AssetService) GetInternalDepositRecords(param V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error) {
-	var res V5GetInternalDepositRecordsResponse
+func (s *V5AssetService) GetInternalDepositRecords(param V5GetInternalDepositRecordsParam) (*V5Response[V5GetInternalDepositRecordsResult], error) {
+	var res V5Response[V5GetInternalDepositRecordsResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -336,13 +306,8 @@ type V5GetMasterDepositAddressResult struct {
 	Chains []V5GetMasterDepositAddressChain `json:"chains"`
 }
 
-type V5GetMasterDepositAddressResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetMasterDepositAddressResult `json:"result"`
-}
-
-func (s *V5AssetService) GetMasterDepositAddress(param V5GetMasterDepositAddressParam) (*V5GetMasterDepositAddressResponse, error) {
-	var res V5GetMasterDepositAddressResponse
+func (s *V5AssetService) GetMasterDepositAddress(param V5GetMasterDepositAddressParam) (*V5Response[V5GetMasterDepositAddressResult], error) {
+	var res V5Response[V5GetMasterDepositAddressResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -365,12 +330,6 @@ type V5GetWithdrawalRecordsParam struct {
 	EndTime      *int64          `url:"endTime,omitempty"`   // The start timestamp (ms)
 	Limit        *int            `url:"limit,omitempty"`     // Limit for data size per page. [1, 50]. Default: 50
 	Cursor       *string         `url:"cursor,omitempty"`
-}
-
-// V5GetWithdrawalRecordsResponse :
-type V5GetWithdrawalRecordsResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetWithdrawalRecordsResult `json:"result"`
 }
 
 // V5GetWithdrawalRecordsResult :
@@ -399,8 +358,8 @@ type V5GetWithdrawalRecordsRow struct {
 }
 
 // GetWithdrawalRecords :
-func (s *V5AssetService) GetWithdrawalRecords(param V5GetWithdrawalRecordsParam) (*V5GetWithdrawalRecordsResponse, error) {
-	var res V5GetWithdrawalRecordsResponse
+func (s *V5AssetService) GetWithdrawalRecords(param V5GetWithdrawalRecordsParam) (*V5Response[V5GetWithdrawalRecordsResult], error) {
+	var res V5Response[V5GetWithdrawalRecordsResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -417,12 +376,6 @@ func (s *V5AssetService) GetWithdrawalRecords(param V5GetWithdrawalRecordsParam)
 // V5GetCoinInfoParam :
 type V5GetCoinInfoParam struct {
 	Coin *Coin `url:"coin,omitempty"`
-}
-
-// V5GetCoinInfoResponse :
-type V5GetCoinInfoResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetCoinInfoResult `json:"result"`
 }
 
 // V5GetCoinInfoResult :
@@ -459,8 +412,8 @@ type V5GetCoinInfoChain struct {
 }
 
 // GetCoinInfo :
-func (s *V5AssetService) GetCoinInfo(param V5GetCoinInfoParam) (*V5GetCoinInfoResponse, error) {
-	var res V5GetCoinInfoResponse
+func (s *V5AssetService) GetCoinInfo(param V5GetCoinInfoParam) (*V5Response[V5GetCoinInfoResult], error) {
+	var res V5Response[V5GetCoinInfoResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -482,12 +435,6 @@ type V5GetAllCoinsBalanceParam struct {
 	Coins       []Coin
 }
 
-// V5GetAllCoinsBalanceResponse :
-type V5GetAllCoinsBalanceResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5GetAllCoinsBalanceResult `json:"result"`
-}
-
 // V5GetAllCoinsBalanceResult :
 type V5GetAllCoinsBalanceResult struct {
 	MemberID    string                         `json:"memberId"`
@@ -505,8 +452,8 @@ type V5GetAllCoinsBalanceBalance struct {
 
 // GetAllCoinsBalance :
 // https://bybit-exchange.github.io/docs/v5/asset/all-balance
-func (s *V5AssetService) GetAllCoinsBalance(param V5GetAllCoinsBalanceParam) (*V5GetAllCoinsBalanceResponse, error) {
-	var res V5GetAllCoinsBalanceResponse
+func (s *V5AssetService) GetAllCoinsBalance(param V5GetAllCoinsBalanceParam) (*V5Response[V5GetAllCoinsBalanceResult], error) {
+	var res V5Response[V5GetAllCoinsBalanceResult]
 
 	queryString, err := query.Values(param)
 	if err != nil {
@@ -528,11 +475,6 @@ func (s *V5AssetService) GetAllCoinsBalance(param V5GetAllCoinsBalanceParam) (*V
 	return &res, nil
 }
 
-type V5WithdrawResponse struct {
-	CommonV5Response `json:",inline"`
-	Result           V5WithdrawResult `json:"result"`
-}
-
 type V5WithdrawResult struct {
 	ID string `json:"id"`
 }
@@ -551,8 +493,8 @@ type V5WithdrawParam struct {
 	RequestID   *string      `json:"requestId,omitempty"`
 }
 
-func (s *V5AssetService) Withdraw(param V5WithdrawParam) (*V5WithdrawResponse, error) {
-	var res V5WithdrawResponse
+func (s *V5AssetService) Withdraw(param V5WithdrawParam) (*V5Response[V5WithdrawResult], error) {
+	var res V5Response[V5WithdrawResult]
 
 	body, err := json.Marshal(param)
 	if err != nil {
