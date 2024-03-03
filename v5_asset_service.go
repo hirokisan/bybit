@@ -12,8 +12,9 @@ import (
 
 // V5AssetServiceI :
 type V5AssetServiceI interface {
-	CreateInternalTransfer(param V5CreateInternalTransferParam) (*V5CreateInternalTransferResponse, error)
+	CreateInternalTransfer(V5CreateInternalTransferParam) (*V5CreateInternalTransferResponse, error)
 	GetInternalTransferRecords(V5GetInternalTransferRecordsParam) (*V5GetInternalTransferRecordsResponse, error)
+	CreateUniversalTransfer(V5CreateUniversalTransferParam) (*V5CreateUniversalTransferResponse, error)
 	GetDepositRecords(V5GetDepositRecordsParam) (*V5GetDepositRecordsResponse, error)
 	GetSubDepositRecords(V5GetSubDepositRecordsParam) (*V5GetSubDepositRecordsResponse, error)
 	GetInternalDepositRecords(V5GetInternalDepositRecordsParam) (*V5GetInternalDepositRecordsResponse, error)
@@ -136,6 +137,113 @@ func (s *V5AssetService) GetInternalTransferRecords(param V5GetInternalTransferR
 	}
 
 	if err := s.client.getV5Privately("/v5/asset/transfer/query-inter-transfer-list", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type V5CreateUniversalTransferParam struct {
+	TransferID      string        `json:"transferId"`
+	Coin            Coin          `json:"coin"`
+	Amount          string        `json:"amount"`
+	FromAccountType AccountTypeV5 `json:"fromAccountType"`
+	ToAccountType   AccountTypeV5 `json:"toAccountType"`
+	FromMemberID    int           `json:"fromMemberID"`
+	ToMemberID      int           `json:"toMemberID"`
+}
+
+func (p V5CreateUniversalTransferParam) validate() error {
+	if _, err := uuid.Parse(p.TransferID); err != nil {
+		return fmt.Errorf("%w: transferId must be a valid UUID", err)
+	}
+	amount, err := strconv.ParseFloat(p.Amount, 64)
+	if err != nil {
+		return fmt.Errorf("%w: parse amount", err)
+	}
+	if amount <= 0 {
+		return fmt.Errorf("amount must be positive")
+	}
+	if p.Coin == "" || p.FromAccountType == "" || p.ToAccountType == "" {
+		return fmt.Errorf("coin, fromAccountType and toAccountType needed")
+	}
+	if p.FromAccountType == p.ToAccountType {
+		return fmt.Errorf("toAccountType and fromAccountType must differ")
+	}
+	return nil
+}
+
+type V5CreateUniversalTransferResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5CreateInternalTransferResult `json:"result"`
+}
+
+type V5CreateUniversalTransferResult struct {
+	TransferID string `json:"transferId"`
+}
+
+func (s *V5AssetService) CreateUniversalTransfer(param V5CreateUniversalTransferParam) (*V5CreateUniversalTransferResponse, error) {
+	var res V5CreateUniversalTransferResponse
+
+	if err := param.validate(); err != nil {
+		return nil, fmt.Errorf("validate param: %w", err)
+	}
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return &res, fmt.Errorf("json marshal: %w", err)
+	}
+
+	if err := s.client.postV5JSON("/v5/asset/transfer/universal-transfer", body, &res); err != nil {
+		return &res, err
+	}
+
+	return &res, nil
+}
+
+type V5GetUniversalTransferRecordsParam struct {
+	TransferID *string           `url:"transferId,omitempty"`
+	Coin       *Coin             `url:"coin,omitempty"`
+	Status     *TransferStatusV5 `url:"status,omitempty"`
+	StartTime  *int64            `url:"startTime,omitempty"` // The start timestamp (ms)
+	EndTime    *int64            `url:"endTime,omitempty"`   // The start timestamp (ms)
+	Limit      *int              `url:"limit,omitempty"`     // Limit for data size per page. [1, 50]. Default: 20
+	Cursor     *string           `url:"cursor,omitempty"`
+}
+
+type V5GetUniversalTransferRecordsResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetUniversalTransferRecordsResult `json:"result"`
+}
+
+type V5GetUniversalTransferRecordsResult struct {
+	List           V5GetUniversalTransferRecordsList `json:"list"`
+	NextPageCursor string                            `json:"nextPageCursor"`
+}
+
+type V5GetUniversalTransferRecordsList []V5GetInternalTransferRecordsItem
+
+type V5GetUniversalTransferRecordsItem struct {
+	TransferID      string           `json:"transferId"`
+	Coin            Coin             `json:"coin"`
+	Amount          string           `json:"amount"`
+	FromMemberID    string           `json:"fromMemberID"`
+	ToMemberID      string           `json:"ToMemberID"`
+	FromAccountType AccountTypeV5    `json:"fromAccountType"`
+	ToAccountType   AccountTypeV5    `json:"toAccountType"`
+	Timestamp       string           `json:"timestamp"`
+	Status          TransferStatusV5 `json:"status"`
+}
+
+func (s *V5AssetService) GetUniversalTransferRecords(param V5GetUniversalTransferRecordsParam) (*V5GetUniversalTransferRecordsResponse, error) {
+	var res V5GetUniversalTransferRecordsResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/asset/transfer/query-universal-transfer-list", queryString, &res); err != nil {
 		return nil, err
 	}
 
