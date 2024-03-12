@@ -323,7 +323,7 @@ func TestV5Asset_GetUniversalTransferRecords(t *testing.T) {
 	})
 }
 
-func GetDepositRecords(t *testing.T) {
+func TestV5Asset_GetDepositRecords(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := V5GetDepositRecordsParam{}
 
@@ -412,7 +412,7 @@ func GetDepositRecords(t *testing.T) {
 	})
 }
 
-func GetSubDepositRecords(t *testing.T) {
+func TestV5Asset_GetSubDepositRecords(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := V5GetSubDepositRecordsParam{}
 
@@ -471,7 +471,7 @@ func GetSubDepositRecords(t *testing.T) {
 	})
 }
 
-func GetInternalDepositRecords(t *testing.T) {
+func TestV5Asset_GetInternalDepositRecords(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := V5GetInternalDepositRecordsParam{}
 
@@ -530,7 +530,7 @@ func GetInternalDepositRecords(t *testing.T) {
 	})
 }
 
-func TestGetMasterDepositAddress(t *testing.T) {
+func TestV5Asset_GetMasterDepositAddress(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := V5GetMasterDepositAddressParam{}
 
@@ -596,7 +596,7 @@ func TestGetMasterDepositAddress(t *testing.T) {
 	})
 }
 
-func TestGetWithdrawalRecords(t *testing.T) {
+func TestV5Asset_GetWithdrawalRecords(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := V5GetWithdrawalRecordsParam{}
 
@@ -655,7 +655,7 @@ func TestGetWithdrawalRecords(t *testing.T) {
 	})
 }
 
-func TestGetCoinInfo(t *testing.T) {
+func TestV5Asset_GetCoinInfo(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := V5GetCoinInfoParam{}
 
@@ -752,7 +752,7 @@ func TestGetCoinInfo(t *testing.T) {
 	})
 }
 
-func TestGetAllCoinsBalance(t *testing.T) {
+func TestV5Asset_GetAllCoinsBalance(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		param := V5GetAllCoinsBalanceParam{}
 
