@@ -222,14 +222,14 @@ type V5GetUniversalTransferRecordsResult struct {
 	NextPageCursor string                            `json:"nextPageCursor"`
 }
 
-type V5GetUniversalTransferRecordsList []V5GetInternalTransferRecordsItem
+type V5GetUniversalTransferRecordsList []V5GetUniversalTransferRecordsItem
 
 type V5GetUniversalTransferRecordsItem struct {
 	TransferID      string           `json:"transferId"`
 	Coin            Coin             `json:"coin"`
 	Amount          string           `json:"amount"`
-	FromMemberID    string           `json:"fromMemberID"`
-	ToMemberID      string           `json:"ToMemberID"`
+	FromMemberID    string           `json:"fromMemberId"`
+	ToMemberID      string           `json:"toMemberId"`
 	FromAccountType AccountTypeV5    `json:"fromAccountType"`
 	ToAccountType   AccountTypeV5    `json:"toAccountType"`
 	Timestamp       string           `json:"timestamp"`
