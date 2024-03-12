@@ -174,6 +174,8 @@ The following API endpoints have been implemented
 - [`/v5/asset/withdraw/query-record` Get Withdrawal Records](https://bybit-exchange.github.io/docs/v5/asset/withdraw-record)
 - [`/v5/asset/coin/query-info` Get Coin Info](https://bybit-exchange.github.io/docs/v5/asset/coin-info)
 - [`/v5/asset/withdraw/create` Withdraw](https://bybit-exchange.github.io/docs/v5/asset/withdraw)
+- [`/v5/asset/transfer/universal-transfer` Create Universal Transfer](https://bybit-exchange.github.io/docs/v5/asset/unitransfer)
+- [`/v5/asset/transfer/query-universal-transfer-list` Get Universal Transfer Records](https://bybit-exchange.github.io/docs/v5/asset/unitransfer-list)
 
 #### User
 
