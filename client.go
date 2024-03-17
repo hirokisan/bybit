@@ -114,10 +114,10 @@ func (c *Client) Request(req *http.Request, dst interface{}) (err error) {
 	c.debugf("request: %v", req)
 	resp, err := c.httpClient.Do(req)
 	c.debugf("response: %v", resp)
-	c.debugf("response status code: %v", resp.StatusCode)
 	if err != nil {
 		return err
 	}
+	c.debugf("response status code: %v", resp.StatusCode)
 	defer func() {
 		cerr := resp.Body.Close()
 		if err == nil && cerr != nil {
