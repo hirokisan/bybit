@@ -73,6 +73,7 @@ type V5WebsocketPublicTickerResponse struct {
 
 // V5WebsocketPublicTickerData :
 type V5WebsocketPublicTickerData struct {
+	category      CategoryV5
 	LinearInverse *V5WebsocketPublicTickerLinearInverseResult
 	Option        *V5WebsocketPublicTickerOptionResult
 	Spot          *V5WebsocketPublicTickerSpotResult

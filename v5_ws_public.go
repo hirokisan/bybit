@@ -50,6 +50,7 @@ type V5WebsocketPublicServiceI interface {
 type V5WebsocketPublicService struct {
 	client     *WebSocketClient
 	connection *websocket.Conn
+	category   CategoryV5
 
 	mu sync.Mutex
 
@@ -119,21 +120,15 @@ func (s *V5WebsocketPublicService) judgeTopic(respBody []byte) (V5WebsocketPubli
 
 // UnmarshalJSON :
 func (r *V5WebsocketPublicTickerData) UnmarshalJSON(data []byte) error {
-	var res struct {
-		Bid1Price string `json:"bid1Price"`
-		Gamma     string `json:"gamma"`
-	}
-	if err := json.Unmarshal(data, &res); err != nil {
-		return err
-	}
-
-	if res.Bid1Price != "" {
+	switch r.category {
+	case CategoryV5Linear, CategoryV5Inverse:
 		return json.Unmarshal(data, &r.LinearInverse)
-	}
-	if res.Gamma != "" {
+	case CategoryV5Option:
 		return json.Unmarshal(data, &r.Option)
+	case CategoryV5Spot:
+		return json.Unmarshal(data, &r.Spot)
 	}
-	return json.Unmarshal(data, &r.Spot)
+	return errors.New("unsupported format")
 }
 
 // parseResponse :
@@ -238,6 +233,7 @@ func (s *V5WebsocketPublicService) Run() error {
 		}
 	case V5WebsocketPublicTopicTicker:
 		var resp V5WebsocketPublicTickerResponse
+		resp.Data.category = s.category
 		if err := s.parseResponse(message, &resp); err != nil {
 			return err
 		}
