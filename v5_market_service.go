@@ -85,7 +85,7 @@ func (l *V5GetKlineList) UnmarshalJSON(data []byte) error {
 			Low:       d[3].(string),
 			Close:     d[4].(string),
 			Volume:    d[5].(string),
-			Turnover:  d[5].(string),
+			Turnover:  d[6].(string),
 		})
 	}
 	return nil
