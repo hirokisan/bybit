@@ -240,6 +240,8 @@ func TestV5Market_GetInstrumentsInfo(t *testing.T) {
 							"minOrderQty":         "10",
 							"qtyStep":             "10",
 							"postOnlyMaxOrderQty": "3700000",
+							"maxMktOrderQty":      "100.000",
+							"minNotionalValue":    "5",
 						},
 						"unifiedMarginTrade": true,
 						"fundingInterval":    480,
