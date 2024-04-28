@@ -431,6 +431,8 @@ type LinearInverseLotSizeFilterV5 struct {
 	MinOrderQty         string `json:"minOrderQty"`
 	QtyStep             string `json:"qtyStep"`
 	PostOnlyMaxOrderQty string `json:"postOnlyMaxOrderQty"`
+	MaxMktOrderQty      string `json:"maxMktOrderQty"`
+	MinNotionalValue    string `json:"minNotionalValue"`
 }
 
 // V5GetInstrumentsInfoOptionResult :
