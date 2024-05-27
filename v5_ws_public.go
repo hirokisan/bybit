@@ -147,12 +147,6 @@ func (s *V5WebsocketPublicService) Start(ctx context.Context, errHandler ErrHand
 		defer close(done)
 		defer s.connection.Close()
 
-		_ = s.connection.SetReadDeadline(time.Now().Add(60 * time.Second))
-		s.connection.SetPongHandler(func(string) error {
-			_ = s.connection.SetReadDeadline(time.Now().Add(60 * time.Second))
-			return nil
-		})
-
 		for {
 			if err := s.Run(); err != nil {
 				if errHandler == nil {
