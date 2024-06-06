@@ -2,6 +2,7 @@ package bybit
 
 import (
 	"bytes"
+	"context"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
@@ -278,6 +279,26 @@ func (c *Client) getPublicly(path string, query url.Values, dst interface{}) err
 	u.RawQuery = query.Encode()
 
 	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
+	if err != nil {
+		return err
+	}
+
+	if err := c.Request(req, &dst); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) getPubliclyWithContext(ctx context.Context, path string, query url.Values, dst interface{}) error {
+	u, err := url.Parse(c.baseURL)
+	if err != nil {
+		return err
+	}
+	u.Path = path
+	u.RawQuery = query.Encode()
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
 	if err != nil {
 		return err
 	}

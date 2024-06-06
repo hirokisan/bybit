@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -201,6 +202,8 @@ func TestV5Market_GetPremiumIndexPriceKline(t *testing.T) {
 }
 
 func TestV5Market_GetInstrumentsInfo(t *testing.T) {
+
+	ctx := context.Background()
 	t.Run("linear", func(t *testing.T) {
 		param := V5GetInstrumentsInfoParam{
 			Category: CategoryV5Linear,
@@ -260,7 +263,7 @@ func TestV5Market_GetInstrumentsInfo(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		resp, err := client.V5().Market().GetInstrumentsInfo(param)
+		resp, err := client.V5().Market().GetInstrumentsInfo(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -314,7 +317,7 @@ func TestV5Market_GetInstrumentsInfo(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		resp, err := client.V5().Market().GetInstrumentsInfo(param)
+		resp, err := client.V5().Market().GetInstrumentsInfo(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -364,7 +367,7 @@ func TestV5Market_GetInstrumentsInfo(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		resp, err := client.V5().Market().GetInstrumentsInfo(param)
+		resp, err := client.V5().Market().GetInstrumentsInfo(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)

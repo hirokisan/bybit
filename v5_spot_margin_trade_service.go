@@ -1,12 +1,13 @@
 package bybit
 
 import (
+	"context"
 	"github.com/google/go-querystring/query"
 )
 
 // V5SpotMarginTradeServiceI :
 type V5SpotMarginTradeServiceI interface {
-	GetVIPMarginData(V5GetVIPMarginDataParam) (*V5GetVIPMarginDataResponse, error)
+	GetVIPMarginData(context.Context, V5GetVIPMarginDataParam) (*V5GetVIPMarginDataResponse, error)
 }
 
 // V5SpotMarginTradeService :
@@ -43,7 +44,7 @@ type V5VIPMarginDataVipCoin struct {
 	MaxBorrowingAmount string `json:"maxBorrowingAmount"`
 }
 
-func (s *V5SpotMarginTradeService) GetVIPMarginData(param V5GetVIPMarginDataParam) (*V5GetVIPMarginDataResponse, error) {
+func (s *V5SpotMarginTradeService) GetVIPMarginData(ctx context.Context, param V5GetVIPMarginDataParam) (*V5GetVIPMarginDataResponse, error) {
 	res := new(V5GetVIPMarginDataResponse)
 
 	queryString, err := query.Values(param)
@@ -51,7 +52,7 @@ func (s *V5SpotMarginTradeService) GetVIPMarginData(param V5GetVIPMarginDataPara
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/spot-margin-trade/data", queryString, res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/spot-margin-trade/data", queryString, res); err != nil {
 		return nil, err
 	}
 

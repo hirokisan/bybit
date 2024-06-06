@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -14,7 +15,7 @@ type V5MarketServiceI interface {
 	GetMarkPriceKline(V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error)
 	GetIndexPriceKline(V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error)
 	GetPremiumIndexPriceKline(V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error)
-	GetInstrumentsInfo(V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error)
+	GetInstrumentsInfo(context.Context, V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error)
 	GetOrderbook(V5GetOrderbookParam) (*V5GetOrderbookResponse, error)
 	GetTickers(V5GetTickersParam) (*V5GetTickersResponse, error)
 	GetFundingRateHistory(V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error)
@@ -498,7 +499,7 @@ type SpotPriceFilterV5 struct {
 }
 
 // GetInstrumentsInfo :
-func (s *V5MarketService) GetInstrumentsInfo(param V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error) {
+func (s *V5MarketService) GetInstrumentsInfo(ctx context.Context, param V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error) {
 	var res V5GetInstrumentsInfoResponse
 
 	queryString, err := query.Values(param)
@@ -506,7 +507,7 @@ func (s *V5MarketService) GetInstrumentsInfo(param V5GetInstrumentsInfoParam) (*
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/instruments-info", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/instruments-info", queryString, &res); err != nil {
 		return nil, err
 	}
 
