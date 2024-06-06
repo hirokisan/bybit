@@ -5,8 +5,8 @@ package integrationtestv5asset
 import (
 	"testing"
 
-	"github.com/hirokisan/bybit/v2"
-	"github.com/hirokisan/bybit/v2/integrationtest/testhelper"
+	"github.com/dimkus/bybit/v2"
+	"github.com/dimkus/bybit/v2/integrationtest/testhelper"
 	"github.com/stretchr/testify/require"
 )
 

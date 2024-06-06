@@ -1,6 +1,6 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/hirokisan/bybit)](https://goreportcard.com/report/github.com/hirokisan/bybit)
-[![golangci-lint](https://github.com/hirokisan/bybit/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/hirokisan/bybit/actions/workflows/golangci-lint.yml)
-[![test](https://github.com/hirokisan/bybit/actions/workflows/test.yml/badge.svg)](https://github.com/hirokisan/bybit/actions/workflows/test.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dimkus/bybit)](https://goreportcard.com/report/github.com/dimkus/bybit)
+[![golangci-lint](https://github.com/dimkus/bybit/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/dimkus/bybit/actions/workflows/golangci-lint.yml)
+[![test](https://github.com/dimkus/bybit/actions/workflows/test.yml/badge.svg)](https://github.com/hirokisan/bybit/actions/workflows/test.yml)
 
 # bybit
 

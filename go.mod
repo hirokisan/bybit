@@ -1,4 +1,4 @@
-module github.com/hirokisan/bybit/v2
+module github.com/dimkus/bybit/v2
 
 go 1.21
 

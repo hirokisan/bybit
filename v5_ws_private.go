@@ -229,7 +229,7 @@ func (s *V5WebsocketPrivateService) Run() error {
 // Ping :
 func (s *V5WebsocketPrivateService) Ping() error {
 	// NOTE: It appears that two messages need to be sent.
-	// REF: https://github.com/hirokisan/bybit/pull/127#issuecomment-1537479346
+	// REF: https://github.com/dimkus/bybit/pull/127#issuecomment-1537479346
 	if err := s.writeMessage(websocket.PingMessage, nil); err != nil {
 		return err
 	}
