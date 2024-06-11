@@ -365,6 +365,36 @@ func (c *Client) getV5Privately(path string, query url.Values, dst interface{}) 
 	return nil
 }
 
+func (c *Client) getV5PrivatelyWithContext(ctx context.Context, path string, query url.Values, dst interface{}) error {
+	if !c.hasAuth() {
+		return fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	u, err := url.Parse(c.baseURL)
+	if err != nil {
+		return err
+	}
+	u.Path = path
+	u.RawQuery = query.Encode()
+
+	timestamp := c.getTimestamp()
+	sign := getV5Signature(timestamp, c.key, query.Encode(), c.secret)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("X-BAPI-API-KEY", c.key)
+	req.Header.Set("X-BAPI-TIMESTAMP", strconv.FormatInt(timestamp, 10))
+	req.Header.Set("X-BAPI-SIGN", sign)
+
+	if err := c.Request(req, &dst); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (c *Client) postJSON(path string, body []byte, dst interface{}) error {
 	if !c.hasAuth() {
 		return fmt.Errorf("this is private endpoint, please set api key and secret")
@@ -406,6 +436,39 @@ func (c *Client) postV5JSON(path string, body []byte, dst interface{}) error {
 	sign := getV5SignatureForBody(timestamp, c.key, body, c.secret)
 
 	req, err := http.NewRequest(http.MethodPost, u.String(), bytes.NewBuffer(body))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-BAPI-API-KEY", c.key)
+	req.Header.Set("X-BAPI-TIMESTAMP", strconv.FormatInt(timestamp, 10))
+	req.Header.Set("X-BAPI-SIGN", sign)
+	if c.referer != "" {
+		req.Header.Set("X-Referer", c.referer)
+	}
+
+	if err := c.Request(req, &dst); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) postV5JSONWithContext(ctx context.Context, path string, body []byte, dst interface{}) error {
+	if !c.hasAuth() {
+		return fmt.Errorf("this is private endpoint, please set api key and secret")
+	}
+
+	u, err := url.Parse(c.baseURL)
+	if err != nil {
+		return err
+	}
+	u.Path = path
+
+	timestamp := c.getTimestamp()
+	sign := getV5SignatureForBody(timestamp, c.key, body, c.secret)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), bytes.NewBuffer(body))
 	if err != nil {
 		return err
 	}
