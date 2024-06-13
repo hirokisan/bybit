@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/url"
 	"strings"
@@ -12,6 +13,7 @@ import (
 type V5AccountServiceI interface {
 	GetWalletBalance(AccountType, []Coin) (*V5GetWalletBalanceResponse, error)
 	SetCollateralCoin(V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error)
+	SetBatchCollateralCoin(ctx context.Context, param V5SetBatchCollateralCoinParam) (*V5SetBatchCollateralCoinResponse, error)
 	GetCollateralInfo(V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error)
 	GetAccountInfo() (*V5GetAccountInfoResponse, error)
 	GetTransactionLog(V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error)
@@ -123,6 +125,39 @@ func (s *V5AccountService) SetCollateralCoin(param V5SetCollateralCoinParam) (*V
 	}
 
 	if err := s.client.postV5JSON("/v5/account/set-collateral-switch", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5SetBatchCollateralCoinParam :
+type V5SetBatchCollateralCoinParam struct {
+	// Coin:
+	// You cannot pass multiple coins to query
+	// USDT,USDC cannot be switched off
+	Request []V5SetCollateralCoinParam `json:"request"`
+}
+
+type V5SetBatchCollateralCoinResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5SetBatchCollateralCoinList `json:"result"`
+}
+
+type V5SetBatchCollateralCoinList struct {
+	List []V5SetCollateralCoinParam `json:"list"`
+}
+
+// SetBatchCollateralCoin :
+func (s *V5AccountService) SetBatchCollateralCoin(ctx context.Context, param V5SetBatchCollateralCoinParam) (*V5SetBatchCollateralCoinResponse, error) {
+	var res V5SetBatchCollateralCoinResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.postV5JSONWithContext(ctx, "/v5/account/set-collateral-switch-batch", body, &res); err != nil {
 		return nil, err
 	}
 
