@@ -1053,6 +1053,7 @@ type V5GetRiskLimitParam struct {
 	Category CategoryV5 `url:"category"`
 
 	Symbol *SymbolV5 `url:"symbol,omitempty"`
+	Cursor *string   `url:"cursor,omitempty"`
 }
 
 func (p V5GetRiskLimitParam) validate() error {
@@ -1070,8 +1071,9 @@ type V5GetRiskLimitResponse struct {
 
 // V5GetRiskLimitResult :
 type V5GetRiskLimitResult struct {
-	Category CategoryV5           `json:"category"`
-	List     []V5GetRiskLimitItem `json:"list"`
+	Category       CategoryV5           `json:"category"`
+	List           []V5GetRiskLimitItem `json:"list"`
+	NextPageCursor string               `json:"nextPageCursor"`
 }
 
 type V5GetRiskLimitItem struct {
