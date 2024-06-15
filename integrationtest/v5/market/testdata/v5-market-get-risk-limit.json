@@ -13,277 +13,277 @@
     {
       "id": 2,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "4000000",
-      "maintenanceMargin": "0.01",
-      "initialMargin": "0.0175",
+      "riskLimitValue": "2600000",
+      "maintenanceMargin": "0.0056",
+      "initialMargin": "0.0111",
       "isLowestRisk": 0,
-      "maxLeverage": "57.14"
+      "maxLeverage": "90.00"
     },
     {
       "id": 3,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "6000000",
+      "riskLimitValue": "3200000",
+      "maintenanceMargin": "0.0063",
+      "initialMargin": "0.0125",
+      "isLowestRisk": 0,
+      "maxLeverage": "80.00"
+    },
+    {
+      "id": 4,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "3800000",
+      "maintenanceMargin": "0.0067",
+      "initialMargin": "0.0133",
+      "isLowestRisk": 0,
+      "maxLeverage": "75.00"
+    },
+    {
+      "id": 5,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "4400000",
+      "maintenanceMargin": "0.0071",
+      "initialMargin": "0.0143",
+      "isLowestRisk": 0,
+      "maxLeverage": "70.00"
+    },
+    {
+      "id": 6,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "5000000",
+      "maintenanceMargin": "0.0077",
+      "initialMargin": "0.0154",
+      "isLowestRisk": 0,
+      "maxLeverage": "65.00"
+    },
+    {
+      "id": 7,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "5600000",
+      "maintenanceMargin": "0.0091",
+      "initialMargin": "0.0182",
+      "isLowestRisk": 0,
+      "maxLeverage": "55.00"
+    },
+    {
+      "id": 8,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "8500000",
+      "maintenanceMargin": "0.01",
+      "initialMargin": "0.02",
+      "isLowestRisk": 0,
+      "maxLeverage": "50.00"
+    },
+    {
+      "id": 9,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "10000000",
+      "maintenanceMargin": "0.013",
+      "initialMargin": "0.0222",
+      "isLowestRisk": 0,
+      "maxLeverage": "45.00"
+    },
+    {
+      "id": 10,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "14000000",
       "maintenanceMargin": "0.015",
       "initialMargin": "0.025",
       "isLowestRisk": 0,
       "maxLeverage": "40.00"
     },
     {
-      "id": 4,
+      "id": 11,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "8000000",
-      "maintenanceMargin": "0.02",
-      "initialMargin": "0.0325",
+      "riskLimitValue": "20000000",
+      "maintenanceMargin": "0.016",
+      "initialMargin": "0.0286",
       "isLowestRisk": 0,
-      "maxLeverage": "30.77"
+      "maxLeverage": "35.00"
     },
     {
-      "id": 5,
+      "id": 12,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "10000000",
+      "riskLimitValue": "28000000",
+      "maintenanceMargin": "0.02",
+      "initialMargin": "0.0333",
+      "isLowestRisk": 0,
+      "maxLeverage": "30.00"
+    },
+    {
+      "id": 13,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "38000000",
       "maintenanceMargin": "0.025",
       "initialMargin": "0.04",
       "isLowestRisk": 0,
       "maxLeverage": "25.00"
     },
     {
-      "id": 6,
+      "id": 14,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "12000000",
+      "riskLimitValue": "50000000",
+      "maintenanceMargin": "0.029",
+      "initialMargin": "0.05",
+      "isLowestRisk": 0,
+      "maxLeverage": "20.00"
+    },
+    {
+      "id": 15,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "55000000",
       "maintenanceMargin": "0.03",
-      "initialMargin": "0.0475",
+      "initialMargin": "0.0526",
       "isLowestRisk": 0,
-      "maxLeverage": "21.05"
+      "maxLeverage": "19.00"
     },
     {
-      "id": 7,
+      "id": 16,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "14000000",
+      "riskLimitValue": "60000000",
       "maintenanceMargin": "0.035",
-      "initialMargin": "0.055",
+      "initialMargin": "0.0556",
       "isLowestRisk": 0,
-      "maxLeverage": "18.18"
+      "maxLeverage": "18.00"
     },
     {
-      "id": 8,
+      "id": 17,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "16000000",
-      "maintenanceMargin": "0.04",
+      "riskLimitValue": "65000000",
+      "maintenanceMargin": "0.036",
+      "initialMargin": "0.0588",
+      "isLowestRisk": 0,
+      "maxLeverage": "17.00"
+    },
+    {
+      "id": 18,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "70000000",
+      "maintenanceMargin": "0.038",
       "initialMargin": "0.0625",
       "isLowestRisk": 0,
       "maxLeverage": "16.00"
     },
     {
-      "id": 9,
+      "id": 19,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "18000000",
+      "riskLimitValue": "75000000",
+      "maintenanceMargin": "0.04",
+      "initialMargin": "0.0667",
+      "isLowestRisk": 0,
+      "maxLeverage": "15.00"
+    },
+    {
+      "id": 20,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "80000000",
       "maintenanceMargin": "0.045",
-      "initialMargin": "0.07",
+      "initialMargin": "0.0714",
       "isLowestRisk": 0,
-      "maxLeverage": "14.29"
+      "maxLeverage": "14.00"
     },
     {
-      "id": 10,
+      "id": 21,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "20000000",
+      "riskLimitValue": "85000000",
       "maintenanceMargin": "0.05",
-      "initialMargin": "0.0775",
+      "initialMargin": "0.0769",
       "isLowestRisk": 0,
-      "maxLeverage": "12.90"
+      "maxLeverage": "13.00"
     },
     {
-      "id": 11,
+      "id": 22,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "22000000",
+      "riskLimitValue": "90000000",
       "maintenanceMargin": "0.055",
-      "initialMargin": "0.085",
+      "initialMargin": "0.0833",
       "isLowestRisk": 0,
-      "maxLeverage": "11.76"
+      "maxLeverage": "12.00"
     },
     {
-      "id": 12,
+      "id": 23,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "24000000",
+      "riskLimitValue": "95000000",
       "maintenanceMargin": "0.06",
-      "initialMargin": "0.0925",
+      "initialMargin": "0.0909",
       "isLowestRisk": 0,
-      "maxLeverage": "10.81"
+      "maxLeverage": "11.00"
     },
     {
-      "id": 13,
+      "id": 24,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "26000000",
+      "riskLimitValue": "100000000",
       "maintenanceMargin": "0.065",
       "initialMargin": "0.1",
       "isLowestRisk": 0,
       "maxLeverage": "10.00"
     },
     {
-      "id": 14,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "28000000",
-      "maintenanceMargin": "0.07",
-      "initialMargin": "0.1075",
-      "isLowestRisk": 0,
-      "maxLeverage": "9.30"
-    },
-    {
-      "id": 15,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "30000000",
-      "maintenanceMargin": "0.075",
-      "initialMargin": "0.115",
-      "isLowestRisk": 0,
-      "maxLeverage": "8.70"
-    },
-    {
-      "id": 16,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "32000000",
-      "maintenanceMargin": "0.08",
-      "initialMargin": "0.1225",
-      "isLowestRisk": 0,
-      "maxLeverage": "8.16"
-    },
-    {
-      "id": 17,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "34000000",
-      "maintenanceMargin": "0.085",
-      "initialMargin": "0.13",
-      "isLowestRisk": 0,
-      "maxLeverage": "7.69"
-    },
-    {
-      "id": 18,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "36000000",
-      "maintenanceMargin": "0.09",
-      "initialMargin": "0.1375",
-      "isLowestRisk": 0,
-      "maxLeverage": "7.27"
-    },
-    {
-      "id": 19,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "38000000",
-      "maintenanceMargin": "0.095",
-      "initialMargin": "0.145",
-      "isLowestRisk": 0,
-      "maxLeverage": "6.90"
-    },
-    {
-      "id": 20,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "40000000",
-      "maintenanceMargin": "0.1",
-      "initialMargin": "0.1525",
-      "isLowestRisk": 0,
-      "maxLeverage": "6.56"
-    },
-    {
-      "id": 21,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "42000000",
-      "maintenanceMargin": "0.105",
-      "initialMargin": "0.16",
-      "isLowestRisk": 0,
-      "maxLeverage": "6.25"
-    },
-    {
-      "id": 22,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "44000000",
-      "maintenanceMargin": "0.11",
-      "initialMargin": "0.1675",
-      "isLowestRisk": 0,
-      "maxLeverage": "5.97"
-    },
-    {
-      "id": 23,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "46000000",
-      "maintenanceMargin": "0.115",
-      "initialMargin": "0.175",
-      "isLowestRisk": 0,
-      "maxLeverage": "5.71"
-    },
-    {
-      "id": 24,
-      "symbol": "BTCUSDT",
-      "riskLimitValue": "48000000",
-      "maintenanceMargin": "0.12",
-      "initialMargin": "0.1825",
-      "isLowestRisk": 0,
-      "maxLeverage": "5.48"
-    },
-    {
       "id": 25,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "50000000",
-      "maintenanceMargin": "0.125",
-      "initialMargin": "0.19",
+      "riskLimitValue": "105000000",
+      "maintenanceMargin": "0.07",
+      "initialMargin": "0.1111",
       "isLowestRisk": 0,
-      "maxLeverage": "5.26"
+      "maxLeverage": "9.00"
     },
     {
       "id": 26,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "52000000",
-      "maintenanceMargin": "0.13",
-      "initialMargin": "0.1975",
+      "riskLimitValue": "110000000",
+      "maintenanceMargin": "0.085",
+      "initialMargin": "0.125",
       "isLowestRisk": 0,
-      "maxLeverage": "5.06"
+      "maxLeverage": "8.00"
     },
     {
       "id": 27,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "54000000",
-      "maintenanceMargin": "0.135",
-      "initialMargin": "0.205",
+      "riskLimitValue": "115000000",
+      "maintenanceMargin": "0.095",
+      "initialMargin": "0.1429",
       "isLowestRisk": 0,
-      "maxLeverage": "4.88"
+      "maxLeverage": "7.00"
     },
     {
       "id": 28,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "56000000",
-      "maintenanceMargin": "0.14",
-      "initialMargin": "0.2125",
+      "riskLimitValue": "120000000",
+      "maintenanceMargin": "0.1",
+      "initialMargin": "0.1667",
       "isLowestRisk": 0,
-      "maxLeverage": "4.71"
+      "maxLeverage": "6.00"
     },
     {
       "id": 29,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "58000000",
-      "maintenanceMargin": "0.145",
-      "initialMargin": "0.22",
+      "riskLimitValue": "150000000",
+      "maintenanceMargin": "0.12",
+      "initialMargin": "0.2",
       "isLowestRisk": 0,
-      "maxLeverage": "4.55"
+      "maxLeverage": "5.00"
     },
     {
       "id": 30,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "60000000",
-      "maintenanceMargin": "0.15",
-      "initialMargin": "0.2275",
+      "riskLimitValue": "200000000",
+      "maintenanceMargin": "0.14",
+      "initialMargin": "0.25",
       "isLowestRisk": 0,
-      "maxLeverage": "4.40"
+      "maxLeverage": "4.00"
     },
     {
       "id": 31,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "70000000",
+      "riskLimitValue": "250000000",
       "maintenanceMargin": "0.18",
-      "initialMargin": "0.3",
+      "initialMargin": "0.3333",
       "isLowestRisk": 0,
-      "maxLeverage": "3.33"
+      "maxLeverage": "3.00"
     },
     {
       "id": 32,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "85000000",
+      "riskLimitValue": "400000000",
       "maintenanceMargin": "0.3",
       "initialMargin": "0.5",
       "isLowestRisk": 0,
@@ -292,20 +292,30 @@
     {
       "id": 33,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "100000000",
+      "riskLimitValue": "600000000",
       "maintenanceMargin": "0.42",
-      "initialMargin": "0.7",
+      "initialMargin": "0.6993",
       "isLowestRisk": 0,
       "maxLeverage": "1.43"
     },
     {
       "id": 34,
       "symbol": "BTCUSDT",
-      "riskLimitValue": "200000000",
+      "riskLimitValue": "800000000",
+      "maintenanceMargin": "0.5",
+      "initialMargin": "0.7813",
+      "isLowestRisk": 0,
+      "maxLeverage": "1.28"
+    },
+    {
+      "id": 35,
+      "symbol": "BTCUSDT",
+      "riskLimitValue": "1200000000",
       "maintenanceMargin": "0.6",
       "initialMargin": "1",
       "isLowestRisk": 0,
       "maxLeverage": "1.00"
     }
-  ]
+  ],
+  "nextPageCursor": ""
 }
