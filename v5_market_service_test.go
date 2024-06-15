@@ -870,6 +870,7 @@ func TestV5Market_GetRiskLimit(t *testing.T) {
 					"maxLeverage":       "57.14",
 				},
 			},
+			"nextPageCursor": "first%3D10000000AIDOGEUSDT%26last%3DAIOZUSDT",
 		},
 	}
 	bytesBody, err := json.Marshal(respBody)
