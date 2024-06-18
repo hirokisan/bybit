@@ -558,8 +558,8 @@ func (c *Client) updateSyncTimeDelta(
 	return nil
 }
 
-func (c *Client) SyncServerTime() error {
-	r, err := c.NewTimeService().GetServerTime()
+func (c *Client) SyncServerTime(ctx context.Context) error {
+	r, err := c.NewTimeService().GetServerTime(ctx)
 	if err != nil {
 		return fmt.Errorf("get server time: %w", err)
 	}

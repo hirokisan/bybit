@@ -1,5 +1,9 @@
 package bybit
 
+import (
+	"context"
+)
+
 // TimeService :
 type TimeService struct {
 	client *Client
@@ -7,7 +11,7 @@ type TimeService struct {
 
 // TimeServiceI :
 type TimeServiceI interface {
-	GetServerTime() (*GetServerTimeResponse, error)
+	GetServerTime(ctx context.Context) (*GetServerTimeResponse, error)
 }
 
 // GetServerTimeResponse :
@@ -22,10 +26,10 @@ type GetServerTimeResult struct {
 }
 
 // GetServerTime :
-func (s *TimeService) GetServerTime() (*GetServerTimeResponse, error) {
+func (s *TimeService) GetServerTime(ctx context.Context) (*GetServerTimeResponse, error) {
 	var res GetServerTimeResponse
 
-	if err := s.client.getPublicly("/v3/public/time", nil, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v3/public/time", nil, &res); err != nil {
 		return nil, err
 	}
 
