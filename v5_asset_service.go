@@ -150,8 +150,8 @@ type V5CreateUniversalTransferParam struct {
 	Amount          string        `json:"amount"`
 	FromAccountType AccountTypeV5 `json:"fromAccountType"`
 	ToAccountType   AccountTypeV5 `json:"toAccountType"`
-	FromMemberID    int           `json:"fromMemberID"`
-	ToMemberID      int           `json:"toMemberID"`
+	FromMemberID    int           `json:"fromMemberId"`
+	ToMemberID      int           `json:"toMemberId"`
 }
 
 func (p V5CreateUniversalTransferParam) validate() error {
@@ -167,9 +167,6 @@ func (p V5CreateUniversalTransferParam) validate() error {
 	}
 	if p.Coin == "" || p.FromAccountType == "" || p.ToAccountType == "" {
 		return fmt.Errorf("coin, fromAccountType and toAccountType needed")
-	}
-	if p.FromAccountType == p.ToAccountType {
-		return fmt.Errorf("toAccountType and fromAccountType must differ")
 	}
 	return nil
 }
