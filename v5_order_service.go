@@ -1,9 +1,9 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-
 	"github.com/google/go-querystring/query"
 )
 
@@ -15,6 +15,7 @@ type V5OrderServiceI interface {
 	GetOpenOrders(V5GetOpenOrdersParam) (*V5GetOrdersResponse, error)
 	CancelAllOrders(V5CancelAllOrdersParam) (*V5CancelAllOrdersResponse, error)
 	GetHistoryOrders(V5GetHistoryOrdersParam) (*V5GetOrdersResponse, error)
+	GetBorrowQuotaSpot(ctx context.Context, param V5GetBorrowQuotaSpotParam) (*V5BorrowQuotaSpotResponse, error)
 }
 
 // V5OrderService :
@@ -381,6 +382,49 @@ func (s *V5OrderService) CancelAllOrders(param V5CancelAllOrdersParam) (*V5Cance
 	if err := s.client.postV5JSON("/v5/order/cancel-all", body, &res); err != nil {
 		return &res, err
 	}
+
+	return &res, nil
+}
+
+// V5GetBorrowQuotaSpotParam :
+type V5GetBorrowQuotaSpotParam struct {
+	Category CategoryV5 `url:"category"`
+	Symbol   SymbolV5   `url:"symbol"`
+	Side     Side       `url:"side"`
+}
+
+// V5CancelAllOrdersResponse :
+type V5BorrowQuotaSpotResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5BorrowQuotaSpotResult `json:"result"`
+}
+
+// V5CancelAllOrdersResult :
+type V5BorrowQuotaSpotResult struct {
+	Symbol             SymbolV5 `json:"symbol"`
+	MaxTradeQty        string   `json:"maxTradeQty"`
+	Side               Side     `json:"side"`
+	SpotMaxTradeAmount string   `json:"spotMaxTradeAmount"`
+	MaxTradeAmount     string   `json:"maxTradeAmount"`
+	BorrowCoin         string   `json:"borrowCoin"`
+	SpotMaxTradeQty    string   `json:"spotMaxTradeQty"`
+}
+
+// GetBorrowQuotaSpot :
+// https://bybit-exchange.github.io/docs/v5/order/spot-borrow-quota
+func (s *V5OrderService) GetBorrowQuotaSpot(ctx context.Context, param V5GetBorrowQuotaSpotParam) (*V5BorrowQuotaSpotResponse, error) {
+	var res V5BorrowQuotaSpotResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5PrivatelyWithContext(ctx, "/v5/order/spot-borrow-check", queryString, &res); err != nil {
+		return &res, err
+	}
+
+	fmt.Println(err)
 
 	return &res, nil
 }
