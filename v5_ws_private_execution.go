@@ -88,7 +88,7 @@ type V5WebsocketPrivateExecutionData struct {
 	ExecTime        string     `json:"execTime"`
 	IsLeverage      string     `json:"isLeverage"`
 	ClosedSize      string     `json:"closedSize"`
-	CrossSequence   string     `json:"seq"`
+	CrossSequence   int64      `json:"seq"`
 }
 
 // Key :
