@@ -4,7 +4,7 @@
 
 # bybit
 
-bybit is an bybit client for the Go programming language.
+bybit is a bybit client for the Go programming language.
 
 ## Usage
 

@@ -1,14 +1,5 @@
 package bybit
 
-// AccountType :
-type AccountType string
-
-const (
-	AccountTypeUnified AccountType = "UNIFIED"
-	AccountTypeNormal  AccountType = "CONTRACT"
-	AccountTypeFunding AccountType = "FUND"
-)
-
 // MarginMode :
 type MarginMode string
 
@@ -189,12 +180,26 @@ type ExecTypeV5 string
 const (
 	// ExecTypeV5Trade :
 	ExecTypeV5Trade = ExecTypeV5("Trade")
-	// ExecTypeV5BustTrade :
+	// ExecTypeV5AdlTrade : Auto-Deleveraging
+	// https://www.bybit.com/en/help-center/article/Auto-Deleveraging-ADL
+	ExecTypeV5AdlTrade = ExecTypeV5("AdlTrade")
+	// ExecTypeV5Funding : Funding Fee
+	// https://www.bybit.com/en/help-center/article/Introduction-to-Funding-Rate
+	ExecTypeV5Funding = ExecTypeV5("Funding")
+	// ExecTypeV5BustTrade : Takeover liquidation
 	ExecTypeV5BustTrade = ExecTypeV5("BustTrade")
+	// ExecTypeV5Delivery : USDC futures delivery; Position closed by contract delisted
+	ExecTypeV5Delivery = ExecTypeV5("Delivery")
 	// ExecTypeV5SessionSettlePnL :
 	ExecTypeV5SessionSettlePnL = ExecTypeV5("SessionSettlePnL")
 	// ExecTypeV5Settle :
 	ExecTypeV5Settle = ExecTypeV5("Settle")
+	// ExecTypeV5BlockTrade :
+	ExecTypeV5BlockTrade = ExecTypeV5("BlockTrade")
+	// ExecTypeV5MovePosition :
+	ExecTypeV5MovePosition = ExecTypeV5("MovePosition")
+	// ExecTypeV5UNKNOWN : May be returned by a classic account. Cannot query by this type
+	ExecTypeV5UNKNOWN = ExecTypeV5("UNKNOWN")
 )
 
 // TransferStatusV5 :
@@ -213,17 +218,26 @@ const (
 type AccountTypeV5 string
 
 const (
-	// AccountTypeV5CONTRACT :
+	// AccountTypeV5CONTRACT
+	// Classic: Derivatives Account
+	// UTA: 	Inverse Derivatives Account
 	AccountTypeV5CONTRACT = AccountTypeV5("CONTRACT")
-	// AccountTypeV5SPOT :
+	// AccountTypeV5SPOT
+	// Classic: Spot Account
 	AccountTypeV5SPOT = AccountTypeV5("SPOT")
-	// AccountTypeV5INVESTMENT :
+	// AccountTypeV5INVESTMENT
+	// Classic: ByFi Account
+	// Deprecated: this service is now offline
 	AccountTypeV5INVESTMENT = AccountTypeV5("INVESTMENT")
-	// AccountTypeV5OPTION :
+	// AccountTypeV5OPTION
+	// Classic: USDC Derivatives
 	AccountTypeV5OPTION = AccountTypeV5("OPTION")
-	// AccountTypeV5UNIFIED :
+	// AccountTypeV5UNIFIED
+	// UTA: Unified Trading Account
 	AccountTypeV5UNIFIED = AccountTypeV5("UNIFIED")
-	// AccountTypeV5FUND :
+	// AccountTypeV5FUND
+	// Classic: Funding Account
+	// UTA: 	Funding Account
 	AccountTypeV5FUND = AccountTypeV5("FUND")
 )
 
@@ -234,9 +248,12 @@ const (
 	// UnifiedMarginStatusRegular : Regular account
 	UnifiedMarginStatusRegular = UnifiedMarginStatus(1)
 	// UnifiedMarginStatusUnifiedMargin : Unified margin account, it only trades linear perpetual and options.
+	// Deprecated: Is not used anymore - Please ignore
 	UnifiedMarginStatusUnifiedMargin = UnifiedMarginStatus(2)
 	// UnifiedMarginStatusUnifiedTrade : Unified trade account, it can trade linear perpetual, options and spot
 	UnifiedMarginStatusUnifiedTrade = UnifiedMarginStatus(3)
+	// UnifiedMarginStatusUTAPro : UTA Pro, the pro version of Unified trade account
+	UnifiedMarginStatusUTAPro = UnifiedMarginStatus(4)
 )
 
 // TransactionLogTypeV5 :
