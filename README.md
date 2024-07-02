@@ -359,6 +359,7 @@ The following API endpoints have been implemented
 - [Position](https://bybit-exchange.github.io/docs/v5/websocket/private/position)
 - [Order](https://bybit-exchange.github.io/docs/v5/websocket/private/order)
 - [Wallet](https://bybit-exchange.github.io/docs/v5/websocket/private/wallet)
+- [Execution](https://bybit-exchange.github.io/docs/v5/websocket/private/execution)
 
 #### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
 
