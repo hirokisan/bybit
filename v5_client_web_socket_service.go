@@ -42,11 +42,12 @@ func (s *V5WebsocketService) Private() (V5WebsocketPrivateServiceI, error) {
 		return nil, err
 	}
 	return &V5WebsocketPrivateService{
-		client:           s.client,
-		connection:       c,
-		paramOrderMap:    make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateOrderResponse) error),
-		paramPositionMap: make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error),
-		paramWalletMap:   make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateWalletResponse) error),
+		client:            s.client,
+		connection:        c,
+		paramOrderMap:     make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateOrderResponse) error),
+		paramPositionMap:  make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error),
+		paramExecutionMap: make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateExecutionResponse) error),
+		paramWalletMap:    make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateWalletResponse) error),
 	}, nil
 }
 
