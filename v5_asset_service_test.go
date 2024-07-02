@@ -837,7 +837,7 @@ func TestV5Asset_Withdraw(t *testing.T) {
 			Amount:      "24",
 			Timestamp:   1672196561407,
 			ForceChain:  testhelper.Ptr(true),
-			AccountType: testhelper.Ptr(AccountTypeFunding),
+			AccountType: testhelper.Ptr(AccountTypeV5FUND),
 			FeeType:     testhelper.Ptr(0),
 		}
 
@@ -877,7 +877,7 @@ func TestV5Asset_Withdraw(t *testing.T) {
 			Amount:      "24",
 			Timestamp:   1672196561407,
 			ForceChain:  testhelper.Ptr(true),
-			AccountType: testhelper.Ptr(AccountTypeFunding),
+			AccountType: testhelper.Ptr(AccountTypeV5FUND),
 			FeeType:     testhelper.Ptr(0),
 		}
 

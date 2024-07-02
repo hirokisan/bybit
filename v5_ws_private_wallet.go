@@ -70,7 +70,7 @@ type V5WebsocketPrivateWalletData struct {
 	TotalPerpUPL           string                         `json:"totalPerpUPL"`
 	TotalInitialMargin     string                         `json:"totalInitialMargin"`
 	TotalMaintenanceMargin string                         `json:"totalMaintenanceMargin"`
-	AccountType            AccountType                    `json:"accountType"`
+	AccountType            AccountTypeV5                  `json:"accountType"`
 	Coins                  []V5WebsocketPrivateWalletCoin `json:"coin"`
 }
 

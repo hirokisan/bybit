@@ -582,9 +582,9 @@ func (s *V5AssetService) GetCoinInfo(param V5GetCoinInfoParam) (*V5GetCoinInfoRe
 
 // V5GetAllCoinsBalanceParam :
 type V5GetAllCoinsBalanceParam struct {
-	AccountType AccountType `url:"accountType"`
-	MemberID    string      `url:"memberId,omitempty"`
-	WithBonus   string      `url:"withBonus,omitempty"`
+	AccountType AccountTypeV5 `url:"accountType"`
+	MemberID    string        `url:"memberId,omitempty"`
+	WithBonus   string        `url:"withBonus,omitempty"`
 	Coins       []Coin
 }
 
@@ -597,7 +597,7 @@ type V5GetAllCoinsBalanceResponse struct {
 // V5GetAllCoinsBalanceResult :
 type V5GetAllCoinsBalanceResult struct {
 	MemberID    string                         `json:"memberId"`
-	AccountType AccountType                    `json:"accountType"`
+	AccountType AccountTypeV5                  `json:"accountType"`
 	Balance     []*V5GetAllCoinsBalanceBalance `json:"balance"`
 }
 
@@ -649,12 +649,12 @@ type V5WithdrawParam struct {
 	Amount    string `json:"amount"`
 	Timestamp int64  `json:"timestamp"`
 
-	Chain       *string      `json:"chain,omitempty"`
-	Tag         *string      `json:"tag,omitempty"`
-	ForceChain  *bool        `json:"forceChain,omitempty"`
-	AccountType *AccountType `json:"accountType,omitempty"`
-	FeeType     *int         `json:"feeType,omitempty"`
-	RequestID   *string      `json:"requestId,omitempty"`
+	Chain       *string        `json:"chain,omitempty"`
+	Tag         *string        `json:"tag,omitempty"`
+	ForceChain  *bool          `json:"forceChain,omitempty"`
+	AccountType *AccountTypeV5 `json:"accountType,omitempty"`
+	FeeType     *int           `json:"feeType,omitempty"`
+	RequestID   *string        `json:"requestId,omitempty"`
 }
 
 func (s *V5AssetService) Withdraw(param V5WithdrawParam) (*V5WithdrawResponse, error) {

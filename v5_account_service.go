@@ -2,6 +2,7 @@ package bybit
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/url"
 	"strings"
 
@@ -10,7 +11,7 @@ import (
 
 // V5AccountServiceI :
 type V5AccountServiceI interface {
-	GetWalletBalance(AccountType, []Coin) (*V5GetWalletBalanceResponse, error)
+	GetWalletBalance(AccountTypeV5, []Coin) (*V5GetWalletBalanceResponse, error)
 	SetCollateralCoin(V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error)
 	GetCollateralInfo(V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error)
 	GetAccountInfo() (*V5GetAccountInfoResponse, error)
@@ -69,12 +70,17 @@ type V5WalletBalanceList struct {
 
 // GetWalletBalance :
 //
-// at: UNIFIED or CONTRACT
+// at: UNIFIED, CONTRACT, SPOT
 //
 // coin:
 // If not passed, it returns non-zero asset info
 // You can pass multiple coins to query, separated by comma. "USDT,USDC".
-func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5GetWalletBalanceResponse, error) {
+func (s *V5AccountService) GetWalletBalance(at AccountTypeV5, coins []Coin) (*V5GetWalletBalanceResponse, error) {
+	switch at {
+	case AccountTypeV5UNIFIED, AccountTypeV5CONTRACT, AccountTypeV5SPOT:
+	default:
+		return nil, fmt.Errorf("wrong account type")
+	}
 	var (
 		res   V5GetWalletBalanceResponse
 		query = make(url.Values)

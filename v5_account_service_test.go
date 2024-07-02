@@ -65,7 +65,7 @@ func TestV5Account_GetWalletBalance(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Account().GetWalletBalance(AccountTypeUnified, nil)
+		resp, err := client.V5().Account().GetWalletBalance(AccountTypeV5UNIFIED, nil)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
