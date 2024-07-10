@@ -49,7 +49,7 @@ func TestV5MarketGetKline(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetKline(param)
+	resp, err := client.V5().Market().GetKline(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -93,7 +93,7 @@ func TestV5Market_GetMarkPriceKline(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetMarkPriceKline(param)
+	resp, err := client.V5().Market().GetMarkPriceKline(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -141,7 +141,7 @@ func TestV5Market_GetIndexPriceKline(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetIndexPriceKline(param)
+	resp, err := client.V5().Market().GetIndexPriceKline(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -189,7 +189,7 @@ func TestV5Market_GetPremiumIndexPriceKline(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetPremiumIndexPriceKline(param)
+	resp, err := client.V5().Market().GetPremiumIndexPriceKline(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -414,7 +414,7 @@ func TestV5Market_GetOrderbook(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetOrderbook(param)
+	resp, err := client.V5().Market().GetOrderbook(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -475,7 +475,7 @@ func TestV5Market_GetTickers(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		resp, err := client.V5().Market().GetTickers(param)
+		resp, err := client.V5().Market().GetTickers(context.Background(), param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -536,7 +536,7 @@ func TestV5Market_GetTickers(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		resp, err := client.V5().Market().GetTickers(param)
+		resp, err := client.V5().Market().GetTickers(context.Background(), param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -583,7 +583,7 @@ func TestV5Market_GetTickers(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		resp, err := client.V5().Market().GetTickers(param)
+		resp, err := client.V5().Market().GetTickers(context.Background(), param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -623,7 +623,7 @@ func TestV5Market_GetFundingRateHistory(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetFundingRateHistory(param)
+	resp, err := client.V5().Market().GetFundingRateHistory(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -666,7 +666,7 @@ func TestV5Market_GetPublicTradingHistory(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetPublicTradingHistory(param)
+	resp, err := client.V5().Market().GetPublicTradingHistory(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -707,7 +707,7 @@ func TestV5Market_GetOpenInterest(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetOpenInterest(param)
+	resp, err := client.V5().Market().GetOpenInterest(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -743,7 +743,7 @@ func TestV5Market_GetHistoricalVolatility(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetHistoricalVolatility(param)
+	resp, err := client.V5().Market().GetHistoricalVolatility(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -835,7 +835,7 @@ func TestV5Market_GetInsurance(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetInsurance(param)
+	resp, err := client.V5().Market().GetInsurance(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -886,7 +886,7 @@ func TestV5Market_GetRiskLimit(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.V5().Market().GetRiskLimit(param)
+	resp, err := client.V5().Market().GetRiskLimit(context.Background(), param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)

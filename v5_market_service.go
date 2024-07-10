@@ -11,19 +11,19 @@ import (
 
 // V5MarketServiceI :
 type V5MarketServiceI interface {
-	GetKline(V5GetKlineParam) (*V5GetKlineResponse, error)
-	GetMarkPriceKline(V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error)
-	GetIndexPriceKline(V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error)
-	GetPremiumIndexPriceKline(V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error)
+	GetKline(context.Context, V5GetKlineParam) (*V5GetKlineResponse, error)
+	GetMarkPriceKline(context.Context, V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error)
+	GetIndexPriceKline(context.Context, V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error)
+	GetPremiumIndexPriceKline(context.Context, V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error)
 	GetInstrumentsInfo(context.Context, V5GetInstrumentsInfoParam) (*V5GetInstrumentsInfoResponse, error)
-	GetOrderbook(V5GetOrderbookParam) (*V5GetOrderbookResponse, error)
-	GetTickers(V5GetTickersParam) (*V5GetTickersResponse, error)
-	GetFundingRateHistory(V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error)
-	GetPublicTradingHistory(V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error)
-	GetOpenInterest(V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error)
-	GetHistoricalVolatility(V5GetHistoricalVolatilityParam) (*V5GetHistoricalVolatilityResponse, error)
-	GetInsurance(V5GetInsuranceParam) (*V5GetInsuranceResponse, error)
-	GetRiskLimit(V5GetRiskLimitParam) (*V5GetRiskLimitResponse, error)
+	GetOrderbook(context.Context, V5GetOrderbookParam) (*V5GetOrderbookResponse, error)
+	GetTickers(context.Context, V5GetTickersParam) (*V5GetTickersResponse, error)
+	GetFundingRateHistory(context.Context, V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error)
+	GetPublicTradingHistory(context.Context, V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error)
+	GetOpenInterest(context.Context, V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error)
+	GetHistoricalVolatility(context.Context, V5GetHistoricalVolatilityParam) (*V5GetHistoricalVolatilityResponse, error)
+	GetInsurance(context.Context, V5GetInsuranceParam) (*V5GetInsuranceResponse, error)
+	GetRiskLimit(context.Context, V5GetRiskLimitParam) (*V5GetRiskLimitResponse, error)
 }
 
 // V5MarketService :
@@ -93,7 +93,7 @@ func (l *V5GetKlineList) UnmarshalJSON(data []byte) error {
 }
 
 // GetKline :
-func (s *V5MarketService) GetKline(param V5GetKlineParam) (*V5GetKlineResponse, error) {
+func (s *V5MarketService) GetKline(ctx context.Context, param V5GetKlineParam) (*V5GetKlineResponse, error) {
 	var res V5GetKlineResponse
 
 	queryString, err := query.Values(param)
@@ -101,7 +101,7 @@ func (s *V5MarketService) GetKline(param V5GetKlineParam) (*V5GetKlineResponse, 
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/kline", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -165,7 +165,7 @@ func (l *V5GetMarkPriceKlineList) UnmarshalJSON(data []byte) error {
 }
 
 // GetMarkPriceKline :
-func (s *V5MarketService) GetMarkPriceKline(param V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error) {
+func (s *V5MarketService) GetMarkPriceKline(ctx context.Context, param V5GetMarkPriceKlineParam) (*V5GetMarkPriceKlineResponse, error) {
 	var res V5GetMarkPriceKlineResponse
 
 	if param.Category != CategoryV5Linear && param.Category != CategoryV5Inverse {
@@ -177,7 +177,7 @@ func (s *V5MarketService) GetMarkPriceKline(param V5GetMarkPriceKlineParam) (*V5
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/mark-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/mark-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -241,7 +241,7 @@ func (l *V5GetIndexPriceKlineList) UnmarshalJSON(data []byte) error {
 }
 
 // GetIndexPriceKline :
-func (s *V5MarketService) GetIndexPriceKline(param V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error) {
+func (s *V5MarketService) GetIndexPriceKline(ctx context.Context, param V5GetIndexPriceKlineParam) (*V5GetIndexPriceKlineResponse, error) {
 	var res V5GetIndexPriceKlineResponse
 
 	if param.Category != CategoryV5Linear && param.Category != CategoryV5Inverse {
@@ -253,7 +253,7 @@ func (s *V5MarketService) GetIndexPriceKline(param V5GetIndexPriceKlineParam) (*
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/index-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/index-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -318,7 +318,7 @@ func (l *V5GetPremiumIndexPriceKlineList) UnmarshalJSON(data []byte) error {
 }
 
 // GetPremiumIndexPriceKline :
-func (s *V5MarketService) GetPremiumIndexPriceKline(param V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error) {
+func (s *V5MarketService) GetPremiumIndexPriceKline(ctx context.Context, param V5GetPremiumIndexPriceKlineParam) (*V5GetPremiumIndexPriceKlineResponse, error) {
 	var res V5GetPremiumIndexPriceKlineResponse
 
 	if param.Category != CategoryV5Linear {
@@ -330,7 +330,7 @@ func (s *V5MarketService) GetPremiumIndexPriceKline(param V5GetPremiumIndexPrice
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/premium-index-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/premium-index-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -571,7 +571,7 @@ type V5GetOrderbookBidAsk struct {
 }
 
 // GetOrderbook :
-func (s *V5MarketService) GetOrderbook(param V5GetOrderbookParam) (*V5GetOrderbookResponse, error) {
+func (s *V5MarketService) GetOrderbook(ctx context.Context, param V5GetOrderbookParam) (*V5GetOrderbookResponse, error) {
 	var res V5GetOrderbookResponse
 
 	queryString, err := query.Values(param)
@@ -579,7 +579,7 @@ func (s *V5MarketService) GetOrderbook(param V5GetOrderbookParam) (*V5GetOrderbo
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/orderbook", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/orderbook", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -738,7 +738,7 @@ type V5GetTickersSpotItem struct {
 }
 
 // GetTickers :
-func (s *V5MarketService) GetTickers(param V5GetTickersParam) (*V5GetTickersResponse, error) {
+func (s *V5MarketService) GetTickers(ctx context.Context, param V5GetTickersParam) (*V5GetTickersResponse, error) {
 	var res V5GetTickersResponse
 
 	if err := param.validate(); err != nil {
@@ -750,7 +750,7 @@ func (s *V5MarketService) GetTickers(param V5GetTickersParam) (*V5GetTickersResp
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/tickers", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/tickers", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -793,7 +793,7 @@ type V5GetFundingRateHistoryItem struct {
 }
 
 // GetFundingRateHistory :
-func (s *V5MarketService) GetFundingRateHistory(param V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error) {
+func (s *V5MarketService) GetFundingRateHistory(ctx context.Context, param V5GetFundingRateHistoryParam) (*V5GetFundingRateHistoryResponse, error) {
 	var res V5GetFundingRateHistoryResponse
 
 	if err := param.validate(); err != nil {
@@ -805,7 +805,7 @@ func (s *V5MarketService) GetFundingRateHistory(param V5GetFundingRateHistoryPar
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/funding/history", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/funding/history", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -856,7 +856,7 @@ type V5GetPublicTradingHistoryItem struct {
 }
 
 // GetPublicTradingHistory :
-func (s *V5MarketService) GetPublicTradingHistory(param V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error) {
+func (s *V5MarketService) GetPublicTradingHistory(ctx context.Context, param V5GetPublicTradingHistoryParam) (*V5GetPublicTradingHistoryResponse, error) {
 	var res V5GetPublicTradingHistoryResponse
 
 	if err := param.validate(); err != nil {
@@ -868,7 +868,7 @@ func (s *V5MarketService) GetPublicTradingHistory(param V5GetPublicTradingHistor
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/recent-trade", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/recent-trade", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -914,7 +914,7 @@ type V5GetOpenInterestItem struct {
 }
 
 // GetOpenInterest :
-func (s *V5MarketService) GetOpenInterest(param V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error) {
+func (s *V5MarketService) GetOpenInterest(ctx context.Context, param V5GetOpenInterestParam) (*V5GetOpenInterestResponse, error) {
 	var res V5GetOpenInterestResponse
 
 	if err := param.validate(); err != nil {
@@ -926,7 +926,7 @@ func (s *V5MarketService) GetOpenInterest(param V5GetOpenInterestParam) (*V5GetO
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/open-interest", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/open-interest", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -991,7 +991,7 @@ type V5GetHistoricalVolatilityListItem struct {
 }
 
 // GetHistoricalVolatility :
-func (s *V5MarketService) GetHistoricalVolatility(param V5GetHistoricalVolatilityParam) (*V5GetHistoricalVolatilityResponse, error) {
+func (s *V5MarketService) GetHistoricalVolatility(ctx context.Context, param V5GetHistoricalVolatilityParam) (*V5GetHistoricalVolatilityResponse, error) {
 	var res V5GetHistoricalVolatilityResponse
 
 	if err := param.validate(); err != nil {
@@ -1003,7 +1003,7 @@ func (s *V5MarketService) GetHistoricalVolatility(param V5GetHistoricalVolatilit
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/historical-volatility", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/historical-volatility", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -1034,7 +1034,7 @@ type V5GetInsuranceItem struct {
 }
 
 // GetInsurance :
-func (s *V5MarketService) GetInsurance(param V5GetInsuranceParam) (*V5GetInsuranceResponse, error) {
+func (s *V5MarketService) GetInsurance(ctx context.Context, param V5GetInsuranceParam) (*V5GetInsuranceResponse, error) {
 	var res V5GetInsuranceResponse
 
 	queryString, err := query.Values(param)
@@ -1042,7 +1042,7 @@ func (s *V5MarketService) GetInsurance(param V5GetInsuranceParam) (*V5GetInsuran
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/insurance", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/insurance", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -1086,7 +1086,7 @@ type V5GetRiskLimitItem struct {
 }
 
 // GetRiskLimit :
-func (s *V5MarketService) GetRiskLimit(param V5GetRiskLimitParam) (*V5GetRiskLimitResponse, error) {
+func (s *V5MarketService) GetRiskLimit(ctx context.Context, param V5GetRiskLimitParam) (*V5GetRiskLimitResponse, error) {
 	var res V5GetRiskLimitResponse
 
 	if err := param.validate(); err != nil {
@@ -1098,7 +1098,7 @@ func (s *V5MarketService) GetRiskLimit(param V5GetRiskLimitParam) (*V5GetRiskLim
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v5/market/risk-limit", queryString, &res); err != nil {
+	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/risk-limit", queryString, &res); err != nil {
 		return nil, err
 	}
 
