@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/url"
@@ -11,35 +12,35 @@ import (
 // FutureUSDTPerpetualServiceI :
 type FutureUSDTPerpetualServiceI interface {
 	// Market Data Endpoints
-	OrderBook(SymbolFuture) (*OrderBookResponse, error)
-	ListLinearKline(ListLinearKlineParam) (*ListLinearKlineResponse, error)
-	Tickers(SymbolFuture) (*TickersResponse, error)
-	Symbols() (*SymbolsResponse, error)
-	OpenInterest(OpenInterestParam) (*OpenInterestResponse, error)
-	BigDeal(BigDealParam) (*BigDealResponse, error)
-	AccountRatio(AccountRatioParam) (*AccountRatioResponse, error)
+	OrderBook(context.Context, SymbolFuture) (*OrderBookResponse, error)
+	ListLinearKline(context.Context, ListLinearKlineParam) (*ListLinearKlineResponse, error)
+	Tickers(context.Context, SymbolFuture) (*TickersResponse, error)
+	Symbols(context.Context) (*SymbolsResponse, error)
+	OpenInterest(context.Context, OpenInterestParam) (*OpenInterestResponse, error)
+	BigDeal(context.Context, BigDealParam) (*BigDealResponse, error)
+	AccountRatio(context.Context, AccountRatioParam) (*AccountRatioResponse, error)
 
 	// Account Data Endpoints
-	CreateLinearOrder(CreateLinearOrderParam) (*CreateLinearOrderResponse, error)
-	ListLinearOrder(ListLinearOrderParam) (*ListLinearOrderResponse, error)
-	CancelLinearOrder(CancelLinearOrderParam) (*CancelLinearOrderResponse, error)
-	LinearCancelAllOrder(LinearCancelAllParam) (*LinearCancelAllResponse, error)
-	ReplaceLinearOrder(ReplaceLinearOrderParam) (*ReplaceLinearOrderResponse, error)
-	QueryLinearOrder(QueryLinearOrderParam) (*QueryLinearOrderResponse, error)
-	CreateLinearStopOrder(CreateLinearStopOrderParam) (*CreateLinearStopOrderResponse, error)
-	ListLinearStopOrder(ListLinearStopOrderParam) (*ListLinearStopOrderResponse, error)
-	CancelLinearStopOrder(CancelLinearStopOrderParam) (*CancelLinearStopOrderResponse, error)
-	CancelAllLinearStopOrder(CancelAllLinearStopOrderParam) (*CancelAllLinearStopOrderResponse, error)
-	QueryLinearStopOrder(QueryLinearStopOrderParam) (*QueryLinearStopOrderResponse, error)
-	ListLinearPosition(SymbolFuture) (*ListLinearPositionResponse, error)
-	ListLinearPositions() (*ListLinearPositionsResponse, error)
-	SaveLinearLeverage(SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error)
-	LinearTradingStop(LinearTradingStopParam) (*LinearTradingStopResponse, error)
-	LinearExecutionList(LinearExecutionListParam) (*LinearExecutionListResponse, error)
-	APIKeyInfo() (*APIKeyInfoResponse, error)
+	CreateLinearOrder(context.Context, CreateLinearOrderParam) (*CreateLinearOrderResponse, error)
+	ListLinearOrder(context.Context, ListLinearOrderParam) (*ListLinearOrderResponse, error)
+	CancelLinearOrder(context.Context, CancelLinearOrderParam) (*CancelLinearOrderResponse, error)
+	LinearCancelAllOrder(context.Context, LinearCancelAllParam) (*LinearCancelAllResponse, error)
+	ReplaceLinearOrder(context.Context, ReplaceLinearOrderParam) (*ReplaceLinearOrderResponse, error)
+	QueryLinearOrder(context.Context, QueryLinearOrderParam) (*QueryLinearOrderResponse, error)
+	CreateLinearStopOrder(context.Context, CreateLinearStopOrderParam) (*CreateLinearStopOrderResponse, error)
+	ListLinearStopOrder(context.Context, ListLinearStopOrderParam) (*ListLinearStopOrderResponse, error)
+	CancelLinearStopOrder(context.Context, CancelLinearStopOrderParam) (*CancelLinearStopOrderResponse, error)
+	CancelAllLinearStopOrder(context.Context, CancelAllLinearStopOrderParam) (*CancelAllLinearStopOrderResponse, error)
+	QueryLinearStopOrder(context.Context, QueryLinearStopOrderParam) (*QueryLinearStopOrderResponse, error)
+	ListLinearPosition(context.Context, SymbolFuture) (*ListLinearPositionResponse, error)
+	ListLinearPositions(context.Context) (*ListLinearPositionsResponse, error)
+	SaveLinearLeverage(context.Context, SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error)
+	LinearTradingStop(context.Context, LinearTradingStopParam) (*LinearTradingStopResponse, error)
+	LinearExecutionList(context.Context, LinearExecutionListParam) (*LinearExecutionListResponse, error)
+	APIKeyInfo(context.Context) (*APIKeyInfoResponse, error)
 
 	// Wallet Data Endpoints
-	Balance(Coin) (*BalanceResponse, error)
+	Balance(context.Context, Coin) (*BalanceResponse, error)
 }
 
 // FutureUSDTPerpetualService :
@@ -80,7 +81,7 @@ type ListLinearKlineResult struct {
 }
 
 // ListLinearKline :
-func (s *FutureCommonService) ListLinearKline(param ListLinearKlineParam) (*ListLinearKlineResponse, error) {
+func (s *FutureCommonService) ListLinearKline(ctx context.Context, param ListLinearKlineParam) (*ListLinearKlineResponse, error) {
 	var res ListLinearKlineResponse
 
 	queryString, err := query.Values(param)
@@ -88,7 +89,7 @@ func (s *FutureCommonService) ListLinearKline(param ListLinearKlineParam) (*List
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/public/linear/kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/public/linear/kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -152,7 +153,7 @@ type CreateLinearOrderParam struct {
 }
 
 // CreateLinearOrder :
-func (s *FutureUSDTPerpetualService) CreateLinearOrder(param CreateLinearOrderParam) (*CreateLinearOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) CreateLinearOrder(ctx context.Context, param CreateLinearOrderParam) (*CreateLinearOrderResponse, error) {
 	var res CreateLinearOrderResponse
 
 	body, err := json.Marshal(param)
@@ -160,7 +161,7 @@ func (s *FutureUSDTPerpetualService) CreateLinearOrder(param CreateLinearOrderPa
 		return nil, fmt.Errorf("json marshal for CreateLinearOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/private/linear/order/create", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/private/linear/order/create", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -218,7 +219,7 @@ type ListLinearOrderParam struct {
 }
 
 // ListLinearOrder :
-func (s *FutureUSDTPerpetualService) ListLinearOrder(param ListLinearOrderParam) (*ListLinearOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) ListLinearOrder(ctx context.Context, param ListLinearOrderParam) (*ListLinearOrderResponse, error) {
 	var res ListLinearOrderResponse
 
 	queryString, err := query.Values(param)
@@ -226,7 +227,7 @@ func (s *FutureUSDTPerpetualService) ListLinearOrder(param ListLinearOrderParam)
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/private/linear/order/list", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/private/linear/order/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -264,13 +265,13 @@ type ListLinearPositionResult struct {
 }
 
 // ListLinearPosition :
-func (s *FutureUSDTPerpetualService) ListLinearPosition(symbol SymbolFuture) (*ListLinearPositionResponse, error) {
+func (s *FutureUSDTPerpetualService) ListLinearPosition(ctx context.Context, symbol SymbolFuture) (*ListLinearPositionResponse, error) {
 	var res ListLinearPositionResponse
 
 	query := url.Values{}
 	query.Add("symbol", string(symbol))
 
-	if err := s.client.getPrivately("/private/linear/position/list", query, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/private/linear/position/list", query, &res); err != nil {
 		return nil, err
 	}
 
@@ -290,10 +291,10 @@ type ListLinearPositionsResult struct {
 }
 
 // ListLinearPositions :
-func (s *FutureUSDTPerpetualService) ListLinearPositions() (*ListLinearPositionsResponse, error) {
+func (s *FutureUSDTPerpetualService) ListLinearPositions(ctx context.Context) (*ListLinearPositionsResponse, error) {
 	var res ListLinearPositionsResponse
 
-	if err := s.client.getPrivately("/private/linear/position/list", nil, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/private/linear/position/list", nil, &res); err != nil {
 		return nil, err
 	}
 
@@ -325,7 +326,7 @@ type CancelLinearOrderParam struct {
 }
 
 // CancelLinearOrder :
-func (s *FutureUSDTPerpetualService) CancelLinearOrder(param CancelLinearOrderParam) (*CancelLinearOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) CancelLinearOrder(ctx context.Context, param CancelLinearOrderParam) (*CancelLinearOrderResponse, error) {
 	var res CancelLinearOrderResponse
 
 	if param.OrderID == nil && param.OrderLinkID == nil {
@@ -337,7 +338,7 @@ func (s *FutureUSDTPerpetualService) CancelLinearOrder(param CancelLinearOrderPa
 		return nil, fmt.Errorf("json marshal for CancelLinearOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/private/linear/order/cancel", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/private/linear/order/cancel", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -357,7 +358,7 @@ type SaveLinearLeverageParam struct {
 }
 
 // SaveLinearLeverage :
-func (s *FutureUSDTPerpetualService) SaveLinearLeverage(param SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error) {
+func (s *FutureUSDTPerpetualService) SaveLinearLeverage(ctx context.Context, param SaveLinearLeverageParam) (*SaveLinearLeverageResponse, error) {
 	var res SaveLinearLeverageResponse
 
 	body, err := json.Marshal(param)
@@ -365,7 +366,7 @@ func (s *FutureUSDTPerpetualService) SaveLinearLeverage(param SaveLinearLeverage
 		return nil, fmt.Errorf("json marshal for SaveLinearLeverageParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/private/linear/position/set-leverage", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/private/linear/position/set-leverage", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -393,7 +394,7 @@ type LinearTradingStopParam struct {
 }
 
 // LinearTradingStop :
-func (s *FutureUSDTPerpetualService) LinearTradingStop(param LinearTradingStopParam) (*LinearTradingStopResponse, error) {
+func (s *FutureUSDTPerpetualService) LinearTradingStop(ctx context.Context, param LinearTradingStopParam) (*LinearTradingStopResponse, error) {
 	var res LinearTradingStopResponse
 
 	body, err := json.Marshal(param)
@@ -401,7 +402,7 @@ func (s *FutureUSDTPerpetualService) LinearTradingStop(param LinearTradingStopPa
 		return nil, fmt.Errorf("json marshal for LinearTradingStopParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/private/linear/position/trading-stop", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/private/linear/position/trading-stop", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -453,7 +454,7 @@ type LinearExecutionListParam struct {
 }
 
 // LinearExecutionList :
-func (s *FutureUSDTPerpetualService) LinearExecutionList(param LinearExecutionListParam) (*LinearExecutionListResponse, error) {
+func (s *FutureUSDTPerpetualService) LinearExecutionList(ctx context.Context, param LinearExecutionListParam) (*LinearExecutionListResponse, error) {
 	var res LinearExecutionListResponse
 
 	queryString, err := query.Values(param)
@@ -461,7 +462,7 @@ func (s *FutureUSDTPerpetualService) LinearExecutionList(param LinearExecutionLi
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/private/linear/trade/execution/list", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/private/linear/trade/execution/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -482,7 +483,7 @@ type LinearCancelAllResponse struct {
 type LinearCancelAllResult []string
 
 // LinearCancelAllOrder : Cancel all active orders that are unfilled or partially filled. Fully filled orders cannot be cancelled.
-func (s *FutureUSDTPerpetualService) LinearCancelAllOrder(param LinearCancelAllParam) (*LinearCancelAllResponse, error) {
+func (s *FutureUSDTPerpetualService) LinearCancelAllOrder(ctx context.Context, param LinearCancelAllParam) (*LinearCancelAllResponse, error) {
 	var res LinearCancelAllResponse
 
 	body, err := json.Marshal(param)
@@ -490,7 +491,7 @@ func (s *FutureUSDTPerpetualService) LinearCancelAllOrder(param LinearCancelAllP
 		return &res, fmt.Errorf("json marshal for LinearCancelAllParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/private/linear/order/cancel-all", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/private/linear/order/cancel-all", body, &res); err != nil {
 		return &res, err
 	}
 
@@ -523,7 +524,7 @@ type ReplaceLinearOrderParam struct {
 }
 
 // ReplaceLinearOrder :
-func (s *FutureUSDTPerpetualService) ReplaceLinearOrder(param ReplaceLinearOrderParam) (*ReplaceLinearOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) ReplaceLinearOrder(ctx context.Context, param ReplaceLinearOrderParam) (*ReplaceLinearOrderResponse, error) {
 	var res ReplaceLinearOrderResponse
 
 	body, err := json.Marshal(param)
@@ -531,7 +532,7 @@ func (s *FutureUSDTPerpetualService) ReplaceLinearOrder(param ReplaceLinearOrder
 		return nil, fmt.Errorf("json marshal for ReplaceLinearOrderResult: %w", err)
 	}
 
-	if err := s.client.postJSON("/private/linear/order/replace", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/private/linear/order/replace", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -579,7 +580,7 @@ type QueryLinearOrderParam struct {
 }
 
 // QueryLinearOrder :
-func (s *FutureUSDTPerpetualService) QueryLinearOrder(param QueryLinearOrderParam) (*QueryLinearOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) QueryLinearOrder(ctx context.Context, param QueryLinearOrderParam) (*QueryLinearOrderResponse, error) {
 	var res QueryLinearOrderResponse
 
 	queryString, err := query.Values(param)
@@ -587,7 +588,7 @@ func (s *FutureUSDTPerpetualService) QueryLinearOrder(param QueryLinearOrderPara
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/private/linear/order/search", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/private/linear/order/search", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -649,7 +650,7 @@ type CreateLinearStopOrderParam struct {
 }
 
 // CreateLinearStopOrder :
-func (s *FutureUSDTPerpetualService) CreateLinearStopOrder(param CreateLinearStopOrderParam) (*CreateLinearStopOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) CreateLinearStopOrder(ctx context.Context, param CreateLinearStopOrderParam) (*CreateLinearStopOrderResponse, error) {
 	var res CreateLinearStopOrderResponse
 
 	body, err := json.Marshal(param)
@@ -657,7 +658,7 @@ func (s *FutureUSDTPerpetualService) CreateLinearStopOrder(param CreateLinearSto
 		return nil, fmt.Errorf("json marshal for CreateLinearStopOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/private/linear/stop-order/create", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/private/linear/stop-order/create", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -715,7 +716,7 @@ type ListLinearStopOrderParam struct {
 }
 
 // ListLinearStopOrder :
-func (s *FutureUSDTPerpetualService) ListLinearStopOrder(param ListLinearStopOrderParam) (*ListLinearStopOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) ListLinearStopOrder(ctx context.Context, param ListLinearStopOrderParam) (*ListLinearStopOrderResponse, error) {
 	var res ListLinearStopOrderResponse
 
 	queryString, err := query.Values(param)
@@ -723,7 +724,7 @@ func (s *FutureUSDTPerpetualService) ListLinearStopOrder(param ListLinearStopOrd
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/private/linear/stop-order/list", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/private/linear/stop-order/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -750,7 +751,7 @@ type CancelLinearStopOrderParam struct {
 }
 
 // CancelLinearStopOrder :
-func (s *FutureUSDTPerpetualService) CancelLinearStopOrder(param CancelLinearStopOrderParam) (*CancelLinearStopOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) CancelLinearStopOrder(ctx context.Context, param CancelLinearStopOrderParam) (*CancelLinearStopOrderResponse, error) {
 	var res CancelLinearStopOrderResponse
 
 	if param.StopOrderID == nil && param.OrderLinkID == nil {
@@ -762,7 +763,7 @@ func (s *FutureUSDTPerpetualService) CancelLinearStopOrder(param CancelLinearSto
 		return nil, fmt.Errorf("json marshal for CancelLinearStopOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/private/linear/stop-order/cancel", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/private/linear/stop-order/cancel", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -784,7 +785,7 @@ type CancelAllLinearStopOrderParam struct {
 }
 
 // CancelAllLinearStopOrder :
-func (s *FutureUSDTPerpetualService) CancelAllLinearStopOrder(param CancelAllLinearStopOrderParam) (*CancelAllLinearStopOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) CancelAllLinearStopOrder(ctx context.Context, param CancelAllLinearStopOrderParam) (*CancelAllLinearStopOrderResponse, error) {
 	var res CancelAllLinearStopOrderResponse
 
 	body, err := json.Marshal(param)
@@ -792,7 +793,7 @@ func (s *FutureUSDTPerpetualService) CancelAllLinearStopOrder(param CancelAllLin
 		return nil, fmt.Errorf("json marshal for CancelAllLinearStopOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/private/linear/stop-order/cancel-all", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/private/linear/stop-order/cancel-all", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -839,7 +840,7 @@ type QueryLinearStopOrderParam struct {
 }
 
 // QueryLinearStopOrder :
-func (s *FutureUSDTPerpetualService) QueryLinearStopOrder(param QueryLinearStopOrderParam) (*QueryLinearStopOrderResponse, error) {
+func (s *FutureUSDTPerpetualService) QueryLinearStopOrder(ctx context.Context, param QueryLinearStopOrderParam) (*QueryLinearStopOrderResponse, error) {
 	var res QueryLinearStopOrderResponse
 
 	queryString, err := query.Values(param)
@@ -847,7 +848,7 @@ func (s *FutureUSDTPerpetualService) QueryLinearStopOrder(param QueryLinearStopO
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/private/linear/stop-order/search", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/private/linear/stop-order/search", queryString, &res); err != nil {
 		return nil, err
 	}
 

@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -15,6 +16,7 @@ import (
 )
 
 func TestSpotPostOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := SpotPostOrderParam{
 			Symbol: SymbolSpotBTCUSDT,
@@ -55,7 +57,7 @@ func TestSpotPostOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Spot().V1().SpotPostOrder(param)
+		resp, err := client.Spot().V1().SpotPostOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -100,7 +102,7 @@ func TestSpotPostOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Spot().V1().SpotPostOrder(param)
+		_, err = client.Spot().V1().SpotPostOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
@@ -142,6 +144,7 @@ func TestSpotOrderBatchFastCancelParam(t *testing.T) {
 }
 
 func TestSpotOpenOrders(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		symbol := SymbolSpotBTCUSDT
 		param := SpotOpenOrdersParam{
@@ -189,7 +192,7 @@ func TestSpotOpenOrders(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Spot().V1().SpotOpenOrders(param)
+		resp, err := client.Spot().V1().SpotOpenOrders(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -241,12 +244,13 @@ func TestSpotOpenOrders(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Spot().V1().SpotOpenOrders(param)
+		_, err = client.Spot().V1().SpotOpenOrders(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestSpotGetWalletBalance(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		path := "/spot/v1/account"
 		method := http.MethodGet
@@ -277,7 +281,7 @@ func TestSpotGetWalletBalance(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Spot().V1().SpotGetWalletBalance()
+		resp, err := client.Spot().V1().SpotGetWalletBalance(ctx)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -312,7 +316,7 @@ func TestSpotGetWalletBalance(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Spot().V1().SpotGetWalletBalance()
+		_, err = client.Spot().V1().SpotGetWalletBalance(ctx)
 		assert.Error(t, err)
 	})
 }

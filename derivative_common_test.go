@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -11,6 +12,7 @@ import (
 )
 
 func TestDerivativesOrderBook(t *testing.T) {
+	ctx := context.Background()
 	param := DerivativesOrderBookParam{
 		Symbol:   SymbolDerivativeBTCUSDT,
 		Category: CategoryDerivativeLinear,
@@ -49,7 +51,7 @@ func TestDerivativesOrderBook(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.Derivative().UnifiedMargin().DerivativesOrderBook(param)
+	resp, err := client.Derivative().UnifiedMargin().DerivativesOrderBook(ctx, param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -57,6 +59,7 @@ func TestDerivativesOrderBook(t *testing.T) {
 }
 
 func TestDerivativesKline(t *testing.T) {
+	ctx := context.Background()
 	param := DerivativesKlineParam{
 		Symbol:   SymbolDerivativeBTCUSDT,
 		Category: CategoryDerivativeLinear,
@@ -96,7 +99,7 @@ func TestDerivativesKline(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.Derivative().UnifiedMargin().DerivativesKline(param)
+	resp, err := client.Derivative().UnifiedMargin().DerivativesKline(ctx, param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -105,6 +108,7 @@ func TestDerivativesKline(t *testing.T) {
 }
 
 func TestDerivativesTickers(t *testing.T) {
+	ctx := context.Background()
 	param := DerivativesTickersParam{
 		Category: CategoryDerivativeLinear,
 	}
@@ -153,7 +157,7 @@ func TestDerivativesTickers(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.Derivative().UnifiedMargin().DerivativesTickers(param)
+	resp, err := client.Derivative().UnifiedMargin().DerivativesTickers(ctx, param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -161,6 +165,7 @@ func TestDerivativesTickers(t *testing.T) {
 }
 
 func TestDerivativesTickersForOption(t *testing.T) {
+	ctx := context.Background()
 	param := DerivativesTickersForOptionParam{
 		Symbol: SymbolDerivativeBTC31MAR23_40000C,
 	}
@@ -209,7 +214,7 @@ func TestDerivativesTickersForOption(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.Derivative().UnifiedMargin().DerivativesTickersForOption(param)
+	resp, err := client.Derivative().UnifiedMargin().DerivativesTickersForOption(ctx, param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -217,6 +222,7 @@ func TestDerivativesTickersForOption(t *testing.T) {
 }
 
 func TestDerivativesInstruments(t *testing.T) {
+	ctx := context.Background()
 	param := DerivativesInstrumentsParam{
 		Category: CategoryDerivativeLinear,
 	}
@@ -268,7 +274,7 @@ func TestDerivativesInstruments(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.Derivative().UnifiedMargin().DerivativesInstruments(param)
+	resp, err := client.Derivative().UnifiedMargin().DerivativesInstruments(ctx, param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -276,6 +282,7 @@ func TestDerivativesInstruments(t *testing.T) {
 }
 
 func TestDerivativesInstrumentsForOption(t *testing.T) {
+	ctx := context.Background()
 	param := DerivativesInstrumentsForOptionParam{}
 
 	path := "/derivatives/v3/public/instruments-info"
@@ -322,7 +329,7 @@ func TestDerivativesInstrumentsForOption(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.Derivative().UnifiedMargin().DerivativesInstrumentsForOption(param)
+	resp, err := client.Derivative().UnifiedMargin().DerivativesInstrumentsForOption(ctx, param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -330,6 +337,7 @@ func TestDerivativesInstrumentsForOption(t *testing.T) {
 }
 
 func TestDerivativesMarkPriceKline(t *testing.T) {
+	ctx := context.Background()
 	param := DerivativesMarkPriceKlineParam{
 		Symbol:   SymbolDerivativeBTCUSDT,
 		Category: CategoryDerivativeLinear,
@@ -367,7 +375,7 @@ func TestDerivativesMarkPriceKline(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.Derivative().UnifiedMargin().DerivativesMarkPriceKline(param)
+	resp, err := client.Derivative().UnifiedMargin().DerivativesMarkPriceKline(ctx, param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -376,6 +384,7 @@ func TestDerivativesMarkPriceKline(t *testing.T) {
 }
 
 func TestDerivativesIndexPriceKline(t *testing.T) {
+	ctx := context.Background()
 	param := DerivativesIndexPriceKlineParam{
 		Symbol:   SymbolDerivativeBTCUSDT,
 		Category: CategoryDerivativeLinear,
@@ -413,7 +422,7 @@ func TestDerivativesIndexPriceKline(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.Derivative().UnifiedMargin().DerivativesIndexPriceKline(param)
+	resp, err := client.Derivative().UnifiedMargin().DerivativesIndexPriceKline(ctx, param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)

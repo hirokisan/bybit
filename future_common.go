@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/url"
 	"time"
@@ -37,13 +38,13 @@ type APIKeyInfoResponse struct {
 }
 
 // APIKeyInfo :
-func (s *FutureCommonService) APIKeyInfo() (*APIKeyInfoResponse, error) {
+func (s *FutureCommonService) APIKeyInfo(ctx context.Context) (*APIKeyInfoResponse, error) {
 	var (
 		res   APIKeyInfoResponse
 		query url.Values
 	)
 
-	if err := s.client.getPrivately("/v2/private/account/api-key", query, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/v2/private/account/api-key", query, &res); err != nil {
 		return nil, err
 	}
 
@@ -92,12 +93,12 @@ type Balance struct {
 }
 
 // Balance :
-func (s *FutureCommonService) Balance(coin Coin) (*BalanceResponse, error) {
+func (s *FutureCommonService) Balance(ctx context.Context, coin Coin) (*BalanceResponse, error) {
 	var res BalanceResponse
 
 	query := url.Values{}
 	query.Add("coin", string(coin))
-	if err := s.client.getPrivately("/v2/private/wallet/balance", query, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/v2/private/wallet/balance", query, &res); err != nil {
 		return nil, err
 	}
 
@@ -119,13 +120,13 @@ type OrderBookResult struct {
 }
 
 // OrderBook :
-func (s *FutureCommonService) OrderBook(symbol SymbolFuture) (*OrderBookResponse, error) {
+func (s *FutureCommonService) OrderBook(ctx context.Context, symbol SymbolFuture) (*OrderBookResponse, error) {
 	var res OrderBookResponse
 
 	query := url.Values{}
 	query.Add("symbol", string(symbol))
 
-	if err := s.client.getPublicly("/v2/public/orderBook/L2", query, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/orderBook/L2", query, &res); err != nil {
 		return nil, err
 	}
 
@@ -161,7 +162,7 @@ type ListKlineResult struct {
 }
 
 // ListKline :
-func (s *FutureCommonService) ListKline(param ListKlineParam) (*ListKlineResponse, error) {
+func (s *FutureCommonService) ListKline(ctx context.Context, param ListKlineParam) (*ListKlineResponse, error) {
 	var res ListKlineResponse
 
 	queryString, err := query.Values(param)
@@ -169,7 +170,7 @@ func (s *FutureCommonService) ListKline(param ListKlineParam) (*ListKlineRespons
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v2/public/kline/list", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/kline/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -210,13 +211,13 @@ type TickersResult struct {
 }
 
 // Tickers :
-func (s *FutureCommonService) Tickers(symbol SymbolFuture) (*TickersResponse, error) {
+func (s *FutureCommonService) Tickers(ctx context.Context, symbol SymbolFuture) (*TickersResponse, error) {
 	var res TickersResponse
 
 	query := url.Values{}
 	query.Add("symbol", string(symbol))
 
-	if err := s.client.getPublicly("/v2/public/tickers", query, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/tickers", query, &res); err != nil {
 		return nil, err
 	}
 
@@ -248,7 +249,7 @@ type TradingRecordsResult struct {
 }
 
 // TradingRecords :
-func (s *FutureCommonService) TradingRecords(param TradingRecordsParam) (*TradingRecordsResponse, error) {
+func (s *FutureCommonService) TradingRecords(ctx context.Context, param TradingRecordsParam) (*TradingRecordsResponse, error) {
 	var res TradingRecordsResponse
 
 	queryString, err := query.Values(param)
@@ -256,7 +257,7 @@ func (s *FutureCommonService) TradingRecords(param TradingRecordsParam) (*Tradin
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v2/public/trading-records", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/trading-records", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -304,10 +305,10 @@ type LotSizeFilter struct {
 }
 
 // Symbols :
-func (s *FutureCommonService) Symbols() (*SymbolsResponse, error) {
+func (s *FutureCommonService) Symbols(ctx context.Context) (*SymbolsResponse, error) {
 	var res SymbolsResponse
 
-	if err := s.client.getPublicly("/v2/public/symbols", nil, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/symbols", nil, &res); err != nil {
 		return nil, err
 	}
 
@@ -341,7 +342,7 @@ type MarkPriceKlineParam struct {
 }
 
 // MarkPriceKline :
-func (s *FutureCommonService) MarkPriceKline(param MarkPriceKlineParam) (*MarkPriceKlineResponse, error) {
+func (s *FutureCommonService) MarkPriceKline(ctx context.Context, param MarkPriceKlineParam) (*MarkPriceKlineResponse, error) {
 	var res MarkPriceKlineResponse
 
 	queryString, err := query.Values(param)
@@ -349,7 +350,7 @@ func (s *FutureCommonService) MarkPriceKline(param MarkPriceKlineParam) (*MarkPr
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v2/public/mark-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/mark-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -383,7 +384,7 @@ type IndexPriceKlineParam struct {
 }
 
 // IndexPriceKline :
-func (s *FutureCommonService) IndexPriceKline(param IndexPriceKlineParam) (*IndexPriceKlineResponse, error) {
+func (s *FutureCommonService) IndexPriceKline(ctx context.Context, param IndexPriceKlineParam) (*IndexPriceKlineResponse, error) {
 	var res IndexPriceKlineResponse
 
 	queryString, err := query.Values(param)
@@ -391,7 +392,7 @@ func (s *FutureCommonService) IndexPriceKline(param IndexPriceKlineParam) (*Inde
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v2/public/index-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/index-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -420,7 +421,7 @@ type OpenInterestParam struct {
 }
 
 // OpenInterest :
-func (s *FutureCommonService) OpenInterest(param OpenInterestParam) (*OpenInterestResponse, error) {
+func (s *FutureCommonService) OpenInterest(ctx context.Context, param OpenInterestParam) (*OpenInterestResponse, error) {
 	var res OpenInterestResponse
 
 	queryString, err := query.Values(param)
@@ -428,7 +429,7 @@ func (s *FutureCommonService) OpenInterest(param OpenInterestParam) (*OpenIntere
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v2/public/open-interest", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/open-interest", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -457,7 +458,7 @@ type BigDealParam struct {
 }
 
 // BigDeal :
-func (s *FutureCommonService) BigDeal(param BigDealParam) (*BigDealResponse, error) {
+func (s *FutureCommonService) BigDeal(ctx context.Context, param BigDealParam) (*BigDealResponse, error) {
 	var res BigDealResponse
 
 	queryString, err := query.Values(param)
@@ -465,7 +466,7 @@ func (s *FutureCommonService) BigDeal(param BigDealParam) (*BigDealResponse, err
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v2/public/big-deal", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/big-deal", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -495,7 +496,7 @@ type AccountRatioParam struct {
 }
 
 // AccountRatio :
-func (s *FutureCommonService) AccountRatio(param AccountRatioParam) (*AccountRatioResponse, error) {
+func (s *FutureCommonService) AccountRatio(ctx context.Context, param AccountRatioParam) (*AccountRatioResponse, error) {
 	var res AccountRatioResponse
 
 	queryString, err := query.Values(param)
@@ -503,7 +504,7 @@ func (s *FutureCommonService) AccountRatio(param AccountRatioParam) (*AccountRat
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/v2/public/account-ratio", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v2/public/account-ratio", queryString, &res); err != nil {
 		return nil, err
 	}
 	return &res, nil

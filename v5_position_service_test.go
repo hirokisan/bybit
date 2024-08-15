@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -11,6 +12,7 @@ import (
 )
 
 func TestV5Position_GetPositionInfo(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		symbol := SymbolV5BTCUSDT
 		param := V5GetPositionInfoParam{
@@ -74,7 +76,7 @@ func TestV5Position_GetPositionInfo(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Position().GetPositionInfo(param)
+		resp, err := client.V5().Position().GetPositionInfo(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -135,12 +137,13 @@ func TestV5Position_GetPositionInfo(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Position().GetPositionInfo(param)
+		_, err = client.V5().Position().GetPositionInfo(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Position_SetLeverage(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5SetLeverageParam{
 			Category:     CategoryV5Linear,
@@ -167,7 +170,7 @@ func TestV5Position_SetLeverage(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Position().SetLeverage(param)
+		resp, err := client.V5().Position().SetLeverage(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -198,12 +201,13 @@ func TestV5Position_SetLeverage(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Position().SetLeverage(param)
+		_, err = client.V5().Position().SetLeverage(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Position_SetTradingStop(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		price := "40000"
 		param := V5SetTradingStopParam{
@@ -231,7 +235,7 @@ func TestV5Position_SetTradingStop(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Position().SetTradingStop(param)
+		resp, err := client.V5().Position().SetTradingStop(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -263,12 +267,13 @@ func TestV5Position_SetTradingStop(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Position().SetTradingStop(param)
+		_, err = client.V5().Position().SetTradingStop(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Position_SetTpSlMode(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5SetTpSlModeParam{
 			Category: CategoryV5Linear,
@@ -296,7 +301,7 @@ func TestV5Position_SetTpSlMode(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Position().SetTpSlMode(param)
+		resp, err := client.V5().Position().SetTpSlMode(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -328,12 +333,13 @@ func TestV5Position_SetTpSlMode(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Position().SetTpSlMode(param)
+		_, err = client.V5().Position().SetTpSlMode(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Position_SwitchPositionMode(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		coin := CoinBTC
 		param := V5SwitchPositionModeParam{
@@ -360,7 +366,7 @@ func TestV5Position_SwitchPositionMode(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Position().SwitchPositionMode(param)
+		resp, err := client.V5().Position().SwitchPositionMode(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -391,12 +397,13 @@ func TestV5Position_SwitchPositionMode(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Position().SwitchPositionMode(param)
+		_, err = client.V5().Position().SwitchPositionMode(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Position_GetClosedPnL(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetClosedPnLParam{
 			Category: CategoryV5Linear,
@@ -444,7 +451,7 @@ func TestV5Position_GetClosedPnL(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Position().GetClosedPnL(param)
+		resp, err := client.V5().Position().GetClosedPnL(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -496,12 +503,13 @@ func TestV5Position_GetClosedPnL(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Position().GetClosedPnL(param)
+		_, err = client.V5().Position().GetClosedPnL(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Position_SwitchPositionMarginMode(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5SwitchPositionMarginModeParam{
 			Category:     CategoryV5Linear,
@@ -529,7 +537,7 @@ func TestV5Position_SwitchPositionMarginMode(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Position().SwitchPositionMarginMode(param)
+		resp, err := client.V5().Position().SwitchPositionMarginMode(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -561,12 +569,13 @@ func TestV5Position_SwitchPositionMarginMode(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Position().SwitchPositionMarginMode(param)
+		_, err = client.V5().Position().SwitchPositionMarginMode(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Position_SetRiskLimit(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5SetRiskLimitParam{
 			Category: CategoryV5Linear,
@@ -596,7 +605,7 @@ func TestV5Position_SetRiskLimit(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Position().SetRiskLimit(param)
+		resp, err := client.V5().Position().SetRiskLimit(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -630,7 +639,7 @@ func TestV5Position_SetRiskLimit(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Position().SetRiskLimit(param)
+		_, err = client.V5().Position().SetRiskLimit(ctx, param)
 		assert.Error(t, err)
 	})
 }

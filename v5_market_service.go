@@ -101,7 +101,7 @@ func (s *V5MarketService) GetKline(ctx context.Context, param V5GetKlineParam) (
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -177,7 +177,7 @@ func (s *V5MarketService) GetMarkPriceKline(ctx context.Context, param V5GetMark
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/mark-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/mark-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -253,7 +253,7 @@ func (s *V5MarketService) GetIndexPriceKline(ctx context.Context, param V5GetInd
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/index-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/index-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -330,7 +330,7 @@ func (s *V5MarketService) GetPremiumIndexPriceKline(ctx context.Context, param V
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/premium-index-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/premium-index-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -507,7 +507,7 @@ func (s *V5MarketService) GetInstrumentsInfo(ctx context.Context, param V5GetIns
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/instruments-info", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/instruments-info", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -579,7 +579,7 @@ func (s *V5MarketService) GetOrderbook(ctx context.Context, param V5GetOrderbook
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/orderbook", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/orderbook", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -750,7 +750,7 @@ func (s *V5MarketService) GetTickers(ctx context.Context, param V5GetTickersPara
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/tickers", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/tickers", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -805,7 +805,7 @@ func (s *V5MarketService) GetFundingRateHistory(ctx context.Context, param V5Get
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/funding/history", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/funding/history", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -868,7 +868,7 @@ func (s *V5MarketService) GetPublicTradingHistory(ctx context.Context, param V5G
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/recent-trade", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/recent-trade", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -926,7 +926,7 @@ func (s *V5MarketService) GetOpenInterest(ctx context.Context, param V5GetOpenIn
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/open-interest", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/open-interest", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -1003,7 +1003,7 @@ func (s *V5MarketService) GetHistoricalVolatility(ctx context.Context, param V5G
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/historical-volatility", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/historical-volatility", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -1042,7 +1042,7 @@ func (s *V5MarketService) GetInsurance(ctx context.Context, param V5GetInsurance
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/insurance", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/insurance", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -1098,7 +1098,7 @@ func (s *V5MarketService) GetRiskLimit(ctx context.Context, param V5GetRiskLimit
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/market/risk-limit", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/market/risk-limit", queryString, &res); err != nil {
 		return nil, err
 	}
 

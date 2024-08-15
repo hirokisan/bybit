@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -10,6 +11,7 @@ import (
 )
 
 func TestV5User_GetAPIKey(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		path := "/v5/user/query-api"
 		method := http.MethodGet
@@ -61,7 +63,7 @@ func TestV5User_GetAPIKey(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().User().GetAPIKey()
+		resp, err := client.V5().User().GetAPIKey(ctx)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)

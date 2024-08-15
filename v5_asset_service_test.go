@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 )
 
 func TestV5Asset_CreateInternalTransfer(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5CreateInternalTransferParam{
 			TransferID:      "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
@@ -41,7 +43,7 @@ func TestV5Asset_CreateInternalTransfer(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().CreateInternalTransfer(param)
+		resp, err := client.V5().Asset().CreateInternalTransfer(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -76,12 +78,13 @@ func TestV5Asset_CreateInternalTransfer(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().CreateInternalTransfer(param)
+		_, err = client.V5().Asset().CreateInternalTransfer(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_GetInternalTransferRecords(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetInternalTransferRecordsParam{}
 
@@ -116,7 +119,7 @@ func TestV5Asset_GetInternalTransferRecords(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().GetInternalTransferRecords(param)
+		resp, err := client.V5().Asset().GetInternalTransferRecords(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -155,12 +158,13 @@ func TestV5Asset_GetInternalTransferRecords(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().GetInternalTransferRecords(param)
+		_, err = client.V5().Asset().GetInternalTransferRecords(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_CreateUniversalTransfer(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5CreateUniversalTransferParam{
 			TransferID:      "be7a2462-1138-4e27-80b1-62653f24925e",
@@ -192,7 +196,7 @@ func TestV5Asset_CreateUniversalTransfer(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().CreateUniversalTransfer(param)
+		resp, err := client.V5().Asset().CreateUniversalTransfer(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -229,12 +233,13 @@ func TestV5Asset_CreateUniversalTransfer(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().CreateUniversalTransfer(param)
+		_, err = client.V5().Asset().CreateUniversalTransfer(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_GetUniversalTransferRecords(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetUniversalTransferRecordsParam{
 			Limit:  testhelper.Ptr(1),
@@ -274,7 +279,7 @@ func TestV5Asset_GetUniversalTransferRecords(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().GetUniversalTransferRecords(param)
+		resp, err := client.V5().Asset().GetUniversalTransferRecords(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -318,12 +323,13 @@ func TestV5Asset_GetUniversalTransferRecords(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().GetUniversalTransferRecords(param)
+		_, err = client.V5().Asset().GetUniversalTransferRecords(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_GetDepositRecords(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetDepositRecordsParam{}
 
@@ -363,7 +369,7 @@ func TestV5Asset_GetDepositRecords(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().GetDepositRecords(param)
+		resp, err := client.V5().Asset().GetDepositRecords(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -407,12 +413,13 @@ func TestV5Asset_GetDepositRecords(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().GetDepositRecords(param)
+		_, err = client.V5().Asset().GetDepositRecords(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_GetSubDepositRecords(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetSubDepositRecordsParam{}
 
@@ -437,7 +444,7 @@ func TestV5Asset_GetSubDepositRecords(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().GetSubDepositRecords(param)
+		resp, err := client.V5().Asset().GetSubDepositRecords(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -466,12 +473,13 @@ func TestV5Asset_GetSubDepositRecords(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().GetSubDepositRecords(param)
+		_, err = client.V5().Asset().GetSubDepositRecords(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_GetInternalDepositRecords(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetInternalDepositRecordsParam{}
 
@@ -496,7 +504,7 @@ func TestV5Asset_GetInternalDepositRecords(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().GetInternalDepositRecords(param)
+		resp, err := client.V5().Asset().GetInternalDepositRecords(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -525,12 +533,13 @@ func TestV5Asset_GetInternalDepositRecords(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().GetInternalDepositRecords(param)
+		_, err = client.V5().Asset().GetInternalDepositRecords(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_GetMasterDepositAddress(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetMasterDepositAddressParam{}
 
@@ -563,7 +572,7 @@ func TestV5Asset_GetMasterDepositAddress(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().GetMasterDepositAddress(param)
+		resp, err := client.V5().Asset().GetMasterDepositAddress(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -591,12 +600,13 @@ func TestV5Asset_GetMasterDepositAddress(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().GetMasterDepositAddress(param)
+		_, err = client.V5().Asset().GetMasterDepositAddress(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_GetWithdrawalRecords(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetWithdrawalRecordsParam{}
 
@@ -621,7 +631,7 @@ func TestV5Asset_GetWithdrawalRecords(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().GetWithdrawalRecords(param)
+		resp, err := client.V5().Asset().GetWithdrawalRecords(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -650,12 +660,13 @@ func TestV5Asset_GetWithdrawalRecords(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().GetWithdrawalRecords(param)
+		_, err = client.V5().Asset().GetWithdrawalRecords(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_GetCoinInfo(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetCoinInfoParam{}
 
@@ -699,7 +710,7 @@ func TestV5Asset_GetCoinInfo(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().GetCoinInfo(param)
+		resp, err := client.V5().Asset().GetCoinInfo(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -747,12 +758,13 @@ func TestV5Asset_GetCoinInfo(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().GetCoinInfo(param)
+		_, err = client.V5().Asset().GetCoinInfo(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_GetAllCoinsBalance(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetAllCoinsBalanceParam{}
 
@@ -785,7 +797,7 @@ func TestV5Asset_GetAllCoinsBalance(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().GetAllCoinsBalance(param)
+		resp, err := client.V5().Asset().GetAllCoinsBalance(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -822,12 +834,13 @@ func TestV5Asset_GetAllCoinsBalance(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().GetAllCoinsBalance(param)
+		_, err = client.V5().Asset().GetAllCoinsBalance(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Asset_Withdraw(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5WithdrawParam{
 			Coin:        CoinETH,
@@ -861,7 +874,7 @@ func TestV5Asset_Withdraw(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Asset().Withdraw(param)
+		resp, err := client.V5().Asset().Withdraw(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -900,7 +913,7 @@ func TestV5Asset_Withdraw(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Asset().Withdraw(param)
+		_, err = client.V5().Asset().Withdraw(ctx, param)
 		assert.Error(t, err)
 	})
 }

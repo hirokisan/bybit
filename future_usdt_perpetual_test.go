@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -11,6 +12,7 @@ import (
 )
 
 func TestListLinearKline(t *testing.T) {
+	ctx := context.Background()
 	param := ListLinearKlineParam{
 		Symbol: SymbolFutureBTCUSDT,
 	}
@@ -46,7 +48,7 @@ func TestListLinearKline(t *testing.T) {
 	client := NewTestClient().
 		WithBaseURL(server.URL)
 
-	resp, err := client.Future().USDTPerpetual().ListLinearKline(param)
+	resp, err := client.Future().USDTPerpetual().ListLinearKline(ctx, param)
 	require.NoError(t, err)
 
 	require.NotNil(t, resp)
@@ -54,6 +56,7 @@ func TestListLinearKline(t *testing.T) {
 }
 
 func TestListLinearOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := ListLinearOrderParam{
 			Symbol: SymbolFutureBTCUSDT,
@@ -105,7 +108,7 @@ func TestListLinearOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().USDTPerpetual().ListLinearOrder(param)
+		resp, err := client.Future().USDTPerpetual().ListLinearOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -162,12 +165,13 @@ func TestListLinearOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().USDTPerpetual().ListLinearOrder(param)
+		_, err = client.Future().USDTPerpetual().ListLinearOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestQueryLinearOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := QueryLinearOrderParam{
 			Symbol: SymbolFutureBTCUSDT,
@@ -216,7 +220,7 @@ func TestQueryLinearOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().USDTPerpetual().QueryLinearOrder(param)
+		resp, err := client.Future().USDTPerpetual().QueryLinearOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -269,12 +273,13 @@ func TestQueryLinearOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().USDTPerpetual().QueryLinearOrder(param)
+		_, err = client.Future().USDTPerpetual().QueryLinearOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCreateLinearStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		price := 19400.5
 		param := CreateLinearStopOrderParam{
@@ -331,7 +336,7 @@ func TestCreateLinearStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().USDTPerpetual().CreateLinearStopOrder(param)
+		resp, err := client.Future().USDTPerpetual().CreateLinearStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -392,12 +397,13 @@ func TestCreateLinearStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().USDTPerpetual().CreateLinearStopOrder(param)
+		_, err = client.Future().USDTPerpetual().CreateLinearStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestListLinearStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := ListLinearStopOrderParam{
 			Symbol: SymbolFutureBTCUSDT,
@@ -449,7 +455,7 @@ func TestListLinearStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().USDTPerpetual().ListLinearStopOrder(param)
+		resp, err := client.Future().USDTPerpetual().ListLinearStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -506,12 +512,13 @@ func TestListLinearStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().USDTPerpetual().ListLinearStopOrder(param)
+		_, err = client.Future().USDTPerpetual().ListLinearStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCancelLinearStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		stopOrderID := "1cc84e40-8b72-4191-935a-cc3feafbf02e"
 		param := CancelLinearStopOrderParam{
@@ -539,7 +546,7 @@ func TestCancelLinearStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().USDTPerpetual().CancelLinearStopOrder(param)
+		resp, err := client.Future().USDTPerpetual().CancelLinearStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -571,12 +578,13 @@ func TestCancelLinearStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().USDTPerpetual().CancelLinearStopOrder(param)
+		_, err = client.Future().USDTPerpetual().CancelLinearStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCancelAllLinearStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := CancelAllLinearStopOrderParam{
 			Symbol: SymbolFutureBTCUSD,
@@ -602,7 +610,7 @@ func TestCancelAllLinearStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().USDTPerpetual().CancelAllLinearStopOrder(param)
+		resp, err := client.Future().USDTPerpetual().CancelAllLinearStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -632,12 +640,13 @@ func TestCancelAllLinearStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().USDTPerpetual().CancelAllLinearStopOrder(param)
+		_, err = client.Future().USDTPerpetual().CancelAllLinearStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestReplaceLinearOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		orderID := "test"
 		newPrice := 10000.0
@@ -667,7 +676,7 @@ func TestReplaceLinearOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().USDTPerpetual().ReplaceLinearOrder(param)
+		resp, err := client.Future().USDTPerpetual().ReplaceLinearOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -701,12 +710,13 @@ func TestReplaceLinearOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().USDTPerpetual().ReplaceLinearOrder(param)
+		_, err = client.Future().USDTPerpetual().ReplaceLinearOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestQueryLinearStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := QueryLinearStopOrderParam{
 			Symbol: SymbolFutureBTCUSDT,
@@ -754,7 +764,7 @@ func TestQueryLinearStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().USDTPerpetual().QueryLinearStopOrder(param)
+		resp, err := client.Future().USDTPerpetual().QueryLinearStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -806,12 +816,13 @@ func TestQueryLinearStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().USDTPerpetual().QueryLinearStopOrder(param)
+		_, err = client.Future().USDTPerpetual().QueryLinearStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestListLinearPositions(t *testing.T) {
+	ctx := context.Background()
 	t.Run("Permission denied", func(t *testing.T) {
 		path := "/private/linear/position/list"
 		method := http.MethodGet
@@ -833,7 +844,7 @@ func TestListLinearPositions(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		_, err = client.Future().USDTPerpetual().ListLinearPositions()
+		_, err = client.Future().USDTPerpetual().ListLinearPositions(ctx)
 		require.Error(t, err)
 
 		var wantErr *ErrorResponse
@@ -842,6 +853,7 @@ func TestListLinearPositions(t *testing.T) {
 }
 
 func TestLinearTradingStop(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		price := 20000.0
 		param := LinearTradingStopParam{
@@ -866,7 +878,7 @@ func TestLinearTradingStop(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().USDTPerpetual().LinearTradingStop(param)
+		resp, err := client.Future().USDTPerpetual().LinearTradingStop(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -895,7 +907,7 @@ func TestLinearTradingStop(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().USDTPerpetual().LinearTradingStop(param)
+		_, err = client.Future().USDTPerpetual().LinearTradingStop(ctx, param)
 		assert.Error(t, err)
 	})
 }

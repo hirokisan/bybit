@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -11,6 +12,7 @@ import (
 )
 
 func TestCreateOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := CreateOrderParam{
 			Side:        SideBuy,
@@ -59,7 +61,7 @@ func TestCreateOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().CreateOrder(param)
+		resp, err := client.Future().InversePerpetual().CreateOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -112,12 +114,13 @@ func TestCreateOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().CreateOrder(param)
+		_, err = client.Future().InversePerpetual().CreateOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestListOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := ListOrderParam{
 			Symbol: SymbolFutureBTCUSD,
@@ -167,7 +170,7 @@ func TestListOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().ListOrder(param)
+		resp, err := client.Future().InversePerpetual().ListOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -221,12 +224,13 @@ func TestListOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().ListOrder(param)
+		_, err = client.Future().InversePerpetual().ListOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCancelAllOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := CancelAllOrderParam{
 			Symbol: SymbolFutureBTCUSD,
@@ -271,7 +275,7 @@ func TestCancelAllOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().CancelAllOrder(param)
+		resp, err := client.Future().InversePerpetual().CancelAllOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -320,12 +324,13 @@ func TestCancelAllOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().CancelAllOrder(param)
+		_, err = client.Future().InversePerpetual().CancelAllOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestQueryOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := QueryOrderParam{
 			Symbol: SymbolFutureBTCUSD,
@@ -380,7 +385,7 @@ func TestQueryOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().QueryOrder(param)
+		resp, err := client.Future().InversePerpetual().QueryOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -439,12 +444,13 @@ func TestQueryOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().QueryOrder(param)
+		_, err = client.Future().InversePerpetual().QueryOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCreateStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		price := 19400.5
 		param := CreateStopOrderParam{
@@ -498,7 +504,7 @@ func TestCreateStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().CreateStopOrder(param)
+		resp, err := client.Future().InversePerpetual().CreateStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -556,12 +562,13 @@ func TestCreateStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().CreateStopOrder(param)
+		_, err = client.Future().InversePerpetual().CreateStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestListStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := ListStopOrderParam{
 			Symbol: SymbolFutureBTCUSD,
@@ -612,7 +619,7 @@ func TestListStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().ListStopOrder(param)
+		resp, err := client.Future().InversePerpetual().ListStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -667,12 +674,13 @@ func TestListStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().ListStopOrder(param)
+		_, err = client.Future().InversePerpetual().ListStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCancelStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		stopOrderID := "f13236dd-4988-41e8-8558-011d875d4282"
 		param := CancelStopOrderParam{
@@ -700,7 +708,7 @@ func TestCancelStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().CancelStopOrder(param)
+		resp, err := client.Future().InversePerpetual().CancelStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -730,12 +738,13 @@ func TestCancelStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().CancelStopOrder(param)
+		_, err = client.Future().InversePerpetual().CancelStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCancelAllStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := CancelAllStopOrderParam{
 			Symbol: SymbolFutureBTCUSD,
@@ -784,7 +793,7 @@ func TestCancelAllStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().CancelAllStopOrder(param)
+		resp, err := client.Future().InversePerpetual().CancelAllStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -837,12 +846,13 @@ func TestCancelAllStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().CancelAllStopOrder(param)
+		_, err = client.Future().InversePerpetual().CancelAllStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestQueryStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := QueryStopOrderParam{
 			Symbol: SymbolFutureBTCUSD,
@@ -898,7 +908,7 @@ func TestQueryStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().QueryStopOrder(param)
+		resp, err := client.Future().InversePerpetual().QueryStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -958,12 +968,13 @@ func TestQueryStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().QueryStopOrder(param)
+		_, err = client.Future().InversePerpetual().QueryStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestTradingStop(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		price := 20000.0
 		param := TradingStopParam{
@@ -1026,7 +1037,7 @@ func TestTradingStop(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().TradingStop(param)
+		resp, err := client.Future().InversePerpetual().TradingStop(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -1093,12 +1104,13 @@ func TestTradingStop(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().TradingStop(param)
+		_, err = client.Future().InversePerpetual().TradingStop(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestAPIKeyInfo(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		path := "/v2/private/account/api-key"
 		method := http.MethodGet
@@ -1146,7 +1158,7 @@ func TestAPIKeyInfo(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InversePerpetual().APIKeyInfo()
+		resp, err := client.Future().InversePerpetual().APIKeyInfo(ctx)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -1198,7 +1210,7 @@ func TestAPIKeyInfo(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InversePerpetual().APIKeyInfo()
+		_, err = client.Future().InversePerpetual().APIKeyInfo(ctx)
 		assert.Error(t, err)
 	})
 }

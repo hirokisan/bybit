@@ -1,16 +1,18 @@
 package bybit
 
+import "context"
+
 // DerivativeUnifiedMarginServiceI :
 type DerivativeUnifiedMarginServiceI interface {
 	// Market Data Endpoints
-	DerivativesOrderBook(DerivativesOrderBookParam) (*DerivativesOrderBookResponse, error)
-	DerivativesKline(DerivativesKlineParam) (*DerivativesKlineResponse, error)
-	DerivativesTickers(DerivativesTickersParam) (*DerivativesTickersResponse, error)
-	DerivativesTickersForOption(DerivativesTickersForOptionParam) (*DerivativesTickersForOptionResponse, error)
-	DerivativesInstruments(DerivativesInstrumentsParam) (*DerivativesInstrumentsResponse, error)
-	DerivativesInstrumentsForOption(DerivativesInstrumentsForOptionParam) (*DerivativesInstrumentsForOptionResponse, error)
-	DerivativesMarkPriceKline(DerivativesMarkPriceKlineParam) (*DerivativesMarkPriceKlineResponse, error)
-	DerivativesIndexPriceKline(DerivativesIndexPriceKlineParam) (*DerivativesIndexPriceKlineResponse, error)
+	DerivativesOrderBook(context.Context, DerivativesOrderBookParam) (*DerivativesOrderBookResponse, error)
+	DerivativesKline(context.Context, DerivativesKlineParam) (*DerivativesKlineResponse, error)
+	DerivativesTickers(context.Context, DerivativesTickersParam) (*DerivativesTickersResponse, error)
+	DerivativesTickersForOption(context.Context, DerivativesTickersForOptionParam) (*DerivativesTickersForOptionResponse, error)
+	DerivativesInstruments(context.Context, DerivativesInstrumentsParam) (*DerivativesInstrumentsResponse, error)
+	DerivativesInstrumentsForOption(context.Context, DerivativesInstrumentsForOptionParam) (*DerivativesInstrumentsForOptionResponse, error)
+	DerivativesMarkPriceKline(context.Context, DerivativesMarkPriceKlineParam) (*DerivativesMarkPriceKlineResponse, error)
+	DerivativesIndexPriceKline(context.Context, DerivativesIndexPriceKlineParam) (*DerivativesIndexPriceKlineResponse, error)
 }
 
 // DerivativeUnifiedMarginService :

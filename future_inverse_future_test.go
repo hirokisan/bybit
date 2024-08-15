@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -11,6 +12,7 @@ import (
 )
 
 func TestCreateFuturesOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		price := 10000.0
 		param := CreateFuturesOrderParam{
@@ -64,7 +66,7 @@ func TestCreateFuturesOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().CreateFuturesOrder(param)
+		resp, err := client.Future().InverseFuture().CreateFuturesOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -122,12 +124,13 @@ func TestCreateFuturesOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().CreateFuturesOrder(param)
+		_, err = client.Future().InverseFuture().CreateFuturesOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestFuturesListOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		orderStatus := OrderStatusNew
 		param := ListFuturesOrderParam{
@@ -182,7 +185,7 @@ func TestFuturesListOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().ListFuturesOrder(param)
+		resp, err := client.Future().InverseFuture().ListFuturesOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -241,12 +244,13 @@ func TestFuturesListOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().ListFuturesOrder(param)
+		_, err = client.Future().InverseFuture().ListFuturesOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCancelFuturesOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		orderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
 		param := CancelFuturesOrderParam{
@@ -292,7 +296,7 @@ func TestCancelFuturesOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().CancelFuturesOrder(param)
+		resp, err := client.Future().InverseFuture().CancelFuturesOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -342,12 +346,13 @@ func TestCancelFuturesOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().CancelFuturesOrder(param)
+		_, err = client.Future().InverseFuture().CancelFuturesOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestAllCancelFuturesOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := CancelAllFuturesOrderParam{
 			Symbol: SymbolFutureBTCUSD,
@@ -391,7 +396,7 @@ func TestAllCancelFuturesOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().CancelAllFuturesOrder(param)
+		resp, err := client.Future().InverseFuture().CancelAllFuturesOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -439,12 +444,13 @@ func TestAllCancelFuturesOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().CancelAllFuturesOrder(param)
+		_, err = client.Future().InverseFuture().CancelAllFuturesOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestQueryFuturesOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		orderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
 		param := QueryFuturesOrderParam{
@@ -499,7 +505,7 @@ func TestQueryFuturesOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().QueryFuturesOrder(param)
+		resp, err := client.Future().InverseFuture().QueryFuturesOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -558,12 +564,13 @@ func TestQueryFuturesOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().QueryFuturesOrder(param)
+		_, err = client.Future().InverseFuture().QueryFuturesOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCreateFuturesStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		price := 19400.5
 		symbol := SymbolFutureBTCUSD
@@ -618,7 +625,7 @@ func TestCreateFuturesStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().CreateFuturesStopOrder(param)
+		resp, err := client.Future().InverseFuture().CreateFuturesStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -677,12 +684,13 @@ func TestCreateFuturesStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().CreateFuturesStopOrder(param)
+		_, err = client.Future().InverseFuture().CreateFuturesStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestFuturesListStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		orderStatus := OrderStatusUntriggered
 		param := ListFuturesStopOrderParam{
@@ -735,7 +743,7 @@ func TestFuturesListStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().ListFuturesStopOrder(param)
+		resp, err := client.Future().InverseFuture().ListFuturesStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -792,12 +800,13 @@ func TestFuturesListStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().ListFuturesStopOrder(param)
+		_, err = client.Future().InverseFuture().ListFuturesStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCancelFuturesStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		stopOrderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
 		param := CancelFuturesStopOrderParam{
@@ -825,7 +834,7 @@ func TestCancelFuturesStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().CancelFuturesStopOrder(param)
+		resp, err := client.Future().InverseFuture().CancelFuturesStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -857,12 +866,13 @@ func TestCancelFuturesStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().CancelFuturesStopOrder(param)
+		_, err = client.Future().InverseFuture().CancelFuturesStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestCancelAllFuturesStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := CancelAllFuturesStopOrderParam{
 			Symbol: SymbolFutureBTCUSD,
@@ -910,7 +920,7 @@ func TestCancelAllFuturesStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().CancelAllFuturesStopOrder(param)
+		resp, err := client.Future().InverseFuture().CancelAllFuturesStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -962,12 +972,13 @@ func TestCancelAllFuturesStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().CancelAllFuturesStopOrder(param)
+		_, err = client.Future().InverseFuture().CancelAllFuturesStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestQueryFuturesStopOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		stopOrderID := "9dde0c9e-7e10-4d9a-8da9-1ef0f976c787"
 		param := QueryFuturesStopOrderParam{
@@ -1023,7 +1034,7 @@ func TestQueryFuturesStopOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().QueryFuturesStopOrder(param)
+		resp, err := client.Future().InverseFuture().QueryFuturesStopOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -1083,12 +1094,13 @@ func TestQueryFuturesStopOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().QueryFuturesStopOrder(param)
+		_, err = client.Future().InverseFuture().QueryFuturesStopOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestListFuturesPositions(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		path := "/futures/private/position/list"
 		symbol := SymbolFutureBTCUSDH23
@@ -1149,7 +1161,7 @@ func TestListFuturesPositions(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().ListFuturesPositions(symbol)
+		resp, err := client.Future().InverseFuture().ListFuturesPositions(ctx, symbol)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -1214,12 +1226,13 @@ func TestListFuturesPositions(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().ListFuturesPositions(symbol)
+		_, err = client.Future().InverseFuture().ListFuturesPositions(ctx, symbol)
 		assert.Error(t, err)
 	})
 }
 
 func TestFuturesTradingStop(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		path := "/futures/private/position/trading-stop"
 		param := FuturesTradingStopParam{
@@ -1279,7 +1292,7 @@ func TestFuturesTradingStop(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().FuturesTradingStop(param)
+		resp, err := client.Future().InverseFuture().FuturesTradingStop(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -1343,12 +1356,13 @@ func TestFuturesTradingStop(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().FuturesTradingStop(param)
+		_, err = client.Future().InverseFuture().FuturesTradingStop(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestFuturesSaveLeverage(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		path := "/futures/private/position/leverage/save"
 		param := FuturesSaveLeverageParam{
@@ -1373,7 +1387,7 @@ func TestFuturesSaveLeverage(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.Future().InverseFuture().FuturesSaveLeverage(param)
+		resp, err := client.Future().InverseFuture().FuturesSaveLeverage(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -1402,7 +1416,7 @@ func TestFuturesSaveLeverage(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.Future().InverseFuture().FuturesSaveLeverage(param)
+		_, err = client.Future().InverseFuture().FuturesSaveLeverage(ctx, param)
 		assert.Error(t, err)
 	})
 }

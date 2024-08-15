@@ -29,7 +29,7 @@ type GetServerTimeResult struct {
 func (s *TimeService) GetServerTime(ctx context.Context) (*GetServerTimeResponse, error) {
 	var res GetServerTimeResponse
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v3/public/time", nil, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v3/public/time", nil, &res); err != nil {
 		return nil, err
 	}
 

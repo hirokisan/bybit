@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -11,6 +12,7 @@ import (
 )
 
 func TestV5Order_CreateOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		price := "10000.0"
 		param := V5CreateOrderParam{
@@ -43,7 +45,7 @@ func TestV5Order_CreateOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Order().CreateOrder(param)
+		resp, err := client.V5().Order().CreateOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -80,12 +82,13 @@ func TestV5Order_CreateOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Order().CreateOrder(param)
+		_, err = client.V5().Order().CreateOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Order_AmendOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		orderID := "1358868270414852352"
 		price := "10000.0"
@@ -117,7 +120,7 @@ func TestV5Order_AmendOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Order().AmendOrder(param)
+		resp, err := client.V5().Order().AmendOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -153,12 +156,13 @@ func TestV5Order_AmendOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Order().AmendOrder(param)
+		_, err = client.V5().Order().AmendOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Order_CancelOrder(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		orderID := "1358868270414852352"
 		param := V5CancelOrderParam{
@@ -188,7 +192,7 @@ func TestV5Order_CancelOrder(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Order().CancelOrder(param)
+		resp, err := client.V5().Order().CancelOrder(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -222,12 +226,13 @@ func TestV5Order_CancelOrder(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Order().CancelOrder(param)
+		_, err = client.V5().Order().CancelOrder(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Order_GetOpenOrders(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		symbol := SymbolV5BTCUSDT
 		param := V5GetOpenOrdersParam{
@@ -294,7 +299,7 @@ func TestV5Order_GetOpenOrders(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Order().GetOpenOrders(param)
+		resp, err := client.V5().Order().GetOpenOrders(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -365,12 +370,13 @@ func TestV5Order_GetOpenOrders(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Order().GetOpenOrders(param)
+		_, err = client.V5().Order().GetOpenOrders(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Order_GetHistoryOrders(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		symbol := SymbolV5BTCUSDT
 		param := V5GetHistoryOrdersParam{
@@ -437,7 +443,7 @@ func TestV5Order_GetHistoryOrders(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Order().GetHistoryOrders(param)
+		resp, err := client.V5().Order().GetHistoryOrders(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -508,12 +514,13 @@ func TestV5Order_GetHistoryOrders(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Order().GetHistoryOrders(param)
+		_, err = client.V5().Order().GetHistoryOrders(ctx, param)
 		assert.Error(t, err)
 	})
 }
 
 func TestV5Order_CancelAllOrders(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		t.Run("linear", func(t *testing.T) {
 			symbol := SymbolV5BTCUSDT
@@ -547,7 +554,7 @@ func TestV5Order_CancelAllOrders(t *testing.T) {
 				WithBaseURL(server.URL).
 				WithAuth("test", "test")
 
-			resp, err := client.V5().Order().CancelAllOrders(param)
+			resp, err := client.V5().Order().CancelAllOrders(ctx, param)
 			require.NoError(t, err)
 
 			require.NotNil(t, resp)
@@ -578,7 +585,7 @@ func TestV5Order_CancelAllOrders(t *testing.T) {
 				WithBaseURL(server.URL).
 				WithAuth("test", "test")
 
-			resp, err := client.V5().Order().CancelAllOrders(param)
+			resp, err := client.V5().Order().CancelAllOrders(ctx, param)
 			require.NoError(t, err)
 
 			require.NotNil(t, resp)
@@ -611,7 +618,7 @@ func TestV5Order_CancelAllOrders(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Order().CancelAllOrders(param)
+		_, err = client.V5().Order().CancelAllOrders(ctx, param)
 		assert.Error(t, err)
 	})
 }

@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/url"
@@ -12,27 +13,27 @@ import (
 // SpotV1ServiceI :
 type SpotV1ServiceI interface {
 	// Market Data Endpoints
-	SpotSymbols() (*SpotSymbolsResponse, error)
-	SpotQuoteDepth(SpotQuoteDepthParam) (*SpotQuoteDepthResponse, error)
-	SpotQuoteDepthMerged(SpotQuoteDepthMergedParam) (*SpotQuoteDepthMergedResponse, error)
-	SpotQuoteTrades(SpotQuoteTradesParam) (*SpotQuoteTradesResponse, error)
-	SpotQuoteKline(SpotQuoteKlineParam) (*SpotQuoteKlineResponse, error)
-	SpotQuoteTicker24hr(SpotQuoteTicker24hrParam) (*SpotQuoteTicker24hrResponse, error)
-	SpotQuoteTickerPrice(SpotQuoteTickerPriceParam) (*SpotQuoteTickerPriceResponse, error)
-	SpotQuoteTickerBookTicker(SpotQuoteTickerBookTickerParam) (*SpotQuoteTickerBookTickerResponse, error)
+	SpotSymbols(context.Context) (*SpotSymbolsResponse, error)
+	SpotQuoteDepth(context.Context, SpotQuoteDepthParam) (*SpotQuoteDepthResponse, error)
+	SpotQuoteDepthMerged(context.Context, SpotQuoteDepthMergedParam) (*SpotQuoteDepthMergedResponse, error)
+	SpotQuoteTrades(context.Context, SpotQuoteTradesParam) (*SpotQuoteTradesResponse, error)
+	SpotQuoteKline(context.Context, SpotQuoteKlineParam) (*SpotQuoteKlineResponse, error)
+	SpotQuoteTicker24hr(context.Context, SpotQuoteTicker24hrParam) (*SpotQuoteTicker24hrResponse, error)
+	SpotQuoteTickerPrice(context.Context, SpotQuoteTickerPriceParam) (*SpotQuoteTickerPriceResponse, error)
+	SpotQuoteTickerBookTicker(context.Context, SpotQuoteTickerBookTickerParam) (*SpotQuoteTickerBookTickerResponse, error)
 
 	// Account Data Endpoints
-	SpotPostOrder(SpotPostOrderParam) (*SpotPostOrderResponse, error)
-	SpotGetOrder(SpotGetOrderParam) (*SpotGetOrderResponse, error)
-	SpotDeleteOrder(SpotDeleteOrderParam) (*SpotDeleteOrderResponse, error)
-	SpotDeleteOrderFast(SpotDeleteOrderFastParam) (*SpotDeleteOrderFastResponse, error)
-	SpotOrderBatchCancel(SpotOrderBatchCancelParam) (*SpotOrderBatchCancelResponse, error)
-	SpotOrderBatchFastCancel(SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error)
-	SpotOrderBatchCancelByIDs(orderIDs []string) (*SpotOrderBatchCancelByIDsResponse, error)
-	SpotOpenOrders(SpotOpenOrdersParam) (*SpotOpenOrdersResponse, error)
+	SpotPostOrder(context.Context, SpotPostOrderParam) (*SpotPostOrderResponse, error)
+	SpotGetOrder(context.Context, SpotGetOrderParam) (*SpotGetOrderResponse, error)
+	SpotDeleteOrder(context.Context, SpotDeleteOrderParam) (*SpotDeleteOrderResponse, error)
+	SpotDeleteOrderFast(context.Context, SpotDeleteOrderFastParam) (*SpotDeleteOrderFastResponse, error)
+	SpotOrderBatchCancel(context.Context, SpotOrderBatchCancelParam) (*SpotOrderBatchCancelResponse, error)
+	SpotOrderBatchFastCancel(context.Context, SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error)
+	SpotOrderBatchCancelByIDs(ctx context.Context, orderIDs []string) (*SpotOrderBatchCancelByIDsResponse, error)
+	SpotOpenOrders(context.Context, SpotOpenOrdersParam) (*SpotOpenOrdersResponse, error)
 
 	// Wallet Data Endpoints
-	SpotGetWalletBalance() (*SpotGetWalletBalanceResponse, error)
+	SpotGetWalletBalance(context.Context) (*SpotGetWalletBalanceResponse, error)
 }
 
 // SpotV1Service :
@@ -63,10 +64,10 @@ type SpotSymbolsResult struct {
 }
 
 // SpotSymbols :
-func (s *SpotV1Service) SpotSymbols() (*SpotSymbolsResponse, error) {
+func (s *SpotV1Service) SpotSymbols(ctx context.Context) (*SpotSymbolsResponse, error) {
 	var res SpotSymbolsResponse
 
-	if err := s.client.getPublicly("/spot/v1/symbols", nil, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/spot/v1/symbols", nil, &res); err != nil {
 		return nil, err
 	}
 
@@ -124,7 +125,7 @@ type SpotQuoteDepthBidAsk struct {
 }
 
 // SpotQuoteDepth :
-func (s *SpotV1Service) SpotQuoteDepth(param SpotQuoteDepthParam) (*SpotQuoteDepthResponse, error) {
+func (s *SpotV1Service) SpotQuoteDepth(ctx context.Context, param SpotQuoteDepthParam) (*SpotQuoteDepthResponse, error) {
 	var res SpotQuoteDepthResponse
 
 	queryString, err := query.Values(param)
@@ -132,7 +133,7 @@ func (s *SpotV1Service) SpotQuoteDepth(param SpotQuoteDepthParam) (*SpotQuoteDep
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/spot/quote/v1/depth", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/spot/quote/v1/depth", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -161,7 +162,7 @@ type SpotQuoteDepthMergedResult struct {
 }
 
 // SpotQuoteDepthMerged :
-func (s *SpotV1Service) SpotQuoteDepthMerged(param SpotQuoteDepthMergedParam) (*SpotQuoteDepthMergedResponse, error) {
+func (s *SpotV1Service) SpotQuoteDepthMerged(ctx context.Context, param SpotQuoteDepthMergedParam) (*SpotQuoteDepthMergedResponse, error) {
 	var res SpotQuoteDepthMergedResponse
 
 	queryString, err := query.Values(param)
@@ -169,7 +170,7 @@ func (s *SpotV1Service) SpotQuoteDepthMerged(param SpotQuoteDepthMergedParam) (*
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/spot/quote/v1/depth/merged", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/spot/quote/v1/depth/merged", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -198,7 +199,7 @@ type SpotQuoteTradesResult struct {
 }
 
 // SpotQuoteTrades :
-func (s *SpotV1Service) SpotQuoteTrades(param SpotQuoteTradesParam) (*SpotQuoteTradesResponse, error) {
+func (s *SpotV1Service) SpotQuoteTrades(ctx context.Context, param SpotQuoteTradesParam) (*SpotQuoteTradesResponse, error) {
 	var res SpotQuoteTradesResponse
 
 	queryString, err := query.Values(param)
@@ -206,7 +207,7 @@ func (s *SpotV1Service) SpotQuoteTrades(param SpotQuoteTradesParam) (*SpotQuoteT
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/spot/quote/v1/trades", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/spot/quote/v1/trades", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -275,7 +276,7 @@ type SpotQuoteKline struct {
 }
 
 // SpotQuoteKline :
-func (s *SpotV1Service) SpotQuoteKline(param SpotQuoteKlineParam) (*SpotQuoteKlineResponse, error) {
+func (s *SpotV1Service) SpotQuoteKline(ctx context.Context, param SpotQuoteKlineParam) (*SpotQuoteKlineResponse, error) {
 	var res SpotQuoteKlineResponse
 
 	queryString, err := query.Values(param)
@@ -283,7 +284,7 @@ func (s *SpotV1Service) SpotQuoteKline(param SpotQuoteKlineParam) (*SpotQuoteKli
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/spot/quote/v1/kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/spot/quote/v1/kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -316,7 +317,7 @@ type SpotQuoteTicker24hrResult struct {
 }
 
 // SpotQuoteTicker24hr :
-func (s *SpotV1Service) SpotQuoteTicker24hr(param SpotQuoteTicker24hrParam) (*SpotQuoteTicker24hrResponse, error) {
+func (s *SpotV1Service) SpotQuoteTicker24hr(ctx context.Context, param SpotQuoteTicker24hrParam) (*SpotQuoteTicker24hrResponse, error) {
 	var res SpotQuoteTicker24hrResponse
 
 	queryString, err := query.Values(param)
@@ -324,7 +325,7 @@ func (s *SpotV1Service) SpotQuoteTicker24hr(param SpotQuoteTicker24hrParam) (*Sp
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/spot/quote/v1/ticker/24hr", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/spot/quote/v1/ticker/24hr", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -349,7 +350,7 @@ type SpotQuoteTickerPriceResult struct {
 }
 
 // SpotQuoteTickerPrice :
-func (s *SpotV1Service) SpotQuoteTickerPrice(param SpotQuoteTickerPriceParam) (*SpotQuoteTickerPriceResponse, error) {
+func (s *SpotV1Service) SpotQuoteTickerPrice(ctx context.Context, param SpotQuoteTickerPriceParam) (*SpotQuoteTickerPriceResponse, error) {
 	var res SpotQuoteTickerPriceResponse
 
 	queryString, err := query.Values(param)
@@ -357,7 +358,7 @@ func (s *SpotV1Service) SpotQuoteTickerPrice(param SpotQuoteTickerPriceParam) (*
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/spot/quote/v1/ticker/price", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/spot/quote/v1/ticker/price", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -386,7 +387,7 @@ type SpotQuoteTickerBookTickerResult struct {
 }
 
 // SpotQuoteTickerBookTicker :
-func (s *SpotV1Service) SpotQuoteTickerBookTicker(param SpotQuoteTickerBookTickerParam) (*SpotQuoteTickerBookTickerResponse, error) {
+func (s *SpotV1Service) SpotQuoteTickerBookTicker(ctx context.Context, param SpotQuoteTickerBookTickerParam) (*SpotQuoteTickerBookTickerResponse, error) {
 	var res SpotQuoteTickerBookTickerResponse
 
 	queryString, err := query.Values(param)
@@ -394,7 +395,7 @@ func (s *SpotV1Service) SpotQuoteTickerBookTicker(param SpotQuoteTickerBookTicke
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/spot/quote/v1/ticker/book_ticker", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/spot/quote/v1/ticker/book_ticker", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -437,7 +438,7 @@ type SpotPostOrderResult struct {
 }
 
 // SpotPostOrder :
-func (s *SpotV1Service) SpotPostOrder(param SpotPostOrderParam) (*SpotPostOrderResponse, error) {
+func (s *SpotV1Service) SpotPostOrder(ctx context.Context, param SpotPostOrderParam) (*SpotPostOrderResponse, error) {
 	var res SpotPostOrderResponse
 
 	queryString, err := query.Values(param)
@@ -445,7 +446,7 @@ func (s *SpotV1Service) SpotPostOrder(param SpotPostOrderParam) (*SpotPostOrderR
 		return nil, err
 	}
 
-	if err := s.client.postForm("/spot/v1/order", queryString, &res); err != nil {
+	if err := s.client.postForm(ctx, "/spot/v1/order", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -489,7 +490,7 @@ type SpotGetOrderResult struct {
 }
 
 // SpotGetOrder :
-func (s *SpotV1Service) SpotGetOrder(param SpotGetOrderParam) (*SpotGetOrderResponse, error) {
+func (s *SpotV1Service) SpotGetOrder(ctx context.Context, param SpotGetOrderParam) (*SpotGetOrderResponse, error) {
 	var res SpotGetOrderResponse
 
 	queryString, err := query.Values(param)
@@ -497,7 +498,7 @@ func (s *SpotV1Service) SpotGetOrder(param SpotGetOrderParam) (*SpotGetOrderResp
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/spot/v1/order", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/spot/v1/order", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -533,7 +534,7 @@ type SpotDeleteOrderResult struct {
 }
 
 // SpotDeleteOrder :
-func (s *SpotV1Service) SpotDeleteOrder(param SpotDeleteOrderParam) (*SpotDeleteOrderResponse, error) {
+func (s *SpotV1Service) SpotDeleteOrder(ctx context.Context, param SpotDeleteOrderParam) (*SpotDeleteOrderResponse, error) {
 	var res SpotDeleteOrderResponse
 
 	queryString, err := query.Values(param)
@@ -541,7 +542,7 @@ func (s *SpotV1Service) SpotDeleteOrder(param SpotDeleteOrderParam) (*SpotDelete
 		return nil, err
 	}
 
-	if err := s.client.deletePrivately("/spot/v1/order", queryString, &res); err != nil {
+	if err := s.client.deletePrivately(ctx, "/spot/v1/order", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -565,7 +566,7 @@ type SpotDeleteOrderFastResult struct {
 }
 
 // SpotDeleteOrderFast :
-func (s *SpotV1Service) SpotDeleteOrderFast(param SpotDeleteOrderFastParam) (*SpotDeleteOrderFastResponse, error) {
+func (s *SpotV1Service) SpotDeleteOrderFast(ctx context.Context, param SpotDeleteOrderFastParam) (*SpotDeleteOrderFastResponse, error) {
 	var res SpotDeleteOrderFastResponse
 
 	queryString, err := query.Values(param)
@@ -573,7 +574,7 @@ func (s *SpotV1Service) SpotDeleteOrderFast(param SpotDeleteOrderFastParam) (*Sp
 		return nil, err
 	}
 
-	if err := s.client.deletePrivately("/spot/v1/order/fast", queryString, &res); err != nil {
+	if err := s.client.deletePrivately(ctx, "/spot/v1/order/fast", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -596,7 +597,7 @@ type SpotOrderBatchCancelResult struct {
 	Success bool `json:"success"`
 }
 
-func (s *SpotV1Service) SpotOrderBatchCancel(param SpotOrderBatchCancelParam) (*SpotOrderBatchCancelResponse, error) {
+func (s *SpotV1Service) SpotOrderBatchCancel(ctx context.Context, param SpotOrderBatchCancelParam) (*SpotOrderBatchCancelResponse, error) {
 	var res SpotOrderBatchCancelResponse
 
 	queryString, err := query.Values(param)
@@ -604,7 +605,7 @@ func (s *SpotV1Service) SpotOrderBatchCancel(param SpotOrderBatchCancelParam) (*
 		return nil, err
 	}
 
-	if err := s.client.deletePrivately("/spot/order/batch-cancel", queryString, &res); err != nil {
+	if err := s.client.deletePrivately(ctx, "/spot/order/batch-cancel", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -627,7 +628,7 @@ type SpotOrderBatchFastCancelResult struct {
 	Success bool `json:"success"`
 }
 
-func (s *SpotV1Service) SpotOrderBatchFastCancel(param SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error) {
+func (s *SpotV1Service) SpotOrderBatchFastCancel(ctx context.Context, param SpotOrderBatchFastCancelParam) (*SpotOrderBatchFastCancelResponse, error) {
 	var res SpotOrderBatchFastCancelResponse
 
 	queryString, err := query.Values(param)
@@ -635,7 +636,7 @@ func (s *SpotV1Service) SpotOrderBatchFastCancel(param SpotOrderBatchFastCancelP
 		return nil, err
 	}
 
-	if err := s.client.deletePrivately("/spot/order/batch-fast-cancel", queryString, &res); err != nil {
+	if err := s.client.deletePrivately(ctx, "/spot/order/batch-fast-cancel", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -653,7 +654,7 @@ type SpotOrderBatchCancelByIDsResult struct {
 }
 
 // TODO : have bug multiple orderIds
-func (s *SpotV1Service) SpotOrderBatchCancelByIDs(orderIDs []string) (*SpotOrderBatchCancelByIDsResponse, error) {
+func (s *SpotV1Service) SpotOrderBatchCancelByIDs(ctx context.Context, orderIDs []string) (*SpotOrderBatchCancelByIDsResponse, error) {
 	var res SpotOrderBatchCancelByIDsResponse
 
 	if len(orderIDs) > 100 {
@@ -662,7 +663,7 @@ func (s *SpotV1Service) SpotOrderBatchCancelByIDs(orderIDs []string) (*SpotOrder
 
 	query := url.Values{}
 	query.Add("orderIds", strings.Join(orderIDs, ","))
-	if err := s.client.deletePrivately("/spot/order/batch-cancel-by-ids", query, &res); err != nil {
+	if err := s.client.deletePrivately(ctx, "/spot/order/batch-cancel-by-ids", query, &res); err != nil {
 		return nil, err
 	}
 
@@ -707,7 +708,7 @@ type SpotOpenOrdersResult struct {
 }
 
 // SpotOpenOrders :
-func (s *SpotV1Service) SpotOpenOrders(param SpotOpenOrdersParam) (*SpotOpenOrdersResponse, error) {
+func (s *SpotV1Service) SpotOpenOrders(ctx context.Context, param SpotOpenOrdersParam) (*SpotOpenOrdersResponse, error) {
 	var res SpotOpenOrdersResponse
 
 	queryString, err := query.Values(param)
@@ -715,7 +716,7 @@ func (s *SpotV1Service) SpotOpenOrders(param SpotOpenOrdersParam) (*SpotOpenOrde
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/spot/v1/open-orders", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/spot/v1/open-orders", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -744,7 +745,7 @@ type SpotGetWalletBalanceResultBalance struct {
 }
 
 // SpotGetWalletBalance :
-func (s *SpotV1Service) SpotGetWalletBalance() (*SpotGetWalletBalanceResponse, error) {
+func (s *SpotV1Service) SpotGetWalletBalance(ctx context.Context) (*SpotGetWalletBalanceResponse, error) {
 	var res SpotGetWalletBalanceResponse
 
 	queryString, err := query.Values(nil)
@@ -752,7 +753,7 @@ func (s *SpotV1Service) SpotGetWalletBalance() (*SpotGetWalletBalanceResponse, e
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/spot/v1/account", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/spot/v1/account", queryString, &res); err != nil {
 		return nil, err
 	}
 

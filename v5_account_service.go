@@ -11,12 +11,12 @@ import (
 
 // V5AccountServiceI :
 type V5AccountServiceI interface {
-	GetWalletBalance(AccountType, []Coin) (*V5GetWalletBalanceResponse, error)
-	SetCollateralCoin(V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error)
-	SetBatchCollateralCoin(ctx context.Context, param V5SetBatchCollateralCoinParam) (*V5SetBatchCollateralCoinResponse, error)
-	GetCollateralInfo(V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error)
-	GetAccountInfo() (*V5GetAccountInfoResponse, error)
-	GetTransactionLog(V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error)
+	GetWalletBalance(context.Context, AccountType, []Coin) (*V5GetWalletBalanceResponse, error)
+	SetCollateralCoin(context.Context, V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error)
+	SetBatchCollateralCoin(context.Context, V5SetBatchCollateralCoinParam) (*V5SetBatchCollateralCoinResponse, error)
+	GetCollateralInfo(context.Context, V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error)
+	GetAccountInfo(context.Context) (*V5GetAccountInfoResponse, error)
+	GetTransactionLog(context.Context, V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error)
 }
 
 // V5AccountService :
@@ -76,7 +76,7 @@ type V5WalletBalanceList struct {
 // coin:
 // If not passed, it returns non-zero asset info
 // You can pass multiple coins to query, separated by comma. "USDT,USDC".
-func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5GetWalletBalanceResponse, error) {
+func (s *V5AccountService) GetWalletBalance(ctx context.Context, at AccountType, coins []Coin) (*V5GetWalletBalanceResponse, error) {
 	var (
 		res   V5GetWalletBalanceResponse
 		query = make(url.Values)
@@ -91,7 +91,7 @@ func (s *V5AccountService) GetWalletBalance(at AccountType, coins []Coin) (*V5Ge
 		query.Add("coin", strings.Join(coinsStr, ","))
 	}
 
-	if err := s.client.getV5Privately("/v5/account/wallet-balance", query, &res); err != nil {
+	if err := s.client.getV5Privately(ctx, "/v5/account/wallet-balance", query, &res); err != nil {
 		return nil, err
 	}
 
@@ -116,7 +116,7 @@ type V5SetCollateralCoinResponse struct {
 }
 
 // SetCollateralCoin :
-func (s *V5AccountService) SetCollateralCoin(param V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error) {
+func (s *V5AccountService) SetCollateralCoin(ctx context.Context, param V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error) {
 	var res V5SetCollateralCoinResponse
 
 	body, err := json.Marshal(param)
@@ -124,7 +124,7 @@ func (s *V5AccountService) SetCollateralCoin(param V5SetCollateralCoinParam) (*V
 		return nil, err
 	}
 
-	if err := s.client.postV5JSON("/v5/account/set-collateral-switch", body, &res); err != nil {
+	if err := s.client.postV5JSON(ctx, "/v5/account/set-collateral-switch", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -157,7 +157,7 @@ func (s *V5AccountService) SetBatchCollateralCoin(ctx context.Context, param V5S
 		return nil, err
 	}
 
-	if err := s.client.postV5JSONWithContext(ctx, "/v5/account/set-collateral-switch-batch", body, &res); err != nil {
+	if err := s.client.postV5JSON(ctx, "/v5/account/set-collateral-switch-batch", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -198,7 +198,7 @@ type V5GetCollateralInfoList struct {
 }
 
 // GetCollateralInfo :
-func (s *V5AccountService) GetCollateralInfo(param V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error) {
+func (s *V5AccountService) GetCollateralInfo(ctx context.Context, param V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error) {
 	var res V5GetCollateralInfoResponse
 
 	queryString, err := query.Values(param)
@@ -206,7 +206,7 @@ func (s *V5AccountService) GetCollateralInfo(param V5GetCollateralInfoParam) (*V
 		return nil, err
 	}
 
-	if err = s.client.getV5Privately("/v5/account/collateral-info", queryString, &res); err != nil {
+	if err = s.client.getV5Privately(ctx, "/v5/account/collateral-info", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -227,13 +227,13 @@ type V5AccountInfoResult struct {
 }
 
 // GetAccountInfo :
-func (s *V5AccountService) GetAccountInfo() (*V5GetAccountInfoResponse, error) {
+func (s *V5AccountService) GetAccountInfo(ctx context.Context) (*V5GetAccountInfoResponse, error) {
 	var (
 		res   V5GetAccountInfoResponse
 		query = make(url.Values)
 	)
 
-	if err := s.client.getV5Privately("/v5/account/info", query, &res); err != nil {
+	if err := s.client.getV5Privately(ctx, "/v5/account/info", query, &res); err != nil {
 		return nil, err
 	}
 
@@ -292,7 +292,7 @@ type V5GetTransactionLogItem struct {
 }
 
 // GetTransactionLog :
-func (s *V5AccountService) GetTransactionLog(param V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error) {
+func (s *V5AccountService) GetTransactionLog(ctx context.Context, param V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error) {
 	var res V5GetTransactionLogResponse
 
 	queryString, err := query.Values(param)
@@ -300,7 +300,7 @@ func (s *V5AccountService) GetTransactionLog(param V5GetTransactionLogParam) (*V
 		return nil, err
 	}
 
-	if err := s.client.getV5Privately("/v5/account/transaction-log", queryString, &res); err != nil {
+	if err := s.client.getV5Privately(ctx, "/v5/account/transaction-log", queryString, &res); err != nil {
 		return nil, err
 	}
 

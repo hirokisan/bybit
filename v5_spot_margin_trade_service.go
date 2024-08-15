@@ -56,7 +56,7 @@ func (s *V5SpotMarginTradeService) GetVIPMarginData(ctx context.Context, param V
 		return nil, err
 	}
 
-	if err := s.client.getPubliclyWithContext(ctx, "/v5/spot-margin-trade/data", queryString, res); err != nil {
+	if err := s.client.getPublicly(ctx, "/v5/spot-margin-trade/data", queryString, res); err != nil {
 		return nil, err
 	}
 
@@ -75,7 +75,7 @@ func (s *V5SpotMarginTradeService) SetLeverage(ctx context.Context, param V5SetM
 		return res, fmt.Errorf("json marshal: %w", err)
 	}
 
-	if err := s.client.postV5JSONWithContext(ctx, "/v5/spot-margin-trade/set-leverage", body, res); err != nil {
+	if err := s.client.postV5JSON(ctx, "/v5/spot-margin-trade/set-leverage", body, res); err != nil {
 		return res, err
 	}
 	return res, nil
@@ -100,7 +100,7 @@ func (s *V5SpotMarginTradeService) GetStatusAndLeverage(ctx context.Context) (*V
 		return nil, err
 	}
 
-	if err := s.client.getV5PrivatelyWithContext(ctx, "/v5/spot-margin-trade/state", queryString, res); err != nil {
+	if err := s.client.getV5Privately(ctx, "/v5/spot-margin-trade/state", queryString, res); err != nil {
 		return nil, err
 	}
 

@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -11,6 +12,7 @@ import (
 )
 
 func TestV5ExecutionService_GetExecutionList(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetExecutionParam{
 			Category: CategoryV5Linear,
@@ -66,7 +68,7 @@ func TestV5ExecutionService_GetExecutionList(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Execution().GetExecutionList(param)
+		resp, err := client.V5().Execution().GetExecutionList(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -127,7 +129,7 @@ func TestV5ExecutionService_GetExecutionList(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Execution().GetExecutionList(param)
+		_, err = client.V5().Execution().GetExecutionList(ctx, param)
 		assert.Error(t, err)
 	})
 }

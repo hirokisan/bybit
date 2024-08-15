@@ -1,13 +1,14 @@
 package bybit
 
 import (
+	"context"
 	"net/url"
 	"time"
 )
 
 // V5UserServiceI :
 type V5UserServiceI interface {
-	GetAPIKey() (*V5APIKeyResponse, error)
+	GetAPIKey(context.Context) (*V5APIKeyResponse, error)
 }
 
 // V5UserService :
@@ -54,12 +55,12 @@ type V5ApiKeyResult struct {
 }
 
 // GetAPIKey :
-func (s *V5UserService) GetAPIKey() (*V5APIKeyResponse, error) {
+func (s *V5UserService) GetAPIKey(ctx context.Context) (*V5APIKeyResponse, error) {
 	var (
 		res V5APIKeyResponse
 	)
 
-	if err := s.client.getV5Privately("/v5/user/query-api", url.Values{}, &res); err != nil {
+	if err := s.client.getV5Privately(ctx, "/v5/user/query-api", url.Values{}, &res); err != nil {
 		return nil, err
 	}
 

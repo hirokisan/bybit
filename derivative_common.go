@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -93,7 +94,7 @@ type DerivativesOrderBookParam struct {
 }
 
 // DerivativesOrderBook :
-func (s *DerivativeCommonService) DerivativesOrderBook(param DerivativesOrderBookParam) (*DerivativesOrderBookResponse, error) {
+func (s *DerivativeCommonService) DerivativesOrderBook(ctx context.Context, param DerivativesOrderBookParam) (*DerivativesOrderBookResponse, error) {
 	var res DerivativesOrderBookResponse
 
 	queryString, err := query.Values(param)
@@ -101,7 +102,7 @@ func (s *DerivativeCommonService) DerivativesOrderBook(param DerivativesOrderBoo
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/derivatives/v3/public/order-book/L2", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/derivatives/v3/public/order-book/L2", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -165,7 +166,7 @@ type DerivativesKlineParam struct {
 }
 
 // DerivativesKline :
-func (s *DerivativeCommonService) DerivativesKline(param DerivativesKlineParam) (*DerivativesKlineResponse, error) {
+func (s *DerivativeCommonService) DerivativesKline(ctx context.Context, param DerivativesKlineParam) (*DerivativesKlineResponse, error) {
 	var res DerivativesKlineResponse
 
 	if param.Category != CategoryDerivativeInverse && param.Category != CategoryDerivativeLinear {
@@ -177,7 +178,7 @@ func (s *DerivativeCommonService) DerivativesKline(param DerivativesKlineParam) 
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/derivatives/v3/public/kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/derivatives/v3/public/kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -229,7 +230,7 @@ type DerivativesTickersParam struct {
 }
 
 // DerivativesTickers :
-func (s *DerivativeCommonService) DerivativesTickers(param DerivativesTickersParam) (*DerivativesTickersResponse, error) {
+func (s *DerivativeCommonService) DerivativesTickers(ctx context.Context, param DerivativesTickersParam) (*DerivativesTickersResponse, error) {
 	var res DerivativesTickersResponse
 
 	if param.Category == CategoryDerivativeOption {
@@ -241,7 +242,7 @@ func (s *DerivativeCommonService) DerivativesTickers(param DerivativesTickersPar
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/derivatives/v3/public/tickers", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/derivatives/v3/public/tickers", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -290,7 +291,7 @@ type DerivativesTickersForOptionParam struct {
 }
 
 // DerivativesTickersForOption :
-func (s *DerivativeCommonService) DerivativesTickersForOption(param DerivativesTickersForOptionParam) (*DerivativesTickersForOptionResponse, error) {
+func (s *DerivativeCommonService) DerivativesTickersForOption(ctx context.Context, param DerivativesTickersForOptionParam) (*DerivativesTickersForOptionResponse, error) {
 	var res DerivativesTickersForOptionResponse
 
 	queryString, err := query.Values(DerivativesTickersParam{
@@ -301,7 +302,7 @@ func (s *DerivativeCommonService) DerivativesTickersForOption(param DerivativesT
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/derivatives/v3/public/tickers", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/derivatives/v3/public/tickers", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -356,7 +357,7 @@ type DerivativesInstrumentsParam struct {
 }
 
 // DerivativesInstruments :
-func (s *DerivativeCommonService) DerivativesInstruments(param DerivativesInstrumentsParam) (*DerivativesInstrumentsResponse, error) {
+func (s *DerivativeCommonService) DerivativesInstruments(ctx context.Context, param DerivativesInstrumentsParam) (*DerivativesInstrumentsResponse, error) {
 	var res DerivativesInstrumentsResponse
 
 	if param.Category == CategoryDerivativeOption {
@@ -368,7 +369,7 @@ func (s *DerivativeCommonService) DerivativesInstruments(param DerivativesInstru
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/derivatives/v3/public/instruments-info", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/derivatives/v3/public/instruments-info", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -417,7 +418,7 @@ type DerivativesInstrumentsForOptionParam struct {
 }
 
 // DerivativesInstrumentsForOption :
-func (s *DerivativeCommonService) DerivativesInstrumentsForOption(param DerivativesInstrumentsForOptionParam) (*DerivativesInstrumentsForOptionResponse, error) {
+func (s *DerivativeCommonService) DerivativesInstrumentsForOption(ctx context.Context, param DerivativesInstrumentsForOptionParam) (*DerivativesInstrumentsForOptionResponse, error) {
 	var res DerivativesInstrumentsForOptionResponse
 
 	queryString, err := query.Values(param)
@@ -426,7 +427,7 @@ func (s *DerivativeCommonService) DerivativesInstrumentsForOption(param Derivati
 	}
 	queryString.Add("category", string(CategoryDerivativeOption))
 
-	if err := s.client.getPublicly("/derivatives/v3/public/instruments-info", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/derivatives/v3/public/instruments-info", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -486,7 +487,7 @@ type DerivativesMarkPriceKlineParam struct {
 }
 
 // DerivativesMarkPriceKline :
-func (s *DerivativeCommonService) DerivativesMarkPriceKline(param DerivativesMarkPriceKlineParam) (*DerivativesMarkPriceKlineResponse, error) {
+func (s *DerivativeCommonService) DerivativesMarkPriceKline(ctx context.Context, param DerivativesMarkPriceKlineParam) (*DerivativesMarkPriceKlineResponse, error) {
 	var res DerivativesMarkPriceKlineResponse
 
 	queryString, err := query.Values(param)
@@ -494,7 +495,7 @@ func (s *DerivativeCommonService) DerivativesMarkPriceKline(param DerivativesMar
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/derivatives/v3/public/mark-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/derivatives/v3/public/mark-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -554,7 +555,7 @@ type DerivativesIndexPriceKlineParam struct {
 }
 
 // DerivativesIndexPriceKline :
-func (s *DerivativeCommonService) DerivativesIndexPriceKline(param DerivativesIndexPriceKlineParam) (*DerivativesIndexPriceKlineResponse, error) {
+func (s *DerivativeCommonService) DerivativesIndexPriceKline(ctx context.Context, param DerivativesIndexPriceKlineParam) (*DerivativesIndexPriceKlineResponse, error) {
 	var res DerivativesIndexPriceKlineResponse
 
 	queryString, err := query.Values(param)
@@ -562,7 +563,7 @@ func (s *DerivativeCommonService) DerivativesIndexPriceKline(param DerivativesIn
 		return nil, err
 	}
 
-	if err := s.client.getPublicly("/derivatives/v3/public/index-price-kline", queryString, &res); err != nil {
+	if err := s.client.getPublicly(ctx, "/derivatives/v3/public/index-price-kline", queryString, &res); err != nil {
 		return nil, err
 	}
 

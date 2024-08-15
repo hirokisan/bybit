@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 
@@ -9,14 +10,14 @@ import (
 
 // V5PositionServiceI :
 type V5PositionServiceI interface {
-	GetPositionInfo(V5GetPositionInfoParam) (*V5GetPositionInfoResponse, error)
-	SetLeverage(V5SetLeverageParam) (*V5SetLeverageResponse, error)
-	SetTradingStop(V5SetTradingStopParam) (*V5SetTradingStopResponse, error)
-	SetTpSlMode(V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error)
-	SwitchPositionMode(V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error)
-	GetClosedPnL(V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error)
-	SwitchPositionMarginMode(V5SwitchPositionMarginModeParam) (*V5SwitchPositionMarginModeResponse, error)
-	SetRiskLimit(V5SetRiskLimitParam) (*V5SetRiskLimitResponse, error)
+	GetPositionInfo(context.Context, V5GetPositionInfoParam) (*V5GetPositionInfoResponse, error)
+	SetLeverage(context.Context, V5SetLeverageParam) (*V5SetLeverageResponse, error)
+	SetTradingStop(context.Context, V5SetTradingStopParam) (*V5SetTradingStopResponse, error)
+	SetTpSlMode(context.Context, V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error)
+	SwitchPositionMode(context.Context, V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error)
+	GetClosedPnL(context.Context, V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error)
+	SwitchPositionMarginMode(context.Context, V5SwitchPositionMarginModeParam) (*V5SwitchPositionMarginModeResponse, error)
+	SetRiskLimit(context.Context, V5SetRiskLimitParam) (*V5SetRiskLimitResponse, error)
 }
 
 // V5PositionService :
@@ -87,7 +88,7 @@ type V5GetPositionInfoItem struct {
 }
 
 // GetPositionInfo :
-func (s *V5PositionService) GetPositionInfo(param V5GetPositionInfoParam) (*V5GetPositionInfoResponse, error) {
+func (s *V5PositionService) GetPositionInfo(ctx context.Context, param V5GetPositionInfoParam) (*V5GetPositionInfoResponse, error) {
 	var res V5GetPositionInfoResponse
 
 	queryString, err := query.Values(param)
@@ -95,7 +96,7 @@ func (s *V5PositionService) GetPositionInfo(param V5GetPositionInfoParam) (*V5Ge
 		return nil, err
 	}
 
-	if err := s.client.getV5Privately("/v5/position/list", queryString, &res); err != nil {
+	if err := s.client.getV5Privately(ctx, "/v5/position/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -117,7 +118,7 @@ type V5SetLeverageResponse struct {
 }
 
 // SetLeverage :
-func (s *V5PositionService) SetLeverage(param V5SetLeverageParam) (*V5SetLeverageResponse, error) {
+func (s *V5PositionService) SetLeverage(ctx context.Context, param V5SetLeverageParam) (*V5SetLeverageResponse, error) {
 	var res V5SetLeverageResponse
 
 	if param.Category == "" || param.Symbol == "" || param.BuyLeverage == "" || param.SellLeverage == "" {
@@ -129,7 +130,7 @@ func (s *V5PositionService) SetLeverage(param V5SetLeverageParam) (*V5SetLeverag
 		return &res, fmt.Errorf("json marshal: %w", err)
 	}
 
-	if err := s.client.postV5JSON("/v5/position/set-leverage", body, &res); err != nil {
+	if err := s.client.postV5JSON(ctx, "/v5/position/set-leverage", body, &res); err != nil {
 		return &res, err
 	}
 
@@ -174,7 +175,7 @@ type V5SetTradingStopResponse struct {
 }
 
 // SetTradingStop :
-func (s *V5PositionService) SetTradingStop(param V5SetTradingStopParam) (*V5SetTradingStopResponse, error) {
+func (s *V5PositionService) SetTradingStop(ctx context.Context, param V5SetTradingStopParam) (*V5SetTradingStopResponse, error) {
 	var res V5SetTradingStopResponse
 
 	if err := param.validate(); err != nil {
@@ -186,7 +187,7 @@ func (s *V5PositionService) SetTradingStop(param V5SetTradingStopParam) (*V5SetT
 		return &res, fmt.Errorf("json marshal: %w", err)
 	}
 
-	if err := s.client.postV5JSON("/v5/position/trading-stop", body, &res); err != nil {
+	if err := s.client.postV5JSON(ctx, "/v5/position/trading-stop", body, &res); err != nil {
 		return &res, err
 	}
 
@@ -219,7 +220,7 @@ type V5SetTpSlModeResult struct {
 }
 
 // SetTpSlMode :
-func (s *V5PositionService) SetTpSlMode(param V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error) {
+func (s *V5PositionService) SetTpSlMode(ctx context.Context, param V5SetTpSlModeParam) (*V5SetTpSlModeResponse, error) {
 	var res V5SetTpSlModeResponse
 
 	if err := param.validate(); err != nil {
@@ -231,7 +232,7 @@ func (s *V5PositionService) SetTpSlMode(param V5SetTpSlModeParam) (*V5SetTpSlMod
 		return &res, fmt.Errorf("json marshal: %w", err)
 	}
 
-	if err := s.client.postV5JSON("/v5/position/set-tpsl-mode", body, &res); err != nil {
+	if err := s.client.postV5JSON(ctx, "/v5/position/set-tpsl-mode", body, &res); err != nil {
 		return &res, err
 	}
 
@@ -261,7 +262,7 @@ type V5SwitchPositionModeResponse struct {
 }
 
 // SwitchPositionMode :
-func (s *V5PositionService) SwitchPositionMode(param V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error) {
+func (s *V5PositionService) SwitchPositionMode(ctx context.Context, param V5SwitchPositionModeParam) (*V5SwitchPositionModeResponse, error) {
 	var res V5SwitchPositionModeResponse
 
 	if err := param.validate(); err != nil {
@@ -273,7 +274,7 @@ func (s *V5PositionService) SwitchPositionMode(param V5SwitchPositionModeParam) 
 		return &res, fmt.Errorf("json marshal: %w", err)
 	}
 
-	if err := s.client.postV5JSON("/v5/position/switch-mode", body, &res); err != nil {
+	if err := s.client.postV5JSON(ctx, "/v5/position/switch-mode", body, &res); err != nil {
 		return &res, err
 	}
 
@@ -329,7 +330,7 @@ type V5GetClosedPnLItem struct {
 }
 
 // GetClosedPnL :
-func (s *V5PositionService) GetClosedPnL(param V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error) {
+func (s *V5PositionService) GetClosedPnL(ctx context.Context, param V5GetClosedPnLParam) (*V5GetClosedPnLResponse, error) {
 	var res V5GetClosedPnLResponse
 
 	queryString, err := query.Values(param)
@@ -337,7 +338,7 @@ func (s *V5PositionService) GetClosedPnL(param V5GetClosedPnLParam) (*V5GetClose
 		return nil, err
 	}
 
-	if err := s.client.getV5Privately("/v5/position/closed-pnl", queryString, &res); err != nil {
+	if err := s.client.getV5Privately(ctx, "/v5/position/closed-pnl", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -370,7 +371,7 @@ type V5SwitchPositionMarginModeResponse struct {
 }
 
 // SwitchPositionMarginMode :
-func (s *V5PositionService) SwitchPositionMarginMode(param V5SwitchPositionMarginModeParam) (*V5SwitchPositionMarginModeResponse, error) {
+func (s *V5PositionService) SwitchPositionMarginMode(ctx context.Context, param V5SwitchPositionMarginModeParam) (*V5SwitchPositionMarginModeResponse, error) {
 	var res V5SwitchPositionMarginModeResponse
 
 	if err := param.validate(); err != nil {
@@ -382,7 +383,7 @@ func (s *V5PositionService) SwitchPositionMarginMode(param V5SwitchPositionMargi
 		return &res, fmt.Errorf("json marshal: %w", err)
 	}
 
-	if err := s.client.postV5JSON("/v5/position/switch-isolated", body, &res); err != nil {
+	if err := s.client.postV5JSON(ctx, "/v5/position/switch-isolated", body, &res); err != nil {
 		return &res, err
 	}
 
@@ -412,7 +413,7 @@ type V5SetRiskLimitResult struct {
 }
 
 // SetRiskLimit :
-func (s *V5PositionService) SetRiskLimit(param V5SetRiskLimitParam) (*V5SetRiskLimitResponse, error) {
+func (s *V5PositionService) SetRiskLimit(ctx context.Context, param V5SetRiskLimitParam) (*V5SetRiskLimitResponse, error) {
 	var res V5SetRiskLimitResponse
 
 	body, err := json.Marshal(param)
@@ -420,7 +421,7 @@ func (s *V5PositionService) SetRiskLimit(param V5SetRiskLimitParam) (*V5SetRiskL
 		return &res, fmt.Errorf("json marshal: %w", err)
 	}
 
-	if err := s.client.postV5JSON("/v5/position/set-risk-limit", body, &res); err != nil {
+	if err := s.client.postV5JSON(ctx, "/v5/position/set-risk-limit", body, &res); err != nil {
 		return &res, err
 	}
 

@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -11,6 +12,7 @@ import (
 )
 
 func TestV5Account_GetWalletBalance(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		path := "/v5/account/wallet-balance"
 		method := http.MethodGet
@@ -65,7 +67,7 @@ func TestV5Account_GetWalletBalance(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Account().GetWalletBalance(AccountTypeUnified, nil)
+		resp, err := client.V5().Account().GetWalletBalance(ctx, AccountTypeUnified, nil)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -74,6 +76,7 @@ func TestV5Account_GetWalletBalance(t *testing.T) {
 }
 
 func TestV5Account_SetCollateralCoin(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5SetCollateralCoinParam{
 			Coin:             CoinBTC,
@@ -99,7 +102,7 @@ func TestV5Account_SetCollateralCoin(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Account().SetCollateralCoin(param)
+		resp, err := client.V5().Account().SetCollateralCoin(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -108,6 +111,7 @@ func TestV5Account_SetCollateralCoin(t *testing.T) {
 }
 
 func TestV5Account_GetCollateralInfo(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		currency := "BTC"
 		param := V5GetCollateralInfoParam{Currency: &currency}
@@ -148,7 +152,7 @@ func TestV5Account_GetCollateralInfo(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Account().GetCollateralInfo(param)
+		resp, err := client.V5().Account().GetCollateralInfo(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -157,6 +161,7 @@ func TestV5Account_GetCollateralInfo(t *testing.T) {
 }
 
 func TestV5Account_GetAccountInfo(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		path := "/v5/account/info"
 		method := http.MethodGet
@@ -181,7 +186,7 @@ func TestV5Account_GetAccountInfo(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Account().GetAccountInfo()
+		resp, err := client.V5().Account().GetAccountInfo(ctx)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -190,6 +195,7 @@ func TestV5Account_GetAccountInfo(t *testing.T) {
 }
 
 func TestV5Account_GetTransactionLog(t *testing.T) {
+	ctx := context.Background()
 	t.Run("success", func(t *testing.T) {
 		param := V5GetTransactionLogParam{}
 
@@ -236,7 +242,7 @@ func TestV5Account_GetTransactionLog(t *testing.T) {
 			WithBaseURL(server.URL).
 			WithAuth("test", "test")
 
-		resp, err := client.V5().Account().GetTransactionLog(param)
+		resp, err := client.V5().Account().GetTransactionLog(ctx, param)
 		require.NoError(t, err)
 
 		require.NotNil(t, resp)
@@ -287,7 +293,7 @@ func TestV5Account_GetTransactionLog(t *testing.T) {
 		client := NewTestClient().
 			WithBaseURL(server.URL)
 
-		_, err = client.V5().Account().GetTransactionLog(param)
+		_, err = client.V5().Account().GetTransactionLog(ctx, param)
 		assert.Error(t, err)
 	})
 }

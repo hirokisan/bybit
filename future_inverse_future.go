@@ -1,6 +1,7 @@
 package bybit
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/url"
@@ -11,35 +12,35 @@ import (
 // FutureInverseFutureServiceI :
 type FutureInverseFutureServiceI interface {
 	// Market Data Endpoints
-	OrderBook(SymbolFuture) (*OrderBookResponse, error)
-	ListKline(ListKlineParam) (*ListKlineResponse, error)
-	Tickers(SymbolFuture) (*TickersResponse, error)
-	TradingRecords(TradingRecordsParam) (*TradingRecordsResponse, error)
-	Symbols() (*SymbolsResponse, error)
-	MarkPriceKline(MarkPriceKlineParam) (*MarkPriceKlineResponse, error)
-	IndexPriceKline(IndexPriceKlineParam) (*IndexPriceKlineResponse, error)
-	OpenInterest(OpenInterestParam) (*OpenInterestResponse, error)
-	BigDeal(BigDealParam) (*BigDealResponse, error)
-	AccountRatio(AccountRatioParam) (*AccountRatioResponse, error)
+	OrderBook(context.Context, SymbolFuture) (*OrderBookResponse, error)
+	ListKline(context.Context, ListKlineParam) (*ListKlineResponse, error)
+	Tickers(context.Context, SymbolFuture) (*TickersResponse, error)
+	TradingRecords(context.Context, TradingRecordsParam) (*TradingRecordsResponse, error)
+	Symbols(context.Context) (*SymbolsResponse, error)
+	MarkPriceKline(context.Context, MarkPriceKlineParam) (*MarkPriceKlineResponse, error)
+	IndexPriceKline(context.Context, IndexPriceKlineParam) (*IndexPriceKlineResponse, error)
+	OpenInterest(context.Context, OpenInterestParam) (*OpenInterestResponse, error)
+	BigDeal(context.Context, BigDealParam) (*BigDealResponse, error)
+	AccountRatio(context.Context, AccountRatioParam) (*AccountRatioResponse, error)
 
 	// Account Data Endpoints
-	CreateFuturesOrder(CreateFuturesOrderParam) (*CreateFuturesOrderResponse, error)
-	ListFuturesOrder(ListFuturesOrderParam) (*ListFuturesOrderResponse, error)
-	CancelFuturesOrder(CancelFuturesOrderParam) (*CancelFuturesOrderResponse, error)
-	CancelAllFuturesOrder(CancelAllFuturesOrderParam) (*CancelAllFuturesOrderResponse, error)
-	QueryFuturesOrder(QueryFuturesOrderParam) (*QueryFuturesOrderResponse, error)
-	CreateFuturesStopOrder(CreateFuturesStopOrderParam) (*CreateFuturesStopOrderResponse, error)
-	ListFuturesStopOrder(ListFuturesStopOrderParam) (*ListFuturesStopOrderResponse, error)
-	CancelFuturesStopOrder(CancelFuturesStopOrderParam) (*CancelFuturesStopOrderResponse, error)
-	CancelAllFuturesStopOrder(CancelAllFuturesStopOrderParam) (*CancelAllFuturesStopOrderResponse, error)
-	QueryFuturesStopOrder(QueryFuturesStopOrderParam) (*QueryFuturesStopOrderResponse, error)
-	ListFuturesPositions(SymbolFuture) (*ListFuturesPositionsResponse, error)
-	FuturesTradingStop(FuturesTradingStopParam) (*FuturesTradingStopResponse, error)
-	FuturesSaveLeverage(FuturesSaveLeverageParam) (*FuturesSaveLeverageResponse, error)
-	APIKeyInfo() (*APIKeyInfoResponse, error)
+	CreateFuturesOrder(context.Context, CreateFuturesOrderParam) (*CreateFuturesOrderResponse, error)
+	ListFuturesOrder(context.Context, ListFuturesOrderParam) (*ListFuturesOrderResponse, error)
+	CancelFuturesOrder(context.Context, CancelFuturesOrderParam) (*CancelFuturesOrderResponse, error)
+	CancelAllFuturesOrder(context.Context, CancelAllFuturesOrderParam) (*CancelAllFuturesOrderResponse, error)
+	QueryFuturesOrder(context.Context, QueryFuturesOrderParam) (*QueryFuturesOrderResponse, error)
+	CreateFuturesStopOrder(context.Context, CreateFuturesStopOrderParam) (*CreateFuturesStopOrderResponse, error)
+	ListFuturesStopOrder(context.Context, ListFuturesStopOrderParam) (*ListFuturesStopOrderResponse, error)
+	CancelFuturesStopOrder(context.Context, CancelFuturesStopOrderParam) (*CancelFuturesStopOrderResponse, error)
+	CancelAllFuturesStopOrder(context.Context, CancelAllFuturesStopOrderParam) (*CancelAllFuturesStopOrderResponse, error)
+	QueryFuturesStopOrder(context.Context, QueryFuturesStopOrderParam) (*QueryFuturesStopOrderResponse, error)
+	ListFuturesPositions(context.Context, SymbolFuture) (*ListFuturesPositionsResponse, error)
+	FuturesTradingStop(context.Context, FuturesTradingStopParam) (*FuturesTradingStopResponse, error)
+	FuturesSaveLeverage(context.Context, FuturesSaveLeverageParam) (*FuturesSaveLeverageResponse, error)
+	APIKeyInfo(context.Context) (*APIKeyInfoResponse, error)
 
 	// Wallet Data Endpoints
-	Balance(Coin) (*BalanceResponse, error)
+	Balance(context.Context, Coin) (*BalanceResponse, error)
 }
 
 // FutureInverseFutureService :
@@ -102,7 +103,7 @@ type CreateFuturesOrderParam struct {
 }
 
 // CreateFuturesOrder :
-func (s *FutureInverseFutureService) CreateFuturesOrder(param CreateFuturesOrderParam) (*CreateFuturesOrderResponse, error) {
+func (s *FutureInverseFutureService) CreateFuturesOrder(ctx context.Context, param CreateFuturesOrderParam) (*CreateFuturesOrderResponse, error) {
 	var res CreateFuturesOrderResponse
 
 	body, err := json.Marshal(param)
@@ -110,7 +111,7 @@ func (s *FutureInverseFutureService) CreateFuturesOrder(param CreateFuturesOrder
 		return nil, fmt.Errorf("json marshal for CreateFuturesOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/futures/private/order/create", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/futures/private/order/create", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -167,7 +168,7 @@ type ListFuturesOrderParam struct {
 }
 
 // ListFuturesOrder :
-func (s *FutureInverseFutureService) ListFuturesOrder(param ListFuturesOrderParam) (*ListFuturesOrderResponse, error) {
+func (s *FutureInverseFutureService) ListFuturesOrder(ctx context.Context, param ListFuturesOrderParam) (*ListFuturesOrderResponse, error) {
 	var res ListFuturesOrderResponse
 
 	queryString, err := query.Values(param)
@@ -175,7 +176,7 @@ func (s *FutureInverseFutureService) ListFuturesOrder(param ListFuturesOrderPara
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/futures/private/order/list", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/futures/private/order/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -220,7 +221,7 @@ type CancelFuturesOrderParam struct {
 }
 
 // CancelFuturesOrder :
-func (s *FutureInverseFutureService) CancelFuturesOrder(param CancelFuturesOrderParam) (*CancelFuturesOrderResponse, error) {
+func (s *FutureInverseFutureService) CancelFuturesOrder(ctx context.Context, param CancelFuturesOrderParam) (*CancelFuturesOrderResponse, error) {
 	var res CancelFuturesOrderResponse
 
 	body, err := json.Marshal(param)
@@ -228,7 +229,7 @@ func (s *FutureInverseFutureService) CancelFuturesOrder(param CancelFuturesOrder
 		return nil, fmt.Errorf("json marshal for CancelFuturesOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/futures/private/order/cancel", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/futures/private/order/cancel", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -268,7 +269,7 @@ type CancelAllFuturesOrderParam struct {
 }
 
 // CancelAllFuturesOrder :
-func (s *FutureInverseFutureService) CancelAllFuturesOrder(param CancelAllFuturesOrderParam) (*CancelAllFuturesOrderResponse, error) {
+func (s *FutureInverseFutureService) CancelAllFuturesOrder(ctx context.Context, param CancelAllFuturesOrderParam) (*CancelAllFuturesOrderResponse, error) {
 	var res CancelAllFuturesOrderResponse
 
 	body, err := json.Marshal(param)
@@ -276,7 +277,7 @@ func (s *FutureInverseFutureService) CancelAllFuturesOrder(param CancelAllFuture
 		return nil, fmt.Errorf("json marshal for CancelAllFuturesOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/futures/private/order/cancelAll", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/futures/private/order/cancelAll", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -328,7 +329,7 @@ type QueryFuturesOrderParam struct {
 }
 
 // QueryFuturesOrder :
-func (s *FutureInverseFutureService) QueryFuturesOrder(param QueryFuturesOrderParam) (*QueryFuturesOrderResponse, error) {
+func (s *FutureInverseFutureService) QueryFuturesOrder(ctx context.Context, param QueryFuturesOrderParam) (*QueryFuturesOrderResponse, error) {
 	var res QueryFuturesOrderResponse
 
 	queryString, err := query.Values(param)
@@ -336,7 +337,7 @@ func (s *FutureInverseFutureService) QueryFuturesOrder(param QueryFuturesOrderPa
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/futures/private/order", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/futures/private/order", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -397,7 +398,7 @@ type CreateFuturesStopOrderParam struct {
 }
 
 // CreateFuturesStopOrder :
-func (s *FutureInverseFutureService) CreateFuturesStopOrder(param CreateFuturesStopOrderParam) (*CreateFuturesStopOrderResponse, error) {
+func (s *FutureInverseFutureService) CreateFuturesStopOrder(ctx context.Context, param CreateFuturesStopOrderParam) (*CreateFuturesStopOrderResponse, error) {
 	var res CreateFuturesStopOrderResponse
 
 	body, err := json.Marshal(param)
@@ -405,7 +406,7 @@ func (s *FutureInverseFutureService) CreateFuturesStopOrder(param CreateFuturesS
 		return nil, fmt.Errorf("json marshal for CreateFuturesStopOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/futures/private/stop-order/create", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/futures/private/stop-order/create", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -460,7 +461,7 @@ type ListFuturesStopOrderParam struct {
 }
 
 // ListFuturesStopOrder :
-func (s *FutureInverseFutureService) ListFuturesStopOrder(param ListFuturesStopOrderParam) (*ListFuturesStopOrderResponse, error) {
+func (s *FutureInverseFutureService) ListFuturesStopOrder(ctx context.Context, param ListFuturesStopOrderParam) (*ListFuturesStopOrderResponse, error) {
 	var res ListFuturesStopOrderResponse
 
 	queryString, err := query.Values(param)
@@ -468,7 +469,7 @@ func (s *FutureInverseFutureService) ListFuturesStopOrder(param ListFuturesStopO
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/futures/private/stop-order/list", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/futures/private/stop-order/list", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -495,7 +496,7 @@ type CancelFuturesStopOrderParam struct {
 }
 
 // CancelFuturesStopOrder :
-func (s *FutureInverseFutureService) CancelFuturesStopOrder(param CancelFuturesStopOrderParam) (*CancelFuturesStopOrderResponse, error) {
+func (s *FutureInverseFutureService) CancelFuturesStopOrder(ctx context.Context, param CancelFuturesStopOrderParam) (*CancelFuturesStopOrderResponse, error) {
 	var res CancelFuturesStopOrderResponse
 
 	body, err := json.Marshal(param)
@@ -503,7 +504,7 @@ func (s *FutureInverseFutureService) CancelFuturesStopOrder(param CancelFuturesS
 		return nil, fmt.Errorf("json marshal for CancelFuturesStopOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/futures/private/stop-order/cancel", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/futures/private/stop-order/cancel", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -547,7 +548,7 @@ type CancelAllFuturesStopOrderParam struct {
 }
 
 // CancelAllFuturesStopOrder :
-func (s *FutureInverseFutureService) CancelAllFuturesStopOrder(param CancelAllFuturesStopOrderParam) (*CancelAllFuturesStopOrderResponse, error) {
+func (s *FutureInverseFutureService) CancelAllFuturesStopOrder(ctx context.Context, param CancelAllFuturesStopOrderParam) (*CancelAllFuturesStopOrderResponse, error) {
 	var res CancelAllFuturesStopOrderResponse
 
 	body, err := json.Marshal(param)
@@ -555,7 +556,7 @@ func (s *FutureInverseFutureService) CancelAllFuturesStopOrder(param CancelAllFu
 		return nil, fmt.Errorf("json marshal for CancelAllFuturesStopOrderParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/futures/private/stop-order/cancelAll", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/futures/private/stop-order/cancelAll", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -608,7 +609,7 @@ type QueryFuturesStopOrderParam struct {
 }
 
 // QueryFuturesStopOrder :
-func (s *FutureInverseFutureService) QueryFuturesStopOrder(param QueryFuturesStopOrderParam) (*QueryFuturesStopOrderResponse, error) {
+func (s *FutureInverseFutureService) QueryFuturesStopOrder(ctx context.Context, param QueryFuturesStopOrderParam) (*QueryFuturesStopOrderResponse, error) {
 	var res QueryFuturesStopOrderResponse
 
 	queryString, err := query.Values(param)
@@ -616,7 +617,7 @@ func (s *FutureInverseFutureService) QueryFuturesStopOrder(param QueryFuturesSto
 		return nil, err
 	}
 
-	if err := s.client.getPrivately("/futures/private/stop-order", queryString, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/futures/private/stop-order", queryString, &res); err != nil {
 		return nil, err
 	}
 
@@ -674,13 +675,13 @@ type ListFuturesPositionsResultData struct {
 }
 
 // ListFuturesPositions :
-func (s *FutureInverseFutureService) ListFuturesPositions(symbol SymbolFuture) (*ListFuturesPositionsResponse, error) {
+func (s *FutureInverseFutureService) ListFuturesPositions(ctx context.Context, symbol SymbolFuture) (*ListFuturesPositionsResponse, error) {
 	var res ListFuturesPositionsResponse
 
 	query := url.Values{}
 	query.Add("symbol", string(symbol))
 
-	if err := s.client.getPrivately("/futures/private/position/list", query, &res); err != nil {
+	if err := s.client.getPrivately(ctx, "/futures/private/position/list", query, &res); err != nil {
 		return nil, err
 	}
 
@@ -744,7 +745,7 @@ type FuturesTradingStopParam struct {
 }
 
 // FuturesTradingStop :
-func (s *FutureInverseFutureService) FuturesTradingStop(param FuturesTradingStopParam) (*FuturesTradingStopResponse, error) {
+func (s *FutureInverseFutureService) FuturesTradingStop(ctx context.Context, param FuturesTradingStopParam) (*FuturesTradingStopResponse, error) {
 	var res FuturesTradingStopResponse
 
 	body, err := json.Marshal(param)
@@ -752,7 +753,7 @@ func (s *FutureInverseFutureService) FuturesTradingStop(param FuturesTradingStop
 		return nil, fmt.Errorf("json marshal for FuturesTradingStopParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/futures/private/position/trading-stop", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/futures/private/position/trading-stop", body, &res); err != nil {
 		return nil, err
 	}
 
@@ -773,7 +774,7 @@ type FuturesSaveLeverageParam struct {
 }
 
 // FuturesSaveLeverage :
-func (s *FutureInverseFutureService) FuturesSaveLeverage(param FuturesSaveLeverageParam) (*FuturesSaveLeverageResponse, error) {
+func (s *FutureInverseFutureService) FuturesSaveLeverage(ctx context.Context, param FuturesSaveLeverageParam) (*FuturesSaveLeverageResponse, error) {
 	var res FuturesSaveLeverageResponse
 
 	body, err := json.Marshal(param)
@@ -781,7 +782,7 @@ func (s *FutureInverseFutureService) FuturesSaveLeverage(param FuturesSaveLevera
 		return nil, fmt.Errorf("json marshal for FuturesSaveLeverageParam: %w", err)
 	}
 
-	if err := s.client.postJSON("/futures/private/position/leverage/save", body, &res); err != nil {
+	if err := s.client.postJSON(ctx, "/futures/private/position/leverage/save", body, &res); err != nil {
 		return nil, err
 	}
 
