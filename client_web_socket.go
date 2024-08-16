@@ -10,6 +10,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strconv"
 	"time"
 )
 
@@ -28,6 +29,8 @@ type WebSocketClient struct {
 	baseURL string
 	key     string
 	secret  string
+
+	syncTimeDeltaNanoSeconds int64
 }
 
 func (c *WebSocketClient) debugf(format string, v ...interface{}) {
@@ -85,7 +88,7 @@ func (c *WebSocketClient) buildAuthParam() ([]byte, error) {
 		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
 	}
 
-	expires := time.Now().Unix()*1000 + 10000
+	expires := c.getTimestamp()*1000 + 10000
 	req := fmt.Sprintf("GET/realtime%d", expires)
 	s := hmac.New(sha256.New, []byte(c.secret))
 	if _, err := s.Write([]byte(req)); err != nil {
@@ -104,6 +107,23 @@ func (c *WebSocketClient) buildAuthParam() ([]byte, error) {
 		return nil, err
 	}
 	return buf, nil
+}
+
+func (c *WebSocketClient) getTimestamp() int64 {
+	return (time.Now().UnixNano() - c.syncTimeDeltaNanoSeconds) / 1000000
+}
+
+func (c *WebSocketClient) UpdateSyncTimeDelta(
+	remoteServerTimeNsRaw string,
+	localTimestampNs int64,
+) error {
+	remoteServerTimeNS, err := strconv.ParseInt(remoteServerTimeNsRaw, 10, 64)
+	if err != nil {
+		return fmt.Errorf("parse server time: %w", err)
+	}
+
+	c.syncTimeDeltaNanoSeconds = localTimestampNs - remoteServerTimeNS
+	return nil
 }
 
 // WebsocketExecutor :
