@@ -207,6 +207,7 @@ func TestV5Account_GetTransactionLog(t *testing.T) {
 				"nextPageCursor": "133%3A1%2C133%3A1",
 				"list": []map[string]interface{}{
 					{
+						"id":              "203522043_TOKENUSDT_167043509104_0",
 						"symbol":          "BTCUSDT",
 						"category":        "linear",
 						"side":            "Sell",
@@ -259,6 +260,7 @@ func TestV5Account_GetTransactionLog(t *testing.T) {
 				"nextPageCursor": "133%3A1%2C133%3A1",
 				"list": []map[string]interface{}{
 					{
+						"id":              "203522043_TOKENUSDT_167043509104_0",
 						"symbol":          "BTCUSDT",
 						"category":        "linear",
 						"side":            "Sell",

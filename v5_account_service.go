@@ -270,6 +270,7 @@ type V5GetTransactionLogList []V5GetTransactionLogItem
 
 // V5GetTransactionLogItem :
 type V5GetTransactionLogItem struct {
+	Id              string               `json:"id""`
 	Symbol          SymbolV5             `json:"symbol"`
 	Category        CategoryV5           `json:"category"`
 	Side            Side                 `json:"side"`
