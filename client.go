@@ -462,16 +462,22 @@ func (c *Client) getTimestamp() int64 {
 	return (time.Now().UnixNano() - c.syncTimeDeltaNanoSeconds) / 1000000
 }
 
-func (c *Client) updateSyncTimeDelta(
-	remoteServerTimeRaw string,
-	localTimestampNanoseconds int64,
+// SetSyncTimeDeltaNs : set sync time delta in nanoseconds localTimeNs - remoteServerTimeNs
+func (c *Client) SetSyncTimeDeltaNs(timeDeltaNs int64) error {
+	c.syncTimeDeltaNanoSeconds = timeDeltaNs
+	return nil
+}
+
+func (c *Client) UpdateSyncTimeDelta(
+	remoteServerTimeNsRaw string,
+	localTimestampNs int64,
 ) error {
-	remoteServerTimeNS, err := strconv.ParseInt(remoteServerTimeRaw, 10, 64)
+	remoteServerTimeNs, err := strconv.ParseInt(remoteServerTimeNsRaw, 10, 64)
 	if err != nil {
 		return fmt.Errorf("parse server time: %w", err)
 	}
 
-	c.syncTimeDeltaNanoSeconds = localTimestampNanoseconds - remoteServerTimeNS
+	c.SetSyncTimeDeltaNs(localTimestampNs - remoteServerTimeNs)
 	return nil
 }
 
@@ -485,5 +491,5 @@ func (c *Client) SyncServerTime(ctx context.Context) error {
 		return errors.New("server time is empty")
 	}
 
-	return c.updateSyncTimeDelta(r.Result.TimeNano, time.Now().UnixNano())
+	return c.UpdateSyncTimeDelta(r.Result.TimeNano, time.Now().UnixNano())
 }

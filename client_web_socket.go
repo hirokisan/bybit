@@ -113,16 +113,22 @@ func (c *WebSocketClient) getTimestamp() int64 {
 	return (time.Now().UnixNano() - c.syncTimeDeltaNanoSeconds) / 1000000
 }
 
+// SetSyncTimeDeltaNs : set sync time delta in nanoseconds localTimeNs - remoteServerTimeNs
+func (c *WebSocketClient) SetSyncTimeDeltaNs(timeDeltaNs int64) error {
+	c.syncTimeDeltaNanoSeconds = timeDeltaNs
+	return nil
+}
+
 func (c *WebSocketClient) UpdateSyncTimeDelta(
 	remoteServerTimeNsRaw string,
 	localTimestampNs int64,
 ) error {
-	remoteServerTimeNS, err := strconv.ParseInt(remoteServerTimeNsRaw, 10, 64)
+	remoteServerTimeNs, err := strconv.ParseInt(remoteServerTimeNsRaw, 10, 64)
 	if err != nil {
 		return fmt.Errorf("parse server time: %w", err)
 	}
 
-	c.syncTimeDeltaNanoSeconds = localTimestampNs - remoteServerTimeNS
+	c.SetSyncTimeDeltaNs(localTimestampNs - remoteServerTimeNs)
 	return nil
 }
 

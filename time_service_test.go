@@ -19,7 +19,7 @@ func TestUpdateSyncTimeDelta(t *testing.T) {
 	nowTimestampMs := time.Now().UnixMilli()
 
 	// when
-	err := c.updateSyncTimeDelta(remoteServerTimeRaw, localTimestampNanoseconds)
+	err := c.UpdateSyncTimeDelta(remoteServerTimeRaw, localTimestampNanoseconds)
 
 	// then
 	require.NoError(t, err)
