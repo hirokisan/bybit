@@ -58,6 +58,7 @@ type V5GetExecutionListItem struct {
 	ExecType        ExecTypeV5 `json:"execType"`
 	ExecValue       string     `json:"execValue"`
 	ExecTime        string     `json:"execTime"`
+	FeeCurrency     Coin       `json:"feeCurrency"`
 	IsMaker         bool       `json:"isMaker"`
 	FeeRate         string     `json:"feeRate"`
 	TradeIv         string     `json:"tradeIv"`
