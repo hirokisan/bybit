@@ -122,7 +122,7 @@ func (s *V5PositionService) SetLeverage(ctx context.Context, param V5SetLeverage
 	var res V5SetLeverageResponse
 
 	if param.Category == "" || param.Symbol == "" || param.BuyLeverage == "" || param.SellLeverage == "" {
-		return nil, fmt.Errorf("category, Symbol, BuyLeverage and SellLeverage needed")
+		return nil, fmt.Errorf("category, symbol, BuyLeverage and SellLeverage needed")
 	}
 
 	body, err := json.Marshal(param)

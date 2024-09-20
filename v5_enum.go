@@ -243,17 +243,20 @@ const (
 type TransactionLogTypeV5 string
 
 const (
-	TransactionLogTypeV5TRANSFERIN   = TransactionLogTypeV5("TRANSFER_IN")
-	TransactionLogTypeV5TRANSFEROUT  = TransactionLogTypeV5("TRANSFER_OUT")
-	TransactionLogTypeV5TRADE        = TransactionLogTypeV5("TRADE")
-	TransactionLogTypeV5SETTLEMENT   = TransactionLogTypeV5("SETTLEMENT")
-	TransactionLogTypeV5DELIVERY     = TransactionLogTypeV5("DELIVERY")
-	TransactionLogTypeV5LIQUIDATION  = TransactionLogTypeV5("LIQUIDATION")
-	TransactionLogTypeV5BONUS        = TransactionLogTypeV5("BONUS")
-	TransactionLogTypeV5FEEREFUND    = TransactionLogTypeV5("FEE_REFUND")
-	TransactionLogTypeV5INTEREST     = TransactionLogTypeV5("INTEREST")
-	TransactionLogTypeV5CURRENCYBUY  = TransactionLogTypeV5("CURRENCY_BUY")
-	TransactionLogTypeV5CURRENCYSELL = TransactionLogTypeV5("CURRENCY_SELL")
+	TransactionLogTypeV5TRANSFERIN        = TransactionLogTypeV5("TRANSFER_IN")
+	TransactionLogTypeV5TRANSFEROUT       = TransactionLogTypeV5("TRANSFER_OUT")
+	TransactionLogTypeV5TRADE             = TransactionLogTypeV5("TRADE")
+	TransactionLogTypeV5SETTLEMENT        = TransactionLogTypeV5("SETTLEMENT")
+	TransactionLogTypeV5DELIVERY          = TransactionLogTypeV5("DELIVERY")
+	TransactionLogTypeV5LIQUIDATION       = TransactionLogTypeV5("LIQUIDATION")
+	TransactionLogTypeV5BONUS             = TransactionLogTypeV5("BONUS")
+	TransactionLogTypeV5BONUSRecollect    = TransactionLogTypeV5("BONUS_RECOLLECT")
+	TransactionLogTypeV5FEEREFUND         = TransactionLogTypeV5("FEE_REFUND")
+	TransactionLogTypeV5INTEREST          = TransactionLogTypeV5("INTEREST")
+	TransactionLogTypeV5CURRENCYBUY       = TransactionLogTypeV5("CURRENCY_BUY")
+	TransactionLogTypeV5CURRENCYSELL      = TransactionLogTypeV5("CURRENCY_SELL")
+	TransactionLogTypeV5SpotRepaymentBuy  = TransactionLogTypeV5("SPOT_REPAYMENT_BUY")
+	TransactionLogTypeV5SpotRepaymentSell = TransactionLogTypeV5("SPOT_REPAYMENT_SELL")
 )
 
 // InternalDepositStatusV5 :
