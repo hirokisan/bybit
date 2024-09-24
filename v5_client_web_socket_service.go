@@ -8,6 +8,7 @@ import (
 type V5WebsocketServiceI interface {
 	Public(CategoryV5) (V5WebsocketPublicService, error)
 	Private() (V5WebsocketPrivateService, error)
+	Trade() (V5WebsocketTradeService, error)
 }
 
 // V5WebsocketService :
@@ -48,6 +49,19 @@ func (s *V5WebsocketService) Private() (V5WebsocketPrivateServiceI, error) {
 		paramPositionMap:  make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivatePositionResponse) error),
 		paramExecutionMap: make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateExecutionResponse) error),
 		paramWalletMap:    make(map[V5WebsocketPrivateParamKey]func(V5WebsocketPrivateWalletResponse) error),
+	}, nil
+}
+
+// Trade :
+func (s *V5WebsocketService) Trade() (V5WebsocketTradeServiceI, error) {
+	url := s.client.baseURL + V5WebsocketTradePath
+	c, _, err := websocket.DefaultDialer.Dial(url, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &V5WebsocketTradeService{
+		client:     s.client,
+		connection: c,
 	}, nil
 }
 
