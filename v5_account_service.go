@@ -16,6 +16,7 @@ type V5AccountServiceI interface {
 	GetCollateralInfo(V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error)
 	GetAccountInfo() (*V5GetAccountInfoResponse, error)
 	GetTransactionLog(V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error)
+	GetFeeRate(V5GetFeeRateParam) (*V5GetFeeRateResponse, error)
 }
 
 // V5AccountService :
@@ -272,6 +273,52 @@ func (s *V5AccountService) GetTransactionLog(param V5GetTransactionLogParam) (*V
 	}
 
 	if err := s.client.getV5Privately("/v5/account/transaction-log", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// V5GetFeeRateParam :
+type V5GetFeeRateParam struct {
+	Category CategoryV5 `json:"category"`
+	Symbol   SymbolV5   `json:"symbol"`
+	BaseCoin *Coin      `url:"baseCoin,omitempty"`
+}
+
+// V5GetFeeRateResponse :
+type V5GetFeeRateResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           V5GetFeeRateResult `json:"result"`
+}
+
+// V5GetFeeRateResult :
+type V5GetFeeRateResult struct {
+	Category CategoryV5       `json:"category,omitempty"`
+	List     V5GetFeeRateList `json:"list"`
+}
+
+// V5GetFeeRateList :
+type V5GetFeeRateList []V5GetFeeRateItem
+
+// V5GetFeeRateItem :
+type V5GetFeeRateItem struct {
+	Symbol       SymbolV5 `json:"symbol"`
+	BaseCoin     *Coin    `url:"baseCoin,omitempty"`
+	TakerFeeRate string   `json:"takerFeeRate"`
+	MakerFeeRate string   `json:"makerFeeRate"`
+}
+
+// GetFeeRate :
+func (s *V5AccountService) GetFeeRate(param V5GetFeeRateParam) (*V5GetFeeRateResponse, error) {
+	var res V5GetFeeRateResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getV5Privately("/v5/account/fee-rate", queryString, &res); err != nil {
 		return nil, err
 	}
 
