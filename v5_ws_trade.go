@@ -64,14 +64,6 @@ func (s *V5WebsocketTradeService) judgeTopic(respBody []byte) (V5WebsocketTradeT
 	return "", nil
 }
 
-// parseResponse :
-func (s *V5WebsocketTradeService) parseResponse(respBody []byte, response interface{}) error {
-	if err := json.Unmarshal(respBody, &response); err != nil {
-		return err
-	}
-	return nil
-}
-
 // Login : Apply for authentication when establishing a connection.
 func (s *V5WebsocketTradeService) Login() error {
 	param, err := s.client.buildAuthParam()

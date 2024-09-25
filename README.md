@@ -161,6 +161,7 @@ The following API endpoints have been implemented
 - [`/v5/account/transaction-log` Get Transaction Log](https://bybit-exchange.github.io/docs/v5/account/transaction-log)
 - [`/v5/account/collateral-info` Get Collateral Info](https://bybit-exchange.github.io/docs/v5/account/collateral-info)
 - [`/v5/account/set-collateral-switch` Set Collateral Coin](https://bybit-exchange.github.io/docs/v5/account/set-collateral)
+- [`/v5/account/fee-rate` Get Fee Rate](https://bybit-exchange.github.io/docs/v5/account/fee-rate)
 
 #### Asset
 
@@ -360,6 +361,11 @@ The following API endpoints have been implemented
 - [Order](https://bybit-exchange.github.io/docs/v5/websocket/private/order)
 - [Wallet](https://bybit-exchange.github.io/docs/v5/websocket/private/wallet)
 - [Execution](https://bybit-exchange.github.io/docs/v5/websocket/private/execution)
+
+#### [Trade V5](https://bybit-exchange.github.io/docs/v5/websocket/trade/guideline)
+
+- Create
+- Cancel
 
 #### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
 

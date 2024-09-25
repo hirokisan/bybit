@@ -2,11 +2,11 @@ package bybit
 
 import (
 	"encoding/json"
-	"fmt"
-	"github.com/google/uuid"
-	"github.com/gorilla/websocket"
 	"strconv"
 	"time"
+
+	"github.com/google/uuid"
+	"github.com/gorilla/websocket"
 )
 
 // CreateOrder :
@@ -29,7 +29,6 @@ func (s *V5WebsocketTradeService) CreateOrder(orders []*V5CreateOrderParam) erro
 	}
 	buf, err := json.Marshal(param)
 	if err != nil {
-		fmt.Printf("error is %+v", err)
 		return err
 	}
 
@@ -58,7 +57,6 @@ func (s *V5WebsocketTradeService) CancelOrder(orders []*V5CancelOrderParam) erro
 	}
 	buf, err := json.Marshal(param)
 	if err != nil {
-		fmt.Printf("error is %+v", err)
 		return err
 	}
 
