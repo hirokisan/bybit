@@ -362,6 +362,11 @@ The following API endpoints have been implemented
 - [Wallet](https://bybit-exchange.github.io/docs/v5/websocket/private/wallet)
 - [Execution](https://bybit-exchange.github.io/docs/v5/websocket/private/execution)
 
+#### [Trade V5](https://bybit-exchange.github.io/docs/v5/websocket/trade/guideline)
+
+- Create
+- Cancel
+
 #### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
 
 ##### Public Topics
