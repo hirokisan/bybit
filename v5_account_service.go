@@ -281,9 +281,10 @@ func (s *V5AccountService) GetTransactionLog(param V5GetTransactionLogParam) (*V
 
 // V5GetFeeRateParam :
 type V5GetFeeRateParam struct {
-	Category CategoryV5 `json:"category"`
-	Symbol   SymbolV5   `json:"symbol"`
-	BaseCoin *Coin      `url:"baseCoin,omitempty"`
+	Category CategoryV5 `url:"category"`
+
+	Symbol   *SymbolV5 `url:"symbol,omitempty"`
+	BaseCoin *Coin     `url:"baseCoin,omitempty"`
 }
 
 // V5GetFeeRateResponse :
@@ -304,7 +305,7 @@ type V5GetFeeRateList []V5GetFeeRateItem
 // V5GetFeeRateItem :
 type V5GetFeeRateItem struct {
 	Symbol       SymbolV5 `json:"symbol"`
-	BaseCoin     *Coin    `url:"baseCoin,omitempty"`
+	BaseCoin     Coin     `json:"baseCoin"`
 	TakerFeeRate string   `json:"takerFeeRate"`
 	MakerFeeRate string   `json:"makerFeeRate"`
 }
