@@ -14,6 +14,10 @@ const (
 	CoinXRP = Coin("XRP")
 	// CoinUSDT :
 	CoinUSDT = Coin("USDT")
+	// CoinMATIC :
+	CoinMATIC = Coin("MATIC")
+	// CoinSOL :
+	CoinSOL = Coin("SOL")
 )
 
 // Side :

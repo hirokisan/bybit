@@ -1,0 +1,20 @@
+{
+  "list": [
+    {
+      "coin": "MATIC",
+      "collateralSwitch": "OFF"
+    },
+    {
+      "coin": "BTC",
+      "collateralSwitch": "OFF"
+    },
+    {
+      "coin": "ETH",
+      "collateralSwitch": "OFF"
+    },
+    {
+      "coin": "SOL",
+      "collateralSwitch": "OFF"
+    }
+  ]
+}
