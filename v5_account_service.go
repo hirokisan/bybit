@@ -153,7 +153,7 @@ type V5BatchSetCollateralCoinResponse struct {
 	} `json:"result"`
 }
 
-// SetCollateralCoin :
+// BatchSetCollateralCoin :
 func (s *V5AccountService) BatchSetCollateralCoin(param V5BatchSetCollateralCoinParam) (*V5BatchSetCollateralCoinResponse, error) {
 	var res V5BatchSetCollateralCoinResponse
 
