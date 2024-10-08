@@ -12,7 +12,7 @@ import (
 
 func TestGetWalletBalance(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
-	res, err := client.V5().Account().GetWalletBalance(bybit.AccountTypeUnified, nil)
+	res, err := client.V5().Account().GetWalletBalance(bybit.AccountTypeV5UNIFIED, nil)
 	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v5-account-get-wallet-balance.json"
@@ -62,7 +62,6 @@ func TestGetCollateralInfo(t *testing.T) {
 
 func TestSetCollateralCoin(t *testing.T) {
 	client := bybit.NewTestClient().WithAuthFromEnv()
-	coins := []bybit.Coin{bybit.CoinBTC}
 	res, err := client.V5().Account().SetCollateralCoin(bybit.V5SetCollateralCoinParam{
 		Coin:             bybit.CoinBTC,
 		CollateralSwitch: bybit.CollateralSwitchV5On,
@@ -70,6 +69,24 @@ func TestSetCollateralCoin(t *testing.T) {
 	require.NoError(t, err)
 	{
 		goldenFilename := "./testdata/v5-account-set-collateral-coin.json"
+		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
+	}
+}
+
+func TestBatchSetCollateralCoin(t *testing.T) {
+	client := bybit.NewTestClient().WithAuthFromEnv()
+	res, err := client.V5().Account().BatchSetCollateralCoin(bybit.V5BatchSetCollateralCoinParam{
+		Request: []bybit.V5BatchSetCollateralCoinListItem{
+			{Coin: bybit.CoinMATIC, CollateralSwitch: bybit.CollateralSwitchV5Off},
+			{Coin: bybit.CoinBTC, CollateralSwitch: bybit.CollateralSwitchV5Off},
+			{Coin: bybit.CoinETH, CollateralSwitch: bybit.CollateralSwitchV5Off},
+			{Coin: bybit.CoinSOL, CollateralSwitch: bybit.CollateralSwitchV5Off},
+		},
+	})
+	require.NoError(t, err)
+	{
+		goldenFilename := "./testdata/v5-account-set-collateral-coin-batch.json"
 		testhelper.Compare(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 		testhelper.UpdateFile(t, goldenFilename, testhelper.ConvertToJSON(res.Result))
 	}

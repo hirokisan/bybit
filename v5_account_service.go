@@ -13,6 +13,7 @@ import (
 type V5AccountServiceI interface {
 	GetWalletBalance(AccountTypeV5, []Coin) (*V5GetWalletBalanceResponse, error)
 	SetCollateralCoin(V5SetCollateralCoinParam) (*V5SetCollateralCoinResponse, error)
+	BatchSetCollateralCoin(V5BatchSetCollateralCoinParam) (*V5BatchSetCollateralCoinResponse, error)
 	GetCollateralInfo(V5GetCollateralInfoParam) (*V5GetCollateralInfoResponse, error)
 	GetAccountInfo() (*V5GetAccountInfoResponse, error)
 	GetTransactionLog(V5GetTransactionLogParam) (*V5GetTransactionLogResponse, error)
@@ -130,6 +131,38 @@ func (s *V5AccountService) SetCollateralCoin(param V5SetCollateralCoinParam) (*V
 	}
 
 	if err := s.client.postV5JSON("/v5/account/set-collateral-switch", body, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type V5BatchSetCollateralCoinParam struct {
+	Request []V5BatchSetCollateralCoinListItem `json:"request"`
+}
+
+type V5BatchSetCollateralCoinListItem struct {
+	Coin             Coin               `json:"coin"`
+	CollateralSwitch CollateralSwitchV5 `json:"collateralSwitch"`
+}
+
+type V5BatchSetCollateralCoinResponse struct {
+	CommonV5Response `json:",inline"`
+	Result           struct {
+		List []V5BatchSetCollateralCoinListItem `json:"list"`
+	} `json:"result"`
+}
+
+// SetCollateralCoin :
+func (s *V5AccountService) BatchSetCollateralCoin(param V5BatchSetCollateralCoinParam) (*V5BatchSetCollateralCoinResponse, error) {
+	var res V5BatchSetCollateralCoinResponse
+
+	body, err := json.Marshal(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = s.client.postV5JSON("/v5/account/set-collateral-switch-batch", body, &res); err != nil {
 		return nil, err
 	}
 

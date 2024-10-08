@@ -107,6 +107,63 @@ func TestV5Account_SetCollateralCoin(t *testing.T) {
 	})
 }
 
+func TestV5Account_BatchSetCollateralCoin(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		param := V5BatchSetCollateralCoinParam{
+			Request: []V5BatchSetCollateralCoinListItem{
+				{Coin: CoinMATIC, CollateralSwitch: CollateralSwitchV5Off},
+				{Coin: CoinBTC, CollateralSwitch: CollateralSwitchV5Off},
+				{Coin: CoinETH, CollateralSwitch: CollateralSwitchV5Off},
+				{Coin: CoinSOL, CollateralSwitch: CollateralSwitchV5Off},
+			},
+		}
+
+		path := "/v5/account/set-collateral-switch-batch"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"list": []map[string]interface{}{
+					{
+						"coin":             "MATIC",
+						"collateralSwitch": "OFF",
+					},
+					{
+						"coin":             "BTC",
+						"collateralSwitch": "OFF",
+					},
+					{
+						"coin":             "ETH",
+						"collateralSwitch": "OFF",
+					},
+					{
+						"coin":             "SOL",
+						"collateralSwitch": "OFF",
+					},
+				},
+			},
+		}
+
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Account().BatchSetCollateralCoin(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+}
+
 func TestV5Account_GetCollateralInfo(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		currency := "BTC"
