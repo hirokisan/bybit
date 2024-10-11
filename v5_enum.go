@@ -250,10 +250,14 @@ const (
 	// UnifiedMarginStatusUnifiedMargin : Unified margin account, it only trades linear perpetual and options.
 	// Deprecated: Is not used anymore - Please ignore
 	UnifiedMarginStatusUnifiedMargin = UnifiedMarginStatus(2)
-	// UnifiedMarginStatusUnifiedTrade : Unified trade account, it can trade linear perpetual, options and spot
+	// UnifiedMarginStatusUnifiedTrade : Unified trading account 1.0
 	UnifiedMarginStatusUnifiedTrade = UnifiedMarginStatus(3)
-	// UnifiedMarginStatusUTAPro : UTA Pro, the pro version of Unified trade account
+	// UnifiedMarginStatusUTAPro : Unified trading account 1.0 (pro version)
 	UnifiedMarginStatusUTAPro = UnifiedMarginStatus(4)
+	// UnifiedMarginStatusUTAv2 : Unified trading account 2.0
+	UnifiedMarginStatusUTAv2 = UnifiedMarginStatus(5)
+	// UnifiedMarginStatusUTAv2Pro : Unified trading account 2.0 (pro version)
+	UnifiedMarginStatusUTAv2Pro = UnifiedMarginStatus(6)
 )
 
 // TransactionLogTypeV5 :
