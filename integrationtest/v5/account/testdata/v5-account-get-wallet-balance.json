@@ -1,48 +1,39 @@
 {
   "list": [
     {
-      "totalEquity": "30587.3509045",
+      "totalEquity": "0.00009475",
       "accountIMRate": "0",
-      "totalMarginBalance": "30587.3509045",
+      "totalMarginBalance": "0.00009475",
       "totalInitialMargin": "0",
       "accountType": "UNIFIED",
-      "totalAvailableBalance": "30587.3509045",
+      "totalAvailableBalance": "0.00009475",
       "accountMMRate": "0",
       "totalPerpUPL": "0",
-      "totalWalletBalance": "30587.3509045",
+      "totalWalletBalance": "0.00009475",
+      "accountLTV": "0",
       "totalMaintenanceMargin": "0",
       "coin": [
         {
-          "availableToBorrow": "2.5",
+          "availableToBorrow": "",
+          "bonus": "0",
           "accruedInterest": "0",
-          "availableToWithdraw": "1.258926",
+          "availableToWithdraw": "0.0000948",
           "totalOrderIM": "0",
-          "equity": "1.258926",
+          "equity": "0.0000948",
           "totalPositionMM": "0",
-          "usdValue": "29579.89105993",
+          "usdValue": "0.00009475",
           "unrealisedPnl": "0",
-          "borrowAmount": "0.0",
+          "collateralSwitch": true,
+          "spotHedgingQty": "0",
+          "borrowAmount": "0.000000000000000000",
           "totalPositionIM": "0",
-          "walletBalance": "1.258926",
-          "cumRealisedPnl": "0",
-          "coin": "BTC"
-        },
-        {
-          "availableToBorrow": "2500000",
-          "accruedInterest": "0",
-          "availableToWithdraw": "912.35705796",
-          "totalOrderIM": "0",
-          "equity": "1012.35705796",
-          "totalPositionMM": "0",
-          "usdValue": "1007.45984457",
-          "unrealisedPnl": "0",
-          "borrowAmount": "0.0",
-          "totalPositionIM": "0",
-          "walletBalance": "1012.35705796",
-          "cumRealisedPnl": "0",
+          "walletBalance": "0.0000948",
+          "cumRealisedPnl": "-43291.2691172",
+          "locked": "0",
+          "marginCollateral": true,
           "coin": "USDT"
         }
       ]
     }
   ]
-}
+  }

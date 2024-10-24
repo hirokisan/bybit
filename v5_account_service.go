@@ -38,34 +38,40 @@ type V5WalletBalanceResult struct {
 
 // V5WalletBalanceCoin :
 type V5WalletBalanceCoin struct {
-	AvailableToBorrow   string `json:"availableToBorrow"`
-	AccruedInterest     string `json:"accruedInterest"`
-	AvailableToWithdraw string `json:"availableToWithdraw"`
-	TotalOrderIM        string `json:"totalOrderIM"`
-	Equity              string `json:"equity"`
-	TotalPositionMM     string `json:"totalPositionMM"`
-	UsdValue            string `json:"usdValue"`
-	UnrealisedPnl       string `json:"unrealisedPnl"`
-	BorrowAmount        string `json:"borrowAmount"`
-	TotalPositionIM     string `json:"totalPositionIM"`
-	WalletBalance       string `json:"walletBalance"`
-	CumRealisedPnl      string `json:"cumRealisedPnl"`
-	Free                string `json:"free"`
-	Locked              string `json:"locked"`
 	Coin                Coin   `json:"coin"`
+	Equity              string `json:"equity"`
+	UsdValue            string `json:"usdValue"`
+	WalletBalance       string `json:"walletBalance"`
+	Free                string `json:"free,omitempty"`
+	Locked              string `json:"locked"`
+	SpotHedgingQuantity string `json:"spotHedgingQty"`
+	BorrowAmount        string `json:"borrowAmount"`
+	AvailableToWithdraw string `json:"availableToWithdraw"`
+	AccruedInterest     string `json:"accruedInterest"`
+	TotalOrderIM        string `json:"totalOrderIM"`
+	TotalPositionIM     string `json:"totalPositionIM"`
+	TotalPositionMM     string `json:"totalPositionMM"`
+	UnrealisedPnl       string `json:"unrealisedPnl"`
+	CumRealisedPnl      string `json:"cumRealisedPnl"`
+	Bonus               string `json:"bonus"`
+	MarginCollateral    bool   `json:"marginCollateral"`
+	CollateralSwitch    bool   `json:"collateralSwitch"`
+	AvailableToBorrow   string `json:"availableToBorrow"`
 }
 
 // V5WalletBalanceList :
 type V5WalletBalanceList struct {
-	TotalEquity            string                `json:"totalEquity"`
+	AccountType string `json:"accountType"`
+	// Deprecated:
+	AccountLTV             string                `json:"accountLTV"`
 	AccountIMRate          string                `json:"accountIMRate"`
-	TotalMarginBalance     string                `json:"totalMarginBalance"`
-	TotalInitialMargin     string                `json:"totalInitialMargin"`
-	AccountType            string                `json:"accountType"`
-	TotalAvailableBalance  string                `json:"totalAvailableBalance"`
 	AccountMMRate          string                `json:"accountMMRate"`
-	TotalPerpUPL           string                `json:"totalPerpUPL"`
+	TotalEquity            string                `json:"totalEquity"`
 	TotalWalletBalance     string                `json:"totalWalletBalance"`
+	TotalMarginBalance     string                `json:"totalMarginBalance"`
+	TotalAvailableBalance  string                `json:"totalAvailableBalance"`
+	TotalPerpUPL           string                `json:"totalPerpUPL"`
+	TotalInitialMargin     string                `json:"totalInitialMargin"`
 	TotalMaintenanceMargin string                `json:"totalMaintenanceMargin"`
 	Coin                   []V5WalletBalanceCoin `json:"coin"`
 }
