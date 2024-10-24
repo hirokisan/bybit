@@ -42,7 +42,7 @@ type V5WalletBalanceCoin struct {
 	Equity              string `json:"equity"`
 	UsdValue            string `json:"usdValue"`
 	WalletBalance       string `json:"walletBalance"`
-	Free                string `json:"free,omitempty"`
+	Free                string `json:"free"`
 	Locked              string `json:"locked"`
 	SpotHedgingQuantity string `json:"spotHedgingQty"`
 	BorrowAmount        string `json:"borrowAmount"`

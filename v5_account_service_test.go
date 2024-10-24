@@ -46,6 +46,7 @@ func TestV5Account_GetWalletBalance(t *testing.T) {
 								"borrowAmount":        "0",
 								"totalPositionIM":     "0",
 								"walletBalance":       "0.805994",
+								"free":                "",
 								"locked":              "",
 								"cumRealisedPnl":      "0",
 								"marginCollateral":    true,
