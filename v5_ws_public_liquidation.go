@@ -63,10 +63,10 @@ func (k *V5WebsocketPublicLiquidationParamKey) Topic() string {
 
 // V5WebsocketPublicLiquidationResponse :
 type V5WebsocketPublicLiquidationResponse struct {
-	Topic     string                             `json:"topic"`
-	Type      string                             `json:"type"`
-	TimeStamp int64                              `json:"ts"`
-	Data      []V5WebsocketPublicLiquidationData `json:"data"`
+	Topic     string                           `json:"topic"`
+	Type      string                           `json:"type"`
+	TimeStamp int64                            `json:"ts"`
+	Data      V5WebsocketPublicLiquidationData `json:"data"`
 }
 
 // V5WebsocketPublicLiquidationData :

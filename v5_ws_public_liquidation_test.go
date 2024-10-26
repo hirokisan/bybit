@@ -14,14 +14,12 @@ func TestWebsocketV5Public_Liquidation(t *testing.T) {
 		"topic": "liquidation.BTCUSDT",
 		"type":  "snapshot",
 		"ts":    1673251091822,
-		"data": []map[string]interface{}{
-			{
-				"price":       "25844.48",
-				"side":        "Buy",
-				"size":        "2.8",
-				"symbol":      "BTCUSDT",
-				"updatedTime": 1673251091822,
-			},
+		"data": map[string]interface{}{
+			"price":       "25844.48",
+			"side":        "Buy",
+			"size":        "2.8",
+			"symbol":      "BTCUSDT",
+			"updatedTime": 1673251091822,
 		},
 	}
 	bytesBody, err := json.Marshal(respBody)
