@@ -38,6 +38,7 @@ func TestV5Position_GetPositionInfo(t *testing.T) {
 						"riskId":                 3,
 						"trailingStop":           "0",
 						"unrealisedPnl":          "",
+						"curRealisedPnl":         "2.23",
 						"markPrice":              "43577.97",
 						"cumRealisedPnl":         "-1618.71655122",
 						"adlRankIndicator":       0,

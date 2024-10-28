@@ -65,6 +65,7 @@ type V5GetPositionInfoItem struct {
 	TrailingStop           string           `json:"trailingStop"`
 	UnrealisedPnl          string           `json:"unrealisedPnl"`
 	MarkPrice              string           `json:"markPrice"`
+	CurRealisedPnl         string           `json:"curRealisedPnl"`
 	CumRealisedPnl         string           `json:"cumRealisedPnl"`
 	AdlRankIndicator       AdlRankIndicator `json:"adlRankIndicator"`
 	IsReduceOnly           bool             `json:"isReduceOnly"`
