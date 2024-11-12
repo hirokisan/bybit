@@ -14,15 +14,36 @@ func (s *V5WebsocketPublicService) SubscribeTicker(
 	key V5WebsocketPublicTickerParamKey,
 	f func(V5WebsocketPublicTickerResponse) error,
 ) (func() error, error) {
-	if err := s.addParamTickerFunc(key, f); err != nil {
-		return nil, err
+	return s.subscribeTickers([]V5WebsocketPublicTickerParamKey{key}, f)
+}
+
+// SubscribeTickers :
+func (s *V5WebsocketPublicService) SubscribeTickers(
+	keys []V5WebsocketPublicTickerParamKey,
+	f func(V5WebsocketPublicTickerResponse) error,
+) (func() error, error) {
+	return s.subscribeTickers(keys, f)
+}
+
+func (s *V5WebsocketPublicService) subscribeTickers(
+	keys []V5WebsocketPublicTickerParamKey,
+	f func(V5WebsocketPublicTickerResponse) error,
+) (func() error, error) {
+	var args []interface{}
+	for _, key := range keys {
+		if err := s.addParamTickerFunc(key, f); err != nil {
+			return nil, err
+		}
+
+		args = append(args, key.Topic())
 	}
+
 	param := struct {
 		Op   string        `json:"op"`
 		Args []interface{} `json:"args"`
 	}{
 		Op:   "subscribe",
-		Args: []interface{}{key.Topic()},
+		Args: args,
 	}
 	buf, err := json.Marshal(param)
 	if err != nil {
@@ -37,7 +58,7 @@ func (s *V5WebsocketPublicService) SubscribeTicker(
 			Args []interface{} `json:"args"`
 		}{
 			Op:   "unsubscribe",
-			Args: []interface{}{key.Topic()},
+			Args: args,
 		}
 		buf, err := json.Marshal(param)
 		if err != nil {
@@ -46,7 +67,10 @@ func (s *V5WebsocketPublicService) SubscribeTicker(
 		if err := s.writeMessage(websocket.TextMessage, []byte(buf)); err != nil {
 			return err
 		}
-		s.removeParamTickerFunc(key)
+
+		for _, key := range keys {
+			s.removeParamTickerFunc(key)
+		}
 		return nil
 	}, nil
 }
