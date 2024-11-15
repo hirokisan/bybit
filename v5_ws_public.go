@@ -35,6 +35,11 @@ type V5WebsocketPublicServiceI interface {
 		func(V5WebsocketPublicTickerResponse) error,
 	) (func() error, error)
 
+	SubscribeTickers(
+		[]V5WebsocketPublicTickerParamKey,
+		func(V5WebsocketPublicTickerResponse) error,
+	) (func() error, error)
+
 	SubscribeTrade(
 		V5WebsocketPublicTradeParamKey,
 		func(V5WebsocketPublicTradeResponse) error,
