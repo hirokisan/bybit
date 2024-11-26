@@ -19,7 +19,13 @@ type V5WebsocketService struct {
 // Public :
 func (s *V5WebsocketService) Public(category CategoryV5) (V5WebsocketPublicServiceI, error) {
 	url := s.client.baseURL + V5WebsocketPublicPathFor(category)
-	c, _, err := websocket.DefaultDialer.Dial(url, nil)
+	var c *websocket.Conn
+	var err error
+	if s.client.dialer != nil {
+		c, _, err = s.client.dialer.Dial(url, nil)
+	} else {
+		c, _, err = websocket.DefaultDialer.Dial(url, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +44,13 @@ func (s *V5WebsocketService) Public(category CategoryV5) (V5WebsocketPublicServi
 // Private :
 func (s *V5WebsocketService) Private() (V5WebsocketPrivateServiceI, error) {
 	url := s.client.baseURL + V5WebsocketPrivatePath
-	c, _, err := websocket.DefaultDialer.Dial(url, nil)
+	var c *websocket.Conn
+	var err error
+	if s.client.dialer != nil {
+		c, _, err = s.client.dialer.Dial(url, nil)
+	} else {
+		c, _, err = websocket.DefaultDialer.Dial(url, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +67,13 @@ func (s *V5WebsocketService) Private() (V5WebsocketPrivateServiceI, error) {
 // Trade :
 func (s *V5WebsocketService) Trade() (V5WebsocketTradeServiceI, error) {
 	url := s.client.baseURL + V5WebsocketTradePath
-	c, _, err := websocket.DefaultDialer.Dial(url, nil)
+	var c *websocket.Conn
+	var err error
+	if s.client.dialer != nil {
+		c, _, err = s.client.dialer.Dial(url, nil)
+	} else {
+		c, _, err = websocket.DefaultDialer.Dial(url, nil)
+	}
 	if err != nil {
 		return nil, err
 	}
