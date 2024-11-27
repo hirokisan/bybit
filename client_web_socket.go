@@ -11,6 +11,8 @@ import (
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/gorilla/websocket"
 )
 
 const (
@@ -28,6 +30,7 @@ type WebSocketClient struct {
 	baseURL string
 	key     string
 	secret  string
+	dialer  *websocket.Dialer
 }
 
 func (c *WebSocketClient) debugf(format string, v ...interface{}) {
@@ -71,6 +74,13 @@ func (c *WebSocketClient) WithAuth(key string, secret string) *WebSocketClient {
 // WithBaseURL :
 func (c *WebSocketClient) WithBaseURL(url string) *WebSocketClient {
 	c.baseURL = url
+
+	return c
+}
+
+// WithDialer :
+func (c *WebSocketClient) WithDialer(dialer *websocket.Dialer) *WebSocketClient {
+	c.dialer = dialer
 
 	return c
 }

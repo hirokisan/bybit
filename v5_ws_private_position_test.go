@@ -2,8 +2,12 @@ package bybit
 
 import (
 	"encoding/json"
+	"net/http"
+	"net/url"
 	"testing"
+	"time"
 
+	"github.com/gorilla/websocket"
 	"github.com/hirokisan/bybit/v2/testhelper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -56,7 +60,13 @@ func TestV5WebsocketPrivate_Position(t *testing.T) {
 
 	wsClient := NewTestWebsocketClient().
 		WithBaseURL(server.URL).
-		WithAuth("test", "test")
+		WithAuth("test", "test").
+		WithDialer(&websocket.Dialer{
+			Proxy: func(req *http.Request) (*url.URL, error) {
+				return nil, nil
+			},
+			HandshakeTimeout: 5 * time.Second,
+		})
 
 	svc, err := wsClient.V5().Private()
 	require.NoError(t, err)
