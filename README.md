@@ -184,7 +184,7 @@ The following API endpoints have been implemented
 - [`/v5/user/query-api` Get API Key Information](https://bybit-exchange.github.io/docs/v5/user/apikey-info)
 
 
-### REST API
+### [deprecated] REST API
 
 #### [Derivatives Unified Margin](https://bybit-exchange.github.io/docs/derivativesV3/unified_margin)
 
@@ -368,7 +368,7 @@ The following API endpoints have been implemented
 - Create
 - Cancel
 
-#### [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
+#### [deprecated] [Spot v1](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
 
 ##### Public Topics
 
