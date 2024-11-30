@@ -126,7 +126,7 @@ type RateLimitV5Error struct {
 }
 
 func (r *RateLimitV5Error) Error() string {
-	return fmt.Sprintf(r.RetMsg)
+	return r.RetMsg
 }
 
 var (
