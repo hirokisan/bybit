@@ -11,8 +11,9 @@ import (
 func (s *V5WebsocketPrivateService) SubscribeOrder(
 	f func(V5WebsocketPrivateOrderResponse) error,
 ) (func() error, error) {
+	topic := s.makeTopic(V5WebsocketPrivateTopicOrder)
 	key := V5WebsocketPrivateParamKey{
-		Topic: V5WebsocketPrivateTopicOrder,
+		Topic: topic,
 	}
 	if err := s.addParamOrderFunc(key, f); err != nil {
 		return nil, err
@@ -22,7 +23,7 @@ func (s *V5WebsocketPrivateService) SubscribeOrder(
 		Args []interface{} `json:"args"`
 	}{
 		Op:   "subscribe",
-		Args: []interface{}{V5WebsocketPrivateTopicOrder},
+		Args: []interface{}{topic},
 	}
 	buf, err := json.Marshal(param)
 	if err != nil {
@@ -37,7 +38,7 @@ func (s *V5WebsocketPrivateService) SubscribeOrder(
 			Args []interface{} `json:"args"`
 		}{
 			Op:   "unsubscribe",
-			Args: []interface{}{V5WebsocketPrivateTopicOrder},
+			Args: []interface{}{topic},
 		}
 		buf, err := json.Marshal(param)
 		if err != nil {

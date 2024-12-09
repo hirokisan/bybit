@@ -11,8 +11,9 @@ import (
 func (s *V5WebsocketPrivateService) SubscribePosition(
 	f func(V5WebsocketPrivatePositionResponse) error,
 ) (func() error, error) {
+	topic := s.makeTopic(V5WebsocketPrivateTopicPosition)
 	key := V5WebsocketPrivateParamKey{
-		Topic: V5WebsocketPrivateTopicPosition,
+		Topic: topic,
 	}
 	if err := s.addParamPositionFunc(key, f); err != nil {
 		return nil, err
@@ -22,7 +23,7 @@ func (s *V5WebsocketPrivateService) SubscribePosition(
 		Args []interface{} `json:"args"`
 	}{
 		Op:   "subscribe",
-		Args: []interface{}{V5WebsocketPrivateTopicPosition},
+		Args: []interface{}{topic},
 	}
 	buf, err := json.Marshal(param)
 	if err != nil {
@@ -37,7 +38,7 @@ func (s *V5WebsocketPrivateService) SubscribePosition(
 			Args []interface{} `json:"args"`
 		}{
 			Op:   "unsubscribe",
-			Args: []interface{}{V5WebsocketPrivateTopicPosition},
+			Args: []interface{}{topic},
 		}
 		buf, err := json.Marshal(param)
 		if err != nil {

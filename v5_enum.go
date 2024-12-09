@@ -23,6 +23,8 @@ const (
 type CategoryV5 string
 
 const (
+	// CategoryV5All :
+	CategoryV5All = CategoryV5("")
 	// CategoryV5Spot :
 	CategoryV5Spot = CategoryV5("spot")
 	// CategoryV5Linear :

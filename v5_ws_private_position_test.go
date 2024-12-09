@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/dimkus/bybit/v2/testhelper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/dimkus/bybit/v2/testhelper"
 )
 
 func TestV5WebsocketPrivate_Position(t *testing.T) {
@@ -58,7 +59,7 @@ func TestV5WebsocketPrivate_Position(t *testing.T) {
 		WithBaseURL(server.URL).
 		WithAuth("test", "test")
 
-	svc, err := wsClient.V5().Private()
+	svc, err := wsClient.V5().Private(CategoryV5Linear)
 	require.NoError(t, err)
 
 	require.NoError(t, svc.Subscribe())

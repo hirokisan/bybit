@@ -11,8 +11,9 @@ import (
 func (s *V5WebsocketPrivateService) SubscribeWallet(
 	f func(V5WebsocketPrivateWalletResponse) error,
 ) (func() error, error) {
+	topic := s.makeTopic(V5WebsocketPrivateTopicWallet)
 	key := V5WebsocketPrivateParamKey{
-		Topic: V5WebsocketPrivateTopicWallet,
+		Topic: topic,
 	}
 	if err := s.addParamWalletFunc(key, f); err != nil {
 		return nil, err
@@ -22,7 +23,7 @@ func (s *V5WebsocketPrivateService) SubscribeWallet(
 		Args []interface{} `json:"args"`
 	}{
 		Op:   "subscribe",
-		Args: []interface{}{V5WebsocketPrivateTopicWallet},
+		Args: []interface{}{topic},
 	}
 	buf, err := json.Marshal(param)
 	if err != nil {
@@ -37,7 +38,7 @@ func (s *V5WebsocketPrivateService) SubscribeWallet(
 			Args []interface{} `json:"args"`
 		}{
 			Op:   "unsubscribe",
-			Args: []interface{}{V5WebsocketPrivateTopicWallet},
+			Args: []interface{}{topic},
 		}
 		buf, err := json.Marshal(param)
 		if err != nil {

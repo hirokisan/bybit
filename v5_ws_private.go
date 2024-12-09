@@ -38,6 +38,7 @@ type V5WebsocketPrivateServiceI interface {
 type V5WebsocketPrivateService struct {
 	client     *WebSocketClient
 	connection *websocket.Conn
+	category   CategoryV5
 
 	mu sync.Mutex
 
@@ -71,6 +72,18 @@ const (
 // V5WebsocketPrivateParamKey :
 type V5WebsocketPrivateParamKey struct {
 	Topic V5WebsocketPrivateTopic
+}
+
+// makeTopic :
+func (s *V5WebsocketPrivateService) makeTopic(key V5WebsocketPrivateTopic) (topic V5WebsocketPrivateTopic) {
+	topic = key
+	if key == V5WebsocketPrivateTopicPong || key == V5WebsocketPrivateTopicWallet {
+		return topic
+	}
+	if len(s.category) > 0 {
+		topic = V5WebsocketPrivateTopic(fmt.Sprintf("%s.%s", topic, s.category))
+	}
+	return topic
 }
 
 // judgeTopic :
@@ -181,11 +194,11 @@ func (s *V5WebsocketPrivateService) Run() error {
 		return err
 	}
 	switch topic {
-	case V5WebsocketPrivateTopicPong:
+	case s.makeTopic(V5WebsocketPrivateTopicPong):
 		if err := s.connection.PongHandler()("pong"); err != nil {
 			return fmt.Errorf("pong: %w", err)
 		}
-	case V5WebsocketPrivateTopicOrder:
+	case s.makeTopic(V5WebsocketPrivateTopicOrder):
 		var resp V5WebsocketPrivateOrderResponse
 		if err := s.parseResponse(message, &resp); err != nil {
 			return err
@@ -197,7 +210,7 @@ func (s *V5WebsocketPrivateService) Run() error {
 		if err := f(resp); err != nil {
 			return err
 		}
-	case V5WebsocketPrivateTopicPosition:
+	case s.makeTopic(V5WebsocketPrivateTopicPosition):
 		var resp V5WebsocketPrivatePositionResponse
 		if err := s.parseResponse(message, &resp); err != nil {
 			return err
@@ -209,7 +222,7 @@ func (s *V5WebsocketPrivateService) Run() error {
 		if err := f(resp); err != nil {
 			return err
 		}
-	case V5WebsocketPrivateTopicWallet:
+	case s.makeTopic(V5WebsocketPrivateTopicWallet):
 		var resp V5WebsocketPrivateWalletResponse
 		if err := s.parseResponse(message, &resp); err != nil {
 			return err
