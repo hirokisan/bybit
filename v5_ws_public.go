@@ -30,6 +30,11 @@ type V5WebsocketPublicServiceI interface {
 		func(V5WebsocketPublicKlineResponse) error,
 	) (func() error, error)
 
+	SubscribeKlines(
+		keys []V5WebsocketPublicKlineParamKey,
+		f func(V5WebsocketPublicKlineResponse) error,
+	) (func() error, error)
+
 	SubscribeTicker(
 		V5WebsocketPublicTickerParamKey,
 		func(V5WebsocketPublicTickerResponse) error,
