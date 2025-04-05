@@ -317,13 +317,31 @@ const (
 	WithdrawStatusV5BlockchainConfirmed = WithdrawStatusV5("BlockchainConfirmed")
 )
 
+// IsLowestRisk :
 type IsLowestRisk int
 
 const (
-	IsLowestRiskFalse = IsLowestRisk(0)
-	IsLowestRiskTrue  = IsLowestRisk(1)
+	// IsLowestRiskNo :
+	IsLowestRiskNo = IsLowestRisk(0)
+	// IsLowestRiskYes :
+	IsLowestRiskYes = IsLowestRisk(1)
 )
 
+// CopyTradingSupport : Indicates whether the trading pair supports copy trading and for which account types
+type CopyTradingSupport string
+
+const (
+	// CopyTradingSupportNone : Regardless of normal account or UTA account, this trading pair does not support copy trading
+	CopyTradingSupportNone = CopyTradingSupport("none")
+	// CopyTradingSupportBoth : For both normal account and UTA account, this trading pair supports copy trading
+	CopyTradingSupportBoth = CopyTradingSupport("both")
+	// CopyTradingSupportUtaOnly : Only for UTA account, this trading pair supports copy trading
+	CopyTradingSupportUtaOnly = CopyTradingSupport("utaOnly")
+	// CopyTradingSupportNormalOnly : Only for normal account, this trading pair supports copy trading
+	CopyTradingSupportNormalOnly = CopyTradingSupport("normalOnly")
+)
+
+// CollateralSwitchV5 :
 type CollateralSwitchV5 string
 
 const (

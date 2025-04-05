@@ -245,6 +245,7 @@ func TestV5Market_GetInstrumentsInfo(t *testing.T) {
 						},
 						"unifiedMarginTrade": true,
 						"fundingInterval":    480,
+						"copyTrading":        CopyTradingSupportBoth,
 					},
 				},
 			},

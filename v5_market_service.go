@@ -418,6 +418,7 @@ type V5GetInstrumentsInfoLinearInverseItem struct {
 	LotSizeFilter      LinearInverseLotSizeFilterV5  `json:"lotSizeFilter"`
 	UnifiedMarginTrade bool                          `json:"unifiedMarginTrade"`
 	FundingInterval    int                           `json:"fundingInterval"`
+	CopyTrading        CopyTradingSupport            `json:"copyTrading"`
 }
 
 type LinearInversePriceFilterV5 struct {
