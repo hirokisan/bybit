@@ -317,14 +317,11 @@ const (
 	WithdrawStatusV5BlockchainConfirmed = WithdrawStatusV5("BlockchainConfirmed")
 )
 
-// IsLowestRisk :
 type IsLowestRisk int
 
 const (
-	// IsLowestRiskNo :
-	IsLowestRiskNo = IsLowestRisk(0)
-	// IsLowestRiskYes :
-	IsLowestRiskYes = IsLowestRisk(1)
+	IsLowestRiskFalse = IsLowestRisk(0)
+	IsLowestRiskTrue  = IsLowestRisk(1)
 )
 
 // CopyTradingSupport : Indicates whether the trading pair supports copy trading and for which account types
