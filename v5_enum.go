@@ -338,6 +338,16 @@ const (
 	CopyTradingSupportNormalOnly = CopyTradingSupport("normalOnly")
 )
 
+// SlippageToleranceType : Slippage tolerance type for market orders
+type SlippageToleranceType string
+
+const (
+	// SlippageToleranceTypeTickSize : The highest price of Buy order = ask1 + slippageTolerance x tickSize; the lowest price of Sell order = bid1 - slippageTolerance x tickSize
+	SlippageToleranceTypeTickSize = SlippageToleranceType("TickSize")
+	// SlippageToleranceTypePercent : The highest price of Buy order = ask1 x (1 + slippageTolerance x 0.01); the lowest price of Sell order = bid1 x (1 - slippageTolerance x 0.01)
+	SlippageToleranceTypePercent = SlippageToleranceType("Percent")
+)
+
 // CollateralSwitchV5 :
 type CollateralSwitchV5 string
 

@@ -30,30 +30,32 @@ type V5CreateOrderParam struct {
 	OrderType OrderType  `json:"orderType"`
 	Qty       string     `json:"qty"`
 
-	IsLeverage            *IsLeverage       `json:"isLeverage,omitempty"`
-	Price                 *string           `json:"price,omitempty"`
-	TriggerDirection      *TriggerDirection `json:"triggerDirection,omitempty"`
-	OrderFilter           *OrderFilter      `json:"orderFilter,omitempty"` // If not passed, Order by default
-	TriggerPrice          *string           `json:"triggerPrice,omitempty"`
-	TriggerBy             *TriggerBy        `json:"triggerBy,omitempty"`
-	OrderIv               *string           `json:"orderIv,omitempty"`     // option only.
-	TimeInForce           *TimeInForce      `json:"timeInForce,omitempty"` // If not passed, GTC is used by default
-	PositionIdx           *PositionIdx      `json:"positionIdx,omitempty"` // Under hedge-mode, this param is required
-	OrderLinkID           *string           `json:"orderLinkId,omitempty"`
-	TakeProfit            *string           `json:"takeProfit,omitempty"`
-	StopLoss              *string           `json:"stopLoss,omitempty"`
-	TpTriggerBy           *TriggerBy        `json:"tpTriggerBy,omitempty"`
-	SlTriggerBy           *TriggerBy        `json:"slTriggerBy,omitempty"`
-	ReduceOnly            *bool             `json:"reduce_only,omitempty"`
-	CloseOnTrigger        *bool             `json:"closeOnTrigger,omitempty"`
-	SmpType               *string           `json:"smpType,omitempty"`
-	MarketMakerProtection *bool             `json:"mmp,omitempty"` // option only
-	TpSlMode              *TpSlMode         `json:"tpslMode,omitempty"`
-	TpLimitPrice          *string           `json:"tpLimitPrice,omitempty"`
-	SlLimitPrice          *string           `json:"slLimitPrice,omitempty"`
-	TpOrderType           *OrderType        `json:"tpOrderType,omitempty"`
-	SlOrderType           *OrderType        `json:"slOrderType,omitempty"`
-	MarketUnit            *MarketUnit       `json:"marketUnit,omitempty"` // The unit for qty when create Spot market orders for UTA account.
+	IsLeverage            *IsLeverage            `json:"isLeverage,omitempty"`
+	Price                 *string                `json:"price,omitempty"`
+	TriggerDirection      *TriggerDirection      `json:"triggerDirection,omitempty"`
+	OrderFilter           *OrderFilter           `json:"orderFilter,omitempty"` // If not passed, Order by default
+	TriggerPrice          *string                `json:"triggerPrice,omitempty"`
+	TriggerBy             *TriggerBy             `json:"triggerBy,omitempty"`
+	OrderIv               *string                `json:"orderIv,omitempty"`     // option only.
+	TimeInForce           *TimeInForce           `json:"timeInForce,omitempty"` // If not passed, GTC is used by default
+	PositionIdx           *PositionIdx           `json:"positionIdx,omitempty"` // Under hedge-mode, this param is required
+	OrderLinkID           *string                `json:"orderLinkId,omitempty"`
+	TakeProfit            *string                `json:"takeProfit,omitempty"`
+	StopLoss              *string                `json:"stopLoss,omitempty"`
+	TpTriggerBy           *TriggerBy             `json:"tpTriggerBy,omitempty"`
+	SlTriggerBy           *TriggerBy             `json:"slTriggerBy,omitempty"`
+	ReduceOnly            *bool                  `json:"reduce_only,omitempty"`
+	CloseOnTrigger        *bool                  `json:"closeOnTrigger,omitempty"`
+	SmpType               *string                `json:"smpType,omitempty"`
+	MarketMakerProtection *bool                  `json:"mmp,omitempty"` // option only
+	TpSlMode              *TpSlMode              `json:"tpslMode,omitempty"`
+	TpLimitPrice          *string                `json:"tpLimitPrice,omitempty"`
+	SlLimitPrice          *string                `json:"slLimitPrice,omitempty"`
+	TpOrderType           *OrderType             `json:"tpOrderType,omitempty"`
+	SlOrderType           *OrderType             `json:"slOrderType,omitempty"`
+	MarketUnit            *MarketUnit            `json:"marketUnit,omitempty"`            // The unit for qty when create Spot market orders for UTA account.
+	SlippageToleranceType *SlippageToleranceType `json:"slippageToleranceType,omitempty"` // Slippage tolerance type for market order, TickSize or Percent
+	SlippageTolerance     *string                `json:"slippageTolerance,omitempty"`     // Slippage tolerance value
 }
 
 // V5CreateOrderResponse :
@@ -231,39 +233,41 @@ type V5GetOrdersResult struct {
 }
 
 type V5GetOrder struct {
-	Symbol             SymbolV5    `json:"symbol"`
-	OrderType          OrderType   `json:"orderType"`
-	OrderLinkID        string      `json:"orderLinkId"`
-	OrderID            string      `json:"orderId"`
-	CancelType         string      `json:"cancelType"`
-	AvgPrice           string      `json:"avgPrice"`
-	StopOrderType      string      `json:"stopOrderType"`
-	LastPriceOnCreated string      `json:"lastPriceOnCreated"`
-	OrderStatus        OrderStatus `json:"orderStatus"`
-	TakeProfit         string      `json:"takeProfit"`
-	CumExecValue       string      `json:"cumExecValue"`
-	TriggerDirection   int         `json:"triggerDirection"`
-	IsLeverage         string      `json:"isLeverage"`
-	RejectReason       string      `json:"rejectReason"`
-	Price              string      `json:"price"`
-	OrderIv            string      `json:"orderIv"`
-	CreatedTime        string      `json:"createdTime"`
-	TpTriggerBy        string      `json:"tpTriggerBy"`
-	PositionIdx        int         `json:"positionIdx"`
-	TimeInForce        TimeInForce `json:"timeInForce"`
-	LeavesValue        string      `json:"leavesValue"`
-	UpdatedTime        string      `json:"updatedTime"`
-	Side               Side        `json:"side"`
-	TriggerPrice       string      `json:"triggerPrice"`
-	CumExecFee         string      `json:"cumExecFee"`
-	LeavesQty          string      `json:"leavesQty"`
-	SlTriggerBy        string      `json:"slTriggerBy"`
-	CloseOnTrigger     bool        `json:"closeOnTrigger"`
-	CumExecQty         string      `json:"cumExecQty"`
-	ReduceOnly         bool        `json:"reduceOnly"`
-	Qty                string      `json:"qty"`
-	StopLoss           string      `json:"stopLoss"`
-	TriggerBy          TriggerBy   `json:"triggerBy"`
+	Symbol                SymbolV5              `json:"symbol"`
+	OrderType             OrderType             `json:"orderType"`
+	OrderLinkID           string                `json:"orderLinkId"`
+	OrderID               string                `json:"orderId"`
+	CancelType            string                `json:"cancelType"`
+	AvgPrice              string                `json:"avgPrice"`
+	StopOrderType         string                `json:"stopOrderType"`
+	LastPriceOnCreated    string                `json:"lastPriceOnCreated"`
+	OrderStatus           OrderStatus           `json:"orderStatus"`
+	TakeProfit            string                `json:"takeProfit"`
+	CumExecValue          string                `json:"cumExecValue"`
+	TriggerDirection      int                   `json:"triggerDirection"`
+	IsLeverage            string                `json:"isLeverage"`
+	RejectReason          string                `json:"rejectReason"`
+	Price                 string                `json:"price"`
+	OrderIv               string                `json:"orderIv"`
+	CreatedTime           string                `json:"createdTime"`
+	TpTriggerBy           string                `json:"tpTriggerBy"`
+	PositionIdx           int                   `json:"positionIdx"`
+	TimeInForce           TimeInForce           `json:"timeInForce"`
+	LeavesValue           string                `json:"leavesValue"`
+	UpdatedTime           string                `json:"updatedTime"`
+	Side                  Side                  `json:"side"`
+	TriggerPrice          string                `json:"triggerPrice"`
+	CumExecFee            string                `json:"cumExecFee"`
+	LeavesQty             string                `json:"leavesQty"`
+	SlTriggerBy           string                `json:"slTriggerBy"`
+	CloseOnTrigger        bool                  `json:"closeOnTrigger"`
+	CumExecQty            string                `json:"cumExecQty"`
+	ReduceOnly            bool                  `json:"reduceOnly"`
+	Qty                   string                `json:"qty"`
+	StopLoss              string                `json:"stopLoss"`
+	TriggerBy             TriggerBy             `json:"triggerBy"`
+	SlippageToleranceType SlippageToleranceType `json:"slippageToleranceType"`
+	SlippageTolerance     string                `json:"slippageTolerance"`
 }
 
 // GetOpenOrders :
