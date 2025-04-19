@@ -49,6 +49,48 @@ func TestV5Order_CreateOrder(t *testing.T) {
 		require.NotNil(t, resp)
 		testhelper.Compare(t, respBody["result"], resp.Result)
 	})
+
+	t.Run("success with slippage tolerance", func(t *testing.T) {
+		slippageToleranceType := SlippageToleranceTypePercent
+		slippageTolerance := "0.5"
+		param := V5CreateOrderParam{
+			Category:              CategoryV5Spot,
+			Symbol:                SymbolV5BTCUSDT,
+			Side:                  SideBuy,
+			OrderType:             OrderTypeMarket,
+			Qty:                   "0.01",
+			SlippageToleranceType: &slippageToleranceType,
+			SlippageTolerance:     &slippageTolerance,
+		}
+
+		path := "/v5/order/create"
+		method := http.MethodPost
+		status := http.StatusOK
+		respBody := map[string]interface{}{
+			"result": map[string]interface{}{
+				"orderId":     "1358868270414852353",
+				"orderLinkId": "1676725721103694",
+			},
+		}
+		bytesBody, err := json.Marshal(respBody)
+		require.NoError(t, err)
+
+		server, teardown := testhelper.NewServer(
+			testhelper.WithHandlerOption(path, method, status, bytesBody),
+		)
+		defer teardown()
+
+		client := NewTestClient().
+			WithBaseURL(server.URL).
+			WithAuth("test", "test")
+
+		resp, err := client.V5().Order().CreateOrder(param)
+		require.NoError(t, err)
+
+		require.NotNil(t, resp)
+		testhelper.Compare(t, respBody["result"], resp.Result)
+	})
+
 	t.Run("authentication required", func(t *testing.T) {
 		price := "10000.0"
 		param := V5CreateOrderParam{
