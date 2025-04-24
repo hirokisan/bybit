@@ -562,6 +562,7 @@ type V5GetCoinInfoChain struct {
 	ChainDeposit          string `json:"chainDeposit"`
 	ChainWithdraw         string `json:"chainWithdraw"`
 	WithdrawPercentageFee string `json:"withdrawPercentageFee"`
+	ContractAddress       string `json:"contractAddress"`
 }
 
 // GetCoinInfo :
