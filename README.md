@@ -354,7 +354,8 @@ The following API endpoints have been implemented
 - [Kline](https://bybit-exchange.github.io/docs/v5/websocket/public/kline)
 - [Ticker](https://bybit-exchange.github.io/docs/v5/websocket/public/ticker)
 - [Trade](https://bybit-exchange.github.io/docs/v5/websocket/public/trade)
-- [Liquidation](https://bybit-exchange.github.io/docs/v5/websocket/public/liquidation)
+- [Liquidation (Deprecated)](https://bybit-exchange.github.io/docs/v5/websocket/public/liquidation)
+- [AllLiquidation](https://bybit-exchange.github.io/docs/v5/websocket/public/all-liquidation)
 
 #### Private Topics V5
 
