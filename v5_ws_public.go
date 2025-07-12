@@ -54,6 +54,10 @@ type V5WebsocketPublicServiceI interface {
 		V5WebsocketPublicLiquidationParamKey,
 		func(V5WebsocketPublicLiquidationResponse) error,
 	) (func() error, error)
+	SubscribeAllLiquidation(
+		V5WebsocketPublicAllLiquidationParamKey,
+		func(V5WebsocketPublicAllLiquidationResponse) error,
+	) (func() error, error)
 }
 
 // V5WebsocketPublicService :
@@ -64,11 +68,12 @@ type V5WebsocketPublicService struct {
 
 	mu sync.Mutex
 
-	paramOrderBookMap   map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error
-	paramKlineMap       map[V5WebsocketPublicKlineParamKey]func(V5WebsocketPublicKlineResponse) error
-	paramTickerMap      map[V5WebsocketPublicTickerParamKey]func(V5WebsocketPublicTickerResponse) error
-	paramTradeMap       map[V5WebsocketPublicTradeParamKey]func(V5WebsocketPublicTradeResponse) error
-	paramLiquidationMap map[V5WebsocketPublicLiquidationParamKey]func(V5WebsocketPublicLiquidationResponse) error
+	paramOrderBookMap      map[V5WebsocketPublicOrderBookParamKey]func(V5WebsocketPublicOrderBookResponse) error
+	paramKlineMap          map[V5WebsocketPublicKlineParamKey]func(V5WebsocketPublicKlineResponse) error
+	paramTickerMap         map[V5WebsocketPublicTickerParamKey]func(V5WebsocketPublicTickerResponse) error
+	paramTradeMap          map[V5WebsocketPublicTradeParamKey]func(V5WebsocketPublicTradeResponse) error
+	paramLiquidationMap    map[V5WebsocketPublicLiquidationParamKey]func(V5WebsocketPublicLiquidationResponse) error
+	paramAllLiquidationMap map[V5WebsocketPublicAllLiquidationParamKey]func(V5WebsocketPublicAllLiquidationResponse) error
 }
 
 const (
@@ -99,6 +104,9 @@ const (
 
 	// V5WebsocketPublicTopicLiquidation :
 	V5WebsocketPublicTopicLiquidation = V5WebsocketPublicTopic("liquidation")
+
+	// V5WebsocketPublicTopicAllLiquidation :
+	V5WebsocketPublicTopicAllLiquidation = V5WebsocketPublicTopic("allLiquidation")
 )
 
 func (t V5WebsocketPublicTopic) String() string {
@@ -123,6 +131,8 @@ func (s *V5WebsocketPublicService) judgeTopic(respBody []byte) (V5WebsocketPubli
 			return V5WebsocketPublicTopicTrade, nil
 		case strings.Contains(topic, V5WebsocketPublicTopicLiquidation.String()):
 			return V5WebsocketPublicTopicLiquidation, nil
+		case strings.Contains(topic, V5WebsocketPublicTopicAllLiquidation.String()):
+			return V5WebsocketPublicTopicAllLiquidation, nil
 		}
 	}
 	return "", nil
@@ -281,6 +291,18 @@ func (s *V5WebsocketPublicService) Run() error {
 			return err
 		}
 
+		if err := f(resp); err != nil {
+			return err
+		}
+	case V5WebsocketPublicTopicAllLiquidation:
+		var resp V5WebsocketPublicAllLiquidationResponse
+		if err := s.parseResponse(message, &resp); err != nil {
+			return err
+		}
+		f, err := s.retrieveAllLiquidationFunc(resp.Key())
+		if err != nil {
+			return err
+		}
 		if err := f(resp); err != nil {
 			return err
 		}
