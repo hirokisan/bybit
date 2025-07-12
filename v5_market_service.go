@@ -481,6 +481,7 @@ type V5GetInstrumentsInfoSpotItem struct {
 	QuoteCoin     Coin                `json:"quoteCoin"`
 	Innovation    Innovation          `json:"innovation"`
 	Status        InstrumentStatus    `json:"status"`
+	MarginTrading string              `json:"marginTrading"`
 	LotSizeFilter SpotLotSizeFilterV5 `json:"lotSizeFilter"`
 	PriceFilter   SpotPriceFilterV5   `json:"priceFilter"`
 }
