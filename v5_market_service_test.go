@@ -334,11 +334,12 @@ func TestV5Market_GetInstrumentsInfo(t *testing.T) {
 				"category": "spot",
 				"list": []map[string]interface{}{
 					{
-						"symbol":     "BTCUSDT",
-						"baseCoin":   "BTC",
-						"quoteCoin":  "USDT",
-						"innovation": "0",
-						"status":     "1",
+						"symbol":        "BTCUSDT",
+						"baseCoin":      "BTC",
+						"quoteCoin":     "USDT",
+						"innovation":    "0",
+						"status":        "1",
+						"marginTrading": "utaOnly",
 						"lotSizeFilter": map[string]interface{}{
 							"basePrecision":  "0.000001",
 							"quotePrecision": "0.00000001",
