@@ -105,7 +105,7 @@ func (s *V5WebsocketPublicService) removeParamAllLiquidationFunc(key V5Websocket
 	delete(s.paramAllLiquidationMap, key)
 }
 
-// retrievePositionFunc :
+// retrieveAllLiquidationFunc :
 func (s *V5WebsocketPublicService) retrieveAllLiquidationFunc(key V5WebsocketPublicAllLiquidationParamKey) (func(V5WebsocketPublicAllLiquidationResponse) error, error) {
 	f, exist := s.paramAllLiquidationMap[key]
 	if !exist {
