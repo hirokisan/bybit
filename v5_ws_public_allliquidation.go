@@ -100,7 +100,7 @@ func (s *V5WebsocketPublicService) addParamAllLiquidationFunc(key V5WebsocketPub
 	return nil
 }
 
-// removeParamLiquidationFunc :
+// removeParamAllLiquidationFunc :
 func (s *V5WebsocketPublicService) removeParamAllLiquidationFunc(key V5WebsocketPublicAllLiquidationParamKey) {
 	delete(s.paramAllLiquidationMap, key)
 }
