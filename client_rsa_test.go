@@ -158,5 +158,6 @@ w4N7BeagGxwcDDdRJWKUC1sMNow12SqKkwxilEECgYBBZsGnzoskGylfEJ9TrlpG
 HyF4dlEMZ7mC+fZjkD9EVyPzBKJ2mGm3hF5mfVmASm93ielzf3DPVbd/eiKQZ5Uu
 0JHHWp6wvtJeC833k4iXAw==
 -----END PRIVATE KEY-----`
-	TestAPIKey = "0s4stkea3xIc38bYoq"
+	// This is a test API key, DO NOT USE ON YOUR OWN ACCOUNT
+	TestAPIKey = "0s4stkea3xIc44bYoq"
 )
