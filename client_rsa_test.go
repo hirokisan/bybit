@@ -33,7 +33,7 @@ func TestExampleClient_WithAuthRSA(t *testing.T) {
 		// Response is bogus, just for testing
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(map[string]interface{}{
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"retCode": 0,
 			"retMsg":  "OK",
 			"result": map[string]interface{}{
