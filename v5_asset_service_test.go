@@ -27,6 +27,7 @@ func TestV5Asset_CreateInternalTransfer(t *testing.T) {
 		respBody := map[string]interface{}{
 			"result": map[string]interface{}{
 				"transferId": "42c0cfb0-6bca-c242-bc76-4e6df6cbcb16",
+				"status":     "SUCCESS",
 			},
 		}
 		bytesBody, err := json.Marshal(respBody)
@@ -178,6 +179,7 @@ func TestV5Asset_CreateUniversalTransfer(t *testing.T) {
 		respBody := map[string]interface{}{
 			"result": map[string]interface{}{
 				"transferId": "be7a2462-1138-4e27-80b1-62653f24925e",
+				"status":     "SUCCESS",
 			},
 		}
 		bytesBody, err := json.Marshal(respBody)
