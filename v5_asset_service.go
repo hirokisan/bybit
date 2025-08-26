@@ -69,6 +69,7 @@ type V5CreateInternalTransferResponse struct {
 // V5CreateInternalTransferResult :
 type V5CreateInternalTransferResult struct {
 	TransferID string `json:"transferId"`
+	Status     string `json:"status"`
 }
 
 // CreateInternalTransfer :
