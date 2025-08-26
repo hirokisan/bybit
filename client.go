@@ -2,10 +2,16 @@ package bybit
 
 import (
 	"bytes"
+	"crypto"
 	"crypto/hmac"
+	"crypto/rand"
+	"crypto/rsa"
 	"crypto/sha256"
+	"crypto/x509"
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
+	"encoding/pem"
 	"errors"
 	"fmt"
 	"io"
@@ -35,6 +41,10 @@ type Client struct {
 	baseURL string
 	key     string
 	secret  string
+
+	// RSA signing support
+	useRSA     bool
+	privateKey *rsa.PrivateKey
 
 	referer string
 
@@ -86,6 +96,37 @@ func (c *Client) WithLogger(logger *log.Logger) *Client {
 func (c *Client) WithAuth(key string, secret string) *Client {
 	c.key = key
 	c.secret = secret
+	c.useRSA = false
+
+	return c
+}
+
+// WithAuthRSA sets up authentication using RSA private key
+func (c *Client) WithAuthRSA(key string, privateKeyPEM string) *Client {
+	c.key = key
+	c.useRSA = true
+
+	// Parse the private key
+	block, _ := pem.Decode([]byte(privateKeyPEM))
+	if block == nil {
+		panic("failed to parse PEM block containing the private key")
+	}
+
+	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	if err != nil {
+		// Try PKCS8 format if PKCS1 fails
+		parsedKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+		if err != nil {
+			panic(fmt.Sprintf("failed to parse private key: %v", err))
+		}
+		var ok bool
+		privateKey, ok = parsedKey.(*rsa.PrivateKey)
+		if !ok {
+			panic("not an RSA private key")
+		}
+	}
+
+	c.privateKey = privateKey
 
 	return c
 }
@@ -160,6 +201,9 @@ func (c *Client) Request(req *http.Request, dst interface{}) (err error) {
 
 // hasAuth : check has auth key and secret
 func (c *Client) hasAuth() bool {
+	if c.useRSA {
+		return c.key != "" && c.privateKey != nil
+	}
 	return c.key != "" && c.secret != ""
 }
 
@@ -212,6 +256,30 @@ func getV5Signature(
 	return hex.EncodeToString(h.Sum(nil))
 }
 
+// getV5SignatureRSA generates RSA signature for V5 API
+func getV5SignatureRSA(
+	timestamp int64,
+	key string,
+	recvWindow string,
+	queryString string,
+	privateKey *rsa.PrivateKey,
+) string {
+	// Build the string to sign: timestamp + api_key + recv_window + queryString
+	val := strconv.FormatInt(timestamp, 10) + key + recvWindow + queryString
+
+	// Calculate SHA256 hash
+	hashed := sha256.Sum256([]byte(val))
+
+	// Sign with RSA private key using PKCS1v15
+	signature, err := rsa.SignPKCS1v15(rand.Reader, privateKey, crypto.SHA256, hashed[:])
+	if err != nil {
+		panic(fmt.Sprintf("failed to sign with RSA: %v", err))
+	}
+
+	// Convert to base64 as required by Bybit for RSA signatures
+	return base64.StdEncoding.EncodeToString(signature)
+}
+
 func getV5SignatureForBody(
 	timestamp int64,
 	key string,
@@ -223,6 +291,30 @@ func getV5SignatureForBody(
 	h := hmac.New(sha256.New, []byte(secret))
 	h.Write([]byte(val))
 	return hex.EncodeToString(h.Sum(nil))
+}
+
+// getV5SignatureForBodyRSA generates RSA signature for V5 API POST requests
+func getV5SignatureForBodyRSA(
+	timestamp int64,
+	key string,
+	recvWindow string,
+	body []byte,
+	privateKey *rsa.PrivateKey,
+) string {
+	// Build the string to sign: timestamp + api_key + recv_window + jsonBodyString
+	val := strconv.FormatInt(timestamp, 10) + key + recvWindow + string(body)
+
+	// Calculate SHA256 hash
+	hashed := sha256.Sum256([]byte(val))
+
+	// Sign with RSA private key using PKCS1v15
+	signature, err := rsa.SignPKCS1v15(rand.Reader, privateKey, crypto.SHA256, hashed[:])
+	if err != nil {
+		panic(fmt.Sprintf("failed to sign with RSA: %v", err))
+	}
+
+	// Convert to base64 as required by Bybit for RSA signatures
+	return base64.StdEncoding.EncodeToString(signature)
 }
 
 func getSignature(src url.Values, key string) string {
@@ -327,7 +419,14 @@ func (c *Client) getV5Privately(path string, query url.Values, dst interface{}) 
 	u.RawQuery = query.Encode()
 
 	timestamp := c.getTimestamp()
-	sign := getV5Signature(timestamp, c.key, query.Encode(), c.secret)
+	var sign string
+	if c.useRSA {
+		// For RSA signatures, use recv_window (default 5000ms)
+		recvWindow := "5000"
+		sign = getV5SignatureRSA(timestamp, c.key, recvWindow, query.Encode(), c.privateKey)
+	} else {
+		sign = getV5Signature(timestamp, c.key, query.Encode(), c.secret)
+	}
 
 	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
 	if err != nil {
@@ -336,6 +435,10 @@ func (c *Client) getV5Privately(path string, query url.Values, dst interface{}) 
 	req.Header.Set("X-BAPI-API-KEY", c.key)
 	req.Header.Set("X-BAPI-TIMESTAMP", strconv.FormatInt(timestamp, 10))
 	req.Header.Set("X-BAPI-SIGN", sign)
+	if c.useRSA {
+		req.Header.Set("X-BAPI-SIGN-TYPE", "2")
+		req.Header.Set("X-BAPI-RECV-WINDOW", "5000")
+	}
 
 	if err := c.Request(req, &dst); err != nil {
 		return err
@@ -382,7 +485,14 @@ func (c *Client) postV5JSON(path string, body []byte, dst interface{}) error {
 	u.Path = path
 
 	timestamp := c.getTimestamp()
-	sign := getV5SignatureForBody(timestamp, c.key, body, c.secret)
+	var sign string
+	if c.useRSA {
+		// For RSA signatures, use recv_window (default 5000ms)
+		recvWindow := "5000"
+		sign = getV5SignatureForBodyRSA(timestamp, c.key, recvWindow, body, c.privateKey)
+	} else {
+		sign = getV5SignatureForBody(timestamp, c.key, body, c.secret)
+	}
 
 	req, err := http.NewRequest(http.MethodPost, u.String(), bytes.NewBuffer(body))
 	if err != nil {
@@ -392,6 +502,10 @@ func (c *Client) postV5JSON(path string, body []byte, dst interface{}) error {
 	req.Header.Set("X-BAPI-API-KEY", c.key)
 	req.Header.Set("X-BAPI-TIMESTAMP", strconv.FormatInt(timestamp, 10))
 	req.Header.Set("X-BAPI-SIGN", sign)
+	if c.useRSA {
+		req.Header.Set("X-BAPI-SIGN-TYPE", "2")
+		req.Header.Set("X-BAPI-RECV-WINDOW", "5000")
+	}
 	if c.referer != "" {
 		req.Header.Set("X-Referer", c.referer)
 	}
