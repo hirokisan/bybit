@@ -3,7 +3,6 @@ package bybit
 import (
 	"encoding/json"
 	"strconv"
-	"time"
 
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
@@ -11,7 +10,7 @@ import (
 
 // CreateOrder :
 func (s *V5WebsocketTradeService) CreateOrder(orders []*V5CreateOrderParam) error {
-	timestamp := strconv.FormatInt(time.Now().UnixMilli(), 10)
+	timestamp := strconv.FormatInt(s.client.getTimestamp(), 10)
 	headers := make(map[string]string)
 	headers["X-BAPI-TIMESTAMP"] = timestamp
 	headers["X-BAPI-RECV-WINDOW"] = "8000"
@@ -39,7 +38,7 @@ func (s *V5WebsocketTradeService) CreateOrder(orders []*V5CreateOrderParam) erro
 }
 
 func (s *V5WebsocketTradeService) CancelOrder(orders []*V5CancelOrderParam) error {
-	timestamp := strconv.FormatInt(time.Now().UnixMilli(), 10)
+	timestamp := strconv.FormatInt(s.client.getTimestamp(), 10)
 	headers := make(map[string]string)
 	headers["X-BAPI-TIMESTAMP"] = timestamp
 	headers["X-BAPI-RECV-WINDOW"] = "8000"

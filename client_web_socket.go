@@ -36,12 +36,14 @@ type WebSocketClient struct {
 	baseURL string
 	key     string
 	secret  string
-	
+
 	// RSA signing support
 	useRSA     bool
 	privateKey *rsa.PrivateKey
-	
-	dialer  *websocket.Dialer
+
+	dialer *websocket.Dialer
+
+	syncTimeDeltaNanoSeconds int64
 }
 
 func (c *WebSocketClient) debugf(format string, v ...interface{}) {
@@ -87,13 +89,13 @@ func (c *WebSocketClient) WithAuth(key string, secret string) *WebSocketClient {
 func (c *WebSocketClient) WithAuthRSA(key string, privateKeyPEM string) *WebSocketClient {
 	c.key = key
 	c.useRSA = true
-	
+
 	// Parse the private key
 	block, _ := pem.Decode([]byte(privateKeyPEM))
 	if block == nil {
 		panic("failed to parse PEM block containing the private key")
 	}
-	
+
 	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
 		// Try PKCS8 format if PKCS1 fails
@@ -107,9 +109,9 @@ func (c *WebSocketClient) WithAuthRSA(key string, privateKeyPEM string) *WebSock
 			panic("not an RSA private key")
 		}
 	}
-	
+
 	c.privateKey = privateKey
-	
+
 	return c
 }
 
@@ -132,14 +134,24 @@ func (c *WebSocketClient) hasAuth() bool {
 	return c.key != "" && c.secret != ""
 }
 
+// getTimestamp returns the current timestamp in milliseconds
+func (c *WebSocketClient) getTimestamp() int64 {
+	return (time.Now().UnixNano() - c.syncTimeDeltaNanoSeconds) / 1000000
+}
+
+// UpdateTimeDelta :
+func (c *WebSocketClient) UpdateTimeDelta(timeDelta int64) {
+	c.syncTimeDeltaNanoSeconds = timeDelta
+}
+
 func (c *WebSocketClient) buildAuthParam() ([]byte, error) {
 	if !c.hasAuth() {
 		return nil, fmt.Errorf("this is private endpoint, please set api key and secret")
 	}
 
-	expires := time.Now().Unix()*1000 + 10000
+	expires := c.getTimestamp() + 10000
 	req := fmt.Sprintf("GET/realtime%d", expires)
-	
+
 	var signature string
 	if c.useRSA {
 		// For RSA signatures
@@ -157,7 +169,7 @@ func (c *WebSocketClient) buildAuthParam() ([]byte, error) {
 		}
 		signature = hex.EncodeToString(s.Sum(nil))
 	}
-	
+
 	param := struct {
 		Op   string        `json:"op"`
 		Args []interface{} `json:"args"`

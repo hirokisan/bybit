@@ -578,24 +578,23 @@ func (c *Client) getTimestamp() int64 {
 func (c *Client) updateSyncTimeDelta(
 	remoteServerTimeRaw string,
 	localTimestampNanoseconds int64,
-) error {
+) (int64, error) {
 	remoteServerTimeNS, err := strconv.ParseInt(remoteServerTimeRaw, 10, 64)
 	if err != nil {
-		return fmt.Errorf("parse server time: %w", err)
+		return 0, fmt.Errorf("parse server time: %w", err)
 	}
-
 	c.syncTimeDeltaNanoSeconds = localTimestampNanoseconds - remoteServerTimeNS
-	return nil
+	return c.syncTimeDeltaNanoSeconds, nil
 }
 
-func (c *Client) SyncServerTime() error {
+func (c *Client) SyncServerTime() (int64, error) {
 	r, err := c.NewTimeService().GetServerTime()
 	if err != nil {
-		return fmt.Errorf("get server time: %w", err)
+		return 0, fmt.Errorf("get server time: %w", err)
 	}
 
 	if r.Result.TimeNano == "" {
-		return errors.New("server time is empty")
+		return 0, errors.New("server time is empty")
 	}
 
 	return c.updateSyncTimeDelta(r.Result.TimeNano, time.Now().UnixNano())
